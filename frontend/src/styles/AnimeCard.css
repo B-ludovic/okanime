@@ -1,0 +1,125 @@
+/* Anime Card */
+.anime-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.anime-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image de l'anime */
+.anime-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.anime-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Contenu de la card */
+.anime-content {
+  padding: 20px;
+}
+
+.anime-content h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+/* Informations */
+.anime-info {
+  margin-bottom: 15px;
+}
+
+.anime-info p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Avis */
+.anime-avis {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border-left: 3px solid #bcece0;
+}
+
+.anime-avis strong {
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.anime-avis p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Footer de la card */
+.anime-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Actions (boutons modifier/supprimer) */
+.anime-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.btn-edit {
+  background: linear-gradient(135deg, #bcece0, #a8ddd0);
+}
+
+.btn-edit:hover {
+  background: linear-gradient(135deg, #a8ddd0, #95cfc0);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(188, 236, 224, 0.4);
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
+}
+
+.btn-delete:hover {
+  background: linear-gradient(135deg, #ef9a9a, #e57373);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(239, 154, 154, 0.4);
+}
