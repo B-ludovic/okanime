@@ -19,8 +19,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Bienvenue sur l\'API O\'Kanime 🎌' });
 });
 
-// TODO: Ajouter les routes ici
-// app.use('/api/auth', authRoutes);
+// Routes d'authentification
+app.use('/api/auth', authRoutes);
 // app.use('/api/animes', animeRoutes);
 
 // Démarrage du serveur

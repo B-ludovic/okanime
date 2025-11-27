@@ -38,7 +38,7 @@ router.post('/register', async (req, res) => {
         });
 
         // Retourner l'utilisateur cree (sans le mot de passe)
-        res.status(201).json({ id: user.id, email: user.email, username: user.username });
+        res.status(201).json({ id: newUser.id, email: newUser.email, username: newUser.username });
     }
     catch (error) {
         console.error(error.message);
@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Route POST /login - Connexion
-router.post('login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         // recuperer les donnes du body
         const { email, password } = req.body;
