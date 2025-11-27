@@ -1,24 +1,18 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import './styles/App.css';
 
 function App() {
   return (
-    <div className="app-container">
-      <header className="header">
-        <h1>🎌 O'Kanime</h1>
-        <p>Votre bibliothèque personnelle d'animes</p>
-      </header>
-
-      <main>
-        <div className="anime-grid">
-          {/* Les composants animes s'afficheront ici */}
-          <div className="anime-card">
-            <h3>Exemple d'anime</h3>
-            <p>Ceci est un exemple de card</p>
-          </div>
-        </div>
-      </main>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
   );
 }
 
