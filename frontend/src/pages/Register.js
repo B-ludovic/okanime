@@ -6,6 +6,7 @@ function Register() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -13,6 +14,18 @@ function Register() {
     e.preventDefault();
     setError('');
     setSuccess('');
+
+    // Vérifier que les mots de passe correspondent
+    if (password !== confirmPassword) {
+        setError('Les mots de passe ne correspondent pas.');
+      return;
+    }
+
+    // Vérfier la complexité du mot de passe
+    if (password.length < 6) {
+      setError('Le mot de passe doit contenir au moins 6 caractères.');
+      return;
+    }
 
     try {
       const data = await api.post('/auth/register', { email, username, password });
@@ -65,6 +78,19 @@ function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            minLength="6"
+          />
+          <small className="input-hint">Minimum 6 caractères</small>
+        </div>
+
+        <div className="form-group">
+          <label>Confirmer le mot de passe</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            minLength="6"
           />
         </div>
 
