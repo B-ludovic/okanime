@@ -24,7 +24,7 @@ router.get('/', authMiddleware, async (req, res) => {
 // Route POST /api/animes - Ajouter un nouvel anime
 router.post('/', authMiddleware, async (req, res) => {
     try {
-        const { title,
+        const { titre,
             nbSaisons,
             nbEpisodes,
             dureeEpisode,
@@ -36,7 +36,7 @@ router.post('/', authMiddleware, async (req, res) => {
             statut } = req.body;
 
         // verifier les champs obligatoires
-        if (!title || !statut || !nbEpisodes || !dureeEpisode || !nbSaisons || !studio || !paysOrigine || !note || !avis || !imageUrl) {
+        if (!titre || !statut || !nbEpisodes || !dureeEpisode || !nbSaisons || !studio || !paysOrigine) {
             return res.status(400).json({ message: 'Tous les champs sont obligatoires.' });
         }
 
@@ -64,10 +64,10 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 // PUT /api/animes/:id - Mettre a jour un anime
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
     try {
         const { id } = req.params;
-        const { title,
+        const { titre,
             nbSaisons,
             nbEpisodes,
             dureeEpisode,
@@ -114,7 +114,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE /api/animes/:id - Supprimer un anime
-router.delete('/;id', async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
     try {
         const { id } = req.params;
 
