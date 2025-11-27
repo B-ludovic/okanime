@@ -179,7 +179,7 @@ function AnimeForm({ onClose, onAnimeAdded }) {
             <button type="button" className="btn-cancel" onClick={onClose}>
               Annuler
             </button>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit">
               Ajouter
             </button>
           </div>

@@ -1,103 +1,144 @@
 /* Container principal du dashboard */
+body {
+  background: linear-gradient(135deg, #ffd7ba, #ffb8a8);
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Container principal du dashboard */
 .dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px 20px; /* Un peu plus d'espace en haut */
 }
 
 /* Header du dashboard */
+/* Header du dashboard */
 .dashboard-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Pousse le titre à gauche et le reste à droite */
   align-items: center;
+  
+  /* ICI : On ajoute un grand espace de sécurité */
+  gap: 40px; 
+  
   margin-bottom: 30px;
-  padding: 20px;
+  padding: 20px 30px;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-header h1 {
   margin: 0;
   color: #333;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-size: 1.8rem;
+  
+  /* Astuce : empêche le titre de se faire écraser si l'écran est petit */
+  white-space: nowrap; 
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px; /* Espace entre "Bienvenue..." et le bouton Déconnexion */
 }
 
 .user-info span {
-  color: #666;
-  font-weight: 500;
+  color: #555;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
+/* Bouton Déconnexion */
 .btn-logout {
-  padding: 8px 16px;
-  background-color: #ff6b9d;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #ff6b9d, #ff5288);
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 .btn-logout:hover {
-  background-color: #ff5288;
+  background: linear-gradient(135deg, #ff5288, #ff3d73);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(255, 107, 157, 0.4);
 }
 
 /* Filtres */
 .filters {
   display: flex;
+  justify-content: center; /* On centre les filtres, c'est souvent plus joli */
   gap: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .filter-btn {
-  padding: 10px 20px;
+  padding: 10px 25px;
   background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 6px;
+  
+  /* Bordure grise visible (comme tes inputs) pour bien voir les boutons */
+  border: 1px solid #ccc; 
+  
+  border-radius: 30px; /* Forme plus arrondie pour les différencier des inputs */
   cursor: pointer;
   font-size: 1rem;
+  color: #555;
+  font-weight: 500;
   transition: all 0.3s ease;
 }
 
 .filter-btn:hover {
-  border-color: #bcece0;
+  border-color: #bcece0; /* Bordure menthe au survol */
+  background: linear-gradient(135deg, #f0fffe, #e0f9f5);
+  color: #333;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(188, 236, 224, 0.3);
 }
 
+/* État actif du filtre (bouton sélectionné) */
 .filter-btn.active {
-  background: #bcece0;
+  background: linear-gradient(135deg, #bcece0, #a8ddd0);
   border-color: #bcece0;
+  color: #333;
   font-weight: bold;
+  box-shadow: 0 2px 6px rgba(188, 236, 224, 0.4);
 }
 
 /* Section ajouter un anime */
 .add-anime-section {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
 .add-anime-section .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  font-size: 1rem;
-  background: #bcece0;
-  border: none;
-  border-radius: 6px;
+  gap: 10px;
+  padding: 15px 30px; /* Bouton un peu plus gros pour l'action principale */
+  font-size: 1.1rem;
+  font-weight: bold;
+  
+  background: linear-gradient(135deg, #ffffff, #f5fffe);
+  border: 2px solid #bcece0; /* Bordure menthe épaisse */
+  border-radius: 8px;
+  
   cursor: pointer;
-  transition: background-color 0.3s;
+  color: #333;
+  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .add-anime-section .btn:hover {
-  background: #a8ddd0;
+  background: linear-gradient(135deg, #bcece0, #a8ddd0);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(188, 236, 224, 0.4);
 }
 
 .add-icon {
@@ -107,28 +148,37 @@
 
 /* Message si aucun anime */
 .no-anime {
+  background: white; /* On le met dans une boite blanche pour la lisibilité */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  
   text-align: center;
   color: #666;
   font-size: 1.2rem;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 /* Badge de statut */
 .statut-badge {
   display: inline-block;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: bold;
   margin-top: 10px;
+  text-transform: uppercase; /* Rend le texte plus propre (ex: A VOIR) */
+  letter-spacing: 0.5px;
 }
 
 .statut-badge.a_voir {
   background: #fff3e0;
-  color: #f57c00;
+  color: #ef6c00; /* Orange un peu plus foncé pour la lisibilité */
+  border: 1px solid #ffe0b2; /* Petite bordure subtile */
 }
 
 .statut-badge.deja_vu {
   background: #e8f5e9;
   color: #2e7d32;
+  border: 1px solid #c8e6c9;
 }

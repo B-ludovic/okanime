@@ -1,0 +1,89 @@
+/* Variables CSS globales pour O'Kanime */
+
+:root {
+  /* Couleurs principales */
+  --color-primary: #bcece0;
+  --color-primary-dark: #a8ddd0;
+  --color-primary-darker: #95cfc0;
+  
+  --color-secondary: #ff6b9d;
+  --color-secondary-dark: #ff5288;
+  --color-secondary-darker: #ff3d73;
+  
+  /* Couleurs de fond */
+  --bg-gradient: linear-gradient(135deg, #ffd7ba, #ffb8a8);
+  --bg-white: #ffffff;
+  
+  /* Couleurs de texte */
+  --text-primary: #333;
+  --text-secondary: #555;
+  --text-tertiary: #666;
+  --text-muted: #999;
+  
+  /* Couleurs de bordure */
+  --border-color: #ccc;
+  --border-color-light: #e0e0e0;
+  
+  /* Messages */
+  --error-bg: #ffebee;
+  --error-text: #c62828;
+  --error-border: #ffcdd2;
+  
+  --success-bg: #e8f5e9;
+  --success-text: #2e7d32;
+  --success-border: #c8e6c9;
+  
+  /* Badges de statut */
+  --status-a-voir-bg: #fff3e0;
+  --status-a-voir-text: #ef6c00;
+  --status-a-voir-border: #ffe0b2;
+  
+  --status-deja-vu-bg: #e8f5e9;
+  --status-deja-vu-text: #2e7d32;
+  --status-deja-vu-border: #c8e6c9;
+  
+  /* Espacements */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+  --spacing-xxl: 40px;
+  
+  /* Bordures */
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 10px;
+  --border-radius-xl: 20px;
+  --border-radius-full: 30px;
+  
+  /* Ombres */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 6px 12px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 10px 30px rgba(0, 0, 0, 0.3);
+  
+  /* Transitions */
+  --transition-fast: all 0.2s ease;
+  --transition-normal: all 0.3s ease;
+  --transition-slow: all 0.5s ease;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  --gradient-secondary: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
+  --gradient-gray: linear-gradient(135deg, #e0e0e0, #d0d0d0);
+  
+  /* Polices */
+  --font-family: Arial, sans-serif;
+  --font-size-sm: 0.85rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.1rem;
+  --font-size-lg: 1.2rem;
+  --font-size-xl: 1.5rem;
+  --font-size-xxl: 1.8rem;
+  
+  /* Poids de police */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+}

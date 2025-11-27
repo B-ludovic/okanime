@@ -1,3 +1,6 @@
+/* Import des variables globales */
+@import './Variables.css';
+
 /* Reset et styles de base */
 * {
   margin: 0;

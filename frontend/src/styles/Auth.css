@@ -96,17 +96,22 @@ body {
 button[type="submit"] {
   width: 100%;
   padding: 12px;
-  background-color: #bcece0;
+  background: linear-gradient(135deg, #bcece0, #a8ddd0);
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
   color: #333;
+  font-weight: 500;
   margin-top: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(188, 236, 224, 0.3);
 }
 
 button[type="submit"]:hover {
-  background-color: #a8ddd0; /* Légèrement plus foncé au survol */
+  background: linear-gradient(135deg, #a8ddd0, #95cfc0);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(188, 236, 224, 0.5);
 }
 
 /* Lien d'authentification */
@@ -120,8 +125,11 @@ button[type="submit"]:hover {
   color: #ff6b9d;
   text-decoration: none;
   font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
 
 .auth-link a:hover {
   text-decoration: underline;
+  transform: translateY(-2px);
 }
