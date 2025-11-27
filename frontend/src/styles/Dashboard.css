@@ -1,0 +1,108 @@
+/* Container principal du dashboard */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header du dashboard */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info span {
+  color: #666;
+  font-weight: 500;
+}
+
+.btn-logout {
+  padding: 8px 16px;
+  background-color: #ff6b9d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-logout:hover {
+  background-color: #ff5288;
+}
+
+/* Filtres */
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  border-color: #bcece0;
+}
+
+.filter-btn.active {
+  background: #bcece0;
+  border-color: #bcece0;
+  font-weight: bold;
+}
+
+/* Section ajouter un anime */
+.add-anime-section {
+  margin-bottom: 30px;
+}
+
+/* Message si aucun anime */
+.no-anime {
+  text-align: center;
+  color: #666;
+  font-size: 1.2rem;
+  margin-top: 50px;
+}
+
+/* Badge de statut */
+.statut-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.statut-badge.a_voir {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.statut-badge.deja_vu {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
