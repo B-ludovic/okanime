@@ -13,6 +13,7 @@ app.use(express.json());
 
 // importation des routes
 const authRoutes = require('./routes/auth');
+const animeRoutes = require('./routes/anime');
 
 // Route de test
 app.get('/', (req, res) => {
@@ -21,7 +22,9 @@ app.get('/', (req, res) => {
 
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
-// app.use('/api/animes', animeRoutes);
+
+// Routes pour les animes
+app.use('/api/animes', animeRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
