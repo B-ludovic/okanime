@@ -37,6 +37,23 @@
   font-size: 1.3rem;
 }
 
+/* Résumé */
+.anime-resume {
+  background: #f0f8ff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border-left: 3px solid #bcece0;
+}
+
+.anime-resume p {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
 /* Informations */
 .anime-info {
   margin-bottom: 15px;
@@ -54,7 +71,6 @@
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 15px;
-  border-left: 3px solid #bcece0;
 }
 
 .anime-avis strong {

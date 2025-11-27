@@ -5,6 +5,7 @@ import '../styles/AnimeForm.css';
 function AnimeForm({ onClose, onAnimeAdded }) {
   const [formData, setFormData] = useState({
     titre: '',
+    resume: '',
     nbSaisons: '',
     nbEpisodes: '',
     dureeEpisode: '',
@@ -61,6 +62,17 @@ function AnimeForm({ onClose, onAnimeAdded }) {
               value={formData.titre}
               onChange={handleChange}
               required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Résumé général</label>
+            <textarea
+              name="resume"
+              value={formData.resume}
+              onChange={handleChange}
+              rows="3"
+              placeholder="De quoi parle cet anime..."
             />
           </div>
 

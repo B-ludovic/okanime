@@ -24,6 +24,7 @@ model User {
 model Anime {
   id              Int      @id @default(autoincrement())
   titre           String
+  resume          String?  // Résumé général de l'anime
   nbSaisons       Int
   nbEpisodes      Int
   dureeEpisode    Int      // en minutes

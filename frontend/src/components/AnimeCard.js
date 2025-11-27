@@ -19,6 +19,12 @@ function AnimeCard({ anime, onDelete, onEdit }) {
       <div className="anime-content">
         <h3>{anime.titre}</h3>
         
+        {anime.resume && (
+          <div className="anime-resume">
+            <p>{anime.resume}</p>
+          </div>
+        )}
+        
         <div className="anime-info">
           <p><strong>Studio:</strong> {anime.studio}</p>
           <p><strong>Pays:</strong> {anime.paysOrigine}</p>
@@ -42,10 +48,10 @@ function AnimeCard({ anime, onDelete, onEdit }) {
           
           <div className="anime-actions">
             <button className="btn-edit" onClick={() => onEdit(anime)}>
-              <img src="/icons/modifier.png" alt="Modifier" className="action-icon" />
+              <img src="/icons/modify.png" alt="Modifier" className="action-icon" />
             </button>
             <button className="btn-delete" onClick={handleDelete}>
-              <img src="/icons/supprimer.png" alt="Supprimer" className="action-icon" />
+              <img src="/icons/delete.png" alt="Supprimer" className="action-icon" />
             </button>
           </div>
         </div>
