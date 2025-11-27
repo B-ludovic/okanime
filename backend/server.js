@@ -11,6 +11,9 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// importation des routes
+const authRoutes = require('./routes/auth');
+
 // Route de test
 app.get('/', (req, res) => {
   res.json({ message: 'Bienvenue sur l\'API O\'Kanime 🎌' });
