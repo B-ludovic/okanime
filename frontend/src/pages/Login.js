@@ -12,7 +12,7 @@ function Login() {
         setError('');
 
         try {
-            const data = await api.post('auth/login', { email, password });
+            const data = await api.post('/auth/login', { email, password });
             if (data.error) {
                 setError(data.error);
             } else {

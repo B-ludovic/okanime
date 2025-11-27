@@ -20,6 +20,9 @@
 .dashboard-header h1 {
   margin: 0;
   color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .user-info {
@@ -77,6 +80,29 @@
 /* Section ajouter un anime */
 .add-anime-section {
   margin-bottom: 30px;
+  text-align: center;
+}
+
+.add-anime-section .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  background: #bcece0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-anime-section .btn:hover {
+  background: #a8ddd0;
+}
+
+.add-icon {
+  width: 20px;
+  height: 20px;
 }
 
 /* Message si aucun anime */
