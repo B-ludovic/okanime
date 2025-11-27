@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import api from '../api';
 import '../styles/AnimeForm.css';
 
-function AnimeForm({ onClose, onAnimeAdded }) {
+function AnimeEditForm({ anime, onClose, onAnimeUpdated }) {
   const [formData, setFormData] = useState({
-    titre: '',
-    resume: '',
-    nbSaisons: '',
-    nbEpisodes: '',
-    dureeEpisode: '',
-    studio: '',
-    paysOrigine: '',
-    note: '',
-    avis: '',
-    imageUrl: '',
-    statut: 'a_voir'
+    titre: anime.titre || '',
+    resume: anime.resume || '',
+    nbSaisons: anime.nbSaisons || '',
+    nbEpisodes: anime.nbEpisodes || '',
+    dureeEpisode: anime.dureeEpisode || '',
+    studio: anime.studio || '',
+    paysOrigine: anime.paysOrigine || '',
+    note: anime.note || '',
+    avis: anime.avis || '',
+    imageUrl: anime.imageUrl || '',
+    statut: anime.statut || 'a_voir'
   });
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -59,16 +59,16 @@ function AnimeForm({ onClose, onAnimeAdded }) {
     setError('');
 
     try {
-      const data = await api.post('/animes', formData);
+      const data = await api.put(`/animes/${anime.id}`, formData);
 
       if (data.error) {
         setError(data.error);
       } else {
-        onAnimeAdded();
+        onAnimeUpdated();
         onClose();
       }
     } catch (err) {
-      setError('Erreur lors de l\'ajout de l\'anime');
+      setError('Erreur lors de la modification de l\'anime');
     }
   };
 
@@ -76,7 +76,7 @@ function AnimeForm({ onClose, onAnimeAdded }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Ajouter un anime</h2>
+          <h2>Modifier l'anime</h2>
           <button className="close-btn" onClick={onClose}>✕</button>
         </div>
 
@@ -255,7 +255,7 @@ function AnimeForm({ onClose, onAnimeAdded }) {
               Annuler
             </button>
             <button type="submit">
-              Ajouter
+              Modifier
             </button>
           </div>
         </form>
@@ -264,4 +264,4 @@ function AnimeForm({ onClose, onAnimeAdded }) {
   );
 }
 
-export default AnimeForm;
+export default AnimeEditForm;

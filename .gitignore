@@ -28,3 +28,7 @@ Thumbs.db
 
 # Prisma
 backend/prisma/migrations/
+backend/prisma/backups/
+
+# base de données SQL
+*.sql

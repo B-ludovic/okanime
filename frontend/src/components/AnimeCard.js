@@ -19,11 +19,9 @@ function AnimeCard({ anime, onDelete, onEdit }) {
       <div className="anime-content">
         <h3>{anime.titre}</h3>
         
-        {anime.resume && (
-          <div className="anime-resume">
-            <p>{anime.resume}</p>
-          </div>
-        )}
+        <div className="anime-resume">
+          {anime.resume && <p>{anime.resume}</p>}
+        </div>
         
         <div className="anime-info">
           <p><strong>Studio:</strong> {anime.studio}</p>
@@ -34,12 +32,14 @@ function AnimeCard({ anime, onDelete, onEdit }) {
           {anime.note && <p><strong>Note:</strong> {anime.note}/10</p>}
         </div>
 
-        {anime.avis && (
-          <div className="anime-avis">
-            <strong>Avis:</strong>
-            <p>{anime.avis}</p>
-          </div>
-        )}
+        <div className="anime-avis">
+          {anime.avis && (
+            <>
+              <strong>Avis:</strong>
+              <p>{anime.avis}</p>
+            </>
+          )}
+        </div>
 
         <div className="anime-footer">
           <span className={`statut-badge ${anime.statut}`}>

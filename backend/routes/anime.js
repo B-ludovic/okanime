@@ -25,6 +25,7 @@ router.get('/', authMiddleware, async (req, res) => {
 router.post('/', authMiddleware, async (req, res) => {
     try {
         const { titre,
+            resume,
             nbSaisons,
             nbEpisodes,
             dureeEpisode,
@@ -44,6 +45,7 @@ router.post('/', authMiddleware, async (req, res) => {
         const anime = await prisma.anime.create({
             data: {
                 titre,
+                resume: resume || null,
                 nbSaisons: parseInt(nbSaisons),
                 nbEpisodes: parseInt(nbEpisodes),
                 dureeEpisode: parseInt(dureeEpisode),
@@ -68,6 +70,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
     try {
         const { id } = req.params;
         const { titre,
+            resume,
             nbSaisons,
             nbEpisodes,
             dureeEpisode,
@@ -95,6 +98,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
             where: { id: parseInt(id) },
             data: {
                 titre,
+                resume: resume || null,
                 nbSaisons: parseInt(nbSaisons),
                 nbEpisodes: parseInt(nbEpisodes),
                 dureeEpisode: parseInt(dureeEpisode),

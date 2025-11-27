@@ -5,6 +5,9 @@
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .anime-card:hover {
@@ -18,6 +21,7 @@
   height: 200px;
   overflow: hidden;
   background: #f0f0f0;
+  flex-shrink: 0;
 }
 
 .anime-image img {
@@ -29,6 +33,9 @@
 /* Contenu de la card */
 .anime-content {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .anime-content h3 {
@@ -39,19 +46,47 @@
 
 /* Résumé */
 .anime-resume {
-  background: #f0f8ff;
-  padding: 12px;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f4ff 100%);
+  padding: 14px;
+  border-radius: 8px;
   margin-bottom: 15px;
-  border-left: 3px solid #bcece0;
+  height: 90px;
+  overflow-y: auto;
+  box-shadow: -4px 0 8px rgba(188, 236, 224, 0.3), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.anime-resume:hover {
+  box-shadow: -6px 0 12px rgba(188, 236, 224, 0.5), 0 3px 8px rgba(0, 0, 0, 0.12);
 }
 
 .anime-resume p {
   margin: 0;
-  color: #555;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  color: #2c5282;
+  font-size: 0.88rem;
+  line-height: 1.6;
   font-style: italic;
+  font-weight: 400;
+}
+
+/* Scrollbar personnalisée pour le résumé */
+.anime-resume::-webkit-scrollbar {
+  width: 6px;
+}
+
+.anime-resume::-webkit-scrollbar-track {
+  background: rgba(188, 236, 224, 0.1);
+  border-radius: 10px;
+}
+
+.anime-resume::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #bcece0, #a8ddd0);
+  border-radius: 10px;
+}
+
+.anime-resume::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #a8ddd0, #95cfc0);
 }
 
 /* Informations */
@@ -71,6 +106,7 @@
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 15px;
+  min-height: 80px; /* Hauteur minimale pour alignement */
 }
 
 .anime-avis strong {
@@ -91,7 +127,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 15px;
+  margin-top: auto; /* ← Cette ligne pousse le footer tout en bas */
   padding-top: 15px;
   border-top: 1px solid #e0e0e0;
 }

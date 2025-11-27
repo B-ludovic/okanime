@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
 import AnimeForm from '../components/AnimeForm';
+import AnimeEditForm from '../components/AnimeEditForm';
 import AnimeCard from '../components/AnimeCard';
 import '../styles/Dashboard.css';
 
@@ -9,6 +10,8 @@ function Dashboard() {
     const [filter, setFilter] = useState('all');
     const [user, setUser] = useState(null);
     const [showForm, setShowForm] = useState(false);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [selectedAnime, setSelectedAnime] = useState(null);
 
     useEffect(() => {
         // Récupérer les informations de l'utilisateur depuis le localStorage
@@ -40,8 +43,8 @@ function Dashboard() {
     };
 
     const handleEdit = (anime) => {
-        // Logique pour éditer un anime (à implémenter)
-        console.log('Éditer l\'anime:', anime);
+        setSelectedAnime(anime);
+        setShowEditForm(true);
     };
 
     const handleLogout = () => {
@@ -117,6 +120,18 @@ function Dashboard() {
                 <AnimeForm
                     onClose={() => setShowForm(false)}
                     onAnimeAdded={loadAnimes}
+                />
+            )}
+
+            {/* Formulaire d'édition d'anime */}
+            {showEditForm && selectedAnime && (
+                <AnimeEditForm
+                    anime={selectedAnime}
+                    onClose={() => {
+                        setShowEditForm(false);
+                        setSelectedAnime(null);
+                    }}
+                    onAnimeUpdated={loadAnimes}
                 />
             )}
         </div>
