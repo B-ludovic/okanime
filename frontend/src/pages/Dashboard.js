@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
 import AnimeForm from '../components/AnimeForm';
+import AnimeCard from '../components/AnimeCard';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
@@ -27,6 +28,20 @@ function Dashboard() {
         } catch (error) {
             console.error('Erreur lors du chargement des animes:', error);
         }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await api.delete(`/animes/${id}`);
+            loadAnimes();
+        } catch (error) {
+            console.error('Erreur lors de la suppression de l\'anime:', error);
+        }
+    };
+
+    const handleEdit = (anime) => {
+        // Logique pour éditer un anime (à implémenter)
+        console.log('Éditer l\'anime:', anime);
     };
 
     const handleLogout = () => {
@@ -88,15 +103,12 @@ function Dashboard() {
                     <p className="no-anime">Aucun anime pour le moment.</p>
                 ) : (
                     filteredAnimes.map(anime => (
-                        <div key={anime.id} className="anime-card">
-                            <h3>{anime.titre}</h3>
-                            <p><strong>Studio:</strong> {anime.studio}</p>
-                            <p><strong>Épisodes:</strong> {anime.nbEpisodes}</p>
-                            <p><strong>Note:</strong> {anime.note ? `${anime.note}/10` : 'Non noté'}</p>
-                            <span className={`statut-badge ${anime.statut}`}>
-                                {anime.statut === 'a_voir' ? 'À voir' : 'Déjà vu'}
-                            </span>
-                        </div>
+                        <AnimeCard
+                            key={anime.id}
+                            anime={anime}
+                            onDelete={handleDelete}
+                            onEdit={handleEdit}
+                        />
                     ))
                 )}
             </div>
