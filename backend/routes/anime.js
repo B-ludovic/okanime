@@ -6,11 +6,10 @@ const { parse } = require('dotenv');
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// Route GET /api/animes - Recuperer la liste des animes
-router.get('/', authMiddleware, async (req, res) => {
+// Route GET /api/animes - Recuperer la liste des animes (accessible à tous)
+router.get('/', async (req, res) => {
     try {
         const animes = await prisma.anime.findMany({
-            where: { userId: req.userId },
             orderBy: { createdAt: 'desc' },
         });
         res.json(animes);

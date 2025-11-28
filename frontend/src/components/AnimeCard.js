@@ -4,6 +4,7 @@ import '../styles/AnimeCard.css';
 
 function AnimeCard({ anime, onDelete, onEdit }) {
     const navigate = useNavigate();
+    const isAuthenticated = !!localStorage.getItem('token');
 
     const handleDelete = async (e) => {
         e.stopPropagation(); // Empêche de naviguer quand on clique sur supprimer
@@ -59,14 +60,16 @@ function AnimeCard({ anime, onDelete, onEdit }) {
                         {anime.statut === 'a_voir' ? 'À voir' : 'Déjà vu'}
                     </span>
 
-                    <div className="anime-actions">
-                        <button className="btn-edit" onClick={handleEdit}>
-                            <img src="/icons/modify.png" alt="Modifier" className="action-icon" />
-                        </button>
-                        <button className="btn-delete" onClick={handleDelete}>
-                            <img src="/icons/delete.png" alt="Supprimer" className="action-icon" />
-                        </button>
-                    </div>
+                    {isAuthenticated && (
+                        <div className="anime-actions">
+                            <button className="btn-edit" onClick={handleEdit}>
+                                <img src="/icons/modify.png" alt="Modifier" className="action-icon" />
+                            </button>
+                            <button className="btn-delete" onClick={handleDelete}>
+                                <img src="/icons/delete.png" alt="Supprimer" className="action-icon" />
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

@@ -8,19 +8,12 @@ import '../styles/Dashboard.css';
 function Dashboard() {
     const [animes, setAnimes] = useState([]);
     const [filter, setFilter] = useState('all');
-    const [user, setUser] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [selectedAnime, setSelectedAnime] = useState(null);
+    const isAuthenticated = !!localStorage.getItem('token');
 
     useEffect(() => {
-        // Récupérer les informations de l'utilisateur depuis le localStorage
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
-
-        // Charger les animes de l'utilisateur
         loadAnimes();
     }, []);
 
@@ -47,58 +40,44 @@ function Dashboard() {
         setShowEditForm(true);
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        window.location.href = '/login';
-    };
-
     // Filtrer les animes selon le statut sélectionné
+    const animesArray = Array.isArray(animes) ? animes : [];
     const filteredAnimes = filter === 'all'
-        ? animes
-        : animes.filter(anime => anime.statut === filter);
+        ? animesArray
+        : animesArray.filter(anime => anime.statut === filter);
 
     return (
         <div className="dashboard-container">
-            {/* Header */}
-            <header className="dashboard-header">
-                <h1><img src="/icons/japan-flag.png" alt="Japan flag" className="flag-icon" /> O'Kanime</h1>
-                <div className="user-info">
-                    <span>Bienvenue, {user?.username}</span>
-                    <button onClick={handleLogout} className="btn-logout">
-                        Déconnexion
-                    </button>
-                </div>
-            </header>
-
             {/* Filtres */}
             <div className="filters">
                 <button
                     className={filter === 'all' ? 'filter-btn active' : 'filter-btn'}
                     onClick={() => setFilter('all')}
                 >
-                    Tous ({animes.length})
+                    Tous ({animesArray.length})
                 </button>
                 <button
                     className={filter === 'a_voir' ? 'filter-btn active' : 'filter-btn'}
                     onClick={() => setFilter('a_voir')}
                 >
-                    À voir ({animes.filter(a => a.statut === 'a_voir').length})
+                    À voir ({animesArray.filter(a => a.statut === 'a_voir').length})
                 </button>
                 <button
                     className={filter === 'deja_vu' ? 'filter-btn active' : 'filter-btn'}
                     onClick={() => setFilter('deja_vu')}
                 >
-                    Déjà vu ({animes.filter(a => a.statut === 'deja_vu').length})
+                    Déjà vu ({animesArray.filter(a => a.statut === 'deja_vu').length})
                 </button>
             </div>
 
             {/* Bouton ajouter */}
-            <div className="add-anime-section">
-                <button className="btn btn-primary" onClick={() => setShowForm(true)}>
-                    <img src="/icons/ajouter.png" alt="Ajouter un anime" className="add-icon" /> Ajouter un anime
-                </button>
-            </div>
+            {isAuthenticated && (
+                <div className="add-anime-section">
+                    <button className="btn btn-primary" onClick={() => setShowForm(true)}>
+                        <img src="/icons/ajouter.png" alt="Ajouter un anime" className="add-icon" /> Ajouter un anime
+                    </button>
+                </div>
+            )}
 
             {/* Liste des animes */}
             <div className="anime-grid">

@@ -1,0 +1,159 @@
+/* Header principal fixe */
+.main-header {
+    background: linear-gradient(135deg, #ffffff, #fef9f7);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(188, 236, 224, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.logo h1 {
+    margin: 0;
+    background: linear-gradient(135deg, #ff6b9d, #bcece0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #333;
+    background: linear-gradient(135deg, #f0fffe, #e0f9f5);
+}
+
+.nav-link.active {
+    color: #333;
+    font-weight: 600;
+    background: linear-gradient(135deg, #bcece0, #a8ddd0);
+}
+
+/* Actions du header */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-name {
+    color: #555;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Boutons */
+.btn-login,
+.btn-register,
+.btn-logout {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-login {
+    background: linear-gradient(135deg, #bcece0, #a8ddd0);
+    color: #333;
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, #a8ddd0, #95cfc0);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(188, 236, 224, 0.4);
+}
+
+.btn-register {
+    background: white;
+    color: #333;
+    border: 2px solid #bcece0;
+}
+
+.btn-register:hover {
+    background: linear-gradient(135deg, #bcece0, #a8ddd0);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(188, 236, 224, 0.3);
+}
+
+.btn-logout {
+    background: linear-gradient(135deg, #ff6b9d, #ff5288);
+    color: white;
+}
+
+.btn-logout:hover {
+    background: linear-gradient(135deg, #ff5288, #ff3d73);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 107, 157, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-container {
+        flex-wrap: wrap;
+        padding: 15px 20px;
+    }
+
+    .main-nav {
+        gap: 15px;
+    }
+
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+
+    .user-name {
+        display: none; /* Cache le nom sur mobile */
+    }
+}

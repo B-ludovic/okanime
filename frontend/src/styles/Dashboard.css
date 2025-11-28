@@ -11,64 +11,7 @@ body {
 .dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 30px 20px; /* Un peu plus d'espace en haut */
-}
-
-/* Header du dashboard */
-/* Header du dashboard */
-.dashboard-header {
-  display: flex;
-  justify-content: space-between; /* Pousse le titre à gauche et le reste à droite */
-  align-items: center;
-  
-  /* ICI : On ajoute un grand espace de sécurité */
-  gap: 40px; 
-  
-  margin-bottom: 30px;
-  padding: 20px 30px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-header h1 {
-  margin: 0;
-  color: #333;
-  font-size: 1.8rem;
-  
-  /* Astuce : empêche le titre de se faire écraser si l'écran est petit */
-  white-space: nowrap; 
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 20px; /* Espace entre "Bienvenue..." et le bouton Déconnexion */
-}
-
-.user-info span {
-  color: #555;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-/* Bouton Déconnexion */
-.btn-logout {
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #ff6b9d, #ff5288);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.btn-logout:hover {
-  background: linear-gradient(135deg, #ff5288, #ff3d73);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(255, 107, 157, 0.4);
+  padding: 30px 20px;
 }
 
 /* Filtres */
