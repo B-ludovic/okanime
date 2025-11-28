@@ -10,6 +10,7 @@ function AnimeDetail() {
     const [anime, setAnime] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showEditForm, setShowEditForm] = useState(false);
+    const isAuthenticated = !!localStorage.getItem('token');
 
     const loadAnime = useCallback(async () => {
         try {
@@ -120,16 +121,18 @@ function AnimeDetail() {
                         </div>
                     )}
 
-                    <div className="detail-actions">
-                        <button className="btn-edit-detail" onClick={handleEdit}>
-                            <img src="/icons/modify.png" alt="Modifier" />
-                            Modifier
-                        </button>
-                        <button className="btn-delete-detail" onClick={handleDelete}>
-                            <img src="/icons/delete.png" alt="Supprimer" />
-                            Supprimer
-                        </button>
-                    </div>
+                    {isAuthenticated && (
+                        <div className="detail-actions">
+                            <button className="btn-edit-detail" onClick={handleEdit}>
+                                <img src="/icons/modify.png" alt="Modifier" />
+                                Modifier
+                            </button>
+                            <button className="btn-delete-detail" onClick={handleDelete}>
+                                <img src="/icons/delete.png" alt="Supprimer" />
+                                Supprimer
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
 
