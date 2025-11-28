@@ -1,10 +1,10 @@
 /* Anime Card */
 .anime-card {
   background: white;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -12,7 +12,7 @@
 
 .anime-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Image de l'anime */
@@ -40,15 +40,15 @@
 
 .anime-content h3 {
   margin: 0 0 15px 0;
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.3rem;
 }
 
 /* Résumé */
 .anime-resume {
-  background: linear-gradient(135deg, #f0f8ff 0%, #e6f4ff 100%);
+  background: var(--gradient-sky);
   padding: 14px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
   margin-bottom: 15px;
   height: 90px;
   overflow-y: auto;
@@ -102,7 +102,7 @@
 
 /* Avis */
 .anime-avis {
-  background: #f9f9f9;
+  background: linear-gradient(135deg, var(--color-peach-light), var(--color-peach));
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 15px;
@@ -110,14 +110,14 @@
 }
 
 .anime-avis strong {
-  color: #333;
+  color: var(--text-primary);
   display: block;
   margin-bottom: 5px;
 }
 
 .anime-avis p {
   margin: 0;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.4;
 }
@@ -157,21 +157,21 @@
 }
 
 .btn-edit {
-  background: linear-gradient(135deg, #bcece0, #a8ddd0);
+  background: var(--gradient-sky);
 }
 
 .btn-edit:hover {
-  background: linear-gradient(135deg, #a8ddd0, #95cfc0);
+  background: var(--color-sky-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(188, 236, 224, 0.4);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-delete {
-  background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
+  background: var(--gradient-sakura);
 }
 
 .btn-delete:hover {
-  background: linear-gradient(135deg, #ef9a9a, #e57373);
+  background: var(--color-sakura-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(239, 154, 154, 0.4);
+  box-shadow: var(--shadow-sm);
 }

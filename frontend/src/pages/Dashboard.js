@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
+import Hero from '../components/Hero';
 import AnimeForm from '../components/AnimeForm';
 import AnimeEditForm from '../components/AnimeEditForm';
 import AnimeCard from '../components/AnimeCard';
@@ -7,7 +8,7 @@ import '../styles/Dashboard.css';
 
 function Dashboard() {
     const [animes, setAnimes] = useState([]);
-    const [filter, setFilter] = useState('all');
+    const [filter] = useState('all'); // Garde filter pour la logique de filtrage
     const [showForm, setShowForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [selectedAnime, setSelectedAnime] = useState(null);
@@ -47,31 +48,13 @@ function Dashboard() {
         : animesArray.filter(anime => anime.statut === filter);
 
     return (
-        <div className="dashboard-container">
-            {/* Filtres */}
-            <div className="filters">
-                <button
-                    className={filter === 'all' ? 'filter-btn active' : 'filter-btn'}
-                    onClick={() => setFilter('all')}
-                >
-                    Tous ({animesArray.length})
-                </button>
-                <button
-                    className={filter === 'a_voir' ? 'filter-btn active' : 'filter-btn'}
-                    onClick={() => setFilter('a_voir')}
-                >
-                    À voir ({animesArray.filter(a => a.statut === 'a_voir').length})
-                </button>
-                <button
-                    className={filter === 'deja_vu' ? 'filter-btn active' : 'filter-btn'}
-                    onClick={() => setFilter('deja_vu')}
-                >
-                    Déjà vu ({animesArray.filter(a => a.statut === 'deja_vu').length})
-                </button>
-            </div>
-
-            {/* Bouton ajouter */}
-            {isAuthenticated && (
+        <>
+            {/* Hero uniquement sur la page d'accueil */}
+            <Hero />
+            
+            <div className="dashboard-container">
+                {/* Bouton ajouter */}
+                {isAuthenticated && (
                 <div className="add-anime-section">
                     <button className="btn btn-primary" onClick={() => setShowForm(true)}>
                         <img src="/icons/ajouter.png" alt="Ajouter un anime" className="add-icon" /> Ajouter un anime
@@ -114,6 +97,7 @@ function Dashboard() {
                 />
             )}
         </div>
+        </>
     );
 }
 

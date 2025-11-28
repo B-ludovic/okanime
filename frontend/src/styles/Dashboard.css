@@ -1,10 +1,10 @@
 /* Container principal du dashboard */
 body {
-  background: linear-gradient(135deg, #ffd7ba, #ffb8a8);
+  background: var(--bg-gradient);
   min-height: 100vh;
   margin: 0;
-  font-family: Arial, sans-serif;
-  color: #333;
+  font-family: var(--font-family);
+  color: var(--text-primary);
 }
 
 /* Container principal du dashboard */
@@ -38,20 +38,20 @@ body {
 }
 
 .filter-btn:hover {
-  border-color: #bcece0; /* Bordure menthe au survol */
-  background: linear-gradient(135deg, #f0fffe, #e0f9f5);
-  color: #333;
+  border-color: var(--color-violet);
+  background: var(--gradient-violet);
+  color: var(--text-primary);
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(188, 236, 224, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 /* État actif du filtre (bouton sélectionné) */
 .filter-btn.active {
-  background: linear-gradient(135deg, #bcece0, #a8ddd0);
-  border-color: #bcece0;
-  color: #333;
+  background: var(--gradient-sakura);
+  border-color: var(--color-sakura);
+  color: var(--text-primary);
   font-weight: bold;
-  box-shadow: 0 2px 6px rgba(188, 236, 224, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
 /* Section ajouter un anime */
@@ -68,20 +68,20 @@ body {
   font-size: 1.1rem;
   font-weight: bold;
   
-  background: linear-gradient(135deg, #ffffff, #f5fffe);
-  border: 2px solid #bcece0; /* Bordure menthe épaisse */
+  background: linear-gradient(135deg, var(--bg-white), var(--bg-soft));
+  border: 2px solid var(--color-violet); /* Bordure menthe épaisse */
   border-radius: 8px;
   
   cursor: pointer;
-  color: #333;
-  transition: all 0.3s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
 }
 
 .add-anime-section .btn:hover {
-  background: linear-gradient(135deg, #bcece0, #a8ddd0);
+  background: var(--gradient-violet);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(188, 236, 224, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
 .add-icon {
