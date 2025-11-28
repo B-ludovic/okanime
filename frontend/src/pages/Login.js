@@ -28,8 +28,9 @@ function Login() {
     };
 
     return (
-        <div className="auth-container">
-            <h2>Connexion - O'Kanime <img src="/icons/japan-flag.png" alt="Japan flag" className="flag-icon" /></h2>
+        <div className="auth-page">
+            <div className="auth-container">
+                <h2>Connexion - O'Kanime <img src="/icons/japan-flag.png" alt="Japan flag" className="flag-icon" /></h2>
 
             {error && <div className="error-message">{error}</div>}
 
@@ -62,6 +63,7 @@ function Login() {
             <p className="auth-link">
                 Pas encore de compte ? <a href="/register">S'inscrire</a>
             </p>
+            </div>
         </div>
     );
 }

@@ -44,8 +44,9 @@ function Register() {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Inscription - O'Kanime <img src="/icons/japan-flag.png" alt="Japan flag" className="flag-icon" /></h2>
+    <div className="auth-page">
+      <div className="auth-container">
+        <h2>Inscription - O'Kanime <img src="/icons/japan-flag.png" alt="Japan flag" className="flag-icon" /></h2>
       
       {error && <div className="error-message">{error}</div>}
       {success && <div className="success-message">{success}</div>}
@@ -102,6 +103,7 @@ function Register() {
       <p className="auth-link">
         Déjà un compte ? <a href="/login">Se connecter</a>
       </p>
+      </div>
     </div>
   );
 }

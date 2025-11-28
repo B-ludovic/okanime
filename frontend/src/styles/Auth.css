@@ -1,36 +1,30 @@
 /* Pages d'authentification */
-body {
-  /* Un joli dégradé simple */
-  background: linear-gradient(135deg, #ffd7ba, #ffb8a8);
+.auth-page {
+  background: var(--bg-gradient);
   min-height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif; /* Police standard et sûre */
-  
-  /* Centrage de la page */
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 80px 20px 40px; /* Espace pour le header fixe */
 }
 
 .auth-container {
   width: 100%;
   max-width: 400px;
   padding: 30px;
-  background: white; /* Fond blanc simple et efficace */
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Ombre douce classique */
+  background: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
 .auth-container h2 {
-  /* Alignement du titre et de l'image */
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  
   text-align: center;
   margin-bottom: 25px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .flag-icon {
@@ -96,22 +90,22 @@ body {
 button[type="submit"] {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #bcece0, #a8ddd0);
+  background: var(--gradient-sky);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius-md);
   cursor: pointer;
   font-size: 1rem;
-  color: #333;
+  color: var(--text-primary);
   font-weight: 500;
   margin-top: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(188, 236, 224, 0.3);
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
 }
 
 button[type="submit"]:hover {
-  background: linear-gradient(135deg, #a8ddd0, #95cfc0);
+  background: var(--color-sky-dark);
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(188, 236, 224, 0.5);
+  box-shadow: var(--shadow-md);
 }
 
 /* Lien d'authentification */
@@ -122,10 +116,10 @@ button[type="submit"]:hover {
 }
 
 .auth-link a {
-  color: #ff6b9d;
+  color: var(--color-sakura);
   text-decoration: none;
   font-weight: bold;
-  transition: all 0.3s ease;
+  transition: var(--transition-normal);
   display: inline-block;
 }
 
