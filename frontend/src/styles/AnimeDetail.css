@@ -1,46 +1,51 @@
 /* Container de la page détail */
 .detail-container {
-  max-width: 1000px;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  padding: 100px 20px 40px; /* Espace pour le header fixe */
+}
+
+.detail-wrapper {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
 }
 
 /* Bouton retour */
 .btn-back {
   padding: 10px 20px;
   background: white;
-  border: 2px solid #bcece0;
-  border-radius: 6px;
+  border: 2px solid var(--color-violet);
+  border-radius: var(--border-radius-md);
   cursor: pointer;
   font-size: 1rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 20px;
-  transition: all 0.3s ease;
+  transition: var(--transition-normal);
 }
 
 .btn-back:hover {
-  background: #bcece0;
+  background: var(--gradient-violet);
   transform: translateX(-5px);
 }
 
 /* Contenu principal */
 .detail-content {
   background: white;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 30px;
+  grid-template-columns: 350px 1fr;
+  gap: 40px;
 }
 
 /* Image de l'anime */
 .detail-image {
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
 }
 
 .detail-image img {
@@ -53,8 +58,8 @@
 /* Informations */
 .detail-info h1 {
   margin: 0 0 15px 0;
-  color: #333;
-  font-size: 2rem;
+  color: var(--text-primary);
+  font-size: 2.2rem;
 }
 
 .detail-section {
@@ -62,14 +67,14 @@
 }
 
 .detail-section h3 {
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 10px;
-  border-bottom: 2px solid #bcece0;
+  border-bottom: 2px solid var(--color-violet);
   padding-bottom: 5px;
 }
 
 .detail-section p {
-  color: #555;
+  color: var(--text-secondary);
   line-height: 1.6;
   font-size: 1rem;
 }
@@ -79,6 +84,9 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
+  background: linear-gradient(135deg, var(--color-sky-light), var(--bg-soft));
+  padding: 20px;
+  border-radius: var(--border-radius-md);
 }
 
 .info-item {
@@ -88,13 +96,14 @@
 }
 
 .info-item strong {
-  color: #666;
+  color: var(--text-tertiary);
   font-size: 0.9rem;
 }
 
 .info-item span {
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.1rem;
+  font-weight: var(--font-weight-medium);
 }
 
 /* Actions */
@@ -109,11 +118,11 @@
   flex: 1;
   padding: 12px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--border-radius-md);
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: var(--transition-normal);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -128,31 +137,32 @@
 }
 
 .btn-edit-detail {
-  background: linear-gradient(135deg, #bcece0, #a8ddd0);
-  color: #333;
+  background: var(--gradient-sky);
+  color: var(--text-primary);
 }
 
 .btn-edit-detail:hover {
-  background: linear-gradient(135deg, #a8ddd0, #95cfc0);
+  background: var(--color-sky-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(188, 236, 224, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-delete-detail {
-  background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
-  color: #333;
+  background: var(--gradient-sakura);
+  color: var(--text-primary);
 }
 
 .btn-delete-detail:hover {
-  background: linear-gradient(135deg, #ef9a9a, #e57373);
+  background: var(--color-sakura-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(239, 154, 154, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .detail-content {
     grid-template-columns: 1fr;
+    padding: 20px;
   }
 
   .info-grid {

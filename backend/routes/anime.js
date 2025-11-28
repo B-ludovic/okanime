@@ -80,6 +80,9 @@ router.put('/:id', authMiddleware, async (req, res) => {
             imageUrl,
             statut } = req.body;
 
+        console.log('📝 Données reçues pour modification:', req.body);
+        console.log('🖼️ imageUrl reçue:', imageUrl);
+
             // Verifier que l'anime appartient a l'utilisateur
             const anime = await prisma.anime.findFirst({
                 where: {
@@ -109,6 +112,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
                 statut: statut || 'a_voir',
             },
         });
+        console.log('✅ Anime mis à jour:', updatedAnime);
         res.json(updatedAnime);
     } catch (error) {
         console.error(error.message);

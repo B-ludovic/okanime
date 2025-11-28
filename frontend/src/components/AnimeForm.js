@@ -65,9 +65,19 @@ function AnimeForm({ onClose, onAnimeAdded, animeToEdit }) {
 
   // Fonction pour sélectionner un anime depuis les résultats
   const selectAnime = (anime) => {
+    // Utiliser l'image large, ou image standard si large n'existe pas
+    let imageUrl = anime.images.jpg.large_image_url || anime.images.jpg.image_url;
+    
+    // Si l'URL se termine par 'l.jpg', la remplacer par '.jpg' pour éviter les 404
+    if (imageUrl && imageUrl.endsWith('l.jpg')) {
+      imageUrl = imageUrl.replace('l.jpg', '.jpg');
+    }
+    
+    console.log('🖼️ Image sélectionnée:', imageUrl);
+    
     setFormData({
       ...formData,
-      imageUrl: anime.images.jpg.large_image_url || anime.images.jpg.image_url
+      imageUrl: imageUrl
     });
     setSearchResults([]);
     setSearchQuery('');
@@ -77,14 +87,19 @@ function AnimeForm({ onClose, onAnimeAdded, animeToEdit }) {
     e.preventDefault();
     setError('');
 
+    console.log('📤 Envoi des données:', formData);
+    console.log('🖼️ imageUrl à envoyer:', formData.imageUrl);
+
     try {
       let data;
       
       if (animeToEdit) {
         // Mode édition
+        console.log('✏️ Mode édition pour anime ID:', animeToEdit.id);
         data = await api.put(`/animes/${animeToEdit.id}`, formData);
       } else {
         // Mode création
+        console.log('➕ Mode création');
         data = await api.post('/animes', formData);
       }
 

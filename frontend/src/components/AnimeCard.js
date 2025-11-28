@@ -24,11 +24,20 @@ function AnimeCard({ anime, onDelete, onEdit }) {
 
     return (
         <div className="anime-card" onClick={handleCardClick}>
-            {anime.imageUrl && (
-                <div className="anime-image">
-                    <img src={anime.imageUrl} alt={anime.titre} />
-                </div>
-            )}
+            <div className="anime-image">
+                {anime.imageUrl ? (
+                    <img 
+                        src={anime.imageUrl} 
+                        alt={anime.titre}
+                        onError={(e) => {
+                            console.error('❌ Erreur chargement image:', anime.imageUrl);
+                            e.target.style.display = 'none';
+                        }}
+                    />
+                ) : (
+                    <div className="no-image"></div>
+                )}
+            </div>
 
             <div className="anime-content">
                 <h3>{anime.titre}</h3>

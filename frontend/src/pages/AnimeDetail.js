@@ -57,11 +57,12 @@ function AnimeDetail() {
 
     return (
         <div className="detail-container">
-            <button className="btn-back" onClick={() => navigate('/dashboard')}>
-                ← Retour
-            </button>
+            <div className="detail-wrapper">
+                <button className="btn-back" onClick={() => navigate('/')}>
+                    ← Retour
+                </button>
 
-            <div className="detail-content">
+                <div className="detail-content">
                 {anime.imageUrl && (
                     <div className="detail-image">
                         <img src={anime.imageUrl} alt={anime.titre} />
@@ -144,6 +145,7 @@ function AnimeDetail() {
                     animeToEdit={anime}
                 />
             )}
+            </div>
         </div>
     );
 }
