@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../api';
 import '../styles/AnimeForm.css';
 
-function AnimeForm({ onClose, onAnimeAdded }) {
+function AnimeForm({ onClose, onAnimeAdded, animeToEdit }) {
   const [formData, setFormData] = useState({
     titre: '',
     resume: '',
@@ -20,6 +20,25 @@ function AnimeForm({ onClose, onAnimeAdded }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+
+  // Pré-remplir le formulaire si on est en mode édition
+  useEffect(() => {
+    if (animeToEdit) {
+      setFormData({
+        titre: animeToEdit.titre || '',
+        resume: animeToEdit.resume || '',
+        nbSaisons: animeToEdit.nbSaisons || '',
+        nbEpisodes: animeToEdit.nbEpisodes || '',
+        dureeEpisode: animeToEdit.dureeEpisode || '',
+        studio: animeToEdit.studio || '',
+        paysOrigine: animeToEdit.paysOrigine || '',
+        note: animeToEdit.note || '',
+        avis: animeToEdit.avis || '',
+        imageUrl: animeToEdit.imageUrl || '',
+        statut: animeToEdit.statut || 'a_voir'
+      });
+    }
+  }, [animeToEdit]);
 
   const handleChange = (e) => {
     setFormData({
@@ -59,7 +78,15 @@ function AnimeForm({ onClose, onAnimeAdded }) {
     setError('');
 
     try {
-      const data = await api.post('/animes', formData);
+      let data;
+      
+      if (animeToEdit) {
+        // Mode édition
+        data = await api.put(`/animes/${animeToEdit.id}`, formData);
+      } else {
+        // Mode création
+        data = await api.post('/animes', formData);
+      }
 
       if (data.error) {
         setError(data.error);
@@ -68,7 +95,7 @@ function AnimeForm({ onClose, onAnimeAdded }) {
         onClose();
       }
     } catch (err) {
-      setError('Erreur lors de l\'ajout de l\'anime');
+      setError('Erreur lors de l\'enregistrement de l\'anime');
     }
   };
 
@@ -76,7 +103,7 @@ function AnimeForm({ onClose, onAnimeAdded }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Ajouter un anime</h2>
+          <h2>{animeToEdit ? 'Modifier l\'anime' : 'Ajouter un anime'}</h2>
           <button className="close-btn" onClick={onClose}>✕</button>
         </div>
 
@@ -255,7 +282,7 @@ function AnimeForm({ onClose, onAnimeAdded }) {
               Annuler
             </button>
             <button type="submit">
-              Ajouter
+              {animeToEdit ? 'Modifier' : 'Ajouter'}
             </button>
           </div>
         </form>
