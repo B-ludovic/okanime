@@ -17,13 +17,11 @@ export default function RegisterForm() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // Met à jour les champs du formulaire
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-    // Efface l'erreur du champ modifié
     if (errors[e.target.name]) {
       setErrors({
         ...errors,
@@ -32,26 +30,21 @@ export default function RegisterForm() {
     }
   };
 
-  // Validation côté client
   const validate = () => {
     const newErrors = {};
 
-    // Username
     if (formData.username.length < 3) {
       newErrors.username = 'Le nom d\'utilisateur doit contenir au moins 3 caractères';
     }
 
-    // Email
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email invalide';
     }
 
-    // Password
     if (formData.password.length < 8) {
       newErrors.password = 'Le mot de passe doit contenir au moins 8 caractères';
     }
 
-    // Confirm password
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Les mots de passe ne correspondent pas';
     }
@@ -60,27 +53,18 @@ export default function RegisterForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Soumet le formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Valide avant d'envoyer
     if (!validate()) return;
 
     setLoading(true);
 
     try {
-      // Prépare les données (sans confirmPassword)
       const { confirmPassword, ...dataToSend } = formData;
-
-      // Appel à l'API d'inscription
       const response = await api.post('/auth/register', dataToSend);
-
-      // Stocke le token et les infos utilisateur
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-
-      // Redirige vers la page d'accueil
       router.push('/');
       router.refresh();
     } catch (err) {
@@ -91,8 +75,8 @@ export default function RegisterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Message d'erreur général */}
+    <form onSubmit={handleSubmit} className="form">
+      {/* Erreur générale */}
       {errors.general && (
         <div className="alert alert-error">
           <span>{errors.general}</span>
@@ -100,97 +84,69 @@ export default function RegisterForm() {
       )}
 
       {/* Username */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Nom d&apos;utilisateur</span>
-        </label>
+      <div className="form-group">
+        <label className="form-label">Nom d&apos;utilisateur</label>
         <input
           type="text"
           name="username"
           placeholder="john_doe"
-          className={`input input-bordered w-full ${errors.username ? 'input-error' : ''}`}
+          className={`form-input ${errors.username ? 'error' : ''}`}
           value={formData.username}
           onChange={handleChange}
           required
         />
-        {errors.username && (
-          <label className="label">
-            <span className="label-text-alt text-error">{errors.username}</span>
-          </label>
-        )}
+        {errors.username && <span className="form-error">{errors.username}</span>}
       </div>
 
       {/* Email */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Email</span>
-        </label>
+      <div className="form-group">
+        <label className="form-label">Email</label>
         <input
           type="email"
           name="email"
           placeholder="votre@email.com"
-          className={`input input-bordered w-full ${errors.email ? 'input-error' : ''}`}
+          className={`form-input ${errors.email ? 'error' : ''}`}
           value={formData.email}
           onChange={handleChange}
           required
         />
-        {errors.email && (
-          <label className="label">
-            <span className="label-text-alt text-error">{errors.email}</span>
-          </label>
-        )}
+        {errors.email && <span className="form-error">{errors.email}</span>}
       </div>
 
       {/* Password */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Mot de passe</span>
-        </label>
+      <div className="form-group">
+        <label className="form-label">Mot de passe</label>
         <input
           type="password"
           name="password"
           placeholder="••••••••"
-          className={`input input-bordered w-full ${errors.password ? 'input-error' : ''}`}
+          className={`form-input ${errors.password ? 'error' : ''}`}
           value={formData.password}
           onChange={handleChange}
           required
         />
-        {errors.password && (
-          <label className="label">
-            <span className="label-text-alt text-error">{errors.password}</span>
-          </label>
-        )}
+        {errors.password && <span className="form-error">{errors.password}</span>}
       </div>
 
       {/* Confirm Password */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Confirmer le mot de passe</span>
-        </label>
+      <div className="form-group">
+        <label className="form-label">Confirmer le mot de passe</label>
         <input
           type="password"
           name="confirmPassword"
           placeholder="••••••••"
-          className={`input input-bordered w-full ${errors.confirmPassword ? 'input-error' : ''}`}
+          className={`form-input ${errors.confirmPassword ? 'error' : ''}`}
           value={formData.confirmPassword}
           onChange={handleChange}
           required
         />
-        {errors.confirmPassword && (
-          <label className="label">
-            <span className="label-text-alt text-error">{errors.confirmPassword}</span>
-          </label>
-        )}
+        {errors.confirmPassword && <span className="form-error">{errors.confirmPassword}</span>}
       </div>
 
-      {/* Bouton d'inscription */}
-      <button
-        type="submit"
-        className="btn btn-primary w-full"
-        disabled={loading}
-      >
+      {/* Bouton */}
+      <button type="submit" className="btn btn-primary w-full" disabled={loading}>
         {loading ? (
-          <span className="loading loading-spinner"></span>
+          <span className="loading"></span>
         ) : (
           <>
             <UserPlus size={18} />
@@ -199,11 +155,11 @@ export default function RegisterForm() {
         )}
       </button>
 
-      {/* Lien vers connexion */}
-      <div className="text-center mt-4">
-        <p className="text-sm">
+      {/* Lien connexion */}
+      <div className="text-center">
+        <p style={{ fontSize: '0.875rem' }}>
           Déjà un compte ?{' '}
-          <Link href="/login" className="link link-primary">
+          <Link href="/login" style={{ color: 'var(--color-primary)', fontWeight: '600' }}>
             Connectez-vous
           </Link>
         </p>
