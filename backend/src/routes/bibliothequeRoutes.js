@@ -1,12 +1,20 @@
 import express from 'express';
+import {
+    getMaBibliotheque,
+    addToBibliotheque,
+    updateBibliothequeEntry,
+    removeFromBibliotheque,
+    filterBibliothequeByStatut,
+} from '../controllers/bibliothequeController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 
-const router = express.Router();
+export const router = express.Router();
 
-// Route protégée - ajouter à la bibliothèque
-router.post('/', authMiddleware, (req, res) => {
-  res.json({ message: 'Ajouté à la bibliothèque' });
-  
-});
+// Toutes ces routes nécessitent d'être connecté
+router.use(authMiddleware);
 
-export default router;
+router.get('/', getMaBibliotheque);
+router.get('/filter/:statut', filterBibliothequeByStatut);
+router.post('/', addToBibliotheque);
+router.put('/:id', updateBibliothequeEntry);
+router.delete('/:id', removeFromBibliotheque);               
