@@ -63,6 +63,7 @@ app.use((req, res) => {
 });
 
 // Middleware de gestion des erreurs (TOUJOURS EN DERNIER)
+// Capture toutes les erreurs passées avec next(err) dans l'application (GENIAL !!!)
 app.use(errorHandler);
 
 // DÉMARRAGE DU SERVEUR 

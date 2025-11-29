@@ -4,7 +4,7 @@ import { HttpNotFoundError, httpStatusCodes } from '../utils/httpErrors.js';
 // Récupérer tous les animes (avec recherche et filtres)
 const getAllAnimes = async (req, res, next) => {
   try {
-    const { q, genre, page = '1', limit = '20' } = req.query;
+    const { query, genre, page = '1', limit = '20' } = req.query;
 
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
@@ -16,9 +16,9 @@ const getAllAnimes = async (req, res, next) => {
     };
 
     // Si recherche par titre
-    if (q) {
+    if (query) {
       where.titreVf = {
-        contains: q,
+        contains: query,
         mode: 'insensitive',
       };
     }
@@ -180,7 +180,7 @@ const getFeaturedAnimes = async (req, res, next) => {
       },
     });
 
-    res.status(200).json({
+    res.status(httpStatusCodes.OK).json({
       success: true,
       data: { animes },
     });

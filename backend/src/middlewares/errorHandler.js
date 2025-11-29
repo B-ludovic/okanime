@@ -1,5 +1,4 @@
 import { HttpError, httpStatusCodes } from '../utils/httpErrors.js';
-import dotenv from 'dotenv';
 
 const errorHandler = (err, req, res, next) => {
   // Log l'erreur pour le débogage
