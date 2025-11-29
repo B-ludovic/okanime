@@ -60,7 +60,7 @@ export default function Header() {
                                     href="/bibliotheque"
                                     className={`${styles.navLink} ${pathname === '/bibliotheque' ? styles.active : ''}`}
                                 >
-                                    <Image src="/icons/anime.png" alt="Ma Bibliothèque" width={20} height={20} className="object-contain" />
+                                    <Image src="/icons/my-library.png" alt="Ma Bibliothèque" width={20} height={20} className="object-contain" />
                                     Ma Bibliothèque
                                 </Link>
                             </li>

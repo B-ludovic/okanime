@@ -48,6 +48,10 @@ Backend : http://localhost:5001
 - Système d'avis et de notes
 - Upload d'images (Cloudinary)
 
+## Crédits
+
+- **Icônes** : [Flaticon](https://www.flaticon.com)
+
 ## Auteur
 
 Ludovic - Dev junior
