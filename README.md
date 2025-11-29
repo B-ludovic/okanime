@@ -22,7 +22,7 @@ Bibliothèque personnelle d'animés en ligne.
 ### Prérequis
 - Node.js 18+
 - PostgreSQL
-- pnpm (recommandé) ou npm
+- npm
 
 ### Frontend
 ```bash
