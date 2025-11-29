@@ -1,7 +1,7 @@
 import { asyncHandler } from './errorHandler.js';
 import { HttpUnauthorizedError } from '../utils/httpErrors.js';
-import { verifyToken, extractTokenFromHeader } from '../utils/jwt.js';
-import prisma from '../config/database.js';
+import { verifyToken, getTokenFromHeader } from '../utils/jwt.js';
+import prisma from '../config/prisma.js';
 
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
@@ -9,7 +9,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
   const authHeader = req.headers.authorization;
   
   // 2. Extrait le token
-  const token = extractTokenFromHeader(authHeader);
+  const token = getTokenFromHeader(authHeader);
   
   if (!token) {
     throw new HttpUnauthorizedError('Token manquant. Veuillez vous connecter.');
@@ -45,7 +45,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
 const optionalAuthMiddleware = asyncHandler(async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
-    const token = extractTokenFromHeader(authHeader);
+    const token = getTokenFromHeader(authHeader);
     
     if (token) {
       const decoded = verifyToken(token);

@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { errorHandler } from './middlewares/errorHandler.js';
+
+// Import des routes
+import authRoutes from './routes/authRoutes.js';
 import animeRoutes from './routes/animeRoutes.js';
 import genreRoutes from './routes/genreRoutes.js';
 import bibliothequeRoutes from './routes/bibliothequeRoutes.js';
@@ -40,23 +43,15 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Import des routes
-import authRoutes from './routes/authRoutes.js';
-import animeRoutes from './routes/animeRoutes.js';
-import bibliothequeRoutes from './routes/bibliothequeRoutes.js';
-import avisRoutes from './routes/avisRoutes.js';
-
+// Routes API
 app.use('/api/auth', authRoutes);
-app.use('/api/animes', animeRoutes);
-app.use('/api/bibliotheque', bibliothequeRoutes);
-app.use('/api/avis', avisRoutes);
 app.use('/api/animes', animeRoutes);
 app.use('/api/genres', genreRoutes);
 app.use('/api/bibliotheque', bibliothequeRoutes);
 app.use('/api/avis', avisRoutes);
+
+// Routes admin
 app.use('/api/admin', adminRoutes);
-
-
 
 // GESTION DES ERREURS 
 

@@ -1,5 +1,5 @@
 import { HttpError, httpStatusCodes } from '../utils/httpErrors.js';
-import { env } from '../config/env.js';
+import dotenv from 'dotenv';
 
 const errorHandler = (err, req, res, next) => {
   // Log l'erreur pour le débogage
@@ -43,7 +43,7 @@ const errorHandler = (err, req, res, next) => {
         message: 'Erreur lors de l\'opération en base de données',
         type: 'DatabaseError',
       },
-      ...(env.NODE_ENV === 'development' && { details: err.message }),
+      ...(process.env.NODE_ENV === 'development' && { details: err.message }),
     });
   }
 
@@ -54,7 +54,7 @@ const errorHandler = (err, req, res, next) => {
       message: 'Une erreur inattendue s\'est produite',
       type: 'InternalServerError',
     },
-    ...(env.NODE_ENV === 'development' && { 
+    ...(process.env.NODE_ENV === 'development' && { 
       stack: err.stack,
       originalError: err.message 
     }),

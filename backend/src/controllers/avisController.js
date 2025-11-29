@@ -1,7 +1,7 @@
 import { asyncHandler } from '../middlewares/errorHandler.js';
 import { createAvisSchema, updateAvisSchema, validateData } from '../validators/avisValidator.js';
 import { HttpNotFoundError, HttpConflictError, HttpForbiddenError, httpStatusCodes } from '../utils/httpErrors.js';
-import prisma from '../config/database.js';
+import prisma from '../config/prisma.js';
 
 // CRÉER UN AVIS - POST /api/avis
 const createAvis = asyncHandler(async (req, res) => {

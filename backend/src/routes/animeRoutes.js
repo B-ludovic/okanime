@@ -16,7 +16,6 @@ router.get('/', getAllAnimes);
 router.get('/featured', getFeaturedAnimes);
 router.get('/recent', getRecentAnimes);
 router.get('/:id', getAnimeById);
-router.get('/genres/all', getAllGenres);
 
 // Routes admin (besoin d'être admin)
 

@@ -3,7 +3,7 @@ import { registerSchema, loginSchema, validateData } from '../validators/authVal
 import { hashPassword, comparePassword } from '../utils/bcrypt.js';
 import { generateToken } from '../utils/jwt.js';
 import { HttpBadRequestError, HttpUnauthorizedError, HttpConflictError, httpStatusCodes } from '../utils/httpErrors.js';
-import prisma from '../config/database.js';
+import prisma from '../config/prisma.js';
 
 // INSCRIPTION - POST /api/auth/register
 const register = asyncHandler(async (req, res) => {

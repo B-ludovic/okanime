@@ -37,9 +37,15 @@ const updateAnimeSchema = z.object({
   statutModeration: z.enum(['EN_ATTENTE', 'VALIDE', 'REFUSE']).optional(),
 });
 
+// Fonction de validation
+const validateData = (schema, data) => {
+  return schema.parse(data);
+};
+
 export {
   searchAnimeSchema,
   createAnimeSchema,
   createSaisonSchema,
   updateAnimeSchema,
+  validateData,
 };

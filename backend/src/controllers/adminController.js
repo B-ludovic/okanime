@@ -2,7 +2,7 @@ import { asyncHandler } from '../middlewares/errorHandler.js';
 import { createAnimeSchema, updateAnimeSchema, createSaisonSchema, validateData } from '../validators/animeValidator.js';
 import { HttpNotFoundError, HttpBadRequestError, httpStatusCodes } from '../utils/httpErrors.js';
 import { uploadPoster, uploadBanniere, deleteFromCloudinary } from '../services/uploadService.js';
-import prisma from '../config/database.js';
+import prisma from '../config/prisma.js';
 
 // GESTION DES ANIMÉS 
 
@@ -355,7 +355,7 @@ const deleteUserAvatar = asyncHandler(async (req, res) => {
 // STATISTIQUES ADMIN 
 
 // RÉCUPÉRER LES STATISTIQUES - GET /api/admin/stats
-export const getStats = asyncHandler(async (req, res) => {
+const getStats = asyncHandler(async (req, res) => {
   // Compte le nombre total d'utilisateurs
   const totalUsers = await prisma.user.count();
 
