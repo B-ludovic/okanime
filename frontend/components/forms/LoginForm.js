@@ -15,33 +15,25 @@ export default function LoginForm() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Met à jour les champs du formulaire
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-    // Efface l'erreur quand l'utilisateur tape
     if (error) setError('');
   };
 
-  // Soumet le formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
-      // Appel à l'API de connexion
       const response = await api.post('/auth/login', formData);
-
-      // Stocke le token et les infos utilisateur
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-
-      // Redirige vers la page d'accueil
       router.push('/');
-      router.refresh(); // Force le refresh pour mettre à jour le header
+      router.refresh();
     } catch (err) {
       setError(err.message || 'Erreur lors de la connexion');
     } finally {
@@ -50,7 +42,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="form">
       {/* Message d'erreur */}
       {error && (
         <div className="alert alert-error">
@@ -59,15 +51,13 @@ export default function LoginForm() {
       )}
 
       {/* Email */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Email</span>
-        </label>
+      <div className="form-group">
+        <label className="form-label">Email</label>
         <input
           type="email"
           name="email"
           placeholder="votre@email.com"
-          className="input input-bordered w-full"
+          className="form-input"
           value={formData.email}
           onChange={handleChange}
           required
@@ -75,29 +65,23 @@ export default function LoginForm() {
       </div>
 
       {/* Mot de passe */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Mot de passe</span>
-        </label>
+      <div className="form-group">
+        <label className="form-label">Mot de passe</label>
         <input
           type="password"
           name="password"
           placeholder="••••••••"
-          className="input input-bordered w-full"
+          className="form-input"
           value={formData.password}
           onChange={handleChange}
           required
         />
       </div>
 
-      {/* Bouton de connexion */}
-      <button
-        type="submit"
-        className="btn btn-primary w-full"
-        disabled={loading}
-      >
+      {/* Bouton */}
+      <button type="submit" className="btn btn-primary w-full" disabled={loading}>
         {loading ? (
-          <span className="loading loading-spinner"></span>
+          <span className="loading"></span>
         ) : (
           <>
             <LogIn size={18} />
@@ -106,11 +90,11 @@ export default function LoginForm() {
         )}
       </button>
 
-      {/* Lien vers inscription */}
-      <div className="text-center mt-4">
-        <p className="text-sm">
+      {/* Lien inscription */}
+      <div className="text-center">
+        <p style={{ fontSize: '0.875rem' }}>
           Pas encore de compte ?{' '}
-          <Link href="/register" className="link link-primary">
+          <Link href="/register" style={{ color: 'var(--color-primary)', fontWeight: '600' }}>
             Inscrivez-vous
           </Link>
         </p>
