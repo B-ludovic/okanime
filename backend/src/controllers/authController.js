@@ -1,0 +1,119 @@
+import { asyncHandler } from '../middlewares/errorHandler.js';
+import { registerSchema, loginSchema, validateData } from '../validators/authValidator.js';
+import { hashPassword, comparePassword } from '../utils/bcrypt.js';
+import { generateToken } from '../utils/jwt.js';
+import { HttpBadRequestError, HttpUnauthorizedError, HttpConflictError, httpStatusCodes } from '../utils/httpErrors.js';
+import prisma from '../config/database.js';
+
+// INSCRIPTION - POST /api/auth/register
+export const register = asyncHandler(async (req, res) => {
+  // 1. Valide les données reçues
+  const validatedData = validateData(registerSchema, req.body);
+  const { username, email, password } = validatedData;
+
+  // 2. Vérifie si l'email existe déjà
+  const existingEmail = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (existingEmail) {
+    throw new HttpConflictError('Cet email est déjà utilisé');
+  }
+
+  // 3. Vérifie si le username existe déjà
+  const existingUsername = await prisma.user.findUnique({
+    where: { username },
+  });
+
+  if (existingUsername) {
+    throw new HttpConflictError('Ce nom d\'utilisateur est déjà pris');
+  }
+
+  // 4. Hash le mot de passe
+  const hashedPassword = await hashPassword(password);
+
+  // 5. Crée l'utilisateur en base de données
+  const user = await prisma.user.create({
+    data: {
+      username,
+      email,
+      password: hashedPassword,
+      role: 'USER', // Par défaut, nouveau user = USER
+    },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      role: true,
+      dateInscription: true,
+      // On ne renvoie JAMAIS le mot de passe
+    },
+  });
+
+  // 6. Génère un token JWT
+  const token = generateToken({ userId: user.id, role: user.role });
+
+  // 7. Renvoie la réponse
+  res.status(httpStatusCodes.CREATED).json({
+    success: true,
+    message: 'Inscription réussie',
+    data: {
+      user,
+      token,
+    },
+  });
+});
+
+// CONNEXION - POST /api/auth/login
+export const login = asyncHandler(async (req, res) => {
+  // 1. Valide les données reçues
+  const validatedData = validateData(loginSchema, req.body);
+  const { email, password } = validatedData;
+
+  // 2. Cherche l'utilisateur par email
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (!user) {
+    throw new HttpUnauthorizedError('Email ou mot de passe incorrect');
+  }
+
+  // 3. Vérifie le mot de passe
+  const isPasswordValid = await comparePassword(password, user.password);
+
+  if (!isPasswordValid) {
+    throw new HttpUnauthorizedError('Email ou mot de passe incorrect');
+  }
+
+  // 4. Génère un token JWT
+  const token = generateToken({ userId: user.id, role: user.role });
+
+  // 5. Renvoie la réponse (sans le mot de passe)
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: 'Connexion réussie',
+    data: {
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar,
+        dateInscription: user.dateInscription,
+      },
+      token,
+    },
+  });
+});
+
+// PROFIL - GET /api/auth/me
+export const getMe = asyncHandler(async (req, res) => {
+  // req.user est déjà rempli par authMiddleware
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    data: {
+      user: req.user,
+    },
+  });
+});
