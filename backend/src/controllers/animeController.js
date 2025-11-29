@@ -1,5 +1,5 @@
 import prisma from '../config/prisma.js';
-import { HttpNotFoundError } from '../utils/httpErrors.js';
+import { HttpNotFoundError, httpStatusCodes } from '../utils/httpErrors.js';
 
 // Récupérer tous les animes (avec recherche et filtres)
 export const getAllAnimes = async (req, res, next) => {
@@ -69,7 +69,7 @@ export const getAllAnimes = async (req, res, next) => {
       },
     });
 
-    res.status(200).json({
+    res.status(httpStatusCodes.OK).json({
       success: true,
       data: {
         animes,
@@ -125,7 +125,7 @@ export const getAnimeById = async (req, res, next) => {
       throw new HttpNotFoundError('Anime introuvable');
     }
 
-    res.status(200).json({
+    res.status(httpStatusCodes.OK).json({
       success: true,
       data: { anime },
     });
@@ -143,7 +143,7 @@ export const getAllGenres = async (req, res, next) => {
       },
     });
 
-    res.status(200).json({
+    res.status(httpStatusCodes.OK).json({
       success: true,
       data: { genres },
     });
@@ -209,7 +209,7 @@ export const getRecentAnimes = async (req, res, next) => {
       },
     });
 
-    res.status(200).json({
+    res.status(httpStatusCodes.OK).json({
       success: true,
       data: { animes },
     });
