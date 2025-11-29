@@ -1,0 +1,76 @@
+/* Page d'inscription - Styles spécifiques */
+
+.registerPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.registerMain {
+  flex: 1;
+  padding: 3rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.registerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.registerCard {
+  background-color: #FFFFFF;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  max-width: 28rem;
+  margin: 0 auto;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.registerCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.registerCardBody {
+  padding: 3rem;
+}
+
+.registerTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--bleu-pastel);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .registerCardBody {
+    padding: 2rem 1.5rem;
+  }
+
+  .registerTitle {
+    font-size: 1.5rem;
+  }
+
+  .registerMain {
+    padding: 2rem 0;
+  }
+}

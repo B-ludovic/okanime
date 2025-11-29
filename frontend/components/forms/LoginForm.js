@@ -94,7 +94,7 @@ export default function LoginForm() {
       <div className="text-center">
         <p style={{ fontSize: '0.875rem' }}>
           Pas encore de compte ?{' '}
-          <Link href="/register" style={{ color: 'var(--color-primary)', fontWeight: '600' }}>
+          <Link href="/register" className="text-link">
             Inscrivez-vous
           </Link>
         </p>

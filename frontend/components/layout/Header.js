@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Home, BookOpen, User, LogIn, LogOut } from 'lucide-react';
+import { User, LogOut } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '@/lib/utils';
 
@@ -40,7 +40,7 @@ export default function Header() {
                                 href="/"
                                 className={`nav-link ${pathname === '/' ? 'active' : ''}`}
                             >
-                                <Home size={18} />
+                                <Image src="/icons/home.png" alt="Accueil" width={20} height={20} className="object-contain" />
                                 Accueil
                             </Link>
                         </li>
@@ -49,7 +49,7 @@ export default function Header() {
                                 href="/anime"
                                 className={`nav-link ${pathname.startsWith('/anime') ? 'active' : ''}`}
                             >
-                                <BookOpen size={18} />
+                                <Image src="/icons/anime.png" alt="Animés" width={20} height={20} className="object-contain" />
                                 Animés
                             </Link>
                         </li>
@@ -59,7 +59,7 @@ export default function Header() {
                                     href="/bibliotheque"
                                     className={`nav-link ${pathname === '/bibliotheque' ? 'active' : ''}`}
                                 >
-                                    <BookOpen size={18} />
+                                    <Image src="/icons/anime.png" alt="Ma Bibliothèque" width={20} height={20} className="object-contain" />
                                     Ma Bibliothèque
                                 </Link>
                             </li>
@@ -82,7 +82,7 @@ export default function Header() {
                     ) : (
                         <>
                             <Link href="/login" className="btn btn-ghost">
-                                <LogIn size={18} />
+                                <Image src="/icons/login.png" alt="Connexion" width={20} height={20} className="object-contain" />
                                 Connexion
                             </Link>
                             <Link href="/register" className="btn btn-primary">

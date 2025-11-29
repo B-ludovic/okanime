@@ -1,41 +1,54 @@
 /* VARIABLES CSS - O'KANIME */
 
 :root {
-  /* Couleurs principales */
-  --color-primary: #7C3AED;
-  --color-secondary: #EC4899;
-  --color-accent: #06B6D4;
+  /* Couleurs principales - Bleu pastel élégant */
+  --bleu-clair: #BFDBFE;        /* Bleu ciel pastel */
+  --bleu-pastel: #93C5FD;       /* Bleu moyen pastel */
+  --bleu-profond: #60A5FA;      /* Bleu plus soutenu */
+  --cyan-pastel: #67E8F9;       /* Cyan pour accents */
   
-  /* Couleurs de fond */
-  --bg-dark: #0A0A14;
-  --bg-medium: #1A1A2E;
-  --bg-light: #262640;
+  /* Couleurs boutons - Corail/Rose pastel */
+  --corail-pastel: #FFA69E;     /* Corail doux */
+  --rose-saumon: #FFB6B0;       /* Rose saumon */
+  --peche-pastel: #FAD4C0;      /* Pêche clair */
+  
+  /* Couleurs de fond - PLUS CLAIRES */
+  --fond-page: #F9FAFB;          /* Gris très clair (presque blanc) */
+  --fond-carte: #FFFFFF;          /* Blanc pur pour les cards */
+  --fond-header: #FFFFFF;         /* Blanc pour le header */
   
   /* Couleurs de texte */
-  --text-white: #F8FAFC;
-  --text-gray: #94A3B8;
+  --texte-noir: #1F2937;          /* Gris très foncé (presque noir) */
+  --texte-gris: #6B7280;          /* Gris moyen */
   
-  /* Couleurs de statut */
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-info: #3B82F6;
-  --color-error: #EF4444;
-  --color-favorite: #FBBF24;
+  /* Couleurs de statut - Pastel */
+  --vert-pastel: #6EE7B7;
+  --jaune-pastel: #FCD34D;
+  --rouge-pastel: #FCA5A5;
+  --or-pastel: #FDE68A;
   
-  /* Espacements (on utilise vraiment) */
-  --space-xs: 0.5rem;    /* 8px */
-  --space-sm: 1rem;      /* 16px */
-  --space-md: 1.5rem;    /* 24px */
-  --space-lg: 2rem;      /* 32px */
-  --space-xl: 3rem;      /* 48px */
+  /* Gradients - Bleu élégant et apaisant */
+  --gradient-bleu-principal: linear-gradient(135deg, #BFDBFE 0%, #93C5FD 50%, #A5B4FC 100%);
+  --gradient-bleu-cyan: linear-gradient(135deg, #93C5FD 0%, #67E8F9 100%);
+  
+  /* Gradients boutons - Corail pastel élégant */
+  --gradient-corail-rose: linear-gradient(135deg, #FFA69E 0%, #FFB6B0 100%);
+  --gradient-peche-rose: linear-gradient(135deg, #FAD4C0 0%, #FFB6B0 100%);
+  
+  /* Espacements */
+  --espace-xs: 0.5rem;
+  --espace-sm: 1rem;
+  --espace-md: 1.5rem;
+  --espace-lg: 2rem;
+  --espace-xl: 3rem;
   
   /* Coins arrondis */
-  --radius-small: 0.5rem;   /* 8px */
-  --radius-medium: 1rem;     /* 16px */
-  --radius-large: 1.5rem;    /* 24px */
+  --arrondi-petit: 0.5rem;
+  --arrondi-moyen: 1rem;
+  --arrondi-grand: 1.5rem;
   
-  /* Ombres */
-  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.2);
-  --shadow-large: 0 8px 16px rgba(0, 0, 0, 0.3);
+  /* Ombres - Plus subtiles pour fond clair */
+  --ombre-petite: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --ombre-moyenne: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --ombre-grande: 0 10px 15px rgba(0, 0, 0, 0.1);
 }

@@ -1,17 +1,18 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import LoginForm from '@/components/forms/LoginForm';
+import styles from '../../../styles/login.module.css';
 
 export default function LoginPage() {
   return (
-    <div className="page">
+    <div className={styles.loginPage}>
       <Header />
       
-      <main className="main">
-        <div className="container">
-          <div className="card max-w-md mx-auto">
-            <div className="card-body">
-              <h2 className="card-title text-center" style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>
+      <main className={styles.loginMain}>
+        <div className={styles.loginContainer}>
+          <div className={styles.loginCard}>
+            <div className={styles.loginCardBody}>
+              <h2 className={styles.loginTitle}>
                 Connexion
               </h2>
               <LoginForm />

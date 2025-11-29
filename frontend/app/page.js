@@ -18,7 +18,7 @@ export default function Home() {
                 Gérez votre collection d&apos;animés, suivez votre progression 
                 et partagez vos avis avec la communauté.
               </p>
-              <Link href="/anime" className="btn btn-primary btn-large">
+              <Link href="/anime" className="btn btn-secondary btn-large">
                 Découvrir les animés
               </Link>
             </div>

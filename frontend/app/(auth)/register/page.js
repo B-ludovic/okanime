@@ -1,17 +1,18 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import RegisterForm from '@/components/forms/RegisterForm';
+import styles from '../../../styles/register.module.css';
 
 export default function RegisterPage() {
   return (
-    <div className="page">
+    <div className={styles.registerPage}>
       <Header />
       
-      <main className="main">
-        <div className="container">
-          <div className="card max-w-md mx-auto">
-            <div className="card-body">
-              <h2 className="card-title text-center" style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>
+      <main className={styles.registerMain}>
+        <div className={styles.registerContainer}>
+          <div className={styles.registerCard}>
+            <div className={styles.registerCardBody}>
+              <h2 className={styles.registerTitle}>
                 Inscription
               </h2>
               <RegisterForm />

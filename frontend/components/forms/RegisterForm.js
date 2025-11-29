@@ -159,7 +159,7 @@ export default function RegisterForm() {
       <div className="text-center">
         <p style={{ fontSize: '0.875rem' }}>
           Déjà un compte ?{' '}
-          <Link href="/login" style={{ color: 'var(--color-primary)', fontWeight: '600' }}>
+          <Link href="/login" className="text-link">
             Connectez-vous
           </Link>
         </p>
