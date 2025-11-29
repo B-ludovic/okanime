@@ -1,27 +1,33 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 // Configuration
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001;
 
-// Middlewares
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true
-}));
+// MIDDLEWARES 
+
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes de base
+// ROUTES 
+
 app.get('/', (req, res) => {
-  res.json({ 
-    message: 'O\'Kanime API',
+  res.json({
+    message: '🎌 Bienvenue sur l\'API O\'Kanime',
+    status: 'operational',
     version: '1.0.0',
-    status: 'running'
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -29,7 +35,7 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Routes API
+// Import des routes
 import authRoutes from './routes/authRoutes.js';
 import animeRoutes from './routes/animeRoutes.js';
 import bibliothequeRoutes from './routes/bibliothequeRoutes.js';
@@ -40,21 +46,22 @@ app.use('/api/animes', animeRoutes);
 app.use('/api/bibliotheque', bibliothequeRoutes);
 app.use('/api/avis', avisRoutes);
 
-// Gestion des erreurs 404
-app.use((req, res) => {
-  res.status(404).json({ error: 'Route non trouvée' });
-});
+// GESTION DES ERREURS 
 
-// Gestion des erreurs globales
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({
-    error: err.message || 'Erreur serveur interne',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+app.use((req, res) => {
+  res.status(404).json({
+    error: 'Route non trouvée',
+    path: req.path,
   });
 });
 
-// Démarrage du serveur
+// Middleware de gestion des erreurs (TOUJOURS EN DERNIER)
+app.use(errorHandler);
+
+// DÉMARRAGE DU SERVEUR 
+
+const PORT = process.env.PORT || 5001;
+
 app.listen(PORT, () => {
   console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
   console.log(`📝 Environment: ${process.env.NODE_ENV}`);
