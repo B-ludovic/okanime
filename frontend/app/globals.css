@@ -1,6 +1,9 @@
 /* Import des variables */
 @import '../styles/variables.css';
 
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@400;500;600&family=Roboto:wght@500;700&family=Quicksand:wght@600;700&display=swap');
+
 /* RESET DE BASE */
 
 * {
@@ -30,6 +33,14 @@ button {
 img {
   max-width: 100%;
   height: auto;
+}
+
+/* BRAND */
+
+.brand-name {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 /* LAYOUT GÉNÉRAL */
@@ -74,6 +85,9 @@ img {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--bleu-pastel);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .logo:hover {
@@ -422,7 +436,7 @@ img {
 /* HERO */
 
 .hero {
-  min-height: 60vh;
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -445,22 +459,48 @@ img {
   }
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: var(--espace-md);
-  color: white;
+.hero-content {
+  max-width: 900px;
 }
 
-.hero-subtitle {
-  font-size: 1.125rem;
-  color: rgba(255, 255, 255, 0.9);
+.hero-title-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: var(--espace-lg);
+  color: white;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-description {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
   margin-bottom: var(--espace-lg);
   line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+.hero-cta-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: var(--espace-xl);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--cyan-pastel) 0%, var(--or-pastel) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .text-primary {
   color: var(--cyan-pastel);
+  text-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
 }
 
 /* GRILLE */
@@ -513,8 +553,16 @@ img {
     display: none;
   }
   
-  .hero-title {
+  .hero-title-main {
     font-size: 2rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+  }
+  
+  .hero-cta-text {
+    font-size: 1.125rem;
   }
   
   .grid-auto {

@@ -25,11 +25,11 @@ export default function Header() {
                     <Image 
                         src="/icons/japan-flag.png" 
                         alt="O'Kanime" 
-                        width={24} 
-                        height={24}
+                        width={28} 
+                        height={28}
                         className="object-contain"
                     />
-                    O&apos;Kanime
+                    <span className="brand-name">O&apos;Kanime</span>
                 </Link>
 
                 {/* Navigation */}

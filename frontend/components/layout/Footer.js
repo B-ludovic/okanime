@@ -12,7 +12,7 @@ export default function Footer() {
             height={24}
             className="object-contain"
           />
-          <p className="footer-title">O&apos;Kanime</p>
+          <p className="footer-title"><span className="brand-name">O&apos;Kanime</span></p>
         </div>
         <p className="footer-text">Votre bibliothèque d&apos;animés personnelle</p>
         <p className="footer-text">
