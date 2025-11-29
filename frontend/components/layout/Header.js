@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { User, LogOut } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '@/lib/utils';
+import styles from '../../styles/Header.module.css';
 
 export default function Header() {
     const pathname = usePathname();
@@ -18,10 +19,10 @@ export default function Header() {
     }, []);
 
     return (
-        <header className="header">
-            <div className="header-container">
+        <header className={styles.header}>
+            <div className={styles.headerContainer}>
                 {/* Logo */}
-                <Link href="/" className="logo">
+                <Link href="/" className={styles.logo}>
                     <Image 
                         src="/icons/japan-flag.png" 
                         alt="O'Kanime" 
@@ -34,11 +35,11 @@ export default function Header() {
 
                 {/* Navigation */}
                 <nav>
-                    <ul className="nav">
+                    <ul className={styles.nav}>
                         <li>
                             <Link
                                 href="/"
-                                className={`nav-link ${pathname === '/' ? 'active' : ''}`}
+                                className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}
                             >
                                 <Image src="/icons/home.png" alt="Accueil" width={20} height={20} className="object-contain" />
                                 Accueil
@@ -47,7 +48,7 @@ export default function Header() {
                         <li>
                             <Link
                                 href="/anime"
-                                className={`nav-link ${pathname.startsWith('/anime') ? 'active' : ''}`}
+                                className={`${styles.navLink} ${pathname.startsWith('/anime') ? styles.active : ''}`}
                             >
                                 <Image src="/icons/anime.png" alt="Animés" width={20} height={20} className="object-contain" />
                                 Animés
@@ -57,7 +58,7 @@ export default function Header() {
                             <li>
                                 <Link
                                     href="/bibliotheque"
-                                    className={`nav-link ${pathname === '/bibliotheque' ? 'active' : ''}`}
+                                    className={`${styles.navLink} ${pathname === '/bibliotheque' ? styles.active : ''}`}
                                 >
                                     <Image src="/icons/anime.png" alt="Ma Bibliothèque" width={20} height={20} className="object-contain" />
                                     Ma Bibliothèque
@@ -68,7 +69,7 @@ export default function Header() {
                 </nav>
 
                 {/* Actions */}
-                <div className="header-actions">
+                <div className={styles.headerActions}>
                     {isAuth ? (
                         <>
                             <Link href="/profil" className="btn btn-ghost btn-circle">

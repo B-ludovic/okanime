@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { UserPlus } from 'lucide-react';
 import api from '@/lib/api';
+import styles from '../../styles/RegisterForm.module.css';
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -75,78 +76,78 @@ export default function RegisterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={handleSubmit} className={styles.form}>
       {/* Erreur générale */}
       {errors.general && (
-        <div className="alert alert-error">
+        <div className={`${styles.alert} ${styles.alertError}`}>
           <span>{errors.general}</span>
         </div>
       )}
 
       {/* Username */}
-      <div className="form-group">
-        <label className="form-label">Nom d&apos;utilisateur</label>
+      <div className={styles.formGroup}>
+        <label className={styles.formLabel}>Nom d&apos;utilisateur</label>
         <input
           type="text"
           name="username"
           placeholder="john_doe"
-          className={`form-input ${errors.username ? 'error' : ''}`}
+          className={`${styles.formInput} ${errors.username ? styles.error : ''}`}
           value={formData.username}
           onChange={handleChange}
           required
         />
-        {errors.username && <span className="form-error">{errors.username}</span>}
+        {errors.username && <span className={styles.formError}>{errors.username}</span>}
       </div>
 
       {/* Email */}
-      <div className="form-group">
-        <label className="form-label">Email</label>
+      <div className={styles.formGroup}>
+        <label className={styles.formLabel}>Email</label>
         <input
           type="email"
           name="email"
           placeholder="votre@email.com"
-          className={`form-input ${errors.email ? 'error' : ''}`}
+          className={`${styles.formInput} ${errors.email ? styles.error : ''}`}
           value={formData.email}
           onChange={handleChange}
           required
         />
-        {errors.email && <span className="form-error">{errors.email}</span>}
+        {errors.email && <span className={styles.formError}>{errors.email}</span>}
       </div>
 
       {/* Password */}
-      <div className="form-group">
-        <label className="form-label">Mot de passe</label>
+      <div className={styles.formGroup}>
+        <label className={styles.formLabel}>Mot de passe</label>
         <input
           type="password"
           name="password"
           placeholder="••••••••"
-          className={`form-input ${errors.password ? 'error' : ''}`}
+          className={`${styles.formInput} ${errors.password ? styles.error : ''}`}
           value={formData.password}
           onChange={handleChange}
           required
         />
-        {errors.password && <span className="form-error">{errors.password}</span>}
+        {errors.password && <span className={styles.formError}>{errors.password}</span>}
       </div>
 
       {/* Confirm Password */}
-      <div className="form-group">
-        <label className="form-label">Confirmer le mot de passe</label>
+      <div className={styles.formGroup}>
+        <label className={styles.formLabel}>Confirmer le mot de passe</label>
         <input
           type="password"
           name="confirmPassword"
           placeholder="••••••••"
-          className={`form-input ${errors.confirmPassword ? 'error' : ''}`}
+          className={`${styles.formInput} ${errors.confirmPassword ? styles.error : ''}`}
           value={formData.confirmPassword}
           onChange={handleChange}
           required
         />
-        {errors.confirmPassword && <span className="form-error">{errors.confirmPassword}</span>}
+        {errors.confirmPassword && <span className={styles.formError}>{errors.confirmPassword}</span>}
       </div>
 
       {/* Bouton */}
       <button type="submit" className="btn btn-primary w-full" disabled={loading}>
         {loading ? (
-          <span className="loading"></span>
+          <span className={styles.loading}></span>
         ) : (
           <>
             <UserPlus size={18} />
@@ -156,10 +157,10 @@ export default function RegisterForm() {
       </button>
 
       {/* Lien connexion */}
-      <div className="text-center">
-        <p style={{ fontSize: '0.875rem' }}>
+      <div className={styles.textCenter}>
+        <p className={styles.textSmall}>
           Déjà un compte ?{' '}
-          <Link href="/login" className="text-link">
+          <Link href="/login" className={styles.textLink}>
             Connectez-vous
           </Link>
         </p>

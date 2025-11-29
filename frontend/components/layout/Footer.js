@@ -1,10 +1,11 @@
 import Image from 'next/image';
+import styles from '../../styles/Footer.module.css';
 
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-logo">
+    <footer className={styles.footer}>
+      <div className={styles.footerContent}>
+        <div className={styles.footerLogo}>
           <Image 
             src="/icons/japan-flag.png" 
             alt="O'Kanime" 
@@ -12,10 +13,10 @@ export default function Footer() {
             height={24}
             className="object-contain"
           />
-          <p className="footer-title"><span className="brand-name">O&apos;Kanime</span></p>
+          <p className={styles.footerTitle}><span className="brand-name">O&apos;Kanime</span></p>
         </div>
-        <p className="footer-text">Votre bibliothèque d&apos;animés personnelle</p>
-        <p className="footer-text">
+        <p className={styles.footerText}>Votre bibliothèque d&apos;animés personnelle</p>
+        <p className={styles.footerText}>
           © {new Date().getFullYear()} - Tous droits réservés
         </p>
       </div>

@@ -1,0 +1,93 @@
+/* Header - Styles spécifiques */
+
+.header {
+  background-color: var(--fond-header);
+  box-shadow: var(--ombre-grande);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: var(--espace-sm) var(--espace-lg);
+}
+
+.headerContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--bleu-pastel);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+.nav {
+  display: flex;
+  gap: var(--espace-md);
+  list-style: none;
+}
+
+.navLink {
+  padding: var(--espace-xs) var(--espace-sm);
+  border-radius: var(--arrondi-petit);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navLink img {
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.navLink:hover {
+  background-color: rgba(147, 197, 253, 0.1);
+}
+
+.navLink:hover img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.navLink.active {
+  background-color: var(--bleu-pastel);
+  color: white;
+}
+
+.navLink.active img {
+  opacity: 1;
+  filter: brightness(1.2);
+}
+
+.headerActions {
+  display: flex;
+  gap: var(--espace-sm);
+  align-items: center;
+}
+
+.headerActions .btn img {
+  opacity: 0.9;
+  transition: all 0.3s;
+}
+
+.headerActions .btn:hover img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+}

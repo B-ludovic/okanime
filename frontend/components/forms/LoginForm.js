@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { LogIn } from 'lucide-react';
 import api from '@/lib/api';
+import styles from '../../styles/LoginForm.module.css';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -42,22 +43,22 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={handleSubmit} className={styles.form}>
       {/* Message d'erreur */}
       {error && (
-        <div className="alert alert-error">
+        <div className={`${styles.alert} ${styles.alertError}`}>
           <span>{error}</span>
         </div>
       )}
 
       {/* Email */}
-      <div className="form-group">
-        <label className="form-label">Email</label>
+      <div className={styles.formGroup}>
+        <label className={styles.formLabel}>Email</label>
         <input
           type="email"
           name="email"
           placeholder="votre@email.com"
-          className="form-input"
+          className={styles.formInput}
           value={formData.email}
           onChange={handleChange}
           required
@@ -65,13 +66,13 @@ export default function LoginForm() {
       </div>
 
       {/* Mot de passe */}
-      <div className="form-group">
-        <label className="form-label">Mot de passe</label>
+      <div className={styles.formGroup}>
+        <label className={styles.formLabel}>Mot de passe</label>
         <input
           type="password"
           name="password"
           placeholder="••••••••"
-          className="form-input"
+          className={styles.formInput}
           value={formData.password}
           onChange={handleChange}
           required
@@ -81,7 +82,7 @@ export default function LoginForm() {
       {/* Bouton */}
       <button type="submit" className="btn btn-primary w-full" disabled={loading}>
         {loading ? (
-          <span className="loading"></span>
+          <span className={styles.loading}></span>
         ) : (
           <>
             <LogIn size={18} />
@@ -91,10 +92,10 @@ export default function LoginForm() {
       </button>
 
       {/* Lien inscription */}
-      <div className="text-center">
-        <p style={{ fontSize: '0.875rem' }}>
+      <div className={styles.textCenter}>
+        <p className={styles.textSmall}>
           Pas encore de compte ?{' '}
-          <Link href="/register" className="text-link">
+          <Link href="/register" className={styles.textLink}>
             Inscrivez-vous
           </Link>
         </p>

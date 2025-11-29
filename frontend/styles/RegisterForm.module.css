@@ -1,0 +1,89 @@
+/* RegisterForm - Styles spécifiques */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-md);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-xs);
+}
+
+.formLabel {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--texte-noir);
+}
+
+.formInput {
+  padding: 0.75rem 1rem;
+  border: 2px solid #E5E7EB;
+  border-radius: var(--arrondi-petit);
+  background-color: #FFFFFF;
+  color: var(--texte-noir);
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
+}
+
+.formInput.error {
+  border-color: var(--rouge-pastel);
+}
+
+.formError {
+  color: var(--rouge-pastel);
+  font-size: 0.75rem;
+}
+
+.alert {
+  padding: var(--espace-sm) var(--espace-md);
+  border-radius: var(--arrondi-petit);
+  margin-bottom: var(--espace-md);
+}
+
+.alertError {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--rouge-pastel);
+  color: var(--rouge-pastel);
+}
+
+.loading {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textSmall {
+  font-size: 0.875rem;
+}
+
+.textLink {
+  color: var(--corail-pastel);
+  font-weight: 600;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.textLink:hover {
+  color: var(--rose-saumon);
+  text-decoration: underline;
+}

@@ -1,0 +1,101 @@
+/* Page d'accueil - Styles spécifiques */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: var(--espace-lg) 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--espace-sm);
+}
+
+.hero {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-bleu-principal);
+  border-radius: var(--arrondi-moyen);
+  padding: var(--espace-xl);
+  text-align: center;
+  box-shadow: var(--ombre-grande);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heroContent {
+  max-width: 900px;
+}
+
+.heroTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: var(--espace-lg);
+  color: white;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.heroDescription {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: var(--espace-lg);
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+.heroCtaText {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: var(--espace-xl);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--cyan-pastel) 0%, var(--or-pastel) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.textPrimary {
+  color: var(--cyan-pastel);
+  text-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+  
+  .heroDescription {
+    font-size: 1rem;
+  }
+  
+  .heroCtaText {
+    font-size: 1.125rem;
+  }
+}
