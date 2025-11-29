@@ -1,13 +1,24 @@
 import express from 'express';
+import {
+    createAvis,
+    getAvisByAnime,
+    getMesAvis,
+    updateAvis,
+    deleteAvis,
+} from '../controllers/avisController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
-import { userOrAdmin } from '../middlewares/roleMiddleware.js';
 
 const router = express.Router();
 
-// Route user ou admin - créer un avis
-router.post('/', authMiddleware, userOrAdmin, (req, res) => {
-  res.json({ message: 'Avis créé' });
-  
-});
+// Route publique - voir les avis d'un anime
+router.get('/anime/:animeId', getAvisByAnime);
+
+// Routes protégées - il faut être connecté
+router.use(authMiddleware);
+
+router.post('/', createAvis);
+router.get('/me', getMesAvis);
+router.put('/:id', updateAvis);
+router.delete('/:id', deleteAvis);
 
 export default router;
