@@ -1,25 +1,26 @@
+import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="page">
       <Header />
       
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="hero min-h-[60vh] bg-base-200 rounded-lg">
-          <div className="hero-content text-center">
-            <div className="max-w-md">
-              <h1 className="text-5xl font-bold mb-4">
+      <main className="main">
+        <div className="container">
+          <div className="hero">
+            <div>
+              <h1 className="hero-title">
                 Bienvenue sur <span className="text-primary">O&apos;Kanime</span>
               </h1>
-              <p className="py-6 text-lg">
+              <p className="hero-subtitle">
                 Gérez votre collection d&apos;animés, suivez votre progression 
                 et partagez vos avis avec la communauté.
               </p>
-              <button className="btn btn-primary btn-lg">
+              <Link href="/anime" className="btn btn-primary btn-large">
                 Découvrir les animés
-              </button>
+              </Link>
             </div>
           </div>
         </div>
