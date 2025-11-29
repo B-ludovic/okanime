@@ -1,3 +1,27 @@
 node_modules
 # Keep environment variables out of version control
 .env
+
+# Prisma
+prisma/migrations/dev.db
+prisma/*.db
+prisma/*.db-journal
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
