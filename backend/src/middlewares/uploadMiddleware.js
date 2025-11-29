@@ -32,7 +32,7 @@ const upload = multer({
 });
 
 // Middleware pour uploader un seul fichier
-export const uploadSingle = (fieldName) => {
+const uploadSingle = (fieldName) => {
   return (req, res, next) => {
     const multerSingle = upload.single(fieldName);
 
@@ -60,7 +60,7 @@ export const uploadSingle = (fieldName) => {
 };
 
 // Middleware pour uploader plusieurs fichiers
-export const uploadMultiple = (fields) => {
+const uploadMultiple = (fields) => {
   return (req, res, next) => {
     const multerFields = upload.fields(fields);
 
@@ -82,7 +82,7 @@ export const uploadMultiple = (fields) => {
 };
 
 // Middleware optionnel : le fichier peut être présent ou non
-export const uploadSingleOptional = (fieldName) => {
+const uploadSingleOptional = (fieldName) => {
   return (req, res, next) => {
     const multerSingle = upload.single(fieldName);
 
@@ -102,3 +102,5 @@ export const uploadSingleOptional = (fieldName) => {
     });
   };
 };
+
+export { uploadSingle, uploadMultiple, uploadSingleOptional };

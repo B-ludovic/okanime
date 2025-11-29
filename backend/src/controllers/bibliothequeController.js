@@ -2,7 +2,7 @@ import prisma from '../config/prisma.js';
 import { httpStatusCodes } from '../utils/httpErrors.js';
 
 // Récupérer ma bibliothèque
-export const getMaBibliotheque = async (req, res, next) => {
+const getMaBibliotheque = async (req, res, next) => {
   try {
     const userId = req.user.id;
 
@@ -40,7 +40,7 @@ export const getMaBibliotheque = async (req, res, next) => {
 };
 
 // Ajouter une saison à ma bibliothèque
-export const addToBibliotheque = async (req, res, next) => {
+const addToBibliotheque = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { saisonId, statut, progressionEpisodes } = req.body;
@@ -102,7 +102,7 @@ export const addToBibliotheque = async (req, res, next) => {
 };
 
 // Modifier une entrée de ma bibliothèque
-export const updateBibliothequeEntry = async (req, res, next) => {
+const updateBibliothequeEntry = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { id } = req.params;
@@ -147,7 +147,7 @@ export const updateBibliothequeEntry = async (req, res, next) => {
 };
 
 // Retirer une saison de ma bibliothèque
-export const removeFromBibliotheque = async (req, res, next) => {
+const removeFromBibliotheque = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { id } = req.params;
@@ -179,7 +179,7 @@ export const removeFromBibliotheque = async (req, res, next) => {
 };
 
 // Filtrer ma bibliothèque par statut
-export const filterBibliothequeByStatut = async (req, res, next) => {
+const filterBibliothequeByStatut = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { statut } = req.params;
@@ -226,4 +226,12 @@ export const filterBibliothequeByStatut = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export {
+  getMaBibliotheque,
+  addToBibliotheque,
+  updateBibliothequeEntry,
+  removeFromBibliotheque,
+  filterBibliothequeByStatut,
 };

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 // Schéma de validation pour l'inscription
-export const registerSchema = z.object({
+const registerSchema = z.object({
   username: z
     .string()
     .min(3, 'Le nom d\'utilisateur doit contenir au moins 3 caractères')
@@ -22,7 +22,7 @@ export const registerSchema = z.object({
 });
 
 // Schéma de validation pour la connexion
-export const loginSchema = z.object({
+const loginSchema = z.object({
   email: z
     .string()
     .email('Email invalide')
@@ -33,6 +33,12 @@ export const loginSchema = z.object({
     .min(1, 'Le mot de passe est requis'),
 });
 
-export const validateData = (schema, data) => {
+const validateData = (schema, data) => {
   return schema.parse(data);
+};
+
+export {
+  registerSchema,
+  loginSchema,
+  validateData
 };

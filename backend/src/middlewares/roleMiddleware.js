@@ -1,8 +1,7 @@
 import { HttpForbiddenError, HttpUnauthorizedError } from '../utils/httpErrors.js';
 
 // Vérifie que l'utilisateur a le bon rôle
-// À utiliser APRÈS authMiddleware
-export const checkRole = (rolesAutorisés) => {
+const checkRole = (rolesAutorisés) => {
   return (req, res, next) => {
     // Vérifie que l'utilisateur est connecté
     if (!req.user) {
@@ -19,5 +18,7 @@ export const checkRole = (rolesAutorisés) => {
 };
 
 // Raccourcis pratiques
-export const adminOnly = checkRole(['ADMIN']);
-export const userOrAdmin = checkRole(['USER', 'ADMIN']);
+const adminOnly = checkRole(['ADMIN']);
+const userOrAdmin = checkRole(['USER', 'ADMIN']);
+
+export { checkRole, adminOnly, userOrAdmin };

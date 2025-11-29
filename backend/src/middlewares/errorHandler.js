@@ -1,7 +1,7 @@
 import { HttpError, httpStatusCodes } from '../utils/httpErrors.js';
 import { env } from '../config/env.js';
 
-export const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   // Log l'erreur pour le débogage
   console.error('Erreur capturée:', {
     name: err.name,
@@ -62,8 +62,10 @@ export const errorHandler = (err, req, res, next) => {
 };
 
 
-export const asyncHandler = (fn) => {
+const asyncHandler = (fn) => {
   return (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
 };
+
+export { errorHandler, asyncHandler };

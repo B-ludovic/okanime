@@ -5,7 +5,7 @@ import { HttpUnauthorizedError } from './httpErrors.js';
 dotenv.config();
 
 // Créer un token JWT pour un utilisateur
-export const generateToken = (userId, role) => {
+const generateToken = (userId, role) => {
   const payload = { userId, role };
   
   return jwt.sign(
@@ -16,7 +16,7 @@ export const generateToken = (userId, role) => {
 };
 
 // Vérifier si un token est valide
-export const verifyToken = (token) => {
+const verifyToken = (token) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     return decoded; // Retourne { userId, role }
@@ -26,10 +26,12 @@ export const verifyToken = (token) => {
 };
 
 // Récupérer le token depuis le header Authorization
-export const getTokenFromHeader = (authHeader) => {
+const getTokenFromHeader = (authHeader) => {
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return null;
   }
   
   return authHeader.split(' ')[1];
 };
+
+export { generateToken, verifyToken, getTokenFromHeader };

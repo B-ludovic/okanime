@@ -8,7 +8,7 @@ import {
 } from '../controllers/bibliothequeController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 
-export const router = express.Router();
+const router = express.Router();
 
 // Toutes ces routes nécessitent d'être connecté
 router.use(authMiddleware);
@@ -18,3 +18,5 @@ router.get('/filter/:statut', filterBibliothequeByStatut);
 router.post('/', addToBibliotheque);
 router.put('/:id', updateBibliothequeEntry);
 router.delete('/:id', removeFromBibliotheque);               
+
+export default router;

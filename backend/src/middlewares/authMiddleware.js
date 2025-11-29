@@ -4,7 +4,7 @@ import { verifyToken, extractTokenFromHeader } from '../utils/jwt.js';
 import prisma from '../config/database.js';
 
 
-export const authMiddleware = asyncHandler(async (req, res, next) => {
+const authMiddleware = asyncHandler(async (req, res, next) => {
   // 1. Récupère le header Authorization
   const authHeader = req.headers.authorization;
   
@@ -42,7 +42,7 @@ export const authMiddleware = asyncHandler(async (req, res, next) => {
 });
 
 
-export const optionalAuthMiddleware = asyncHandler(async (req, res, next) => {
+const optionalAuthMiddleware = asyncHandler(async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     const token = extractTokenFromHeader(authHeader);
@@ -68,3 +68,5 @@ export const optionalAuthMiddleware = asyncHandler(async (req, res, next) => {
   
   next();
 });
+
+export { authMiddleware, optionalAuthMiddleware };

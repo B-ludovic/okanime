@@ -27,19 +27,19 @@ export const searchAnimeOnJikan = async (query, page = 1) => {
 };
 
 // Récupère les détails complets d'un anime par son ID Jikan
-export const getAnimeDetailsFromJikan = async (jikanId) => {
+const getAnimeDetailsFromJikan = async (jikanId) => {
   const data = await fetchFromJikan(`/anime/${jikanId}/full`);
   return data.data;
 };
 
 // Récupère les genres disponibles sur Jikan
-export const getGenresFromJikan = async () => {
+const getGenresFromJikan = async () => {
   const data = await fetchFromJikan('/genres/anime');
   return data.data;
 };
 
 // Transforme les données Jikan en format compatible avec notre base de données
-export const transformJikanToOurFormat = (jikanAnime) => {
+const transformJikanToOurFormat = (jikanAnime) => {
   return {
     titreVf: jikanAnime.title || jikanAnime.title_english || 'Titre non disponible',
     synopsis: jikanAnime.synopsis || 'Aucun synopsis disponible',
@@ -49,4 +49,11 @@ export const transformJikanToOurFormat = (jikanAnime) => {
     banniereUrl: jikanAnime.images?.jpg?.large_image_url,
     noteMoyenne: jikanAnime.score || 0,
   };
+};
+
+export {
+  searchAnimeOnJikan,
+  getAnimeDetailsFromJikan,
+  getGenresFromJikan,
+  transformJikanToOurFormat,
 };

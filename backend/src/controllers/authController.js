@@ -6,7 +6,7 @@ import { HttpBadRequestError, HttpUnauthorizedError, HttpConflictError, httpStat
 import prisma from '../config/database.js';
 
 // INSCRIPTION - POST /api/auth/register
-export const register = asyncHandler(async (req, res) => {
+const register = asyncHandler(async (req, res) => {
   // 1. Valide les données reçues
   const validatedData = validateData(registerSchema, req.body);
   const { username, email, password } = validatedData;
@@ -65,7 +65,7 @@ export const register = asyncHandler(async (req, res) => {
 });
 
 // CONNEXION - POST /api/auth/login
-export const login = asyncHandler(async (req, res) => {
+const login = asyncHandler(async (req, res) => {
   // 1. Valide les données reçues
   const validatedData = validateData(loginSchema, req.body);
   const { email, password } = validatedData;
@@ -108,7 +108,7 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 // PROFIL - GET /api/auth/me
-export const getMe = asyncHandler(async (req, res) => {
+const getMe = asyncHandler(async (req, res) => {
   // req.user est déjà rempli par authMiddleware
   res.status(httpStatusCodes.OK).json({
     success: true,
@@ -117,3 +117,5 @@ export const getMe = asyncHandler(async (req, res) => {
     },
   });
 });
+
+export { register, login, getMe };

@@ -9,7 +9,7 @@ import {
     getRecentAnimes,
 } from '../controllers/animeController.js';
 
-export const router = express.Router();
+const router = express.Router();
 
 // Routes publiques (pas besoin d'être connecté)
 router.get('/', getAllAnimes);
@@ -19,4 +19,6 @@ router.get('/:id', getAnimeById);
 router.get('/genres/all', getAllGenres);
 
 // Routes admin (besoin d'être admin)
+
+export default router;
 

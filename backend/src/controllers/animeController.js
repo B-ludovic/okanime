@@ -2,7 +2,7 @@ import prisma from '../config/prisma.js';
 import { HttpNotFoundError, httpStatusCodes } from '../utils/httpErrors.js';
 
 // Récupérer tous les animes (avec recherche et filtres)
-export const getAllAnimes = async (req, res, next) => {
+const getAllAnimes = async (req, res, next) => {
   try {
     const { q, genre, page = '1', limit = '20' } = req.query;
 
@@ -87,7 +87,7 @@ export const getAllAnimes = async (req, res, next) => {
 };
 
 // Récupérer un anime par ID
-export const getAnimeById = async (req, res, next) => {
+const getAnimeById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -135,7 +135,7 @@ export const getAnimeById = async (req, res, next) => {
 };
 
 // Récupérer tous les genres
-export const getAllGenres = async (req, res, next) => {
+const getAllGenres = async (req, res, next) => {
   try {
     const genres = await prisma.genre.findMany({
       orderBy: {
@@ -153,7 +153,7 @@ export const getAllGenres = async (req, res, next) => {
 };
 
 // Animes en vedette (mieux notés)
-export const getFeaturedAnimes = async (req, res, next) => {
+const getFeaturedAnimes = async (req, res, next) => {
   try {
     const animes = await prisma.anime.findMany({
       where: {
@@ -190,7 +190,7 @@ export const getFeaturedAnimes = async (req, res, next) => {
 };
 
 // Derniers animes ajoutés
-export const getRecentAnimes = async (req, res, next) => {
+const getRecentAnimes = async (req, res, next) => {
   try {
     const animes = await prisma.anime.findMany({
       where: {
@@ -216,4 +216,12 @@ export const getRecentAnimes = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export {
+  getAllAnimes,
+  getAnimeById,
+  getAllGenres,
+  getFeaturedAnimes,
+  getRecentAnimes,
 };
