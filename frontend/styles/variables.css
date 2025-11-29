@@ -1,0 +1,41 @@
+/* VARIABLES CSS - O'KANIME */
+
+:root {
+  /* Couleurs principales */
+  --color-primary: #7C3AED;
+  --color-secondary: #EC4899;
+  --color-accent: #06B6D4;
+  
+  /* Couleurs de fond */
+  --bg-dark: #0A0A14;
+  --bg-medium: #1A1A2E;
+  --bg-light: #262640;
+  
+  /* Couleurs de texte */
+  --text-white: #F8FAFC;
+  --text-gray: #94A3B8;
+  
+  /* Couleurs de statut */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-info: #3B82F6;
+  --color-error: #EF4444;
+  --color-favorite: #FBBF24;
+  
+  /* Espacements (on utilise vraiment) */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 1rem;      /* 16px */
+  --space-md: 1.5rem;    /* 24px */
+  --space-lg: 2rem;      /* 32px */
+  --space-xl: 3rem;      /* 48px */
+  
+  /* Coins arrondis */
+  --radius-small: 0.5rem;   /* 8px */
+  --radius-medium: 1rem;     /* 16px */
+  --radius-large: 1.5rem;    /* 24px */
+  
+  /* Ombres */
+  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-large: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
