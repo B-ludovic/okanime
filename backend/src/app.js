@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { errorHandler } from './middlewares/errorHandler.js';
+import animeRoutes from './routes/animeRoutes.js';
+import genreRoutes from './routes/genreRoutes.js';
 
 // Configuration
 dotenv.config();
@@ -45,6 +47,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/animes', animeRoutes);
 app.use('/api/bibliotheque', bibliothequeRoutes);
 app.use('/api/avis', avisRoutes);
+app.use('/api/animes', animeRoutes);
+app.use('/api/genres', genreRoutes);
+
 
 // GESTION DES ERREURS 
 
