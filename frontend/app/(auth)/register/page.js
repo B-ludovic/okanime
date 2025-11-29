@@ -1,7 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import RegisterForm from '@/components/forms/RegisterForm';
-import styles from '../../../styles/register.module.css';
+import styles from '../../../styles/Register.module.css';
 
 export default function RegisterPage() {
   return (
