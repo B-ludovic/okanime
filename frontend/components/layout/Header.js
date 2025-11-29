@@ -1,0 +1,95 @@
+'use client';
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { Home, BookOpen, User, LogIn, LogOut } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { getCurrentUser, logout, isAuthenticated } from '@/lib/utils';
+
+export default function Header() {
+  const pathname = usePathname();
+  const [user, setUser] = useState(null);
+  const [isAuth, setIsAuth] = useState(false);
+
+  // Vérifie l'authentification au chargement
+  useEffect(() => {
+    setIsAuth(isAuthenticated());
+    setUser(getCurrentUser());
+  }, []);
+
+  return (
+    <header className="navbar bg-base-200 shadow-lg sticky top-0 z-50">
+      <div className="navbar-start">
+        <Link href="/" className="btn btn-ghost text-xl font-bold text-primary flex items-center gap-2">
+          <Image 
+            src="/icons/japan-flag.png" 
+            alt="O'Kanime" 
+            width={24} 
+            height={24}
+            className="object-contain"
+          />
+          O&apos;Kanime
+        </Link>
+      </div>
+
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1 gap-2">
+          <li>
+            <Link 
+              href="/" 
+              className={pathname === '/' ? 'active' : ''}
+            >
+              <Home size={18} />
+              Accueil
+            </Link>
+          </li>
+          <li>
+            <Link 
+              href="/anime" 
+              className={pathname.startsWith('/anime') ? 'active' : ''}
+            >
+              <BookOpen size={18} />
+              Animés
+            </Link>
+          </li>
+          {isAuth && (
+            <li>
+              <Link 
+                href="/bibliotheque" 
+                className={pathname === '/bibliotheque' ? 'active' : ''}
+              >
+                <BookOpen size={18} />
+                Ma Bibliothèque
+              </Link>
+            </li>
+          )}
+        </ul>
+      </div>
+
+      <div className="navbar-end gap-2">
+        {isAuth ? (
+          <>
+            <Link href="/profil" className="btn btn-ghost btn-circle">
+              <User size={20} />
+            </Link>
+            <button onClick={logout} className="btn btn-ghost">
+              <LogOut size={18} />
+              Déconnexion
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href="/login" className="btn btn-ghost">
+              <LogIn size={18} />
+              Connexion
+            </Link>
+            <Link href="/register" className="btn btn-primary">
+              Inscription
+            </Link>
+          </>
+        )}
+      </div>
+    </header>
+  );
+}
