@@ -1,44 +1,54 @@
 # O'Kanime 🎌
 
-Bibliothèque personnelle d'animés en ligne.
+Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et laisser des avis.
 
-## 🚀 Stack Technique
+## Stack
 
-### Frontend
-- Next.js 14+ (App Router)
-- JavaScript
-- Tailwind CSS
-- React Query
+**Frontend**
+- Next.js 14 (App Router)
+- CSS modules
 
-### Backend
+**Backend**
 - Node.js + Express
-- JavaScript
 - Prisma ORM
 - PostgreSQL
-- Jikan API v4
+- Jikan API v4 (données animés)
 
-## 📦 Installation
+## Installation
 
 ### Prérequis
 - Node.js 18+
 - PostgreSQL
-- npm
 
-### Frontend
-```bash
-cd frontend
-npm install
-npm dev
-```
+### Lancer le projet
 
-### Backend
+**Backend**
 ```bash
 cd backend
 npm install
-npm dev
+npx prisma migrate dev
+npm run dev
 ```
 
-## 👥 Auteur
+**Frontend**
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-Ludovic :
-Développé avec ❤️ 
+Frontend : http://localhost:3000
+Backend : http://localhost:5001
+
+## Fonctionnalités
+
+- Authentification (JWT)
+- Recherche d'animés via Jikan API
+- Gestion de bibliothèque personnelle (En cours, Terminé, Abandonné)
+- Système d'avis et de notes
+- Upload d'images (Cloudinary)
+
+## Auteur
+
+Ludovic - Dev junior
+ 
