@@ -5,6 +5,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import animeRoutes from './routes/animeRoutes.js';
 import genreRoutes from './routes/genreRoutes.js';
 import bibliothequeRoutes from './routes/bibliothequeRoutes.js';
+import avisRoutes from './routes/avisRoutes.js';
 
 // Configuration
 dotenv.config();
@@ -51,6 +52,7 @@ app.use('/api/avis', avisRoutes);
 app.use('/api/animes', animeRoutes);
 app.use('/api/genres', genreRoutes);
 app.use('/api/bibliotheque', bibliothequeRoutes);
+app.use('/api/avis', avisRoutes);
 
 
 
