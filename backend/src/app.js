@@ -29,8 +29,16 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Routes API 
+// Routes API
+import authRoutes from './routes/authRoutes.js';
+import animeRoutes from './routes/animeRoutes.js';
+import bibliothequeRoutes from './routes/bibliothequeRoutes.js';
+import avisRoutes from './routes/avisRoutes.js';
 
+app.use('/api/auth', authRoutes);
+app.use('/api/animes', animeRoutes);
+app.use('/api/bibliotheque', bibliothequeRoutes);
+app.use('/api/avis', avisRoutes);
 
 // Gestion des erreurs 404
 app.use((req, res) => {
