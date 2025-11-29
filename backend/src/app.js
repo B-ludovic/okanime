@@ -6,6 +6,7 @@ import animeRoutes from './routes/animeRoutes.js';
 import genreRoutes from './routes/genreRoutes.js';
 import bibliothequeRoutes from './routes/bibliothequeRoutes.js';
 import avisRoutes from './routes/avisRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 // Configuration
 dotenv.config();
@@ -53,6 +54,7 @@ app.use('/api/animes', animeRoutes);
 app.use('/api/genres', genreRoutes);
 app.use('/api/bibliotheque', bibliothequeRoutes);
 app.use('/api/avis', avisRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 
