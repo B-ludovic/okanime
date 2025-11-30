@@ -46,6 +46,7 @@ const corsOptions = {
       process.env.FRONTEND_URL, // URL de production depuis .env
       'https://okanime.fr', // Production (avec domaine)
       'https://www.okanime.fr', // Production (avec www)
+      'https://okanime-frontend.onrender.com', // Frontend Render
     ].filter(Boolean); // Retire les valeurs undefined/null
 
     // Autorise les requêtes sans origin (accès direct, Postman, health checks)
