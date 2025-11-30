@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Edit2, Trash2 } from 'lucide-react';
 import { STATUTS_BIBLIOTHEQUE } from '@/lib/constants';
+import styles from '../../styles/BiblioCard.module.css';
 
 export default function BiblioCard({ entry, onUpdate, onDelete }) {
   const [showActions, setShowActions] = useState(false);
@@ -17,37 +18,44 @@ export default function BiblioCard({ entry, onUpdate, onDelete }) {
 
   // Classe CSS selon le statut
   const getStatusClass = () => {
-    return entry.statut.toLowerCase().replace('_', '-');
+    const statusMap = {
+      'EN_COURS': 'enCours',
+      'TERMINE': 'termine',
+      'A_VOIR': 'aVoir',
+      'EN_PAUSE': 'enPause',
+      'ABANDONNE': 'abandonne'
+    };
+    return statusMap[entry.statut] || '';
   };
 
   return (
     <div 
-      className="biblio-card"
+      className={styles.card}
       onMouseEnter={() => setShowActions(true)}
       onMouseLeave={() => setShowActions(false)}
     >
       {/* Badge de statut */}
-      <div className={`biblio-status-badge ${getStatusClass()}`}>
+      <div className={`${styles.statusBadge} ${styles[getStatusClass()]}`}>
         {STATUTS_BIBLIOTHEQUE[entry.statut]}
       </div>
 
       {/* Image */}
       <Link href={`/anime/${entry.saison.anime.id}`}>
-        <div className="biblio-card-image-container">
+        <div className={styles.imageContainer}>
           <Image
             src={entry.saison.anime.posterUrl || '/placeholder-anime.jpg'}
             alt={entry.saison.anime.titreVf}
             fill
-            className="biblio-card-image"
+            className={styles.image}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
           />
         </div>
       </Link>
 
-      <div className="biblio-card-body">
+      <div className={styles.body}>
         {/* Titre */}
         <Link href={`/anime/${entry.saison.anime.id}`}>
-          <h3 className="biblio-card-title">
+          <h3 className={styles.title}>
             {entry.saison.anime.titreVf}
             {entry.saison.numeroSaison > 1 && ` - S${entry.saison.numeroSaison}`}
           </h3>
@@ -55,15 +63,15 @@ export default function BiblioCard({ entry, onUpdate, onDelete }) {
 
         {/* Progression */}
         {entry.statut === 'EN_COURS' && (
-          <div className="biblio-progress">
-            <span className="biblio-progress-label">Progression</span>
-            <div className="biblio-progress-bar">
+          <div className={styles.progress}>
+            <span className={styles.progressLabel}>Progression</span>
+            <div className={styles.progressBar}>
               <div 
-                className="biblio-progress-fill" 
+                className={styles.progressFill} 
                 style={{ width: `${getProgressPercentage()}%` }}
               ></div>
             </div>
-            <span className="biblio-progress-text">
+            <span className={styles.progressText}>
               {entry.progressionEpisodes} / {entry.saison.nombreEpisodes} épisodes
             </span>
           </div>
@@ -71,16 +79,16 @@ export default function BiblioCard({ entry, onUpdate, onDelete }) {
 
         {/* Actions */}
         {showActions && (
-          <div className="biblio-actions">
+          <div className={styles.actions}>
             <button
-              className="biblio-action-button"
+              className={styles.actionButton}
               onClick={() => onUpdate(entry)}
             >
               <Edit2 size={14} />
               Modifier
             </button>
             <button
-              className="biblio-action-button danger"
+              className={`${styles.actionButton} ${styles.danger}`}
               onClick={() => onDelete(entry)}
             >
               <Trash2 size={14} />

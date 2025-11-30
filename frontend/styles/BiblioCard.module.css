@@ -1,0 +1,163 @@
+/* Carte bibliothèque */
+
+.card {
+  position: relative;
+  background-color: var(--fond-carte);
+  border-radius: var(--arrondi-moyen);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Badge de statut */
+.statusBadge {
+  position: absolute;
+  top: var(--espace-sm);
+  right: var(--espace-sm);
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--arrondi-grand);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.statusBadge.enCours {
+  background: var(--gradient-corail-rose);
+  color: white;
+}
+
+.statusBadge.termine {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.statusBadge.aVoir {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.statusBadge.enPause {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: white;
+}
+
+.statusBadge.abandonne {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+/* Image */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 140%;
+  overflow: hidden;
+  background: var(--fond-gris);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+/* Corps de la carte */
+.body {
+  padding: var(--espace-md);
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texte-noir);
+  margin-bottom: var(--espace-sm);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s;
+}
+
+.title:hover {
+  color: var(--bleu-pastel);
+}
+
+/* Progression */
+.progress {
+  margin-top: var(--espace-sm);
+}
+
+.progressLabel {
+  font-size: 0.75rem;
+  color: var(--texte-gris);
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background-color: rgba(147, 197, 253, 0.2);
+  border-radius: var(--arrondi-grand);
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--gradient-corail-rose);
+  border-radius: var(--arrondi-grand);
+  transition: width 0.3s;
+}
+
+.progressText {
+  font-size: 0.75rem;
+  color: var(--texte-gris);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: var(--espace-sm);
+  padding-top: var(--espace-sm);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.actionButton {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  background: var(--fond-gris);
+  color: var(--texte-noir);
+  border-radius: var(--arrondi-petit);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  transition: all 0.3s;
+}
+
+.actionButton:hover {
+  background: var(--bleu-pastel);
+  color: white;
+}
+
+.actionButton.danger:hover {
+  background: #ef4444;
+  color: white;
+}
