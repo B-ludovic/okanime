@@ -65,6 +65,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Gestion des requêtes OPTIONS (preflight CORS)
+app.options('*', cors(corsOptions));
+
 // 4. Parse les données JSON
 app.use(express.json({ limit: '10mb' })); // Limite la taille des requêtes JSON à 10MB
 
