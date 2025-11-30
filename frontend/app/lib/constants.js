@@ -1,5 +1,5 @@
 // Palette de couleurs O'Kanime
-export const COLORS = {
+const COLORS = {
   // Couleurs principales
   primary: '#7C3AED',      // Violet vif
   secondary: '#EC4899',    // Rose/Magenta
@@ -20,7 +20,7 @@ export const COLORS = {
 };
 
 // Statuts de bibliothèque
-export const STATUTS_BIBLIOTHEQUE = {
+const STATUTS_BIBLIOTHEQUE = {
   A_VOIR: 'À voir',
   EN_COURS: 'En cours',
   VU: 'Vu',
@@ -28,7 +28,7 @@ export const STATUTS_BIBLIOTHEQUE = {
 };
 
 // Classes DaisyUI par statut (utilise les couleurs du thème)
-export const STATUT_BADGE_CLASSES = {
+const STATUT_BADGE_CLASSES = {
   A_VOIR: 'badge-info',        // Bleu
   EN_COURS: 'badge-warning',    // Orange
   VU: 'badge-success',          // Vert
@@ -36,14 +36,32 @@ export const STATUT_BADGE_CLASSES = {
 };
 
 // Rôles utilisateurs
-export const ROLES = {
+const ROLES = {
   VISITEUR: 'Visiteur',
   USER: 'Utilisateur',
   ADMIN: 'Administrateur',
 };
 
 // Configuration de pagination
-export const PAGINATION = {
+const PAGINATION = {
   ANIMES_PER_PAGE: 20,
   AVIS_PER_PAGE: 10,
+};
+
+// Couleurs par statut
+const STATUT_COLORS = {
+  A_VOIR: '--bleu-pastel',
+  EN_COURS: '--jaune-pastel',
+  VU: '--vert-pastel',
+  FAVORI: '--corail-pastel',
+};
+
+
+export {
+  COLORS,
+  STATUTS_BIBLIOTHEQUE,
+  STATUT_BADGE_CLASSES,
+  ROLES,
+  PAGINATION,
+  STATUT_COLORS,
 };
