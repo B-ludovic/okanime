@@ -1,0 +1,115 @@
+/* AnimeCard - Styles spécifiques */
+
+.animeCard {
+  background-color: var(--fond-carte);
+  border-radius: var(--arrondi-moyen);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.animeCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(147, 197, 253, 0.2);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 140%; /* Ratio 5:7 pour poster manga */
+  overflow: hidden;
+  background: linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%);
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.animeCard:hover .image {
+  transform: scale(1.05);
+}
+
+.badge {
+  position: absolute;
+  top: var(--espace-sm);
+  right: var(--espace-sm);
+  background: var(--gradient-corail-rose);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--arrondi-grand);
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.body {
+  padding: var(--espace-md);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-xs);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: var(--espace-xs);
+}
+
+.genreTag {
+  background-color: rgba(147, 197, 253, 0.15);
+  color: var(--bleu-pastel);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--arrondi-petit);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  margin-top: auto;
+  padding-top: var(--espace-sm);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--or-pastel);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.year {
+  color: var(--texte-gris);
+  font-size: 0.875rem;
+  margin-left: auto;
+}
