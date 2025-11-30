@@ -1,0 +1,244 @@
+/* PAGE AJOUT ANIME - STYLES */
+
+.ajout-anime-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ajout-anime-main {
+  flex: 1;
+  padding: var(--espace-xl) 0;
+}
+
+.ajout-anime-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--espace-md);
+}
+
+.ajout-anime-header {
+  margin-bottom: var(--espace-xl);
+  text-align: center;
+}
+
+.ajout-anime-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-sm);
+}
+
+.ajout-anime-subtitle {
+  font-size: 1.125rem;
+  color: var(--texte-gris);
+}
+
+.ajout-anime-card {
+  background-color: var(--fond-carte);
+  border-radius: var(--arrondi-moyen);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: var(--espace-xl);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Formulaire */
+.ajout-anime-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-lg);
+}
+
+.ajout-anime-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espace-md);
+}
+
+/* Upload d'image */
+.ajout-anime-upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-sm);
+}
+
+.ajout-anime-upload-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--texte-noir);
+}
+
+.ajout-anime-upload-container {
+  border: 2px dashed rgba(147, 197, 253, 0.4);
+  border-radius: var(--arrondi-moyen);
+  padding: var(--espace-lg);
+  text-align: center;
+  background-color: rgba(147, 197, 253, 0.05);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.ajout-anime-upload-container:hover {
+  border-color: var(--bleu-pastel);
+  background-color: rgba(147, 197, 253, 0.1);
+}
+
+.ajout-anime-upload-icon {
+  font-size: 3rem;
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-sm);
+}
+
+.ajout-anime-upload-text {
+  color: var(--texte-gris);
+  font-size: 0.875rem;
+  margin-bottom: var(--espace-xs);
+}
+
+.ajout-anime-upload-subtext {
+  color: var(--texte-gris);
+  font-size: 0.75rem;
+}
+
+.ajout-anime-upload-input {
+  display: none;
+}
+
+/* Preview de l'image */
+.ajout-anime-preview {
+  position: relative;
+  max-width: 300px;
+  margin-top: var(--espace-sm);
+}
+
+.ajout-anime-preview-image {
+  width: 100%;
+  border-radius: var(--arrondi-moyen);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ajout-anime-preview-remove {
+  position: absolute;
+  top: var(--espace-xs);
+  right: var(--espace-xs);
+  background-color: var(--rouge-pastel);
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.ajout-anime-preview-remove:hover {
+  background-color: #ef4444;
+  transform: scale(1.1);
+}
+
+/* Sélection de genres */
+.ajout-anime-genres-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--espace-xs);
+  margin-top: var(--espace-sm);
+}
+
+.ajout-anime-genre-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  padding: var(--espace-sm);
+  border: 2px solid rgba(147, 197, 253, 0.2);
+  border-radius: var(--arrondi-petit);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.ajout-anime-genre-checkbox:hover {
+  border-color: var(--bleu-pastel);
+  background-color: rgba(147, 197, 253, 0.05);
+}
+
+.ajout-anime-genre-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--bleu-pastel);
+  cursor: pointer;
+}
+
+.ajout-anime-genre-checkbox input[type="checkbox"]:checked {
+  background-color: var(--bleu-pastel);
+}
+
+.ajout-anime-genre-checkbox label {
+  flex: 1;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--texte-noir);
+}
+
+.ajout-anime-genre-checkbox.checked {
+  border-color: var(--bleu-pastel);
+  background-color: rgba(147, 197, 253, 0.1);
+}
+
+/* Textarea */
+.ajout-anime-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Actions */
+.ajout-anime-actions {
+  display: flex;
+  gap: var(--espace-sm);
+  justify-content: flex-end;
+  margin-top: var(--espace-md);
+  padding-top: var(--espace-md);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Message d'info */
+.ajout-anime-info {
+  padding: var(--espace-md);
+  background-color: rgba(147, 197, 253, 0.1);
+  border-left: 4px solid var(--bleu-pastel);
+  border-radius: var(--arrondi-petit);
+  margin-bottom: var(--espace-lg);
+}
+
+.ajout-anime-info-title {
+  font-weight: 700;
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-xs);
+}
+
+.ajout-anime-info-text {
+  font-size: 0.875rem;
+  color: var(--texte-gris);
+  line-height: 1.6;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .ajout-anime-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ajout-anime-genres-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ajout-anime-title {
+    font-size: 2rem;
+  }
+
+  .ajout-anime-card {
+    padding: var(--espace-md);
+  }
+}
