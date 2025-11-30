@@ -11,7 +11,8 @@ import {
   deleteUserAvatar,
   getStats,
   getAllUsers,        
-  changeUserRole,     
+  changeUserRole,
+  deleteUser,
   createGenre,        
   updateGenre,        
   deleteGenre,        
@@ -39,6 +40,7 @@ router.put('/animes/:id/moderation', authMiddleware, adminOnly, moderateAnime );
 // GESTION DES UTILISATEURS (admin uniquement)
 router.get('/users', authMiddleware, adminOnly, getAllUsers );        
 router.put('/users/:userId/role', authMiddleware, adminOnly, changeUserRole );
+router.delete('/users/:userId', authMiddleware, adminOnly, deleteUser );
 router.delete('/users/:userId/avatar', authMiddleware, adminOnly, deleteUserAvatar );
 
 // GESTION DES GENRES (admin uniquement)

@@ -13,6 +13,7 @@ model User {
   email           String   @unique
   password        String
   role            Role     @default(USER)
+  isSuperAdmin    Boolean  @default(false)
   dateInscription DateTime @default(now())
   avatar          String?
   

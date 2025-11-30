@@ -35,23 +35,29 @@ async function main() {
   }
 
   // 1. Création de l'utilisateur Admin
-  const adminEmail = 'admin@okanime.com';
-  const hashedPassword = await bcrypt.hash('admin123', 10);
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@okanime.com';
+  const adminUsername = process.env.ADMIN_USERNAME || 'AdminOkanime';
+  // Mot de passe depuis les variables d'environnement (ou défaut temporaire)
+  const adminPassword = process.env.ADMIN_PASSWORD || 'ChangeMe2024!@#$';
+  const hashedPassword = await bcrypt.hash(adminPassword, 10);
   
   const admin = await prisma.user.upsert({
     where: { email: adminEmail },
     update: {},
     create: {
-      username: 'AdminOkanime',
+      username: adminUsername,
       email: adminEmail,
       password: hashedPassword,
       role: Role.ADMIN,
+      isSuperAdmin: true, // Super admin protégé
       avatar: 'https://ui-avatars.com/api/?name=Admin+Okanime&background=7C3AED&color=fff',
     },
   });
 
   console.log(`👤 Admin créé : ${admin.username} (${admin.email})`);
-  console.log(`   🔑 Mot de passe : admin123`);
+  if (!process.env.ADMIN_PASSWORD) {
+    console.log(`   ⚠️  ATTENTION : Utilisez la variable ADMIN_PASSWORD pour définir un mot de passe sécurisé !`);
+  }
 
   // 2. Récupération des animes populaires via Jikan API
   console.log('📡 Récupération des données depuis Jikan API...');

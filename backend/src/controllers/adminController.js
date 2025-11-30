@@ -446,6 +446,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
       username: true,
       email: true,
       role: true,
+      isSuperAdmin: true,
       dateInscription: true,
       avatar: true,
     },
@@ -479,6 +480,11 @@ const changeUserRole = asyncHandler(async (req, res) => {
     throw new HttpNotFoundError('Utilisateur introuvable');
   }
 
+  // Empêche de modifier le super admin
+  if (user.isSuperAdmin) {
+    throw new HttpForbiddenError('Impossible de modifier le rôle du super administrateur');
+  }
+
   // Empêche de changer son propre rôle
   if (user.id === req.user.id) {
     throw new HttpForbiddenError('Vous ne pouvez pas modifier votre propre rôle');
@@ -500,6 +506,45 @@ const changeUserRole = asyncHandler(async (req, res) => {
     success: true,
     message: `Rôle changé en ${role}`,
     user: updatedUser,
+  });
+});
+
+// Supprimer un utilisateur
+const deleteUser = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  // Vérifie que l'utilisateur existe
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    throw new HttpNotFoundError('Utilisateur introuvable');
+  }
+
+  // Empêche de supprimer le super admin
+  if (user.isSuperAdmin) {
+    throw new HttpForbiddenError('Impossible de supprimer le super administrateur');
+  }
+
+  // Empêche de se supprimer soi-même
+  if (user.id === req.user.id) {
+    throw new HttpForbiddenError('Vous ne pouvez pas supprimer votre propre compte');
+  }
+
+  // Supprime l'avatar de Cloudinary s'il existe
+  if (user.avatar && user.avatar.includes('cloudinary')) {
+    await deleteFromCloudinary(user.avatar);
+  }
+
+  // Supprime l'utilisateur (cascade supprime aussi bibliotheque, avis, etc.)
+  await prisma.user.delete({
+    where: { id: userId },
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: 'Utilisateur supprimé avec succès',
   });
 });
 
@@ -642,4 +687,5 @@ export {
   deleteGenre,
   getAllUsers,
   changeUserRole,
+  deleteUser,
 };
