@@ -1,5 +1,6 @@
 import { env } from '../config/env.js';
 import { HttpInternalServerError } from '../utils/httpErrors.js';
+import { translateToFrench } from './translationService.js';
 
 const JIKAN_BASE_URL = env.JIKAN_API_URL;
 
@@ -39,10 +40,19 @@ const getGenresFromJikan = async () => {
 };
 
 // Transforme les données Jikan en format compatible avec notre base de données
-const transformJikanToOurFormat = (jikanAnime) => {
+const transformJikanToOurFormat = async (jikanAnime) => {
+  // Récupère le synopsis original
+  let synopsis = jikanAnime.synopsis || 'Aucun synopsis disponible';
+  
+  // Traduit le synopsis si disponible et si la clé DeepL existe
+  if (synopsis !== 'Aucun synopsis disponible' && process.env.DEEPL_API_KEY) {
+    console.log('Traduction du synopsis...');
+    synopsis = await translateToFrench(synopsis);
+  }
+  
   return {
     titreVf: jikanAnime.title || jikanAnime.title_english || 'Titre non disponible',
-    synopsis: jikanAnime.synopsis || 'Aucun synopsis disponible',
+    synopsis: synopsis,
     anneeDebut: jikanAnime.year || new Date().getFullYear(),
     studio: jikanAnime.studios?.[0]?.name || 'Studio inconnu',
     posterUrl: jikanAnime.images?.jpg?.large_image_url || jikanAnime.images?.jpg?.image_url,
