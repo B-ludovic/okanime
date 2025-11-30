@@ -44,6 +44,17 @@
   color: white;
 }
 
+.statusBadge.vu {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.statusBadge.favori {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 .statusBadge.enPause {
   background: linear-gradient(135deg, #6b7280, #4b5563);
   color: white;

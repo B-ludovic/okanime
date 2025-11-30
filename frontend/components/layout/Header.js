@@ -2,21 +2,32 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { User, LogOut } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { User, LogOut, Search } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '@/lib/utils';
 import styles from '../../styles/Header.module.css';
 
 export default function Header() {
     const pathname = usePathname();
+    const router = useRouter();
     const [user, setUser] = useState(null);
     const [isAuth, setIsAuth] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         setIsAuth(isAuthenticated());
         setUser(getCurrentUser());
     }, []);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            // TODO: Rediriger vers la page de recherche quand elle sera créée
+            console.log('Recherche:', searchQuery);
+            // router.push(`/recherche?q=${encodeURIComponent(searchQuery)}`);
+        }
+    };
 
     return (
         <header className={styles.header}>
@@ -67,6 +78,20 @@ export default function Header() {
                         )}
                     </ul>
                 </nav>
+
+                {/* Barre de recherche */}
+                <form className={styles.searchBox} onSubmit={handleSearch}>
+                    <input
+                        type="text"
+                        placeholder="Rechercher un animé..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className={styles.searchInput}
+                    />
+                    <button type="submit" className={styles.searchButton} aria-label="Rechercher">
+                        <Search size={18} />
+                    </button>
+                </form>
 
                 {/* Actions */}
                 <div className={styles.headerActions}>

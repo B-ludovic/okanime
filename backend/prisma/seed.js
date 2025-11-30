@@ -48,18 +48,24 @@ async function main() {
   let animesData = [];
   
   try {
-    // Page 1
-    const page1 = await fetchFromJikan('https://api.jikan.moe/v4/top/anime?page=1&limit=25');
-    animesData = page1.data;
-    console.log(`✅ Page 1 : ${page1.data.length} animes récupérés`);
+    // Pages 1 à 2 : Top animes de tous les temps (50 animes)
+    for (let page = 1; page <= 2; page++) {
+      const pageData = await fetchFromJikan(`https://api.jikan.moe/v4/top/anime?page=${page}&limit=25`);
+      animesData = [...animesData, ...pageData.data];
+      console.log(`✅ Top classique Page ${page} : ${pageData.data.length} animes récupérés`);
+      await sleep(1000);
+    }
     
-    // Attente de 1 seconde (rate limit Jikan)
-    await sleep(1000);
+    // Pages 1 à 2 : Animes récents (2020+) avec bonnes notes (50 animes)
+    for (let page = 1; page <= 2; page++) {
+      const pageData = await fetchFromJikan(`https://api.jikan.moe/v4/top/anime?page=${page}&limit=25&filter=airing&min_score=7.5`);
+      animesData = [...animesData, ...pageData.data];
+      console.log(`✅ Animes récents Page ${page} : ${pageData.data.length} animes récupérés`);
+      if (page < 2) {
+        await sleep(1000);
+      }
+    }
     
-    // Page 2
-    const page2 = await fetchFromJikan('https://api.jikan.moe/v4/top/anime?page=2&limit=25');
-    animesData = [...animesData, ...page2.data];
-    console.log(`✅ Page 2 : ${page2.data.length} animes récupérés`);
     console.log(`📊 Total : ${animesData.length} animes à traiter`);
   } catch (error) {
     console.error("❌ Erreur lors de l'appel à Jikan API:", error.message);
@@ -72,6 +78,18 @@ async function main() {
 
   for (const animeData of animesData) {
     try {
+      // Filtrer les contenus adultes (Hentai, Erotica uniquement)
+      const isAdultContent = animeData.genres?.some(g => {
+        const genreName = g.name.toLowerCase();
+        return genreName === 'hentai' || 
+               genreName === 'erotica';
+      }) || animeData.rating?.toLowerCase().includes('rx');
+
+      if (isAdultContent) {
+        console.log(`⛔ Ignoré (contenu adulte) : ${animeData.title}`);
+        continue;
+      }
+
       const titre = animeData.title_english || animeData.title;
       const annee = animeData.year || (animeData.aired?.from ? new Date(animeData.aired.from).getFullYear() : 2000);
       const studio = animeData.studios?.length > 0 ? animeData.studios[0].name : 'Inconnu';

@@ -33,6 +33,12 @@
 }
 
 /* Poster à gauche */
+.posterSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-md);
+}
+
 .poster {
   position: relative;
 }
@@ -57,6 +63,15 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.addButton {
+  width: 100%;
+  margin-top: var(--espace-sm);
+}
+
+.addButtonAdded {
+  opacity: 0.7;
 }
 
 /* Infos à droite */

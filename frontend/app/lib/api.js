@@ -46,8 +46,10 @@ const fetchAPI = async (endpoint, options = {}) => {
       console.error('Impossible de parser la réponse d\'erreur:', parseError);
     }
 
-    console.error(`API Error [${options.method || 'GET'} ${endpoint}]:`, errorMessage);
-    throw new Error(errorMessage);
+    // Convertir en string si c'est un objet
+    const errorString = typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage);
+    console.error(`API Error [${options.method || 'GET'} ${endpoint}]:`, errorString);
+    throw new Error(errorString);
   }
 
   // Retourne les données JSON

@@ -51,7 +51,7 @@ const register = asyncHandler(async (req, res) => {
   });
 
   // 6. Génère un token JWT
-  const token = generateToken({ userId: user.id, role: user.role });
+  const token = generateToken(user.id, user.role);
 
   // 7. Renvoie la réponse
   res.status(httpStatusCodes.CREATED).json({
@@ -87,7 +87,7 @@ const login = asyncHandler(async (req, res) => {
   }
 
   // 4. Génère un token JWT
-  const token = generateToken({ userId: user.id, role: user.role });
+  const token = generateToken(user.id, user.role);
 
   // 5. Renvoie la réponse (sans le mot de passe)
   res.status(httpStatusCodes.OK).json({

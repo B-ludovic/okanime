@@ -20,8 +20,9 @@ export default function BiblioCard({ entry, onUpdate, onDelete }) {
   const getStatusClass = () => {
     const statusMap = {
       'EN_COURS': 'enCours',
-      'TERMINE': 'termine',
+      'VU': 'vu',
       'A_VOIR': 'aVoir',
+      'FAVORI': 'favori',
       'EN_PAUSE': 'enPause',
       'ABANDONNE': 'abandonne'
     };

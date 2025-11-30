@@ -40,7 +40,9 @@
 }
 
 .body {
-  margin-bottom: var(--espace-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-lg);
 }
 
 .actions {
@@ -56,6 +58,7 @@
 
 .rangeInput {
   width: 100%;
+  margin-bottom: var(--espace-sm);
   accent-color: var(--bleu-pastel);
 }
 
