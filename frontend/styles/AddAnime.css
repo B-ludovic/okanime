@@ -206,7 +206,6 @@
 .ajout-anime-info {
   padding: var(--espace-md);
   background-color: rgba(147, 197, 253, 0.1);
-  border-left: 4px solid var(--bleu-pastel);
   border-radius: var(--arrondi-petit);
   margin-bottom: var(--espace-lg);
 }

@@ -10,18 +10,18 @@ const searchAnimeSchema = z.object({
 
 // Schéma pour créer un anime manuellement
 const createAnimeSchema = z.object({
-  titreVf: z.string().min(1, 'Le titre est requis'),
-  synopsis: z.string().min(10, 'Le synopsis doit contenir au moins 10 caractères'),
+  titreVf: z.string().min(1, 'Le titre est requis').max(200, 'Le titre ne peut pas dépasser 200 caractères'),
+  synopsis: z.string().min(10, 'Le synopsis doit contenir au moins 10 caractères').max(5000, 'Le synopsis ne peut pas dépasser 5000 caractères'),
   anneeDebut: z.number().int().min(1900).max(new Date().getFullYear() + 2),
-  studio: z.string().optional(),
+  studio: z.string().max(200, 'Le nom du studio ne peut pas dépasser 200 caractères').optional(),
   genreIds: z.array(z.string()).min(1, 'Au moins un genre est requis'),
 });
 
 // Schéma pour créer une saison
 const createSaisonSchema = z.object({
   numeroSaison: z.number().int().min(1),
-  titreSaison: z.string().optional(),
-  resume: z.string().optional(),
+  titreSaison: z.string().max(200, 'Le titre de la saison ne peut pas dépasser 200 caractères').optional(),
+  resume: z.string().max(3000, 'Le résumé ne peut pas dépasser 3000 caractères').optional(),
   nombreEpisodes: z.number().int().min(1),
   annee: z.number().int().min(1900).max(new Date().getFullYear() + 2),
   statut: z.enum(['EN_COURS', 'TERMINE']).default('TERMINE'),
@@ -29,10 +29,10 @@ const createSaisonSchema = z.object({
 
 // Schéma pour mettre à jour un anime
 const updateAnimeSchema = z.object({
-  titreVf: z.string().min(1).optional(),
-  synopsis: z.string().min(10).optional(),
+  titreVf: z.string().min(1).max(200, 'Le titre ne peut pas dépasser 200 caractères').optional(),
+  synopsis: z.string().min(10).max(5000, 'Le synopsis ne peut pas dépasser 5000 caractères').optional(),
   anneeDebut: z.number().int().min(1900).max(new Date().getFullYear() + 2).optional(),
-  studio: z.string().optional(),
+  studio: z.string().max(200, 'Le nom du studio ne peut pas dépasser 200 caractères').optional(),
   genreIds: z.array(z.string()).optional(),
   statutModeration: z.enum(['EN_ATTENTE', 'VALIDE', 'REFUSE']).optional(),
 });

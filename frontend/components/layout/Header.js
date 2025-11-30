@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { User, LogOut, Search } from 'lucide-react';
+import { User, LogOut, Search, Menu, X, ArrowLeft } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '../../app/lib/utils';
 import styles from '../../styles/Header.module.css';
@@ -14,23 +14,31 @@ export default function Header() {
     const [user, setUser] = useState(null);
     const [isAuth, setIsAuth] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
     useEffect(() => {
-        setIsAuth(isAuthenticated());
-        setUser(getCurrentUser());
+        const checkAuth = () => {
+            setIsAuth(isAuthenticated());
+            setUser(getCurrentUser());
+        };
+        checkAuth();
     }, []);
 
     const handleSearch = (e) => {
         e.preventDefault();
         if (searchQuery.trim()) {
             router.push(`/recherche?q=${encodeURIComponent(searchQuery)}`);
+            setIsSearchExpanded(false);
+            setIsMobileMenuOpen(false);
         }
     };
 
     return (
         <header className={styles.header}>
             <div className={styles.headerContainer}>
-                {/* Logo - Gauche */}
+                
+                {/* Logo */}
                 <Link href="/" className={styles.logo}>
                     <Image 
                         src="/icons/japan-flag.png" 
@@ -42,7 +50,40 @@ export default function Header() {
                     <span className="brand-name">O&apos;Kanime</span>
                 </Link>
 
-                {/* Navigation - Centre */}
+                {/* Contrôles mobile : Recherche extensible + Burger */}
+                <div className={styles.mobileControls}>
+                    {/* Formulaire de recherche extensible */}
+                    <form 
+                        onSubmit={handleSearch} 
+                        className={`${styles.mobileSearchForm} ${isSearchExpanded ? styles.expanded : ''}`}
+                        onFocus={() => setIsSearchExpanded(true)}
+                        onBlur={() => {
+                            if (!searchQuery) setIsSearchExpanded(false);
+                        }}
+                    >
+                        <input 
+                            type="text"
+                            placeholder="Rechercher..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className={styles.mobileSearchInput}
+                        />
+                        <button type="submit" className={styles.mobileSearchBtn} aria-label="Rechercher">
+                            <Search size={20} />
+                        </button>
+                    </form>
+                    
+                    {/* Bouton Burger */}
+                    <button 
+                        className={styles.mobileIconBtn}
+                        onClick={() => setIsMobileMenuOpen(true)}
+                        aria-label="Menu"
+                    >
+                        <Menu size={28} />
+                    </button>
+                </div>
+
+                {/* Navigation desktop */}
                 <nav className={styles.navWrapper}>
                     <ul className={styles.nav}>
                         <li>
@@ -77,9 +118,8 @@ export default function Header() {
                     </ul>
                 </nav>
 
-                {/* Colonne droite : Admin + Recherche + Actions */}
+                {/* Header Right (Desktop) */}
                 <div className={styles.headerRight}>
-                    {/* Lien Admin */}
                     {isAuth && user?.role === 'ADMIN' && (
                         <Link
                             href="/admin"
@@ -90,7 +130,6 @@ export default function Header() {
                         </Link>
                     )}
 
-                    {/* Barre de recherche */}
                     <form className={styles.searchBox} onSubmit={handleSearch}>
                         <input
                             type="text"
@@ -104,7 +143,6 @@ export default function Header() {
                         </button>
                     </form>
 
-                    {/* Actions */}
                     <div className={styles.headerActions}>
                         {isAuth ? (
                             <>
@@ -128,6 +166,111 @@ export default function Header() {
                             </>
                         )}
                     </div>
+                </div>
+            </div>
+
+            {/* Backdrop */}
+            <div 
+                className={`${styles.mobileBackdrop} ${isMobileMenuOpen ? styles.backdropVisible : ''}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+            />
+
+            {/* Menu Drawer */}
+            <div className={`${styles.mobileDrawer} ${isMobileMenuOpen ? styles.drawerOpen : ''}`}>
+                <div className={styles.drawerHeader}>
+                    <span className={styles.drawerTitle}>Menu</span>
+                    <button onClick={() => setIsMobileMenuOpen(false)} className={styles.drawerClose}>
+                        <X size={24} />
+                    </button>
+                </div>
+
+                <nav className={styles.drawerNav}>
+                    <Link 
+                        href="/" 
+                        className={`${styles.drawerLink} ${styles.stagger1}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        <Image src="/icons/home.png" alt="" width={22} height={22} />
+                        <span>Accueil</span>
+                    </Link>
+                    <Link 
+                        href="/anime" 
+                        className={`${styles.drawerLink} ${styles.stagger2}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        <Image src="/icons/anime.png" alt="" width={22} height={22} />
+                        <span>Animés</span>
+                    </Link>
+                    
+                    {isAuth && (
+                        <Link 
+                            href="/bibliotheque" 
+                            className={`${styles.drawerLink} ${styles.stagger3}`}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                            <Image src="/icons/my-library.png" alt="" width={22} height={22} />
+                            <span>Ma Bibliothèque</span>
+                        </Link>
+                    )}
+
+                    {/* Séparateur pour l'Admin */}
+                    {isAuth && user?.role === 'ADMIN' && (
+                        <>
+                            <div className={styles.navDivider}></div>
+                            <Link 
+                                href="/admin" 
+                                className={`${styles.drawerLink} ${styles.adminDrawerLink} ${styles.stagger4}`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                <Image src="/icons/admin.png" alt="" width={22} height={22} />
+                                <span>Administration</span>
+                            </Link>
+                        </>
+                    )}
+                </nav>
+
+                <div className={`${styles.drawerFooter} ${styles.stagger5}`}>
+                    {isAuth ? (
+                        <div className={styles.drawerUserSection}>
+                            {/* Carte Profil améliorée */}
+                            <div className={styles.userInfo}>
+                                {/* Avatar avec l'initiale */}
+                                <div className={styles.userAvatar}>
+                                    {user?.username?.charAt(0).toUpperCase() || 'U'}
+                                </div>
+                                <div className={styles.userDetails}>
+                                    <strong>{user?.username}</strong>
+                                    <small>{user?.role}</small>
+                                </div>
+                            </div>
+
+                            {/* Boutons en grille */}
+                            <div className={styles.userActionsGrid}>
+                                <Link 
+                                    href="/profil" 
+                                    className="btn btn-ghost btn-sm w-full" 
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    Profil
+                                </Link>
+                                <button 
+                                    onClick={() => { logout(); setIsMobileMenuOpen(false); }} 
+                                    className="btn btn-danger btn-sm w-full"
+                                >
+                                    Déconnexion
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className={styles.drawerAuthSection}>
+                            <Link href="/login" className="btn btn-ghost w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                                Connexion
+                            </Link>
+                            <Link href="/register" className="btn btn-primary w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                                Inscription
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>

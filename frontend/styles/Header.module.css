@@ -1,170 +1,297 @@
-/* HEADER - Styles complets corrigés */
-
+/* HEADER - Styles */
 .header {
   background-color: var(--fond-header);
   box-shadow: var(--ombre-grande);
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: var(--espace-sm) var(--espace-lg);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--espace-lg);
 }
 
 .headerContainer {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: var(--espace-lg);
+  justify-content: space-between;
 }
 
-/* --- 1. LOGO (Gauche) --- */
+/* LOGO */
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--bleu-pastel);
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--bleu-pastel);
+  text-decoration: none;
   z-index: 20;
 }
 
-.logo:hover {
-  opacity: 0.8;
+/* =========================
+   ELEMENTS DESKTOP
+   ========================= */
+.navWrapper, .headerRight { 
+  display: flex; 
+  align-items: center; 
+  gap: var(--espace-md); 
 }
 
-/* --- 2. MENU CENTRAL (Centré avec justify-self) --- */
-.navWrapper {
-  justify-self: end;
-  margin-right: var(--espace-lg);
-}
+.nav { display: flex; gap: var(--espace-md); list-style: none; margin: 0; padding: 0; }
+.navLink { color: var(--texte-gris); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+.navLink:hover { color: var(--bleu-pastel); }
 
-.nav {
-  display: flex;
-  gap: var(--espace-md);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Rend les liens cliquables */
-.navLink {
-  padding: var(--espace-xs) var(--espace-sm);
-  border-radius: var(--arrondi-petit);
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--texte-gris);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.navLink:hover {
-  background-color: rgba(147, 197, 253, 0.1);
-}
-
-.navLink.active {
-  background-color: var(--bleu-pastel);
-  color: white;
-}
-
-/* --- 3. COLONNE DROITE (Admin + Recherche + Actions) --- */
-.headerRight {
-  display: flex;
-  align-items: center;
-  gap: var(--espace-md);
-  justify-self: end;
-}
-
-/* Lien Admin */
-.adminLink {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--texte-gris);
-  text-decoration: none;
-  padding: var(--espace-xs) var(--espace-sm);
-  border-radius: var(--arrondi-petit);
-  transition: all 0.3s;
-  white-space: nowrap;
-}
-
-.adminLink:hover {
-  background-color: rgba(147, 197, 253, 0.1);
-}
-
-.adminLink.active {
-  background-color: var(--bleu-pastel);
-  color: white;
-}
-
-/* --- 4. BARRE DE RECHERCHE --- */
+/* --- BARRE DE RECHERCHE DESKTOP ANIMÉE (Nouveau Code) --- */
 .searchBox {
   position: relative;
   display: flex;
   align-items: center;
   border: 2px solid rgba(147, 197, 253, 0.2);
-  border-radius: var(--arrondi-grand);
+  border-radius: 25px; /* Arrondi large */
   background: white;
-  transition: width 0.3s ease;
-  width: 200px;
+  
+  /* Animation fluide */
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 150px; /* Largeur initiale compacte */
   overflow: hidden;
-  flex-shrink: 0;
 }
 
+/* État Actif (Focus) */
 .searchBox:focus-within {
-  width: 280px; 
+  width: 350px; /* S'agrandit */
   border-color: var(--bleu-pastel);
-  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
+  box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.1);
 }
 
+/* Input */
 .searchInput {
-  flex: 1;
   border: none;
   outline: none;
-  padding: var(--espace-xs) var(--espace-sm);
-  font-size: 0.9rem;
+  /* Padding droit important (38px) pour ne pas écrire sous le bouton */
+  padding: 10px 38px 10px 15px;
+  font-size: 0.95rem;
+  flex: 1;
   background: transparent;
   width: 100%;
+  color: var(--texte-noir);
 }
 
+/* Bouton Loupe (Absolu à droite) */
 .searchButton {
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  background: transparent;
-  padding: var(--espace-xs) var(--espace-sm);
   cursor: pointer;
-  color: var(--bleu-pastel);
-}
-
-/* --- 5. ACTIONS (Profil / Déconnexion) --- */
-.headerActions {
+  color: var(--texte-gris);
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.2s;
   display: flex;
-  gap: var(--espace-sm);
   align-items: center;
+  justify-content: center;
 }
 
-.headerActions .btn img {
-  opacity: 0.9;
-  transition: all 0.3s;
+.searchButton:hover {
+  color: var(--bleu-pastel);
+  background-color: rgba(147, 197, 253, 0.1);
 }
 
-.headerActions .btn:hover img {
-  opacity: 1;
-  transform: scale(1.1);
+.headerActions { display: flex; gap: 10px; }
+.adminLink { color: var(--texte-gris); font-weight: bold; text-decoration: none; margin-right: 10px; }
+
+
+/* =========================
+   ELEMENTS MOBILE (Cachés sur Desktop)
+   ========================= */
+
+/* IMPORTANT : On cache le conteneur des contrôles mobiles sur Desktop */
+.mobileControls, 
+.mobileBackdrop, 
+.mobileDrawer {
+  display: none;
 }
 
-/* --- 6. RESPONSIVE --- */
+/* =========================
+   MEDIA QUERY (< 950px)
+   ========================= */
+
 @media (max-width: 950px) {
-  .nav {
-    display: none; /* On cache le menu central sur tablette/mobile */
+  /* 1. On cache les éléments Desktop */
+  /* CELA INCLUT LA BARRE DE RECHERCHE DESKTOP (.headerRight) */
+  .navWrapper, .headerRight {
+    display: none;
+  }
+
+  /* 2. On affiche les éléments Mobile */
+  .mobileControls {
+    display: flex; /* On le réactive ici uniquement */
+    align-items: center;
+    gap: var(--espace-sm);
+  }
+
+  /* --- Styles Mobile inchangés --- */
+  
+  .mobileIconBtn {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.05);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bleu-pastel);
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+  }
+  .mobileIconBtn:active { transform: scale(0.9); }
+
+  /* RECHERCHE MOBILE */
+  .mobileSearchForm {
+    display: flex;
+    position: relative;
+    background: white;
+    border: 2px solid rgba(147, 197, 253, 0.2);
+    border-radius: 25px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    width: 44px;
+    height: 44px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobileSearchForm.expanded,
+  .mobileSearchForm:focus-within {
+    width: 280px;
+    justify-content: flex-start;
+    padding-left: 15px;
+  }
+
+  .mobileSearchInput {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    color: var(--texte-noir);
+    width: 0;
+    opacity: 0;
+    transition: all 0.3s;
+    padding: 0;
+  }
+
+  .mobileSearchForm.expanded .mobileSearchInput,
+  .mobileSearchForm:focus-within .mobileSearchInput {
+    width: calc(100% - 60px);
+    opacity: 1;
+    padding: 8px 5px;
+  }
+
+  .mobileSearchBtn {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--bleu-pastel);
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  /* MENU DRAWER (Mobile) */
+  .mobileBackdrop {
+    display: block;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .backdropVisible { opacity: 1; pointer-events: auto; }
+
+  .mobileDrawer {
+    display: flex; flex-direction: column;
+    position: fixed;
+    top: 0; bottom: 0;
+    left: -100%;
+    width: 80%; max-width: 300px;
+    background: white;
+    z-index: 999;
+    transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+  }
+  .drawerOpen { left: 0; }
+
+  .drawerHeader {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: var(--espace-lg);
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .drawerTitle { font-weight: 800; font-size: 1.2rem; color: var(--bleu-pastel); }
+  .drawerClose { background: none; border: none; cursor: pointer; color: var(--texte-gris); }
+
+  .drawerNav {
+    padding: var(--espace-lg);
+    display: flex; flex-direction: column; gap: var(--espace-md);
   }
   
-  .searchBox {
-    width: 160px;
+  .navDivider { height: 1px; background-color: #f0f0f0; margin: var(--espace-xs) 0; width: 100%; }
+  .adminDrawerLink { color: var(--bleu-pastel); font-weight: 600; }
+
+  .drawerLink {
+    display: flex; align-items: center; gap: 15px;
+    font-size: 1.1rem; color: var(--texte-noir); text-decoration: none;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
-  
-  .searchBox:focus-within {
-    width: 200px;
+
+  .drawerOpen .drawerLink, .drawerOpen .drawerFooter {
+    opacity: 1; transform: translateX(0);
   }
+
+  .drawerOpen .stagger1 { transition-delay: 0.1s; }
+  .drawerOpen .stagger2 { transition-delay: 0.2s; }
+  .drawerOpen .stagger3 { transition-delay: 0.3s; }
+  .drawerOpen .stagger4 { transition-delay: 0.4s; }
+  .drawerOpen .stagger5 { transition-delay: 0.5s; }
+
+  .drawerFooter {
+    margin-top: auto;
+    padding: var(--espace-md);
+    padding-bottom: calc(var(--espace-md) + 20px);
+    background-color: #F8FAFC;
+    border-top: 1px solid #E2E8F0;
+    opacity: 0; transform: translateY(20px);
+    transition: all 0.4s; transition-delay: 0.4s;
+  }
+
+  .userInfo {
+    display: flex; align-items: center; gap: var(--espace-sm);
+    margin-bottom: var(--espace-md); background: white; padding: var(--espace-sm);
+    border-radius: var(--arrondi-moyen); border: 1px solid #E2E8F0;
+  }
+  .userAvatar {
+    width: 40px; height: 40px; background-color: var(--bleu-pastel); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; flex-shrink: 0;
+  }
+  .userDetails { display: flex; flex-direction: column; }
+  .userActionsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--espace-sm); }
+  .drawerUserSection { display: flex; flex-direction: column; }
+  .drawerAuthSection { display: flex; flex-direction: column; gap: 12px; }
 }

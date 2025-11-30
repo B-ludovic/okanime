@@ -37,9 +37,6 @@ router.get('/animes/pending', authMiddleware, adminOnly, getPendingAnimes);
 router.put('/animes/:id/moderation', authMiddleware, adminOnly, moderateAnime );
 
 // GESTION DES UTILISATEURS (admin uniquement)
-router.delete('/users/:userId/avatar', authMiddleware, adminOnly, deleteUserAvatar );
-
-// GESTION DES UTILISATEURS (admin uniquement)
 router.get('/users', authMiddleware, adminOnly, getAllUsers );        
 router.put('/users/:userId/role', authMiddleware, adminOnly, changeUserRole );
 router.delete('/users/:userId/avatar', authMiddleware, adminOnly, deleteUserAvatar );

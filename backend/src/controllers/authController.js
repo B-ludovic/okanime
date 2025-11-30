@@ -3,6 +3,7 @@ import { registerSchema, loginSchema, validateData } from '../validators/authVal
 import { hashPassword, comparePassword } from '../utils/bcrypt.js';
 import { generateToken } from '../utils/jwt.js';
 import { HttpBadRequestError, HttpUnauthorizedError, HttpConflictError, httpStatusCodes } from '../utils/httpErrors.js';
+import { uploadAvatar, deleteFromCloudinary } from '../services/uploadService.js';
 import prisma from '../config/prisma.js';
 
 // INSCRIPTION - POST /api/auth/register
@@ -118,4 +119,43 @@ const getMe = asyncHandler(async (req, res) => {
   });
 });
 
-export { register, login, getMe };
+// UPLOAD AVATAR - PUT /api/auth/avatar
+const updateAvatar = asyncHandler(async (req, res) => {
+  // 1. Vérifie qu'un fichier a été uploadé
+  if (!req.file) {
+    throw new HttpBadRequestError('Aucune image fournie');
+  }
+
+  // 2. Supprime l'ancien avatar si présent
+  if (req.user.avatar) {
+    await deleteFromCloudinary(req.user.avatar);
+  }
+
+  // 3. Upload le nouvel avatar
+  const avatarUrl = await uploadAvatar(req.file.buffer);
+
+  // 4. Met à jour l'utilisateur
+  const updatedUser = await prisma.user.update({
+    where: { id: req.user.id },
+    data: { avatar: avatarUrl },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      role: true,
+      avatar: true,
+      dateInscription: true,
+    },
+  });
+
+  // 5. Renvoie la réponse
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: 'Avatar mis à jour',
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+
+export { register, login, getMe, updateAvatar };

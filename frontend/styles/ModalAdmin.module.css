@@ -17,11 +17,11 @@
 }
 
 .modalContent {
-  background: white; /* Correspond à --fond-carte */
+  background: white;
   border-radius: var(--arrondi-moyen);
-  max-width: 900px; /* Même largeur que AddAnime container */
+  max-width: 1100px; /* Augmenté de 900px à 1100px */
   width: 100%;
-  max-height: 90vh;
+  max-height: 95vh; /* Augmenté de 90vh à 95vh */
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -167,17 +167,17 @@
 /* --- GENRES (Style AddAnime exact) --- */
 .genresGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: var(--espace-xs);
-  margin-top: var(--espace-sm);
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Augmenté de 150px à 160px */
+  gap: var(--espace-sm); /* Augmenté de xs à sm */
+  margin-top: var(--espace-md); /* Augmenté de sm à md */
 }
 
 .genreCheckbox {
   display: flex;
   align-items: center;
-  gap: var(--espace-xs);
-  padding: var(--espace-sm);
-  border: 2px solid rgba(147, 197, 253, 0.2); /* Bordure plus fine comme AddAnime */
+  gap: var(--espace-sm); /* Augmenté de xs à sm */
+  padding: var(--espace-md); /* Augmenté de sm à md */
+  border: 2px solid rgba(147, 197, 253, 0.2);
   border-radius: var(--arrondi-petit);
   cursor: pointer;
   transition: all 0.3s;
@@ -197,8 +197,8 @@
 }
 
 .genreCheckbox input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 20px; /* Augmenté de 18px à 20px */
+  height: 20px; /* Augmenté de 18px à 20px */
   accent-color: var(--bleu-pastel);
   cursor: pointer;
 }
@@ -207,17 +207,17 @@
 .genreCheckbox span {
   flex: 1;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 0.9375rem; /* Augmenté de 0.875rem à 0.9375rem */
   color: var(--texte-noir);
-  font-weight: normal; /* Remis à normal comme AddAnime */
+  font-weight: normal;
 }
 
 /* --- BANNIÈRES (Spécifique au modal mais harmonisé) --- */
 .bannersGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colonnes c'est souvent mieux en modal */
+  grid-template-columns: repeat(4, 1fr); /* Changé de 3 à 4 colonnes */
   gap: var(--espace-md);
-  margin-top: var(--espace-sm);
+  margin-top: var(--espace-md);
 }
 
 .bannerOption {
@@ -227,7 +227,7 @@
   overflow: hidden;
   border: 3px solid transparent;
   transition: all 0.3s;
-  height: 120px; /* Un peu moins haut pour gagner de la place */
+  height: 140px; /* Augmenté de 120px à 140px */
 }
 
 .bannerOption:hover {
@@ -242,14 +242,14 @@
 
 .bannerLabel {
   position: absolute;
-  bottom: 8px;
+  bottom: 10px; /* Augmenté de 8px à 10px */
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.8);
   color: white;
-  padding: 4px 12px;
+  padding: 6px 14px; /* Augmenté de 4px 12px à 6px 14px */
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px; /* Augmenté de 11px à 12px */
   font-weight: 600;
   white-space: nowrap;
 }
@@ -316,6 +316,6 @@
   }
   
   .bannersGrid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* Changé de 1 à 2 colonnes sur mobile */
   }
 }
