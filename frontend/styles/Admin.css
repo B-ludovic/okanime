@@ -379,6 +379,27 @@
   padding: 3rem;
 }
 
+/* Actions rapides */
+.admin-quick-actions {
+  background-color: var(--fond-carte);
+  border-radius: var(--arrondi-moyen);
+  padding: var(--espace-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.admin-quick-actions-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-md);
+}
+
+.admin-quick-actions-text {
+  color: var(--texte-gris);
+  margin-bottom: var(--espace-md);
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 1024px) {
