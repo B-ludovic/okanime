@@ -5,7 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AnimeCard from '@/components/anime/AnimeCard';
 import api from '@/lib/api';
-import styles from '@/styles/AnimeList.module.css';
+import styles from '../../styles/AnimeList.module.css';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function AnimePage() {

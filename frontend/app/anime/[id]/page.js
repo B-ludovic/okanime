@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import api from '@/lib/api';
-import styles from '@/styles/AnimeDetail.module.css';
+import styles from '../../../styles/AnimeDetail.module.css';
 import { Star } from 'lucide-react';
 
 export default function AnimeDetailPage() {
