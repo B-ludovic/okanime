@@ -81,6 +81,15 @@
   font-size: 1.125rem;
 }
 
+.emptyAddSection {
+  margin-top: var(--espace-lg);
+}
+
+.emptyAddText {
+  color: var(--texte-gris);
+  margin-bottom: var(--espace-md);
+}
+
 @media (max-width: 768px) {
   .searchGrid {
     grid-template-columns: 1fr;

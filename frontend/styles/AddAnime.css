@@ -215,6 +215,12 @@
   font-weight: 700;
   color: var(--bleu-pastel);
   margin-bottom: var(--espace-xs);
+  display: flex;
+  align-items: center;
+}
+
+.ajout-anime-info-title svg {
+  margin-right: 0.5rem;
 }
 
 .ajout-anime-info-text {

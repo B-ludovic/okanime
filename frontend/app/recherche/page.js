@@ -1,18 +1,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AnimeCard from '@/components/anime/AnimeCard';
-import { Search, X } from 'lucide-react';
+import { Search, X, Plus } from 'lucide-react';
 import api from '@/lib/api';
+import { isAuthenticated } from '@/lib/utils';
 import styles from '../../styles/recherche.module.css';
 import '../../styles/Anime.css';
 
+
 export default function RecherchePage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [animes, setAnimes] = useState([]);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -37,13 +40,13 @@ export default function RecherchePage() {
 
   // Recherche automatique si params dans l'URL
   useEffect(() => {
-    const q = searchParams.get('q');
+    const query = searchParams.get('q');
     const genre = searchParams.get('genre');
 
-    if (q || genre) {
-      setSearchQuery(q || '');
+    if (query || genre) {
+      setSearchQuery(query || '');
       setSelectedGenre(genre || '');
-      handleSearch(q, genre);
+      handleSearch(query, genre);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
@@ -192,6 +195,21 @@ export default function RecherchePage() {
                   <p className={styles.emptyText}>
                     Essayez avec d&apos;autres mots-clés ou un autre genre
                   </p>
+                  {/* BOUTON AJOUTER UN ANIME */}
+                  {isAuthenticated() && (
+                    <div className={styles.emptyAddSection}>
+                      <p className={styles.emptyAddText}>
+                        L&apos;animé que vous cherchez n&apos;existe pas dans notre base ?
+                      </p>
+                      <button
+                        className="btn btn-primary btn-large"
+                        onClick={() => router.push('/anime/ajouter')}
+                      >
+                        <Plus size={18} />
+                        Ajouter un animé
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </>
