@@ -104,6 +104,9 @@ const updateBibliothequeEntry = asyncHandler(async (req, res) => {
   // PROTECTION IDOR : Vérifie que l'entrée existe ET appartient bien à l'utilisateur connecté
   const entry = await prisma.bibliotheque.findUnique({
     where: { id: id },
+    include: {
+      saison: true, // On récupère la saison pour connaître le nombre total d'épisodes
+    },
   });
 
   // Si l'entrée n'existe pas
@@ -117,11 +120,18 @@ const updateBibliothequeEntry = asyncHandler(async (req, res) => {
     throw new HttpForbiddenError('Vous ne pouvez pas modifier la bibliothèque d\'un autre utilisateur');
   }
 
+  // LOGIQUE AUTO : Si l'utilisateur a vu tous les épisodes, on passe automatiquement à "VU"
+  // Exemple : Si la saison a 12 épisodes et que progressionEpisodes = 12, statut devient "VU"
+  let finalStatut = statut;
+  if (progressionEpisodes !== undefined && progressionEpisodes >= entry.saison.nombreEpisodes) {
+    finalStatut = 'VU'; // Passage automatique à "VU" quand tous les épisodes sont vus
+  }
+
   // Met à jour
   const updatedEntry = await prisma.bibliotheque.update({
     where: { id: id },
     data: {
-      statut,
+      statut: finalStatut,
       progressionEpisodes,
     },
     include: {
