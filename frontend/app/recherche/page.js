@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Header from '../../components/layout/Header';
@@ -13,7 +13,7 @@ import styles from '../../styles/Recherche.module.css';
 import '../../styles/Anime.css';
 
 
-export default function RecherchePage() {
+function RechercheContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [animes, setAnimes] = useState([]);
@@ -228,5 +228,17 @@ export default function RecherchePage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function RecherchePage() {
+  return (
+    <Suspense fallback={
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <span className="loading"></span>
+      </div>
+    }>
+      <RechercheContent />
+    </Suspense>
   );
 }
