@@ -56,7 +56,22 @@ export default function AdminUsersPage() {
       await api.put(`/admin/users/${userId}/role`, { role: newRole });
       fetchUsers();
     } catch (err) {
-      alert('Erreur lors du changement de rôle');
+      alert(err.response?.data?.error?.message || 'Erreur lors du changement de rôle');
+      console.error(err);
+    }
+  };
+
+  // Supprimer un utilisateur
+  const handleDeleteUser = async (userId) => {
+    if (!confirm('⚠️ ATTENTION : Voulez-vous vraiment supprimer cet utilisateur ? Cette action est irréversible !')) {
+      return;
+    }
+
+    try {
+      await api.delete(`/admin/users/${userId}`);
+      fetchUsers();
+    } catch (err) {
+      alert(err.response?.data?.error?.message || 'Erreur lors de la suppression de l\'utilisateur');
       console.error(err);
     }
   };
@@ -144,29 +159,55 @@ export default function AdminUsersPage() {
                 </td>
                 <td>
                   <div className="admin-actions-cell">
-                    {user.role === 'USER' ? (
-                      <button
-                        className="admin-btn admin-btn-small admin-btn-success"
-                        onClick={() => handleChangeRole(user.id, 'ADMIN')}
-                      >
-                        <Shield size={14} />
-                        Promouvoir
-                      </button>
-                    ) : (
-                      <button
-                        className="admin-btn admin-btn-small btn-ghost"
-                        onClick={() => handleChangeRole(user.id, 'USER')}
-                      >
-                        <User size={14} />
-                        Rétrograder
-                      </button>
+                    {/* Boutons de rôle - masqués pour super admin */}
+                    {!user.isSuperAdmin && (
+                      user.role === 'USER' ? (
+                        <button
+                          className="admin-btn admin-btn-small admin-btn-success"
+                          onClick={() => handleChangeRole(user.id, 'ADMIN')}
+                        >
+                          <Shield size={14} />
+                          Promouvoir
+                        </button>
+                      ) : (
+                        <button
+                          className="admin-btn admin-btn-small btn-ghost"
+                          onClick={() => handleChangeRole(user.id, 'USER')}
+                        >
+                          <User size={14} />
+                          Rétrograder
+                        </button>
+                      )
                     )}
-                    {user.avatar && (
+                    
+                    {/* Badge super admin */}
+                    {user.isSuperAdmin && (
+                      <span className="admin-badge admin-badge-admin" style={{ fontSize: '0.75rem' }}>
+                        <Shield size={12} />
+                        SUPER ADMIN
+                      </span>
+                    )}
+                    
+                    {/* Suppression avatar */}
+                    {user.avatar && !user.isSuperAdmin && (
                       <button
                         className="admin-btn admin-btn-small admin-btn-danger"
                         onClick={() => handleDeleteAvatar(user.id)}
+                        title="Supprimer l'avatar"
                       >
                         <Trash2 size={14} />
+                      </button>
+                    )}
+                    
+                    {/* Suppression utilisateur - masquée pour super admin */}
+                    {!user.isSuperAdmin && (
+                      <button
+                        className="admin-btn admin-btn-small admin-btn-danger"
+                        onClick={() => handleDeleteUser(user.id)}
+                        title="Supprimer l'utilisateur"
+                      >
+                        <Trash2 size={14} />
+                        Supprimer
                       </button>
                     )}
                   </div>
