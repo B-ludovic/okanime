@@ -25,13 +25,13 @@ async function main() {
   console.log('🌱 Début du seeding...');
 
   // Vérifier si on active la traduction (besoin de la clé DeepL)
-  const enableTranslation = process.env.ENABLE_TRANSLATION === 'true' && !!process.env.DEEPL_API_KEY;
+  const enableTranslation = !!process.env.DEEPL_API_KEY;
   let totalCharacters = 0; // Compteur de caractères traduits
 
   if (enableTranslation) {
     console.log('🌍 Traduction activée avec DeepL');
   } else {
-    console.log('⚠️  Traduction désactivée (définir ENABLE_TRANSLATION=true pour activer)');
+    console.log('⚠️  Traduction désactivée (pas de clé DEEPL_API_KEY)');
   }
 
   // 1. Création de l'utilisateur Admin
