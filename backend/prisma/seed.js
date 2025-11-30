@@ -1,5 +1,6 @@
 import { PrismaClient, Role, StatutModeration, StatutSaison } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import { translateToFrench } from '../src/services/translationService.js';
 
 const prisma = new PrismaClient();
 
@@ -22,6 +23,16 @@ const fetchFromJikan = async (url) => {
 
 async function main() {
   console.log('🌱 Début du seeding...');
+
+  // Vérifier si on active la traduction (besoin de la clé DeepL)
+  const enableTranslation = !!process.env.DEEPL_API_KEY;
+  let totalCharacters = 0; // Compteur de caractères traduits
+
+  if (enableTranslation) {
+    console.log('🌍 Traduction activée avec DeepL');
+  } else {
+    console.log('⚠️  Traduction désactivée (pas de clé DEEPL_API_KEY)');
+  }
 
   // 1. Création de l'utilisateur Admin
   const adminEmail = 'admin@okanime.com';
@@ -94,8 +105,22 @@ async function main() {
       const annee = animeData.year || (animeData.aired?.from ? new Date(animeData.aired.from).getFullYear() : 2000);
       const studio = animeData.studios?.length > 0 ? animeData.studios[0].name : 'Inconnu';
       const malId = animeData.mal_id;
+      
+      // Récupérer le synopsis original
+      let synopsis = animeData.synopsis || "Pas de synopsis disponible.";
 
       console.log(`💾 Traitement de : ${titre} (MAL ID: ${malId})`);
+
+      // Traduire le synopsis si la traduction est activée
+      if (enableTranslation && synopsis !== "Pas de synopsis disponible.") {
+        console.log('   🌍 Traduction du synopsis...');
+        const originalLength = synopsis.length;
+        synopsis = await translateToFrench(synopsis);
+        totalCharacters += originalLength;
+        console.log(`   ✅ Synopsis traduit (${originalLength} caractères)`);
+        // Petite pause pour ne pas surcharger DeepL
+        await sleep(500);
+      }
 
       // A. Vérifier si l'anime existe déjà via malId
       let anime = await prisma.anime.findUnique({
@@ -108,7 +133,7 @@ async function main() {
           data: {
             malId: malId,
             titreVf: titre,
-            synopsis: animeData.synopsis || "Pas de synopsis disponible.",
+            synopsis: synopsis, // Synopsis traduit ou original
             anneeDebut: annee,
             studio: studio,
             posterUrl: animeData.images?.jpg?.large_image_url,
@@ -185,6 +210,9 @@ async function main() {
   console.log(`✅ ${successCount} animes traités avec succès`);
   if (errorCount > 0) {
     console.log(`❌ ${errorCount} erreurs rencontrées`);
+  }
+  if (enableTranslation) {
+    console.log(`📊 Total de caractères traduits : ${totalCharacters} / 500000 (DeepL gratuit)`);
   }
 }
 
