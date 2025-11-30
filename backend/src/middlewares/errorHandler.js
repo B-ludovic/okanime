@@ -18,7 +18,7 @@ const errorHandler = (err, req, res, next) => {
         type: err.name,
       },
       // En développement, on affiche aussi la stack trace
-      ...(env.NODE_ENV === 'development' && { stack: err.stack }),
+      ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
     });
   }
 
