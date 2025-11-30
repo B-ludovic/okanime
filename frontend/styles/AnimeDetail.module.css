@@ -1,0 +1,181 @@
+/* Page détail d'un animé */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: var(--espace-xl) 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--espace-md);
+}
+
+.card {
+  background-color: var(--fond-carte);
+  border-radius: var(--arrondi-moyen);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: var(--espace-xl);
+  padding: var(--espace-xl);
+}
+
+/* Poster à gauche */
+.poster {
+  position: relative;
+}
+
+.posterImage {
+  width: 100%;
+  border-radius: var(--arrondi-moyen);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.posterBadge {
+  position: absolute;
+  top: var(--espace-sm);
+  right: var(--espace-sm);
+  background: var(--gradient-corail-rose);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--arrondi-grand);
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Infos à droite */
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--texte-noir);
+  margin-bottom: var(--espace-xs);
+}
+
+.author {
+  font-size: 1.125rem;
+  color: var(--texte-gris);
+  margin-bottom: var(--espace-md);
+}
+
+.genresSection {
+  margin-bottom: var(--espace-md);
+}
+
+.genresLabel {
+  font-weight: 600;
+  color: var(--texte-noir);
+  margin-bottom: var(--espace-xs);
+  display: block;
+}
+
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.genreTag {
+  background: var(--gradient-corail-rose);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--arrondi-grand);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.resumeSection {
+  margin-top: var(--espace-md);
+  padding-top: var(--espace-md);
+  border-top: 2px solid rgba(147, 197, 253, 0.2);
+}
+
+.resumeTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-sm);
+}
+
+.resumeText {
+  color: var(--texte-noir);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.seasonsSection {
+  margin-top: var(--espace-lg);
+}
+
+.seasonsTitle {
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-sm);
+}
+
+.seasonsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-xs);
+}
+
+.seasonItem {
+  padding: var(--espace-sm);
+  background-color: rgba(147, 197, 253, 0.1);
+  border-radius: var(--arrondi-petit);
+  display: flex;
+  justify-content: space-between;
+}
+
+.seasonName {
+  font-weight: 600;
+}
+
+.seasonEpisodes {
+  color: var(--texte-gris);
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 250px 1fr;
+    gap: var(--espace-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+    padding: var(--espace-md);
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+}
