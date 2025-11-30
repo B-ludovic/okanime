@@ -43,7 +43,9 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:3000',
       'http://localhost:3001',
-      process.env.FRONTEND_URL, // URL de production (ex: https://okanime.com)
+      process.env.FRONTEND_URL, // URL de production depuis .env
+      'https://okanime.fr', // Production (avec domaine)
+      'https://www.okanime.fr', // Production (avec www)
     ].filter(Boolean); // Retire les valeurs undefined/null
 
     // En développement, autorise aussi les requêtes sans origin (Postman, etc.)
