@@ -20,6 +20,10 @@ dotenv.config();
 
 const app = express();
 
+// Trust proxy - Nécessaire pour Render et le rate limiting
+// Permet à Express de reconnaître les headers X-Forwarded-* du proxy
+app.set('trust proxy', 1);
+
 
 // SÉCURITÉ - Middlewares de protection
 
