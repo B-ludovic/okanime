@@ -56,21 +56,31 @@ export default function Header() {
                     <form 
                         onSubmit={handleSearch} 
                         className={`${styles.mobileSearchForm} ${isSearchExpanded ? styles.expanded : ''}`}
-                        onFocus={() => setIsSearchExpanded(true)}
-                        onBlur={() => {
-                            if (!searchQuery) setIsSearchExpanded(false);
-                        }}
                     >
                         <input 
                             type="text"
                             placeholder="Rechercher..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
+                            onFocus={() => setIsSearchExpanded(true)}
                             className={styles.mobileSearchInput}
                         />
                         <button type="submit" className={styles.mobileSearchBtn} aria-label="Rechercher">
                             <Search size={20} />
                         </button>
+                        {isSearchExpanded && searchQuery && (
+                            <button 
+                                type="button"
+                                className={styles.mobileClearBtn}
+                                onClick={() => {
+                                    setSearchQuery('');
+                                    setIsSearchExpanded(false);
+                                }}
+                                aria-label="Effacer"
+                            >
+                                <X size={16} />
+                            </button>
+                        )}
                     </form>
                     
                     {/* Bouton Burger */}

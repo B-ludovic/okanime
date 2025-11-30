@@ -121,7 +121,6 @@ const updateBibliothequeEntry = asyncHandler(async (req, res) => {
   }
 
   // LOGIQUE AUTO : Si l'utilisateur a vu tous les épisodes, on passe automatiquement à "VU"
-  // Exemple : Si la saison a 12 épisodes et que progressionEpisodes = 12, statut devient "VU"
   let finalStatut = statut;
   if (progressionEpisodes !== undefined && progressionEpisodes >= entry.saison.nombreEpisodes) {
     finalStatut = 'VU'; // Passage automatique à "VU" quand tous les épisodes sont vus

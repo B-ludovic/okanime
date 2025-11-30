@@ -211,6 +211,30 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .mobileClearBtn {
+    position: absolute;
+    right: 42px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.05);
+    border: none;
+    color: var(--texte-gris);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .mobileClearBtn:active {
+    background: rgba(0,0,0,0.1);
   }
 
   /* MENU DRAWER (Mobile) */
