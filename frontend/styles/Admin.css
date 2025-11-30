@@ -195,6 +195,13 @@
   background-color: rgba(147, 197, 253, 0.05);
 }
 
+/* Liste animés */
+.admin-animes-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-lg);
+}
+
 /* Carte d'anime en attente */
 .admin-anime-card {
   background-color: var(--fond-carte);
@@ -241,6 +248,16 @@
   gap: var(--espace-md);
   font-size: 0.875rem;
   color: var(--texte-gris);
+}
+
+.admin-anime-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.admin-anime-meta-item svg {
+  display: inline;
 }
 
 .admin-anime-synopsis {
@@ -347,6 +364,32 @@
 .admin-badge-user {
   background-color: rgba(147, 197, 253, 0.3);
   color: var(--bleu-pastel);
+}
+
+/* Cellules de tableau */
+.admin-user-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+}
+
+.admin-email-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+}
+
+.admin-date-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  font-size: 0.875rem;
+  color: var(--texte-gris);
+}
+
+.admin-actions-cell {
+  display: flex;
+  gap: var(--espace-xs);
 }
 
 /* Messages d'état */
