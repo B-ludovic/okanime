@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { User, LogOut, Search, Menu, X, ArrowLeft } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '../../app/lib/utils';
 import styles from '../../styles/Header.module.css';
 
@@ -16,6 +16,7 @@ export default function Header() {
     const [searchQuery, setSearchQuery] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+    const mobileSearchInputRef = useRef(null);
 
     useEffect(() => {
         const checkAuth = () => {
@@ -31,6 +32,20 @@ export default function Header() {
             router.push(`/recherche?q=${encodeURIComponent(searchQuery)}`);
             setIsSearchExpanded(false);
             setIsMobileMenuOpen(false);
+        }
+    };
+
+    const handleMobileSearchClick = (e) => {
+        e.preventDefault();
+        if (!isSearchExpanded) {
+            setIsSearchExpanded(true);
+            // Focus l'input après l'expansion pour ouvrir le clavier mobile
+            setTimeout(() => {
+                mobileSearchInputRef.current?.focus();
+            }, 100);
+        } else if (searchQuery.trim()) {
+            // Si déjà ouvert et qu'il y a du texte, soumettre
+            handleSearch(e);
         }
     };
 
@@ -58,6 +73,7 @@ export default function Header() {
                         className={`${styles.mobileSearchForm} ${isSearchExpanded ? styles.expanded : ''}`}
                     >
                         <input 
+                            ref={mobileSearchInputRef}
                             type="text"
                             placeholder="Rechercher..."
                             value={searchQuery}
@@ -65,7 +81,12 @@ export default function Header() {
                             onFocus={() => setIsSearchExpanded(true)}
                             className={styles.mobileSearchInput}
                         />
-                        <button type="submit" className={styles.mobileSearchBtn} aria-label="Rechercher">
+                        <button 
+                            type="button"
+                            onClick={handleMobileSearchClick}
+                            className={styles.mobileSearchBtn} 
+                            aria-label="Rechercher"
+                        >
                             <Search size={20} />
                         </button>
                         {isSearchExpanded && searchQuery && (
