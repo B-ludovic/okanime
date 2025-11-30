@@ -38,14 +38,15 @@ const fetchAPI = async (endpoint, options = {}) => {
     }
 
     // Parse l'erreur si possible
-    let errorMessage = 'Une erreur est survenue';
+    let errorMessage = `Erreur ${response.status}: ${response.statusText}`;
     try {
       const errorData = await response.json();
       errorMessage = errorData.error || errorData.message || errorMessage;
-    } catch {
-      // Si impossible de parser, garde le message par défaut
+    } catch (parseError) {
+      console.error('Impossible de parser la réponse d\'erreur:', parseError);
     }
 
+    console.error(`API Error [${options.method || 'GET'} ${endpoint}]:`, errorMessage);
     throw new Error(errorMessage);
   }
 

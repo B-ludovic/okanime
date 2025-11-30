@@ -82,8 +82,7 @@
 }
 
 .genreTag {
-  background-color: rgba(147, 197, 253, 0.15);
-  color: var(--bleu-pastel);
+  color: #1a1a1a;
   padding: 0.25rem 0.5rem;
   border-radius: var(--arrondi-petit);
   font-size: 0.7rem;
