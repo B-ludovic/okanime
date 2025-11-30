@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { User, LogOut, Search } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { getCurrentUser, logout, isAuthenticated } from '@/lib/utils';
+import { getCurrentUser, logout, isAuthenticated } from '../../app/lib/utils';
 import styles from '../../styles/Header.module.css';
 
 export default function Header() {

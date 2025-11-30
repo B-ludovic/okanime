@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import AnimeCard from '@/components/anime/AnimeCard';
+import Header from '../../components/layout/Header';
+import Footer from '../../components/layout/Footer';
+import AnimeCard from '../../components/anime/AnimeCard';
 import { Search, X, Plus } from 'lucide-react';
-import api from '@/lib/api';
-import { isAuthenticated } from '@/lib/utils';
+import api from '../../app/lib/api';
+import { isAuthenticated } from '../../app/lib/utils';
 import styles from '../../styles/recherche.module.css';
 import '../../styles/Anime.css';
 

@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import AnimeCard from '@/components/anime/AnimeCard';
-import api from '@/lib/api';
+import Header from '../../components/layout/Header';
+import Footer from '../../components/layout/Footer';
+import AnimeCard from '../../components/anime/AnimeCard';
+import api from '../../app/lib/api';
 import styles from '../../styles/AnimeList.module.css';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 

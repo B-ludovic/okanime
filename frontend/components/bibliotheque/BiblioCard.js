@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Edit2, Trash2 } from 'lucide-react';
-import { STATUTS_BIBLIOTHEQUE } from '@/lib/constants';
+import { STATUTS_BIBLIOTHEQUE } from '../../app/lib/constants';
 import styles from '../../styles/BiblioCard.module.css';
 
 export default function BiblioCard({ entry, onUpdate, onDelete }) {

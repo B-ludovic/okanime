@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Header from '../../../components/layout/Header';
+import Footer from '../../../components/layout/Footer';
 import { Upload, X, AlertCircle } from 'lucide-react';
-import api from '@/lib/api';
-import { isAuthenticated } from '@/lib/utils';
-import '../../styles/AddAnime.css';
+import api from '../../../app/lib/api';
+import { isAuthenticated } from '../../../app/lib/utils';
+import '../../../styles/AddAnime.css';
 
 export default function AjouterAnimePage() {
   const router = useRouter();

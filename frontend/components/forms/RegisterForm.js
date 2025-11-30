@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { UserPlus } from 'lucide-react';
-import api from '@/lib/api';
+import api from '../../app/lib/api';
 import styles from '../../styles/RegisterForm.module.css';
 
 export default function RegisterForm() {

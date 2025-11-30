@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import api from '@/lib/api';
-import { isAuthenticated } from '@/lib/utils';
+import Header from '../../../components/layout/Header';
+import Footer from '../../../components/layout/Footer';
+import api from '../../../app/lib/api';
+import { isAuthenticated } from '../../../app/lib/utils';
 import styles from '../../../styles/AnimeDetail.module.css';
 import { Star, BookmarkPlus, Check } from 'lucide-react';
 

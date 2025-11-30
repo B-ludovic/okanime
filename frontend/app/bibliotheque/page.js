@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import BiblioCard from '@/components/bibliotheque/BiblioCard';
-import BiblioModal from '@/components/bibliotheque/BiblioModal';
-import api from '@/lib/api';
-import { isAuthenticated } from '@/lib/utils';
-import { STATUTS_BIBLIOTHEQUE } from '@/lib/constants';
+import Header from '../../components/layout/Header';
+import Footer from '../../components/layout/Footer';
+import BiblioCard from '../../components/bibliotheque/BiblioCard';
+import BiblioModal from '../../components/bibliotheque/BiblioModal';
+import api from '../../app/lib/api';
+import { isAuthenticated } from '../../app/lib/utils';
+import { STATUTS_BIBLIOTHEQUE } from '../../app/lib/constants';
 import styles from '../../styles/Bibliotheque.module.css';
 import { BookOpen, Filter } from 'lucide-react';
 

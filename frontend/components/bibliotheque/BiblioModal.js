@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import { STATUTS_BIBLIOTHEQUE } from '@/lib/constants';
+import { STATUTS_BIBLIOTHEQUE } from '../../app/lib/constants';
 import styles from '../../styles/BiblioModal.module.css';
 
 export default function BiblioModal({ entry, onClose, onSave }) {
