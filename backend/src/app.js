@@ -48,8 +48,8 @@ const corsOptions = {
       'https://www.okanime.fr', // Production (avec www)
     ].filter(Boolean); // Retire les valeurs undefined/null
 
-    // En développement, autorise aussi les requêtes sans origin (Postman, etc.)
-    if (process.env.NODE_ENV !== 'production' && !origin) {
+    // Autorise les requêtes sans origin (accès direct, Postman, health checks)
+    if (!origin) {
       return callback(null, true);
     }
 
