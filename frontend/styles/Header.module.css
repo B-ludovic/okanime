@@ -1,4 +1,4 @@
-/* Header - Styles spécifiques */
+/* HEADER - Styles complets corrigés */
 
 .header {
   background-color: var(--fond-header);
@@ -12,11 +12,13 @@
 .headerContainer {
   max-width: 1400px;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--espace-lg);
 }
 
+/* --- 1. LOGO (Gauche) --- */
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
@@ -24,18 +26,28 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  z-index: 20;
 }
 
 .logo:hover {
   opacity: 0.8;
 }
 
+/* --- 2. MENU CENTRAL (Centré avec justify-self) --- */
+.navWrapper {
+  justify-self: end;
+  margin-right: var(--espace-lg);
+}
+
 .nav {
   display: flex;
   gap: var(--espace-md);
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
+/* Rend les liens cliquables */
 .navLink {
   padding: var(--espace-xs) var(--espace-sm);
   border-radius: var(--arrondi-petit);
@@ -43,20 +55,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.navLink img {
-  opacity: 0.8;
-  transition: opacity 0.3s;
+  color: var(--texte-gris);
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .navLink:hover {
   background-color: rgba(147, 197, 253, 0.1);
-}
-
-.navLink:hover img {
-  opacity: 1;
-  transform: scale(1.1);
 }
 
 .navLink.active {
@@ -64,11 +69,75 @@
   color: white;
 }
 
-.navLink.active img {
-  opacity: 1;
-  filter: brightness(1.2);
+/* --- 3. COLONNE DROITE (Admin + Recherche + Actions) --- */
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-md);
+  justify-self: end;
 }
 
+/* Lien Admin */
+.adminLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--texte-gris);
+  text-decoration: none;
+  padding: var(--espace-xs) var(--espace-sm);
+  border-radius: var(--arrondi-petit);
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.adminLink:hover {
+  background-color: rgba(147, 197, 253, 0.1);
+}
+
+.adminLink.active {
+  background-color: var(--bleu-pastel);
+  color: white;
+}
+
+/* --- 4. BARRE DE RECHERCHE --- */
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 2px solid rgba(147, 197, 253, 0.2);
+  border-radius: var(--arrondi-grand);
+  background: white;
+  transition: width 0.3s ease;
+  width: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.searchBox:focus-within {
+  width: 280px; 
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: var(--espace-xs) var(--espace-sm);
+  font-size: 0.9rem;
+  background: transparent;
+  width: 100%;
+}
+
+.searchButton {
+  border: none;
+  background: transparent;
+  padding: var(--espace-xs) var(--espace-sm);
+  cursor: pointer;
+  color: var(--bleu-pastel);
+}
+
+/* --- 5. ACTIONS (Profil / Déconnexion) --- */
 .headerActions {
   display: flex;
   gap: var(--espace-sm);
@@ -85,65 +154,16 @@
   transform: scale(1.1);
 }
 
-/* Barre de recherche */
-.searchBox {
-  position: relative;
-  display: flex;
-  align-items: center;
-  border: 2px solid rgba(147, 197, 253, 0.2);
-  border-radius: var(--arrondi-grand);
-  background: white;
-  transition: all 0.3s;
-  width: 200px;
-  overflow: hidden;
-}
-
-.searchBox:focus-within {
-  width: 300px;
-  border-color: var(--bleu-pastel);
-  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
-}
-
-.searchInput {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: var(--espace-xs) var(--espace-sm);
-  font-size: 0.9rem;
-  background: transparent;
-}
-
-.searchInput::placeholder {
-  color: var(--texte-gris);
-}
-
-.searchButton {
-  border: none;
-  background: transparent;
-  padding: var(--espace-xs) var(--espace-sm);
-  cursor: pointer;
-  color: var(--bleu-pastel);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.searchButton:hover {
-  color: var(--corail-pastel);
-  transform: scale(1.1);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
+/* --- 6. RESPONSIVE --- */
+@media (max-width: 950px) {
   .nav {
-    display: none;
+    display: none; /* On cache le menu central sur tablette/mobile */
   }
-
+  
   .searchBox {
-    width: 150px;
+    width: 160px;
   }
-
+  
   .searchBox:focus-within {
     width: 200px;
   }

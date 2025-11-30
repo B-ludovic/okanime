@@ -52,9 +52,9 @@ export default function AdminAnimesPage() {
 
     try {
       await api.put(`/admin/animes/${animeId}/moderation`, {
-        statutModeration: 'VALIDE',
+        statut: 'VALIDE',
       });
-      fetchPendingAnimes(); // Recharge la liste
+      fetchPendingAnimes();
     } catch (err) {
       alert('Erreur lors de la validation');
       console.error(err);
@@ -67,9 +67,9 @@ export default function AdminAnimesPage() {
 
     try {
       await api.put(`/admin/animes/${animeId}/moderation`, {
-        statutModeration: 'REFUSE',
+        statut: 'REFUSE',
       });
-      fetchPendingAnimes(); // Recharge la liste
+      fetchPendingAnimes();
     } catch (err) {
       alert('Erreur lors du refus');
       console.error(err);

@@ -10,10 +10,15 @@ import {
   moderateAnime,
   deleteUserAvatar,
   getStats,
+  getAllUsers,        
+  changeUserRole,     
+  createGenre,        
+  updateGenre,        
+  deleteGenre,        
 } from '../controllers/adminController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { adminOnly } from '../middlewares/roleMiddleware.js';
-import { uploadMultiple, uploadMultipleOptional, uploadSingleOptional } from '../middlewares/uploadMiddleware.js';
+import { uploadSingleOptional } from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router();
 
@@ -33,6 +38,16 @@ router.put('/animes/:id/moderation', authMiddleware, adminOnly, moderateAnime );
 
 // GESTION DES UTILISATEURS (admin uniquement)
 router.delete('/users/:userId/avatar', authMiddleware, adminOnly, deleteUserAvatar );
+
+// GESTION DES UTILISATEURS (admin uniquement)
+router.get('/users', authMiddleware, adminOnly, getAllUsers );        
+router.put('/users/:userId/role', authMiddleware, adminOnly, changeUserRole );
+router.delete('/users/:userId/avatar', authMiddleware, adminOnly, deleteUserAvatar );
+
+// GESTION DES GENRES (admin uniquement)
+router.post('/genres', authMiddleware, adminOnly, createGenre );
+router.put('/genres/:id', authMiddleware, adminOnly, updateGenre );
+router.delete('/genres/:id', authMiddleware, adminOnly, deleteGenre );
 
 // STATISTIQUES (admin uniquement)
 router.get('/stats', authMiddleware, adminOnly,getStats );

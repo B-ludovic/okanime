@@ -1,6 +1,6 @@
 import { asyncHandler } from '../middlewares/errorHandler.js';
 import { createAnimeSchema, updateAnimeSchema, createSaisonSchema, validateData } from '../validators/animeValidator.js';
-import { HttpNotFoundError, HttpBadRequestError, HttpForbiddenError, httpStatusCodes } from '../utils/httpErrors.js';
+import { HttpNotFoundError, HttpBadRequestError, HttpForbiddenError, HttpConflictError, httpStatusCodes } from '../utils/httpErrors.js';
 import { uploadPoster, deleteFromCloudinary } from '../services/uploadService.js';
 import prisma from '../config/prisma.js';
 
@@ -436,6 +436,196 @@ const getStats = asyncHandler(async (req, res) => {
   });
 });
 
+// GESTION DES UTILISATEURS 
+
+// Récupère tous les utilisateurs
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      role: true,
+      dateInscription: true,
+      avatar: true,
+    },
+    orderBy: {
+      dateInscription: 'desc',
+    },
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    users,
+  });
+});
+
+// Change le rôle d'un utilisateur
+const changeUserRole = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const { role } = req.body;
+
+  // Validation du rôle
+  if (!['USER', 'ADMIN'].includes(role)) {
+    throw new HttpBadRequestError('Rôle invalide');
+  }
+
+  // Vérifie que l'utilisateur existe
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    throw new HttpNotFoundError('Utilisateur introuvable');
+  }
+
+  // Empêche de changer son propre rôle
+  if (user.id === req.user.id) {
+    throw new HttpForbiddenError('Vous ne pouvez pas modifier votre propre rôle');
+  }
+
+  // Met à jour le rôle
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: { role },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      role: true,
+    },
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: `Rôle changé en ${role}`,
+    user: updatedUser,
+  });
+});
+
+// GESTION DES GENRES 
+
+// Créer un nouveau genre
+const createGenre = asyncHandler(async (req, res) => {
+  const { nom } = req.body;
+
+  if (!nom || nom.trim().length === 0) {
+    throw new HttpBadRequestError('Le nom du genre est requis');
+  }
+
+  // Vérifie que le genre n'existe pas déjà
+  const existingGenre = await prisma.genre.findFirst({
+    where: {
+      nom: {
+        equals: nom.trim(),
+        mode: 'insensitive',
+      },
+    },
+  });
+
+  if (existingGenre) {
+    throw new HttpConflictError('Ce genre existe déjà');
+  }
+
+  // Crée le genre
+  const genre = await prisma.genre.create({
+    data: {
+      nom: nom.trim(),
+    },
+  });
+
+  res.status(httpStatusCodes.CREATED).json({
+    success: true,
+    message: 'Genre créé avec succès',
+    genre,
+  });
+});
+
+// Modifier un genre
+const updateGenre = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { nom } = req.body;
+
+  if (!nom || nom.trim().length === 0) {
+    throw new HttpBadRequestError('Le nom du genre est requis');
+  }
+
+  // Vérifie que le genre existe
+  const existingGenre = await prisma.genre.findUnique({
+    where: { id },
+  });
+
+  if (!existingGenre) {
+    throw new HttpNotFoundError('Genre introuvable');
+  }
+
+  // Vérifie qu'un autre genre n'a pas déjà ce nom
+  const duplicateGenre = await prisma.genre.findFirst({
+    where: {
+      nom: {
+        equals: nom.trim(),
+        mode: 'insensitive',
+      },
+      id: {
+        not: id,
+      },
+    },
+  });
+
+  if (duplicateGenre) {
+    throw new HttpConflictError('Un autre genre avec ce nom existe déjà');
+  }
+
+  // Met à jour le genre
+  const genre = await prisma.genre.update({
+    where: { id },
+    data: {
+      nom: nom.trim(),
+    },
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: 'Genre modifié avec succès',
+    genre,
+  });
+});
+
+// Supprimer un genre
+const deleteGenre = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  // Vérifie que le genre existe
+  const existingGenre = await prisma.genre.findUnique({
+    where: { id },
+    include: {
+      _count: {
+        select: { animes: true },
+      },
+    },
+  });
+
+  if (!existingGenre) {
+    throw new HttpNotFoundError('Genre introuvable');
+  }
+
+  // Avertissement si le genre est utilisé
+  if (existingGenre._count.animes > 0) {
+    // On supprime quand même, mais ça supprimera les relations dans AnimeGenre
+    // grâce au onDelete: Cascade dans le schema Prisma
+  }
+
+  // Supprime le genre
+  await prisma.genre.delete({
+    where: { id },
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: 'Genre supprimé avec succès',
+  });
+});
+
 export {
   createAnime,
   updateAnime,
@@ -447,4 +637,9 @@ export {
   moderateAnime,
   deleteUserAvatar,
   getStats,
+  createGenre,
+  updateGenre,
+  deleteGenre,
+  getAllUsers,
+  changeUserRole,
 };

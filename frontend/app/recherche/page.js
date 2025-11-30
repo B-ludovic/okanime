@@ -9,7 +9,7 @@ import AnimeCard from '../../components/anime/AnimeCard';
 import { Search, X, Plus } from 'lucide-react';
 import api from '../../app/lib/api';
 import { isAuthenticated } from '../../app/lib/utils';
-import styles from '../../styles/recherche.module.css';
+import styles from '../../styles/Recherche.module.css';
 import '../../styles/Anime.css';
 
 

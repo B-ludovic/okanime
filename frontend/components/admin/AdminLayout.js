@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
@@ -11,7 +12,9 @@ import {
   Users, 
   Tag,
   MessageSquare,
-  Shield 
+  Shield,
+  Calendar,
+  Star
 } from 'lucide-react';
 
 export default function AdminLayout({ children }) {
@@ -20,6 +23,9 @@ export default function AdminLayout({ children }) {
   const navLinks = [
     { href: '/admin', label: 'Tableau de bord', icon: LayoutDashboard },
     { href: '/admin/animes', label: 'Modération animés', icon: Film },
+    { href: '/admin/tous-les-animes', label: 'Tous les animés', icon: Film },
+    { href: '/admin/saisons', label: 'Saisons', icon: Calendar, wip: true },
+    { href: '/admin/avis', label: 'Avis', icon: Star, wip: true },
     { href: '/admin/users', label: 'Utilisateurs', icon: Users },
     { href: '/admin/genres', label: 'Genres', icon: Tag },
   ];
@@ -42,10 +48,19 @@ export default function AdminLayout({ children }) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`admin-nav-link ${pathname === link.href ? 'active' : ''}`}
+                  className={`admin-nav-link ${pathname === link.href ? 'active' : ''} ${link.wip ? 'wip' : ''}`}
                 >
                   <Icon size={18} />
                   {link.label}
+                  {link.wip && (
+                    <Image 
+                      src="/icons/work-in-progress.png" 
+                      alt="En développement" 
+                      width={20} 
+                      height={20}
+                      className="wip-badge"
+                    />
+                  )}
                 </Link>
               );
             })}

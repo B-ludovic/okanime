@@ -27,17 +27,16 @@ export default function AdminUsersPage() {
     }
   }, [router]);
 
-  // Récupère tous les utilisateurs (route à créer dans le backend)
+  // Récupère tous les utilisateurs
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      // Note : Cette route n'existe pas encore dans le backend
-      // On devra la créer dans adminController.js
       const response = await api.get('/admin/users');
-      setUsers(response.data.users);
+      console.log('Response:', response); // Debug
+      setUsers(response.users || []);
     } catch (err) {
       setError('Erreur lors du chargement des utilisateurs');
-      console.error(err);
+      console.error('Erreur complète:', err);
     } finally {
       setLoading(false);
     }

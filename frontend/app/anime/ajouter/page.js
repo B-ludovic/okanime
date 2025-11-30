@@ -9,7 +9,7 @@ import { Upload, X, AlertCircle, Search } from 'lucide-react';
 import api from '../../../app/lib/api';
 import { isAuthenticated } from '../../../app/lib/utils';
 import '../../../styles/AddAnime.css';
-import '../../../styles/banners.css';
+import '../../../styles/Banners.css';
 
 export default function AjouterAnimePage() {
   const router = useRouter();

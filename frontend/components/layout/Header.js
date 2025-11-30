@@ -30,7 +30,7 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.headerContainer}>
-                {/* Logo */}
+                {/* Logo - Gauche */}
                 <Link href="/" className={styles.logo}>
                     <Image 
                         src="/icons/japan-flag.png" 
@@ -42,8 +42,8 @@ export default function Header() {
                     <span className="brand-name">O&apos;Kanime</span>
                 </Link>
 
-                {/* Navigation */}
-                <nav>
+                {/* Navigation - Centre */}
+                <nav className={styles.navWrapper}>
                     <ul className={styles.nav}>
                         <li>
                             <Link
@@ -77,43 +77,57 @@ export default function Header() {
                     </ul>
                 </nav>
 
-                {/* Barre de recherche */}
-                <form className={styles.searchBox} onSubmit={handleSearch}>
-                    <input
-                        type="text"
-                        placeholder="Rechercher un animé..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className={styles.searchInput}
-                    />
-                    <button type="submit" className={styles.searchButton} aria-label="Rechercher">
-                        <Search size={18} />
-                    </button>
-                </form>
-
-                {/* Actions */}
-                <div className={styles.headerActions}>
-                    {isAuth ? (
-                        <>
-                            <Link href="/profil" className="btn btn-ghost btn-circle">
-                                <User size={20} />
-                            </Link>
-                            <button onClick={logout} className="btn btn-ghost">
-                                <LogOut size={18} />
-                                Déconnexion
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <Link href="/login" className="btn btn-ghost">
-                                <Image src="/icons/login.png" alt="Connexion" width={20} height={20} className="object-contain" />
-                                Connexion
-                            </Link>
-                            <Link href="/register" className="btn btn-primary">
-                                Inscription
-                            </Link>
-                        </>
+                {/* Colonne droite : Admin + Recherche + Actions */}
+                <div className={styles.headerRight}>
+                    {/* Lien Admin */}
+                    {isAuth && user?.role === 'ADMIN' && (
+                        <Link
+                            href="/admin"
+                            className={`${styles.adminLink} ${pathname.startsWith('/admin') ? styles.active : ''}`}
+                        >
+                            <Image src="/icons/admin.png" alt="Admin" width={20} height={20} className="object-contain" />
+                            Admin
+                        </Link>
                     )}
+
+                    {/* Barre de recherche */}
+                    <form className={styles.searchBox} onSubmit={handleSearch}>
+                        <input
+                            type="text"
+                            placeholder="Rechercher un animé..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className={styles.searchInput}
+                        />
+                        <button type="submit" className={styles.searchButton} aria-label="Rechercher">
+                            <Search size={18} />
+                        </button>
+                    </form>
+
+                    {/* Actions */}
+                    <div className={styles.headerActions}>
+                        {isAuth ? (
+                            <>
+                                <Link href="/profil" className="btn btn-ghost btn-circle">
+                                    <User size={20} />
+                                </Link>
+                                <button onClick={logout} className="btn btn-ghost">
+                                    <LogOut size={18} />
+                                    Déconnexion
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/login" className="btn btn-ghost">
+                                    <Image src="/icons/login.png" alt="Connexion" width={20} height={20} className="object-contain" />
+                                    Connexion
+                                </Link>
+                                <Link href="/register" className="btn btn-primary">
+                                    Inscription
+                                </Link>
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
         </header>

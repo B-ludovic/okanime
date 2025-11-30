@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../lib/api';
 import { isAuthenticated, getCurrentUser } from '../lib/utils';
@@ -12,7 +13,8 @@ import {
   Clock,
   CheckCircle,
   XCircle,
-  TrendingUp 
+  TrendingUp,
+  MessageSquare
 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
@@ -154,16 +156,32 @@ export default function AdminDashboardPage() {
           <div className="admin-stat-label">avis publiés</div>
         </div>
 
-        {/* Total saisons */}
-        <div className="admin-stat-card success">
+        {/* Saisons - Work in Progress */}
+        <div className="admin-stat-card wip">
           <div className="admin-stat-header">
             <span className="admin-stat-label">Saisons</span>
             <div className="admin-stat-icon">
               <TrendingUp size={24} />
             </div>
           </div>
-          <div className="admin-stat-value">{stats.totalSaisons}</div>
-          <div className="admin-stat-label">saisons disponibles</div>
+          <div className="admin-stat-wip">
+            <Image src="/icons/work-in-progress.png" alt="En développement" width={60} height={60} />
+            <span className="admin-stat-wip-text">Bientôt disponible</span>
+          </div>
+        </div>
+
+        {/* Avis - Work in Progress */}
+        <div className="admin-stat-card wip">
+          <div className="admin-stat-header">
+            <span className="admin-stat-label">Modération Avis</span>
+            <div className="admin-stat-icon">
+              <MessageSquare size={24} />
+            </div>
+          </div>
+          <div className="admin-stat-wip">
+            <Image src="/icons/work-in-progress.png" alt="En développement" width={60} height={60} />
+            <span className="admin-stat-wip-text">Bientôt disponible</span>
+          </div>
         </div>
       </div>
 
