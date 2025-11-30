@@ -43,6 +43,17 @@ async function main() {
   
   // Supprimer l'ancien admin par défaut si on change l'email
   if (adminEmail !== 'admin@okanime.com') {
+    // D'abord, supprimer tous les animes créés par l'ancien admin
+    await prisma.anime.deleteMany({
+      where: {
+        userAjout: {
+          email: 'admin@okanime.com'
+        }
+      }
+    });
+    console.log('🗑️  Animes de l\'ancien admin supprimés');
+    
+    // Ensuite, supprimer l'ancien admin
     await prisma.user.deleteMany({
       where: { 
         email: 'admin@okanime.com'
