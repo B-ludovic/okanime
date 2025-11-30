@@ -8,17 +8,23 @@ import prisma from '../config/prisma.js';
 
 // CRÉER UN ANIME MANUELLEMENT - POST /api/admin/animes
 const createAnime = asyncHandler(async (req, res) => {
-  // Valide les données
-  const validatedData = validateData(createAnimeSchema, req.body);
-  const { titreVf, synopsis, anneeDebut, studio, genreIds } = validatedData;
+  const { titreVf, synopsis, anneeDebut, studio, genreIds } = req.body;
 
-  // Upload du poster (obligatoire pour ajout manuel)
-  let posterUrl = null;
-  if (req.files && req.files.poster) {
-    posterUrl = await uploadPoster(req.files.poster[0].buffer);
-  } else {
+  // Validation
+  const validatedData = createAnimeSchema.parse({
+    titreVf,
+    synopsis,
+    anneeDebut: parseInt(anneeDebut),
+    studio,
+    genreIds: JSON.parse(genreIds),
+  });
+
+  // Upload du poster (obligatoire)
+  if (!req.files || !req.files.poster) {
     throw new HttpBadRequestError('Le poster est obligatoire');
   }
+
+  const posterUrl = await uploadPoster(req.files.poster[0].buffer);
 
   // Upload de la bannière (optionnel)
   let banniereUrl = null;
@@ -26,38 +32,42 @@ const createAnime = asyncHandler(async (req, res) => {
     banniereUrl = await uploadBanniere(req.files.banniere[0].buffer);
   }
 
-  // Crée l'anime
+  // MODIFICATION : Détermine le statut selon le rôle
+  // Si USER → EN_ATTENTE, si ADMIN → VALIDE directement
+  const statutModeration = req.user.role === 'ADMIN' ? 'VALIDE' : 'EN_ATTENTE';
+
+  // Crée l'anime avec userIdAjout
   const anime = await prisma.anime.create({
     data: {
-      titreVf,
-      synopsis,
-      anneeDebut,
-      studio,
+      titreVf: validatedData.titreVf,
+      synopsis: validatedData.synopsis,
+      anneeDebut: validatedData.anneeDebut,
+      studio: validatedData.studio,
       posterUrl,
       banniereUrl,
-      statutModeration: 'VALIDE', // Admin ajoute = validé directement
-      userIdAjout: req.user.id, // L'admin qui a ajouté
+      statutModeration, // EN_ATTENTE pour les users, VALIDE pour les admins
+      userIdAjout: req.user.id, // AJOUT : Stocke qui a créé l'anime
       genres: {
-        create: genreIds.map(genreId => ({
-          genre: {
-            connect: { id: genreId }
-          }
-        }))
-      }
+        create: validatedData.genreIds.map((genreId) => ({
+          genre: { connect: { id: genreId } },
+        })),
+      },
     },
     include: {
       genres: {
         include: {
-          genre: true
-        }
-      }
-    }
+          genre: true,
+        },
+      },
+    },
   });
 
   res.status(httpStatusCodes.CREATED).json({
     success: true,
-    message: 'Anime créé avec succès',
-    data: { anime }
+    message: statutModeration === 'VALIDE' 
+      ? 'Anime créé avec succès' 
+      : 'Anime créé et en attente de validation',
+    anime,
   });
 });
 
