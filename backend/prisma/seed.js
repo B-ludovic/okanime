@@ -25,13 +25,13 @@ async function main() {
   console.log('🌱 Début du seeding...');
 
   // Vérifier si on active la traduction (besoin de la clé DeepL)
-  const enableTranslation = !!process.env.DEEPL_API_KEY;
+  const enableTranslation = process.env.ENABLE_TRANSLATION === 'true' && !!process.env.DEEPL_API_KEY;
   let totalCharacters = 0; // Compteur de caractères traduits
 
   if (enableTranslation) {
     console.log('🌍 Traduction activée avec DeepL');
   } else {
-    console.log('⚠️  Traduction désactivée (pas de clé DEEPL_API_KEY)');
+    console.log('⚠️  Traduction désactivée (définir ENABLE_TRANSLATION=true pour activer)');
   }
 
   // 1. Création de l'utilisateur Admin
@@ -40,6 +40,16 @@ async function main() {
   // Mot de passe depuis les variables d'environnement (ou défaut temporaire)
   const adminPassword = process.env.ADMIN_PASSWORD || 'ChangeMe2024!@#$';
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
+  
+  // Supprimer l'ancien admin par défaut si on change l'email
+  if (adminEmail !== 'admin@okanime.com') {
+    await prisma.user.deleteMany({
+      where: { 
+        email: 'admin@okanime.com'
+      }
+    });
+    console.log('🗑️  Ancien admin supprimé');
+  }
   
   const admin = await prisma.user.upsert({
     where: { email: adminEmail },
