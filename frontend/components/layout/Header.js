@@ -23,9 +23,7 @@ export default function Header() {
     const handleSearch = (e) => {
         e.preventDefault();
         if (searchQuery.trim()) {
-            // TODO: Rediriger vers la page de recherche quand elle sera créée
-            console.log('Recherche:', searchQuery);
-            // router.push(`/recherche?q=${encodeURIComponent(searchQuery)}`);
+            router.push(`/recherche?q=${encodeURIComponent(searchQuery)}`);
         }
     };
 

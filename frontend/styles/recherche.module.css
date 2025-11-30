@@ -1,0 +1,96 @@
+.searchCard {
+  margin-bottom: var(--espace-xl);
+  padding: var(--espace-lg);
+}
+.searchGrid select {
+  height: 48px;               /* 1. Force une hauteur identique fixe */
+  width: 100%;                /* Prend toute la largeur de la colonne */
+  padding: 0 var(--espace-sm); /* Espacement interne identique */
+  border: 1px solid #E2E8F0;  /* Une bordure visible (ajuste la couleur selon ton thème) */
+  border-radius: 0.5rem;      /* Arrondi identique */
+  box-sizing: border-box;     /* 2. CRUCIAL : inclut le padding dans le calcul de la hauteur */
+  font-size: 1rem;            /* Taille de police identique pour l'alignement */
+  background-color: white;    /* S'assure que le fond est le même */
+  
+  /* Optionnel : transition douce si on clique dessus */
+  transition: border-color 0.2s;
+}
+
+.searchGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espace-md);
+}
+
+.searchButtons {
+  display: flex;
+  gap: var(--espace-sm);
+  margin-top: var(--espace-md);
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.resultsCount {
+  margin-bottom: var(--espace-lg);
+}
+
+.resultsCount p {
+  color: var(--texte-gris);
+  font-size: 1rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem;
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  margin-bottom: var(--espace-md);
+  opacity: 0.3;
+}
+
+.emptyIconSearch {
+  display: flex;
+  justify-content: center;
+  color: var(--texte-gris);
+}
+
+.emptyIconFlag {
+  display: flex;
+  justify-content: center;
+}
+
+.emptyTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--texte-gris);
+  margin-bottom: var(--espace-sm);
+}
+
+.emptyText {
+  color: var(--texte-gris);
+}
+
+.emptyTextLarge {
+  color: var(--texte-gris);
+  font-size: 1.125rem;
+}
+
+@media (max-width: 768px) {
+  .searchGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .searchButtons {
+    flex-direction: column;
+  }
+
+  .searchButtons button {
+    width: 100%;
+  }
+}
