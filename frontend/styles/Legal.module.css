@@ -1,0 +1,141 @@
+/* PAGES LÉGALES - Styles cohérents avec O'Kanime */
+
+.legalPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #f8fafc, #ffffff);
+}
+
+.legalMain {
+  flex: 1;
+  padding: var(--espace-xl) var(--espace-lg);
+}
+
+.legalContainer {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.legalHeader {
+  text-align: center;
+  margin-bottom: var(--espace-xl);
+  padding-bottom: var(--espace-lg);
+  border-bottom: 2px solid var(--bleu-pastel);
+}
+
+.legalTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-sm);
+}
+
+.legalSubtitle {
+  font-size: 1rem;
+  color: var(--texte-gris);
+}
+
+.legalContent {
+  background: white;
+  padding: var(--espace-xl);
+  border-radius: var(--arrondi-large);
+  box-shadow: var(--ombre-moyenne);
+}
+
+.legalSection {
+  margin-bottom: var(--espace-xl);
+}
+
+.legalSection:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--texte-noir);
+  margin-bottom: var(--espace-md);
+  padding-left: var(--espace-sm);
+}
+
+.sectionContent {
+  color: var(--texte-gris);
+  line-height: 1.8;
+  margin-bottom: var(--espace-md);
+}
+
+.sectionContent p {
+  margin-bottom: var(--espace-md);
+}
+
+.sectionContent ul {
+  list-style: disc;
+  padding-left: var(--espace-lg);
+  margin-bottom: var(--espace-md);
+}
+
+.sectionContent li {
+  margin-bottom: var(--espace-xs);
+}
+
+.sectionContent strong {
+  color: var(--texte-noir);
+  font-weight: 600;
+}
+
+.contactInfo {
+  background: #f8fafc;
+  padding: var(--espace-md);
+  border-radius: var(--arrondi-moyen);
+  margin: var(--espace-md) 0;
+}
+
+.contactInfo p {
+  margin: var(--espace-xs) 0;
+  color: var(--texte-noir);
+}
+
+.highlight {
+  background: rgba(147, 197, 253, 0.1);
+  padding: var(--espace-md);
+  border-radius: var(--arrondi-moyen);
+  margin: var(--espace-md) 0;
+}
+
+.updateDate {
+  text-align: center;
+  color: var(--texte-gris);
+  font-size: 0.9rem;
+  margin-top: var(--espace-xl);
+  padding-top: var(--espace-lg);
+  border-top: 1px solid #e5e7eb;
+}
+
+.subsectionTitle {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--texte-noir);
+}
+
+.dangerIcon {
+  display: inline;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .legalTitle {
+    font-size: 2rem;
+  }
+
+  .legalContent {
+    padding: var(--espace-lg);
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+}

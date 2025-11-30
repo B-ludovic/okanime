@@ -63,7 +63,7 @@ export default function AdminUsersPage() {
 
   // Supprimer un utilisateur
   const handleDeleteUser = async (userId) => {
-    if (!confirm('⚠️ ATTENTION : Voulez-vous vraiment supprimer cet utilisateur ? Cette action est irréversible !')) {
+    if (!confirm('ATTENTION : Voulez-vous vraiment supprimer cet utilisateur ? Cette action est irréversible !')) {
       return;
     }
 

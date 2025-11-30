@@ -33,3 +33,29 @@
   font-size: 0.875rem;
   margin: var(--espace-xs) 0;
 }
+
+.footerLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espace-sm);
+  margin: var(--espace-md) 0;
+  flex-wrap: wrap;
+}
+
+.footerLink {
+  color: var(--texte-gris);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footerLink:hover {
+  color: var(--bleu-pastel);
+  text-decoration: underline;
+}
+
+.footerSeparator {
+  color: var(--texte-gris);
+  font-size: 0.875rem;
+}
