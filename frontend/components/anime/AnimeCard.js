@@ -54,6 +54,11 @@ export default function AnimeCard({ anime }) {
 
   return (
     <Link href={`/anime/${anime.id}`} className={styles.animeCard}>
+      {/* Bannière gradient en arrière-plan */}
+      {anime.banniereUrl && anime.banniereUrl.startsWith('gradient-') && (
+        <div className={`${anime.banniereUrl} ${styles.bannerBackground}`}></div>
+      )}
+      
       <div className={styles.imageContainer}>
         <Image
           src={anime.posterUrl || '/placeholder-anime.jpg'}

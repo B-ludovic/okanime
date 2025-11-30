@@ -103,4 +103,27 @@ const uploadSingleOptional = (fieldName) => {
   };
 };
 
-export { uploadSingle, uploadMultiple, uploadSingleOptional };
+// Middleware pour uploader plusieurs fichiers (tous optionnels)
+const uploadMultipleOptional = (fields) => {
+  return (req, res, next) => {
+    const multerFields = upload.fields(fields);
+
+    multerFields(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          return next(new HttpBadRequestError('Un des fichiers est trop volumineux. Taille maximale : 5 MB'));
+        }
+        return next(new HttpBadRequestError(`Erreur lors de l'upload : ${err.message}`));
+      }
+
+      if (err) {
+        return next(err);
+      }
+
+      // Pas de vérification si les fichiers sont présents (optionnels)
+      next();
+    });
+  };
+};
+
+export { uploadSingle, uploadMultiple, uploadSingleOptional, uploadMultipleOptional };

@@ -7,9 +7,12 @@ const fetchAPI = async (endpoint, options = {}) => {
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   // Configure les headers par défaut
-  const headers = {
-    'Content-Type': 'application/json',
-  };
+  const headers = {};
+  
+  // Ajoute Content-Type: application/json seulement si ce n'est pas du FormData
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = 'application/json';
+  }
 
   // Ajoute les headers personnalisés si fournis
   if (options.headers) {
@@ -89,7 +92,7 @@ const api = {
     return fetchAPI(endpoint, {
       method: 'POST',
       body: formData,
-      headers: {}, // Pas de Content-Type, le navigateur le gère
+      // Pas de headers, le navigateur gère automatiquement le Content-Type avec boundary
     });
   },
 
@@ -98,7 +101,7 @@ const api = {
     return fetchAPI(endpoint, {
       method: 'PUT',
       body: formData,
-      headers: {},
+      // Pas de headers, le navigateur gère automatiquement le Content-Type avec boundary
     });
   },
 };

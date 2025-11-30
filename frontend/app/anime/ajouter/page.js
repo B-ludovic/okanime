@@ -2,18 +2,25 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
-import { Upload, X, AlertCircle } from 'lucide-react';
+import { Upload, X, AlertCircle, Search } from 'lucide-react';
 import api from '../../../app/lib/api';
 import { isAuthenticated } from '../../../app/lib/utils';
 import '../../../styles/AddAnime.css';
+import '../../../styles/banners.css';
 
 export default function AjouterAnimePage() {
   const router = useRouter();
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  
+  // Recherche Jikan
+  const [jikanQuery, setJikanQuery] = useState('');
+  const [jikanResults, setJikanResults] = useState([]);
+  const [searchingJikan, setSearchingJikan] = useState(false);
   
   const [formData, setFormData] = useState({
     titreVf: '',
@@ -25,8 +32,53 @@ export default function AjouterAnimePage() {
 
   const [posterFile, setPosterFile] = useState(null);
   const [posterPreview, setPosterPreview] = useState(null);
-  const [banniereFile, setBanniereFile] = useState(null);
-  const [bannierePreview, setBannierePreview] = useState(null);
+  const [posterUrl, setPosterUrl] = useState(''); // URL du poster depuis Jikan
+  const [selectedBanner, setSelectedBanner] = useState(null); // Numéro de bannière (1-20)
+
+  // Recherche sur Jikan
+  const handleJikanSearch = async () => {
+    if (!jikanQuery.trim()) return;
+    
+    setSearchingJikan(true);
+    setJikanResults([]);
+    
+    try {
+      const response = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(jikanQuery)}&limit=10`);
+      const data = await response.json();
+      setJikanResults(data.data || []);
+    } catch (err) {
+      console.error('Erreur recherche Jikan:', err);
+      setError('Erreur lors de la recherche sur Jikan');
+    } finally {
+      setSearchingJikan(false);
+    }
+  };
+
+  // Pré-remplit le formulaire avec les données Jikan
+  const handleSelectJikanAnime = (anime) => {
+    setFormData({
+      titreVf: anime.title_english || anime.title || '',
+      synopsis: anime.synopsis || '',
+      anneeDebut: anime.year || new Date().getFullYear(),
+      studio: anime.studios?.[0]?.name || '',
+      genreIds: [], // Les genres seront ajoutés manuellement
+    });
+    
+    // Récupère le poster depuis Jikan (pas besoin d'upload)
+    const posterJikan = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url;
+    if (posterJikan) {
+      setPosterUrl(posterJikan);
+      setPosterPreview(posterJikan);
+      setPosterFile(null); // Pas de fichier, on utilise l'URL
+    }
+    
+    // Ferme les résultats
+    setJikanResults([]);
+    setJikanQuery('');
+    
+    // Scroll vers le formulaire
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  };
 
   // Vérifie l'authentification
   useEffect(() => {
@@ -81,20 +133,6 @@ export default function AjouterAnimePage() {
     setPosterPreview(null);
   };
 
-  // Gestion de la bannière
-  const handleBanniereChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setBanniereFile(file);
-      setBannierePreview(URL.createObjectURL(file));
-    }
-  };
-
-  const removeBanniere = () => {
-    setBanniereFile(null);
-    setBannierePreview(null);
-  };
-
   // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,7 +140,7 @@ export default function AjouterAnimePage() {
     setLoading(true);
 
     // Validation
-    if (!posterFile) {
+    if (!posterFile && !posterUrl) {
       setError('Le poster est obligatoire');
       setLoading(false);
       return;
@@ -110,6 +148,12 @@ export default function AjouterAnimePage() {
 
     if (formData.genreIds.length === 0) {
       setError('Veuillez sélectionner au moins un genre');
+      setLoading(false);
+      return;
+    }
+
+    if (!selectedBanner) {
+      setError('Veuillez sélectionner une bannière');
       setLoading(false);
       return;
     }
@@ -122,9 +166,17 @@ export default function AjouterAnimePage() {
       data.append('anneeDebut', formData.anneeDebut);
       data.append('studio', formData.studio);
       data.append('genreIds', JSON.stringify(formData.genreIds));
-      data.append('poster', posterFile);
-      if (banniereFile) {
-        data.append('banniere', banniereFile);
+      
+      // Si poster depuis Jikan (URL)
+      if (posterUrl && !posterFile) {
+        data.append('posterUrl', posterUrl);
+      } else if (posterFile) {
+        data.append('poster', posterFile);
+      }
+      
+      // Si bannière gradient sélectionnée
+      if (selectedBanner) {
+        data.append('bannerGradient', selectedBanner);
       }
 
       // Envoie à l'API
@@ -153,6 +205,64 @@ export default function AjouterAnimePage() {
             </p>
           </div>
 
+          {/* Section recherche Jikan */}
+          <div className="ajout-anime-card jikan-search-card">
+            <h2 className="jikan-search-title">
+              Rechercher sur Jikan (optionnel)
+            </h2>
+            <p className="jikan-search-subtitle">
+              Trouvez un anime sur Jikan pour pré-remplir automatiquement le formulaire
+            </p>
+            
+            <div className="jikan-search-input-group">
+              <input
+                type="text"
+                placeholder="Ex: Naruto, One Piece..."
+                value={jikanQuery}
+                onChange={(e) => setJikanQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleJikanSearch()}
+                className="form-input jikan-search-input"
+              />
+              <button
+                type="button"
+                onClick={handleJikanSearch}
+                disabled={searchingJikan || !jikanQuery.trim()}
+                className="btn btn-primary"
+              >
+                {searchingJikan ? <span className="loading"></span> : <><Search size={18} /> Rechercher</>}
+              </button>
+            </div>
+
+            {/* Résultats Jikan */}
+            {jikanResults.length > 0 && (
+              <div className="jikan-results">
+                {jikanResults.map((anime) => (
+                  <div
+                    key={anime.mal_id}
+                    onClick={() => handleSelectJikanAnime(anime)}
+                    className="jikan-result-item"
+                  >
+                    <Image
+                      src={anime.images?.jpg?.image_url || '/placeholder.png'}
+                      alt={anime.title}
+                      width={60}
+                      height={85}
+                      style={{ borderRadius: '4px', objectFit: 'cover' }}
+                    />
+                    <div className="jikan-result-content">
+                      <h4 className="jikan-result-title">
+                        {anime.title_english || anime.title}
+                      </h4>
+                      <p className="jikan-result-meta">
+                        {anime.studios?.[0]?.name || 'Studio inconnu'} • {anime.year || 'N/A'}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <div className="ajout-anime-card">
             {/* Message d'info */}
             <div className="ajout-anime-info">
@@ -161,8 +271,8 @@ export default function AjouterAnimePage() {
                 Information importante
               </div>
               <p className="ajout-anime-info-text">
-                Votre proposition sera soumise à validation par un administrateur avant d'être visible
-                publiquement. Vous pourrez modifier votre anime tant qu'il n'est pas validé.
+                Votre proposition sera soumise à validation par un administrateur avant d&apos;être visible
+                publiquement. Vous pourrez modifier votre anime tant qu&apos;il n&apos;est pas validé.
               </p>
             </div>
 
@@ -279,7 +389,13 @@ export default function AjouterAnimePage() {
                   </div>
                 ) : (
                   <div className="ajout-anime-preview">
-                    <img src={posterPreview} alt="Preview" className="ajout-anime-preview-image" />
+                    <Image 
+                      src={posterPreview} 
+                      alt="Preview" 
+                      width={200}
+                      height={300}
+                      className="ajout-anime-preview-image" 
+                    />
                     <button
                       type="button"
                       onClick={removePoster}
@@ -291,43 +407,29 @@ export default function AjouterAnimePage() {
                 )}
               </div>
 
-              {/* Bannière (optionnelle) */}
+              {/* Bannière (sélection gradient uniquement) */}
               <div className="ajout-anime-upload-section">
-                <label className="ajout-anime-upload-label">Bannière (optionnel)</label>
-                {!bannierePreview ? (
-                  <div
-                    className="ajout-anime-upload-container"
-                    onClick={() => document.getElementById('banniere-input').click()}
-                  >
-                    <div className="ajout-anime-upload-icon">
-                      <Upload size={48} />
-                    </div>
-                    <p className="ajout-anime-upload-text">Cliquez pour choisir une image</p>
-                    <p className="ajout-anime-upload-subtext">PNG, JPG, WebP (max 5MB)</p>
-                    <input
-                      id="banniere-input"
-                      type="file"
-                      accept="image/jpeg,image/png,image/webp"
-                      onChange={handleBanniereChange}
-                      className="ajout-anime-upload-input"
-                    />
-                  </div>
-                ) : (
-                  <div className="ajout-anime-preview">
-                    <img
-                      src={bannierePreview}
-                      alt="Preview"
-                      className="ajout-anime-preview-image"
-                    />
-                    <button
-                      type="button"
-                      onClick={removeBanniere}
-                      className="ajout-anime-preview-remove"
-                    >
-                      <X size={16} />
-                    </button>
-                  </div>
-                )}
+                <label className="ajout-anime-upload-label">Bannière *</label>
+                <p className="banner-description">
+                  Choisissez une bannière parmi nos 20 gradients disponibles
+                </p>
+
+                {/* Sélection de bannières gradient */}
+                <div className="banner-selector">
+                  {[...Array(20)].map((_, index) => {
+                    const bannerNum = index + 1;
+                    return (
+                      <div
+                        key={bannerNum}
+                        className={`banner-option ${selectedBanner === bannerNum ? 'selected' : ''}`}
+                        onClick={() => setSelectedBanner(bannerNum)}
+                      >
+                        <div className={`banner-gradient banner-${bannerNum}`}></div>
+                        <span className="banner-label">Bannière {bannerNum}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Actions */}

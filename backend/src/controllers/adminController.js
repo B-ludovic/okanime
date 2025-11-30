@@ -1,14 +1,17 @@
 import { asyncHandler } from '../middlewares/errorHandler.js';
 import { createAnimeSchema, updateAnimeSchema, createSaisonSchema, validateData } from '../validators/animeValidator.js';
-import { HttpNotFoundError, HttpBadRequestError, httpStatusCodes } from '../utils/httpErrors.js';
-import { uploadPoster, uploadBanniere, deleteFromCloudinary } from '../services/uploadService.js';
+import { HttpNotFoundError, HttpBadRequestError, HttpForbiddenError, httpStatusCodes } from '../utils/httpErrors.js';
+import { uploadPoster, deleteFromCloudinary } from '../services/uploadService.js';
 import prisma from '../config/prisma.js';
 
 // GESTION DES ANIMÉS 
 
 // CRÉER UN ANIME MANUELLEMENT - POST /api/admin/animes
 const createAnime = asyncHandler(async (req, res) => {
-  const { titreVf, synopsis, anneeDebut, studio, genreIds } = req.body;
+  const { titreVf, synopsis, anneeDebut, studio, genreIds, posterUrl, bannerGradient } = req.body;
+
+  // Parse genreIds si c'est une string, sinon utilise directement
+  const parsedGenreIds = typeof genreIds === 'string' ? JSON.parse(genreIds) : genreIds;
 
   // Validation
   const validatedData = createAnimeSchema.parse({
@@ -16,37 +19,43 @@ const createAnime = asyncHandler(async (req, res) => {
     synopsis,
     anneeDebut: parseInt(anneeDebut),
     studio,
-    genreIds: JSON.parse(genreIds),
+    genreIds: parsedGenreIds,
   });
 
-  // Upload du poster (obligatoire)
-  if (!req.files || !req.files.poster) {
+  // Gestion du poster
+  let finalPosterUrl;
+  if (posterUrl) {
+    // Poster depuis Jikan (URL directe)
+    finalPosterUrl = posterUrl;
+  } else if (req.file) {
+    // Poster uploadé
+    finalPosterUrl = await uploadPoster(req.file.buffer);
+  } else {
     throw new HttpBadRequestError('Le poster est obligatoire');
   }
 
-  const posterUrl = await uploadPoster(req.files.poster[0].buffer);
-
-  // Upload de la bannière (optionnel)
-  let banniereUrl = null;
-  if (req.files && req.files.banniere) {
-    banniereUrl = await uploadBanniere(req.files.banniere[0].buffer);
+  // Gestion de la bannière (gradient uniquement, obligatoire)
+  if (!bannerGradient) {
+    throw new HttpBadRequestError('La bannière est obligatoire');
   }
+  
+  const banniereUrl = `gradient-${bannerGradient}`;
 
-  // MODIFICATION : Détermine le statut selon le rôle
-  // Si USER → EN_ATTENTE, si ADMIN → VALIDE directement
-  const statutModeration = req.user.role === 'ADMIN' ? 'VALIDE' : 'EN_ATTENTE';
+  // Tous les animes sont VALIDES par défaut (visibles immédiatement)
+  // L'admin peut les modérer après coup si nécessaire
+  const statutModeration = 'VALIDE';
 
-  // Crée l'anime avec userIdAjout
+  // Crée l'anime
   const anime = await prisma.anime.create({
     data: {
       titreVf: validatedData.titreVf,
       synopsis: validatedData.synopsis,
       anneeDebut: validatedData.anneeDebut,
       studio: validatedData.studio,
-      posterUrl,
+      posterUrl: finalPosterUrl,
       banniereUrl,
-      statutModeration, // EN_ATTENTE pour les users, VALIDE pour les admins
-      userIdAjout: req.user.id, // AJOUT : Stocke qui a créé l'anime
+      statutModeration,
+      userIdAjout: req.user.id,
       genres: {
         create: validatedData.genreIds.map((genreId) => ({
           genre: { connect: { id: genreId } },
@@ -64,9 +73,7 @@ const createAnime = asyncHandler(async (req, res) => {
 
   res.status(httpStatusCodes.CREATED).json({
     success: true,
-    message: statutModeration === 'VALIDE' 
-      ? 'Anime créé avec succès' 
-      : 'Anime créé et en attente de validation',
+    message: 'Anime créé avec succès et visible immédiatement',
     anime,
   });
 });
@@ -87,23 +94,25 @@ const updateAnime = asyncHandler(async (req, res) => {
     throw new HttpNotFoundError('Anime introuvable');
   }
 
+  // Vérifie les permissions : créateur ou admin
+  if (anime.userIdAjout !== req.user.id && req.user.role !== 'ADMIN') {
+    throw new HttpForbiddenError('Vous n\'avez pas les permissions pour modifier cet anime');
+  }
+
   // Upload du nouveau poster si fourni
   let posterUrl = anime.posterUrl;
   if (req.files && req.files.poster) {
-    // Supprime l'ancien poster de Cloudinary
-    if (anime.posterUrl) {
+    // Supprime l'ancien poster de Cloudinary si c'est une URL Cloudinary
+    if (anime.posterUrl && anime.posterUrl.includes('cloudinary')) {
       await deleteFromCloudinary(anime.posterUrl);
     }
     posterUrl = await uploadPoster(req.files.poster[0].buffer);
   }
 
-  // Upload de la nouvelle bannière si fournie
+  // Gestion de la bannière gradient
   let banniereUrl = anime.banniereUrl;
-  if (req.files && req.files.banniere) {
-    if (anime.banniereUrl) {
-      await deleteFromCloudinary(anime.banniereUrl);
-    }
-    banniereUrl = await uploadBanniere(req.files.banniere[0].buffer);
+  if (req.body.bannerGradient) {
+    banniereUrl = `gradient-${req.body.bannerGradient}`;
   }
 
   // Mise à jour de l'anime
@@ -154,13 +163,16 @@ const deleteAnime = asyncHandler(async (req, res) => {
     throw new HttpNotFoundError('Anime introuvable');
   }
 
-  // Supprime les images de Cloudinary
-  if (anime.posterUrl) {
+  // Vérifie les permissions : créateur ou admin
+  if (anime.userIdAjout !== req.user.id && req.user.role !== 'ADMIN') {
+    throw new HttpForbiddenError('Vous n\'avez pas les permissions pour supprimer cet anime');
+  }
+
+  // Supprime les images de Cloudinary (sauf les bannières gradient)
+  if (anime.posterUrl && anime.posterUrl.includes('cloudinary')) {
     await deleteFromCloudinary(anime.posterUrl);
   }
-  if (anime.banniereUrl) {
-    await deleteFromCloudinary(anime.banniereUrl);
-  }
+  // Les bannières gradient ne sont pas sur Cloudinary, pas besoin de les supprimer
 
   // Supprime l'anime (cascade supprime aussi saisons, avis, etc.)
   await prisma.anime.delete({
@@ -191,6 +203,11 @@ const addSaison = asyncHandler(async (req, res) => {
     throw new HttpNotFoundError('Anime introuvable');
   }
 
+  // Vérifie les permissions : créateur ou admin
+  if (anime.userIdAjout !== req.user.id && req.user.role !== 'ADMIN') {
+    throw new HttpForbiddenError('Vous n\'avez pas les permissions pour ajouter une saison à cet anime');
+  }
+
   // Crée la saison
   const saison = await prisma.saison.create({
     data: {
@@ -215,11 +232,19 @@ const updateSaison = asyncHandler(async (req, res) => {
 
   // Vérifie que la saison existe
   const saison = await prisma.saison.findUnique({
-    where: { id }
+    where: { id },
+    include: {
+      anime: true // On a besoin de l'anime pour vérifier le créateur
+    }
   });
 
   if (!saison) {
     throw new HttpNotFoundError('Saison introuvable');
+  }
+
+  // Vérifie les permissions : créateur ou admin
+  if (saison.anime.userIdAjout !== req.user.id && req.user.role !== 'ADMIN') {
+    throw new HttpForbiddenError('Vous n\'avez pas les permissions pour modifier cette saison');
   }
 
   // Met à jour la saison
@@ -241,11 +266,19 @@ const deleteSaison = asyncHandler(async (req, res) => {
 
   // Vérifie que la saison existe
   const saison = await prisma.saison.findUnique({
-    where: { id }
+    where: { id },
+    include: {
+      anime: true // On a besoin de l'anime pour vérifier le créateur
+    }
   });
 
   if (!saison) {
     throw new HttpNotFoundError('Saison introuvable');
+  }
+
+  // Vérifie les permissions : créateur ou admin
+  if (saison.anime.userIdAjout !== req.user.id && req.user.role !== 'ADMIN') {
+    throw new HttpForbiddenError('Vous n\'avez pas les permissions pour supprimer cette saison');
   }
 
   // Supprime la saison

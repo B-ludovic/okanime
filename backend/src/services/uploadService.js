@@ -55,14 +55,8 @@ const uploadPoster = async (fileBuffer) => {
   return uploadToCloudinary(fileBuffer, 'posters');
 };
 
-// Upload une bannière d'anime
-const uploadBanniere = async (fileBuffer) => {
-  return uploadToCloudinary(fileBuffer, 'bannieres');
-};
-
 export {
   uploadAvatar,
   uploadPoster,
-  uploadBanniere,
   deleteFromCloudinary,
 };

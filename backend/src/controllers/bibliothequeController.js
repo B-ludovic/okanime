@@ -94,7 +94,7 @@ const addToBibliotheque = async (req, res, next) => {
     res.status(httpStatusCodes.CREATED).json({
       success: true,
       message: 'Ajouté à votre bibliothèque',
-      data: { bibliothequeEntry },
+      data: { entry: bibliothequeEntry },
     });
   } catch (error) {
     next(error);
@@ -139,7 +139,7 @@ const updateBibliothequeEntry = async (req, res, next) => {
     res.status(httpStatusCodes.OK).json({
       success: true,
       message: 'Bibliothèque mise à jour',
-      data: { bibliothequeEntry: updatedEntry },
+      data: { entry: updatedEntry },
     });
   } catch (error) {
     next(error);

@@ -229,6 +229,87 @@
   line-height: 1.6;
 }
 
+/* Section recherche Jikan */
+.jikan-search-card {
+  margin-bottom: 24px;
+}
+
+.jikan-search-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.jikan-search-subtitle {
+  color: #9ca3af;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+}
+
+.jikan-search-input-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.jikan-search-input {
+  flex: 1;
+}
+
+.jikan-results {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.jikan-result-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  background: transparent;
+}
+
+.jikan-result-item:hover {
+  background: #1f2937;
+}
+
+.jikan-result-content {
+  flex: 1;
+}
+
+.jikan-result-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.jikan-result-meta {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+/* Section bannière personnalisée */
+.banner-custom-upload {
+  margin-top: 24px;
+}
+
+.banner-custom-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.banner-description {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 768px) {

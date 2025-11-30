@@ -10,6 +10,17 @@
   border: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.bannerBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  z-index: 0;
+  opacity: 0.3;
 }
 
 .animeCard:hover {
@@ -23,6 +34,7 @@
   padding-top: 140%; /* Ratio 5:7 pour poster manga */
   overflow: hidden;
   background: linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%);
+  z-index: 1;
 }
 
 .image {
@@ -60,6 +72,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 .title {

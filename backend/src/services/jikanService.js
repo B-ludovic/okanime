@@ -56,7 +56,6 @@ const transformJikanToOurFormat = async (jikanAnime) => {
     anneeDebut: jikanAnime.year || new Date().getFullYear(),
     studio: jikanAnime.studios?.[0]?.name || 'Studio inconnu',
     posterUrl: jikanAnime.images?.jpg?.large_image_url || jikanAnime.images?.jpg?.image_url,
-    banniereUrl: jikanAnime.images?.jpg?.large_image_url,
     noteMoyenne: jikanAnime.score || 0,
   };
 };

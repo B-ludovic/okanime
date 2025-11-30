@@ -13,46 +13,28 @@ import {
 } from '../controllers/adminController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { adminOnly } from '../middlewares/roleMiddleware.js';
-import { uploadMultiple } from '../middlewares/uploadMiddleware.js';
+import { uploadMultiple, uploadMultipleOptional, uploadSingleOptional } from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router();
 
-// Toutes les routes admin nécessitent d'être connecté ET d'être admin
-router.use(authMiddleware);
-router.use(adminOnly);
+// GESTION DES ANIMÉS (créateur ou admin)
+router.post('/animes', authMiddleware, uploadSingleOptional('poster'),createAnime );
+router.put('/animes/:id', authMiddleware, uploadSingleOptional('poster'), updateAnime );
+router.delete('/animes/:id', authMiddleware, deleteAnime );
 
-// GESTION DES ANIMÉS 
-router.post(
-  '/animes',
-  uploadMultiple([
-    { name: 'poster', maxCount: 1 },
-    { name: 'banniere', maxCount: 1 }
-  ]),
-  createAnime
-);
-router.put(
-  '/animes/:id',
-  uploadMultiple([
-    { name: 'poster', maxCount: 1 },
-    { name: 'banniere', maxCount: 1 }
-  ]),
-  updateAnime
-);
-router.delete('/animes/:id', deleteAnime);
+// GESTION DES SAISONS (créateur ou admin)
+router.post('/animes/:animeId/saisons', authMiddleware, addSaison );
+router.put('/saisons/:id', authMiddleware, updateSaison );
+router.delete('/saisons/:id', authMiddleware, deleteSaison );
 
-// GESTION DES SAISONS 
-router.post('/animes/:animeId/saisons', addSaison);
-router.put('/saisons/:id', updateSaison);
-router.delete('/saisons/:id', deleteSaison);
+// MODÉRATION (admin uniquement)
+router.get('/animes/pending', authMiddleware, adminOnly, getPendingAnimes);
+router.put('/animes/:id/moderation', authMiddleware, adminOnly, moderateAnime );
 
-// MODÉRATION
-router.get('/animes/pending', getPendingAnimes);
-router.put('/animes/:id/moderation', moderateAnime);
+// GESTION DES UTILISATEURS (admin uniquement)
+router.delete('/users/:userId/avatar', authMiddleware, adminOnly, deleteUserAvatar );
 
-// GESTION DES UTILISATEURS
-router.delete('/users/:userId/avatar', deleteUserAvatar);
-
-// STATISTIQUES
-router.get('/stats', getStats);
+// STATISTIQUES (admin uniquement)
+router.get('/stats', authMiddleware, adminOnly,getStats );
 
 export default router;
