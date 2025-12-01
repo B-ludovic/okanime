@@ -4,7 +4,7 @@ import { HttpNotFoundError, httpStatusCodes } from '../utils/httpErrors.js';
 // Récupérer tous les animes (avec recherche et filtres)
 const getAllAnimes = async (req, res, next) => {
   try {
-    const { query, genre, page = '1', limit = '20' } = req.query;
+    const { query, genre, page = '1', limit = '20', sort } = req.query;
 
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
@@ -37,6 +37,15 @@ const getAllAnimes = async (req, res, next) => {
       };
     }
 
+    // Gestion du tri
+    let orderBy = { dateAjout: 'desc' }; // Par défaut: les plus récents ajoutés
+    
+    if (sort === 'recent') {
+      orderBy = { createdAt: 'desc' }; // Les plus récents créés
+    } else if (sort === 'rating') {
+      orderBy = { noteMoyenne: 'desc' }; // Les mieux notés
+    }
+
     // Compter le total d'animes
     const total = await prisma.anime.count({ where });
 
@@ -64,9 +73,7 @@ const getAllAnimes = async (req, res, next) => {
           },
         },
       },
-      orderBy: {
-        dateAjout: 'desc',
-      },
+      orderBy,
     });
 
     res.status(httpStatusCodes.OK).json({
