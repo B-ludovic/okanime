@@ -74,6 +74,51 @@
   opacity: 0.7;
 }
 
+/* Section statut bibliothèque */
+.biblioStatusSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-xs);
+  margin-top: var(--espace-sm);
+}
+
+.biblioLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--texte-noir);
+}
+
+.biblioSelect {
+  width: 100%;
+  height: 38px;
+  padding: 0 var(--espace-sm);
+  border: 1px solid #E2E8F0;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texte-noir);
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.biblioSelect:hover {
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 2px 8px rgba(147, 197, 253, 0.2);
+}
+
+.biblioSelect:focus {
+  outline: none;
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
+}
+
+.biblioSelect:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Infos à droite */
 .info {
   display: flex;
@@ -154,12 +199,12 @@
 }
 
 .genreTag {
-  background: var(--gradient-corail-rose);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: var(--arrondi-grand);
   font-size: 0.875rem;
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .resumeSection {

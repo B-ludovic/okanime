@@ -7,6 +7,7 @@ import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
 import api from '../../../app/lib/api';
 import { isAuthenticated } from '../../../app/lib/utils';
+import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
 import styles from '../../../styles/AnimeDetail.module.css';
 import { Star, BookmarkPlus, Check } from 'lucide-react';
 
@@ -19,7 +20,50 @@ export default function AnimeDetailPage() {
     const [inBiblio, setInBiblio] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
     const [biblioEntryId, setBiblioEntryId] = useState(null);
+    const [biblioStatut, setBiblioStatut] = useState(null); // Statut actuel dans la biblio
     const [saving, setSaving] = useState(false);
+
+    // Fonction pour attribuer une couleur à chaque genre
+    const getGenreColor = (genreName) => {
+        if (!genreName) {
+            return '#93C5FD'; // Bleu pastel par défaut
+        }
+
+        const colors = {
+            'Action': '#EF4444',        // Rouge - énergie et combat
+            'Adventure': '#F59E0B',     // Orange - exploration
+            'Comedy': '#FCD34D',        // Jaune - joie et humour
+            'Drama': '#8B5CF6',         // Violet - émotions
+            'Fantasy': '#EC4899',       // Rose - magie et rêves
+            'Horror': '#1F2937',        // Gris foncé - peur
+            'Mystery': '#6366F1',       // Indigo - énigmes
+            'Romance': '#F472B6',       // Rose clair - amour
+            'Sci-Fi': '#3B82F6',        // Bleu - technologie
+            'Slice of Life': '#10B981', // Vert - quotidien
+            'Sports': '#14B8A6',        // Turquoise - compétition
+            'Supernatural': '#7C3AED',  // Violet foncé - surnaturel
+            'Thriller': '#DC2626',      // Rouge foncé - suspense
+            'Mecha': '#6B7280',         // Gris - robots
+            'School': '#F97316',        // Orange clair - jeunesse
+            'Music': '#A855F7',         // Violet clair - harmonie
+        };
+
+        // Recherche insensible à la casse
+        const normalizedName = genreName.trim();
+        if (colors[normalizedName]) {
+            return colors[normalizedName];
+        }
+
+        // Recherche partielle
+        for (const [key, color] of Object.entries(colors)) {
+            if (key.toLowerCase().includes(normalizedName.toLowerCase()) || 
+                normalizedName.toLowerCase().includes(key.toLowerCase())) {
+                return color;
+            }
+        }
+
+        return '#93C5FD'; // Bleu pastel par défaut
+    };
 
     // Récupère les détails de l'anime
     useEffect(() => {
@@ -28,19 +72,23 @@ export default function AnimeDetailPage() {
                 const response = await api.get(`/animes/${params.id}`);
                 setAnime(response.data.anime);
                 
-                // Vérifier si l'anime est déjà en favori dans la bibliothèque
+                // Vérifier si l'anime est déjà dans la bibliothèque
                 if (isAuthenticated() && response.data.anime.saisons?.[0]?.id) {
                     try {
                         const biblioResponse = await api.get('/bibliotheque');
-                        const favoriteEntry = biblioResponse.data.bibliotheque.find(
-                            entry => entry.saison.id === response.data.anime.saisons[0].id && entry.statut === 'FAVORI'
+                        const entry = biblioResponse.data.bibliotheque.find(
+                            entry => entry.saison.id === response.data.anime.saisons[0].id
                         );
-                        if (favoriteEntry) {
-                            setIsFavorite(true);
-                            setBiblioEntryId(favoriteEntry.id);
+                        if (entry) {
+                            setInBiblio(true);
+                            setBiblioEntryId(entry.id);
+                            setBiblioStatut(entry.statut);
+                            if (entry.statut === 'FAVORI') {
+                                setIsFavorite(true);
+                            }
                         }
                     } catch (err) {
-                        console.error('Erreur lors de la vérification des favoris:', err);
+                        console.error('Erreur lors de la vérification de la bibliothèque:', err);
                     }
                 }
             } catch (err) {
@@ -55,6 +103,25 @@ export default function AnimeDetailPage() {
             fetchAnime();
         }
     }, [params.id]);
+
+    // Fonction pour changer le statut dans la bibliothèque
+    const handleStatutChange = async (newStatut) => {
+        if (!biblioEntryId) return;
+
+        try {
+            setSaving(true);
+            await api.put(`/bibliotheque/${biblioEntryId}`, {
+                statut: newStatut,
+            });
+            setBiblioStatut(newStatut);
+            setIsFavorite(newStatut === 'FAVORI');
+        } catch (err) {
+            console.error('Erreur lors du changement de statut:', err);
+            alert('Impossible de modifier le statut');
+        } finally {
+            setSaving(false);
+        }
+    };
 
     // Fonction pour ajouter à la bibliothèque
     const addToBibliotheque = async () => {
@@ -75,10 +142,13 @@ export default function AnimeDetailPage() {
 
             // Ajoute la première saison à la bibliothèque avec statut A_VOIR
             try {
-                await api.post('/bibliotheque', {
+                const response = await api.post('/bibliotheque', {
                     saisonId: anime.saisons[0].id,
                     statut: 'A_VOIR',
                 });
+                const entryId = response.data.entry?.id || response.data.bibliothequeEntry?.id;
+                setBiblioEntryId(entryId);
+                setBiblioStatut('A_VOIR');
                 alert('Ajouté à votre bibliothèque avec succès !');
             } catch (err) {
                 // Si déjà dans la biblio, juste informer
@@ -154,22 +224,35 @@ export default function AnimeDetailPage() {
                                     )}
                                 </div>
                                 
-                                {/* Bouton Ajouter à la bibliothèque */}
-                                <button
-                                    onClick={addToBibliotheque}
-                                    disabled={saving || inBiblio}
-                                    className={`btn btn-primary ${styles.addButton} ${inBiblio ? styles.addButtonAdded : ''}`}
-                                >
-                                    {inBiblio ? (
-                                        <>
-                                            <Check size={18} /> Ajouté à ma bibliothèque
-                                        </>
-                                    ) : (
-                                        <>
-                                            <BookmarkPlus size={18} /> Ajouter à ma bibliothèque
-                                        </>
-                                    )}
-                                </button>
+                                {/* Si déjà dans la bibliothèque : afficher le select de statut */}
+                                {inBiblio ? (
+                                    <div className={styles.biblioStatusSection}>
+                                        <label className={styles.biblioLabel}>
+                                            Statut dans ma bibliothèque :
+                                        </label>
+                                        <select
+                                            value={biblioStatut}
+                                            onChange={(e) => handleStatutChange(e.target.value)}
+                                            disabled={saving}
+                                            className={styles.biblioSelect}
+                                        >
+                                            {Object.keys(STATUTS_BIBLIOTHEQUE).map((key) => (
+                                                <option key={key} value={key}>
+                                                    {STATUTS_BIBLIOTHEQUE[key]}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ) : (
+                                    /* Sinon : afficher le bouton "Ajouter à la bibliothèque" */
+                                    <button
+                                        onClick={addToBibliotheque}
+                                        disabled={saving}
+                                        className={`btn btn-primary ${styles.addButton}`}
+                                    >
+                                        <BookmarkPlus size={18} /> Ajouter à ma bibliothèque
+                                    </button>
+                                )}
                             </div>
 
                             {/* Informations à droite */}
@@ -255,7 +338,11 @@ export default function AnimeDetailPage() {
                                     <span className={styles.genresLabel}>Genres :</span>
                                     <div className={styles.genres}>
                                         {anime.genres.map((genreRelation) => (
-                                            <span key={genreRelation.genre.id} className={styles.genreTag}>
+                                            <span 
+                                                key={genreRelation.genre.id} 
+                                                className={styles.genreTag}
+                                                style={{ backgroundColor: getGenreColor(genreRelation.genre.nom) }}
+                                            >
                                                 {genreRelation.genre.nom}
                                             </span>
                                         ))}

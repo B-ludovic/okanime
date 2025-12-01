@@ -28,7 +28,7 @@ export const searchAnimeOnJikan = async (query, page = 1) => {
 };
 
 // Récupère les détails complets d'un anime par son ID Jikan
-const getAnimeDetailsFromJikan = async (jikanId) => {
+export const getAnimeDetailsFromJikan = async (jikanId) => {
   const data = await fetchFromJikan(`/anime/${jikanId}/full`);
   return data.data;
 };
@@ -62,7 +62,6 @@ const transformJikanToOurFormat = async (jikanAnime) => {
 
 export {
   searchAnimeOnJikan,
-  getAnimeDetailsFromJikan,
   getGenresFromJikan,
   transformJikanToOurFormat,
 };

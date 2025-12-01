@@ -2,13 +2,14 @@ import { asyncHandler } from '../middlewares/errorHandler.js';
 import { createAnimeSchema, updateAnimeSchema, createSaisonSchema, validateData } from '../validators/animeValidator.js';
 import { HttpNotFoundError, HttpBadRequestError, HttpForbiddenError, HttpConflictError, httpStatusCodes } from '../utils/httpErrors.js';
 import { uploadPoster, deleteFromCloudinary } from '../services/uploadService.js';
+import { getAnimeDetailsFromJikan } from '../services/jikanService.js';
 import prisma from '../config/prisma.js';
 
 // GESTION DES ANIMÉS 
 
 // CRÉER UN ANIME MANUELLEMENT - POST /api/admin/animes
 const createAnime = asyncHandler(async (req, res) => {
-  const { titreVf, synopsis, anneeDebut, studio, genreIds, posterUrl, bannerGradient } = req.body;
+  const { titreVf, synopsis, anneeDebut, studio, genreIds, posterUrl, bannerGradient, malId } = req.body;
 
   // Parse genreIds si c'est une string, sinon utilise directement
   const parsedGenreIds = typeof genreIds === 'string' ? JSON.parse(genreIds) : genreIds;
@@ -45,6 +46,18 @@ const createAnime = asyncHandler(async (req, res) => {
   // L'admin peut les modérer après coup si nécessaire
   const statutModeration = 'VALIDE';
 
+  // Récupère le nombre d'épisodes depuis Jikan si malId est fourni
+  let nombreEpisodes = 12; // Valeur par défaut
+  if (malId) {
+    try {
+      const jikanData = await getAnimeDetailsFromJikan(malId);
+      nombreEpisodes = jikanData.episodes || 12;
+      console.log(`📊 Nombre d'épisodes récupéré depuis Jikan: ${nombreEpisodes}`);
+    } catch (error) {
+      console.warn('⚠️ Impossible de récupérer le nombre d\'épisodes depuis Jikan, utilisation de 12 par défaut');
+    }
+  }
+
   // Crée l'anime avec une saison par défaut
   const anime = await prisma.anime.create({
     data: {
@@ -56,6 +69,7 @@ const createAnime = asyncHandler(async (req, res) => {
       banniereUrl,
       statutModeration,
       userIdAjout: req.user.id,
+      malId: malId ? parseInt(malId) : null,
       genres: {
         create: validatedData.genreIds.map((genreId) => ({
           genre: { connect: { id: genreId } },
@@ -65,7 +79,7 @@ const createAnime = asyncHandler(async (req, res) => {
         create: {
           numeroSaison: 1,
           titreSaison: 'Saison 1',
-          nombreEpisodes: 12, // Valeur par défaut, modifiable après
+          nombreEpisodes: nombreEpisodes,
           annee: validatedData.anneeDebut,
           statut: 'EN_COURS',
         },
