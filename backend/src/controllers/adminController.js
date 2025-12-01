@@ -51,8 +51,9 @@ const createAnime = asyncHandler(async (req, res) => {
   if (malId) {
     try {
       const jikanData = await getAnimeDetailsFromJikan(malId);
+      console.log(`📡 Données Jikan reçues:`, { episodes: jikanData.episodes, type: jikanData.type, title: jikanData.title });
       nombreEpisodes = jikanData.episodes || 12;
-      console.log(`📊 Nombre d'épisodes récupéré depuis Jikan: ${nombreEpisodes}`);
+      console.log(`📊 Nombre d'épisodes final: ${nombreEpisodes}`);
     } catch (error) {
       console.warn('⚠️ Impossible de récupérer le nombre d\'épisodes depuis Jikan, utilisation de 12 par défaut');
     }

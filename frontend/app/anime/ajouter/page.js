@@ -28,6 +28,7 @@ export default function AjouterAnimePage() {
     anneeDebut: new Date().getFullYear(),
     studio: '',
     genreIds: [],
+    malId: null, // Ajout du MAL ID depuis Jikan
   });
 
   const [posterFile, setPosterFile] = useState(null);
@@ -62,6 +63,7 @@ export default function AjouterAnimePage() {
       anneeDebut: anime.year || new Date().getFullYear(),
       studio: anime.studios?.[0]?.name || '',
       genreIds: [], // Les genres seront ajoutés manuellement
+      malId: anime.mal_id, // Enregistre le MAL ID
     });
     
     // Récupère le poster depuis Jikan (pas besoin d'upload)
@@ -166,6 +168,11 @@ export default function AjouterAnimePage() {
       data.append('anneeDebut', formData.anneeDebut);
       data.append('studio', formData.studio);
       data.append('genreIds', JSON.stringify(formData.genreIds));
+      
+      // Ajout du MAL ID si disponible (depuis Jikan)
+      if (formData.malId) {
+        data.append('malId', formData.malId);
+      }
       
       // Si poster depuis Jikan (URL)
       if (posterUrl && !posterFile) {

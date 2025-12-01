@@ -1,8 +1,7 @@
-import { env } from '../config/env.js';
 import { HttpInternalServerError } from '../utils/httpErrors.js';
 import { translateToFrench } from './translationService.js';
 
-const JIKAN_BASE_URL = env.JIKAN_API_URL;
+const JIKAN_BASE_URL = process.env.JIKAN_API_URL || 'https://api.jikan.moe/v4';
 
 // Fonction helper pour faire des requêtes à Jikan
 const fetchFromJikan = async (endpoint) => {
@@ -22,13 +21,13 @@ const fetchFromJikan = async (endpoint) => {
 };
 
 // Recherche des animés sur Jikan
-export const searchAnimeOnJikan = async (query, page = 1) => {
+const searchAnimeOnJikan = async (query, page = 1) => {
   const data = await fetchFromJikan(`/anime?q=${encodeURIComponent(query)}&page=${page}&limit=20`);
   return data.data; // Retourne le tableau d'animés
 };
 
 // Récupère les détails complets d'un anime par son ID Jikan
-export const getAnimeDetailsFromJikan = async (jikanId) => {
+const getAnimeDetailsFromJikan = async (jikanId) => {
   const data = await fetchFromJikan(`/anime/${jikanId}/full`);
   return data.data;
 };
@@ -62,6 +61,7 @@ const transformJikanToOurFormat = async (jikanAnime) => {
 
 export {
   searchAnimeOnJikan,
+  getAnimeDetailsFromJikan,
   getGenresFromJikan,
   transformJikanToOurFormat,
 };
