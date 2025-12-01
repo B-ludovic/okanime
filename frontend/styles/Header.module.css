@@ -32,9 +32,7 @@
   z-index: 20;
 }
 
-/* =========================
-   ELEMENTS DESKTOP
-   ========================= */
+/* ELEMENTS DESKTOP */
 .navWrapper, .headerRight { 
   display: flex; 
   align-items: center; 
