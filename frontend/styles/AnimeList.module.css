@@ -9,6 +9,7 @@
 .main {
   flex: 1;
   padding: var(--espace-xl) 0;
+  background: linear-gradient(180deg, #FEFEFE 0%, #FFF5F3 40%, #FFEBE8 100%);
 }
 
 .container {

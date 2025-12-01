@@ -26,6 +26,8 @@ export default function AdminLayout({ children }) {
     { href: '/admin/tous-les-animes', label: 'Tous les animés', icon: Film },
     { href: '/admin/saisons', label: 'Saisons', icon: Calendar, wip: true },
     { href: '/admin/avis', label: 'Avis', icon: Star, wip: true },
+    { href: '/admin/logs', label: "Logs d'activité", iconSrc: '/icons/log.png', wip: true },
+    { href: '/admin/statistiques', label: 'Stats avancées', iconSrc: '/icons/advanced-statistics.png', wip: true },
     { href: '/admin/users', label: 'Utilisateurs', icon: Users },
     { href: '/admin/genres', label: 'Genres', icon: Tag },
   ];
@@ -50,7 +52,17 @@ export default function AdminLayout({ children }) {
                   href={link.href}
                   className={`admin-nav-link ${pathname === link.href ? 'active' : ''} ${link.wip ? 'wip' : ''}`}
                 >
-                  <Icon size={18} />
+                  {link.iconSrc ? (
+                    <Image 
+                      src={link.iconSrc} 
+                      alt={link.label} 
+                      width={20} 
+                      height={20}
+                      className="admin-nav-icon-img"
+                    />
+                  ) : (
+                    <Icon size={20} strokeWidth={2} />
+                  )}
                   {link.label}
                   {link.wip && (
                     <Image 

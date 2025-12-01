@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { User, LogOut, Search, Menu, X, ArrowLeft } from 'lucide-react';
+import { User, LogOut, Search, Menu, X, ArrowLeft, LayoutDashboard, Film, Users as UsersIcon, Tag, Calendar, Star } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '../../app/lib/utils';
 import styles from '../../styles/Header.module.css';
@@ -244,23 +244,106 @@ export default function Header() {
                         </Link>
                     )}
 
-                    {/* Séparateur pour l'Admin */}
+                    {/* Section Administration avec tous les liens */}
                     {isAuth && user?.role === 'ADMIN' && (
                         <>
                             <div className={styles.navDivider}></div>
-                            <Link 
-                                href="/admin" 
-                                className={`${styles.drawerLink} ${styles.adminDrawerLink} ${styles.stagger4}`}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                <Image src="/icons/admin.png" alt="" width={22} height={22} />
-                                <span>Administration</span>
-                            </Link>
+                            <div className={styles.adminSection}>
+                                <div className={styles.adminSectionTitle}>
+                                    <Image src="/icons/admin.png" alt="" width={18} height={18} />
+                                    <span>Administration</span>
+                                </div>
+                                
+                                <Link 
+                                    href="/admin" 
+                                    className={`${styles.drawerLink} ${styles.stagger4}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <LayoutDashboard size={20} />
+                                    <span>Tableau de bord</span>
+                                </Link>
+                                
+                                <Link 
+                                    href="/admin/animes" 
+                                    className={`${styles.drawerLink} ${styles.stagger5}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <Film size={20} />
+                                    <span>Modération animés</span>
+                                </Link>
+                                
+                                <Link 
+                                    href="/admin/tous-les-animes" 
+                                    className={`${styles.drawerLink} ${styles.stagger6}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <Film size={20} />
+                                    <span>Tous les animés</span>
+                                </Link>
+                                
+                                <Link 
+                                    href="/admin/users" 
+                                    className={`${styles.drawerLink} ${styles.stagger7}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <UsersIcon size={20} />
+                                    <span>Utilisateurs</span>
+                                </Link>
+                                
+                                <Link 
+                                    href="/admin/genres" 
+                                    className={`${styles.drawerLink} ${styles.stagger8}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <Tag size={20} />
+                                    <span>Genres</span>
+                                </Link>
+                                
+                                <Link 
+                                    href="/admin/saisons" 
+                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger9}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <Calendar size={20} />
+                                    <span>Saisons</span>
+                                    <Image src="/icons/work-in-progress.png" alt="WIP" width={16} height={16} />
+                                </Link>
+                                
+                                <Link 
+                                    href="/admin/avis" 
+                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger10}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <Star size={20} />
+                                    <span>Avis</span>
+                                    <Image src="/icons/work-in-progress.png" alt="WIP" width={16} height={16} />
+                                </Link>
+                                
+                                <Link 
+                                    href="/admin/logs" 
+                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger11}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <Image src="/icons/log.png" alt="" width={20} height={20} />
+                                    <span>Logs d&apos;activité</span>
+                                    <Image src="/icons/work-in-progress.png" alt="WIP" width={16} height={16} />
+                                </Link>
+                                
+                                <Link 
+                                    href="/admin/statistiques" 
+                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger12}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <Image src="/icons/advanced-statistics.png" alt="" width={20} height={20} />
+                                    <span>Stats avancées</span>
+                                    <Image src="/icons/work-in-progress.png" alt="WIP" width={16} height={16} />
+                                </Link>
+                            </div>
                         </>
                     )}
                 </nav>
 
-                <div className={`${styles.drawerFooter} ${styles.stagger5}`}>
+                <div className={`${styles.drawerFooter} ${styles.stagger13}`}>
                     {isAuth ? (
                         <div className={styles.drawerUserSection}>
                             {/* Carte Profil améliorée */}

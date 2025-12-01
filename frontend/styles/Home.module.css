@@ -9,6 +9,7 @@
 .main {
   flex: 1;
   padding: var(--espace-lg) 0;
+  background: linear-gradient(180deg, #FEFEFE 0%, #FFF5F3 40%, #FFEBE8 100%);
 }
 
 .container {
@@ -64,6 +65,9 @@
   margin-bottom: var(--espace-lg);
   line-height: 1.8;
   letter-spacing: 0.01em;
+  /* Amélioration de la lisibilité : ombre de texte + léger contour */
+  text-shadow: 0 1px 0 rgba(255,255,255,0.02), 0 3px 8px rgba(0,0,0,0.45);
+  -webkit-text-stroke: 0.2px rgba(0,0,0,0.12);
 }
 
 .heroCtaText {

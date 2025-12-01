@@ -164,6 +164,7 @@ export default function AdminGenresPage() {
                     <button
                       className="admin-btn admin-btn-small btn-ghost"
                       onClick={() => handleEdit(genre)}
+                      title="Modifier"
                     >
                       <Edit2 size={14} />
                       Modifier
@@ -171,6 +172,7 @@ export default function AdminGenresPage() {
                     <button
                       className="admin-btn admin-btn-small admin-btn-danger"
                       onClick={() => handleDelete(genre.id)}
+                      title="Supprimer"
                     >
                       <Trash2 size={14} />
                       Supprimer

@@ -143,9 +143,22 @@ const getAllGenres = async (req, res, next) => {
       },
     });
 
+    // Compter manuellement les animés pour chaque genre
+    const genresWithCount = await Promise.all(
+      genres.map(async (genre) => {
+        const animeCount = await prisma.animeGenre.count({
+          where: { genreId: genre.id },
+        });
+        return {
+          ...genre,
+          _count: { animes: animeCount },
+        };
+      })
+    );
+
     res.status(httpStatusCodes.OK).json({
       success: true,
-      data: { genres },
+      data: { genres: genresWithCount },
     });
   } catch (error) {
     next(error);

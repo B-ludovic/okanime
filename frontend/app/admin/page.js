@@ -14,7 +14,9 @@ import {
   CheckCircle,
   XCircle,
   TrendingUp,
-  MessageSquare
+  MessageSquare,
+  FileText,
+  BarChart3
 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
@@ -79,7 +81,7 @@ export default function AdminDashboardPage() {
       {/* Header */}
       <div className="admin-header">
         <h1 className="admin-title">Tableau de bord</h1>
-        <p className="admin-subtitle">Vue d'ensemble de la plateforme O'Kanime</p>
+        <p className="admin-subtitle">Vue d&apos;ensemble de la plateforme O&apos;Kanime</p>
       </div>
 
       {/* Grille de statistiques */}
@@ -176,6 +178,34 @@ export default function AdminDashboardPage() {
             <span className="admin-stat-label">Modération Avis</span>
             <div className="admin-stat-icon">
               <MessageSquare size={24} />
+            </div>
+          </div>
+          <div className="admin-stat-wip">
+            <Image src="/icons/work-in-progress.png" alt="En développement" width={60} height={60} />
+            <span className="admin-stat-wip-text">Bientôt disponible</span>
+          </div>
+        </div>
+
+        {/* Logs d'activité - Work in Progress */}
+        <div className="admin-stat-card wip">
+          <div className="admin-stat-header">
+            <span className="admin-stat-label">Logs d&apos;activité</span>
+            <div className="admin-stat-icon">
+              <FileText size={24} />
+            </div>
+          </div>
+          <div className="admin-stat-wip">
+            <Image src="/icons/work-in-progress.png" alt="En développement" width={60} height={60} />
+            <span className="admin-stat-wip-text">Bientôt disponible</span>
+          </div>
+        </div>
+
+        {/* Statistiques avancées - Work in Progress */}
+        <div className="admin-stat-card wip">
+          <div className="admin-stat-header">
+            <span className="admin-stat-label">Stats avancées</span>
+            <div className="admin-stat-icon">
+              <BarChart3 size={24} />
             </div>
           </div>
           <div className="admin-stat-wip">

@@ -91,6 +91,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--espace-lg);
+  
+  /* --- LA CORRECTION MAGIQUE --- */
+  min-width: 0; /* Autorise le conteneur à rétrécir en dessous de la taille de son contenu */
+  width: 100%;  /* S'assure qu'il ne dépasse pas */
 }
 
 .admin-header {
@@ -206,11 +210,14 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  max-width: 100%;
+  width: 100%;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: auto; /* Permet au tableau de s'adapter */
 }
 
 .admin-table thead {
@@ -225,6 +232,12 @@
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* Centrer les colonnes sauf la première */
+.admin-table th:not(:first-child),
+.admin-table td:not(:first-child) {
+  text-align: center;
 }
 
 .admin-table td {
@@ -501,35 +514,152 @@
 
 /* RESPONSIVE */
 
+/* Sécurité globale : aucun élément ne doit dépasser 100% */
+.admin-stat-card, 
+.admin-anime-card, 
+.admin-quick-actions,
+.admin-table-container,
+.admin-sidebar {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- TABLETTES & MOBILES (Tout ce qui est < 1024px) --- */
 @media (max-width: 1024px) {
+  /* 1. CONTENEUR PRINCIPAL */
   .admin-container {
-    grid-template-columns: 1fr;
+    display: flex;             /* On remplace Grid par Flex column */
+    flex-direction: column;
+    width: 100%;
+    max-width: 100vw;          /* Force à ne pas dépasser la vitre */
+    padding: 1rem;             /* RÉDUIT LE PADDING (c'était trop gros avant) */
+    gap: 1.5rem;
+    box-sizing: border-box;
+    overflow-x: hidden;        /* Coupe tout ce qui dépasse */
   }
 
+  /* 2. SIDEBAR (Masquée en mobile - navigation dans le burger) */
   .admin-sidebar {
-    position: static;
+    display: none;
   }
 
-  .admin-nav {
-    flex-direction: row;
-    overflow-x: auto;
+  /* 3. CONTENU PRINCIPAL */
+  .admin-main {
+    min-width: 0;              /* CRUCIAL : Permet aux enfants de rétrécir */
+    width: 100%;
+  }
+
+  /* 4. TABLEAUX (Le coupable habituel) */
+  .admin-table-container {
+    width: 100%;
+    max-width: 100%;
+    display: block;            /* Important pour que overflow fonctionne */
+    overflow-x: auto;          /* Scroll interne au tableau */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .admin-table {
+    width: 100%;
+    min-width: 100%;           /* Force le tableau à rester dans la card */
+    table-layout: fixed;       /* CRUCIAL : Force les colonnes à respecter width */
+  }
+
+  /* Force les cellules à ne pas déborder */
+  .admin-table th,
+  .admin-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
+/* --- MOBILES UNIQUEMENT (< 768px) --- */
 @media (max-width: 768px) {
-  .admin-stats-grid {
-    grid-template-columns: 1fr;
+  /* Header Admin */
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .admin-add-button {
+    width: 100%;
+    margin-top: 1rem;
   }
 
+  /* Stats Grid */
+  .admin-stats-grid {
+    grid-template-columns: 1fr; /* Une seule colonne */
+  }
+
+  /* Cartes Animés (Mode Vertical) */
   .admin-anime-content {
     grid-template-columns: 1fr;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
   }
 
-  .admin-anime-actions {
-    flex-direction: row;
+  .admin-anime-poster {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 180px;
+    height: auto;
   }
 
-  .admin-title {
-    font-size: 2rem;
+  .admin-anime-meta, .admin-anime-actions {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .admin-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* --- OPTIMISATION DU CONTENU INTERNE (TABLEAUX & LISTES) --- */
+
+  /* 1. Tableaux plus compacts */
+  .admin-table th, 
+  .admin-table td {
+    padding: 0.75rem 0.5rem; /* Marges réduites */
+    font-size: 0.85rem;      /* Texte légèrement plus petit */
+  }
+
+  /* 2. Colonne Actions : On gagne de la place */
+  .admin-actions-cell {
+    gap: 0.25rem;            /* Rapproche les boutons */
+    justify-content: flex-end; /* Colle à droite */
+  }
+
+  /* 3. Transformation des boutons en "Icon-Only" dans les tableaux */
+  .admin-table .admin-btn {
+    padding: 0.4rem;         /* Bouton carré */
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    justify-content: center;
+    font-size: 0;            /* Cache le texte */
+  }
+  
+  .admin-table .admin-btn svg {
+    margin: 0;               /* Centre l'icône */
+    width: 16px;
+    height: 16px;
+  }
+
+  /* 4. Cellules spécifiques */
+  .admin-user-cell, 
+  .admin-email-cell,
+  .admin-genre-cell {
+    max-width: 150px;        /* Limite la largeur */
+    white-space: nowrap;     /* Pas de retour à la ligne */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Ajoute "..." si ça dépasse */
+  }
+  
+  /* Ajustement de la grille des genres (si tu l'utilises) */
+  .genres-grid, .ajout-anime-genres-grid {
+    grid-template-columns: 1fr 1fr; /* 2 colonnes max sur mobile */
   }
 }
