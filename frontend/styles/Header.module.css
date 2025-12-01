@@ -105,9 +105,7 @@
 .adminLink { color: var(--texte-gris); font-weight: bold; text-decoration: none; margin-right: 10px; }
 
 
-/* =========================
-   ELEMENTS MOBILE (Cachés sur Desktop)
-   ========================= */
+/* ELEMENTS MOBILE (Cachés sur Desktop) */
 
 /* IMPORTANT : On cache le conteneur des contrôles mobiles sur Desktop */
 .mobileControls, 
@@ -116,9 +114,7 @@
   display: none;
 }
 
-/* =========================
-   MEDIA QUERY (< 950px)
-   ========================= */
+/* MEDIA QUERY (< 950px) */
 
 @media (max-width: 950px) {
   /* 1. On cache les éléments Desktop */

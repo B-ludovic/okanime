@@ -26,26 +26,26 @@ export default function AnimeDetailPage() {
     // Fonction pour attribuer une couleur à chaque genre
     const getGenreColor = (genreName) => {
         if (!genreName) {
-            return '#93C5FD'; // Bleu pastel par défaut
+            return 'linear-gradient(135deg, #DBEAFE, #93C5FD)'; // Bleu pastel par défaut
         }
 
         const colors = {
-            'Action': '#EF4444',        // Rouge - énergie et combat
-            'Adventure': '#F59E0B',     // Orange - exploration
-            'Comedy': '#FCD34D',        // Jaune - joie et humour
-            'Drama': '#8B5CF6',         // Violet - émotions
-            'Fantasy': '#EC4899',       // Rose - magie et rêves
-            'Horror': '#1F2937',        // Gris foncé - peur
-            'Mystery': '#6366F1',       // Indigo - énigmes
-            'Romance': '#F472B6',       // Rose clair - amour
-            'Sci-Fi': '#3B82F6',        // Bleu - technologie
-            'Slice of Life': '#10B981', // Vert - quotidien
-            'Sports': '#14B8A6',        // Turquoise - compétition
-            'Supernatural': '#7C3AED',  // Violet foncé - surnaturel
-            'Thriller': '#DC2626',      // Rouge foncé - suspense
-            'Mecha': '#6B7280',         // Gris - robots
-            'School': '#F97316',        // Orange clair - jeunesse
-            'Music': '#A855F7',         // Violet clair - harmonie
+            'Action': 'linear-gradient(135deg, #FCA5A5, #EF4444)',        // Rouge - énergie et combat
+            'Adventure': 'linear-gradient(135deg, #FCD34D, #F59E0B)',     // Orange - exploration
+            'Comedy': 'linear-gradient(135deg, #FEF3C7, #FCD34D)',        // Jaune - joie et humour
+            'Drama': 'linear-gradient(135deg, #C4B5FD, #8B5CF6)',         // Violet - émotions
+            'Fantasy': 'linear-gradient(135deg, #F9A8D4, #EC4899)',       // Rose - magie et rêves
+            'Horror': 'linear-gradient(135deg, #4B5563, #1F2937)',        // Gris foncé - peur
+            'Mystery': 'linear-gradient(135deg, #A5B4FC, #6366F1)',       // Indigo - énigmes
+            'Romance': 'linear-gradient(135deg, #FBCFE8, #F472B6)',       // Rose clair - amour
+            'Sci-Fi': 'linear-gradient(135deg, #93C5FD, #3B82F6)',        // Bleu - technologie
+            'Slice of Life': 'linear-gradient(135deg, #6EE7B7, #10B981)', // Vert - quotidien
+            'Sports': 'linear-gradient(135deg, #5EEAD4, #14B8A6)',        // Turquoise - compétition
+            'Supernatural': 'linear-gradient(135deg, #A78BFA, #7C3AED)',  // Violet foncé - surnaturel
+            'Thriller': 'linear-gradient(135deg, #F87171, #DC2626)',      // Rouge foncé - suspense
+            'Mecha': 'linear-gradient(135deg, #9CA3AF, #6B7280)',         // Gris - robots
+            'School': 'linear-gradient(135deg, #FDBA74, #F97316)',        // Orange clair - jeunesse
+            'Music': 'linear-gradient(135deg, #D8B4FE, #A855F7)',         // Violet clair - harmonie
         };
 
         // Recherche insensible à la casse
@@ -62,7 +62,7 @@ export default function AnimeDetailPage() {
             }
         }
 
-        return '#93C5FD'; // Bleu pastel par défaut
+        return 'linear-gradient(135deg, #DBEAFE, #93C5FD)'; // Bleu pastel par défaut
     };
 
     // Récupère les détails de l'anime
@@ -341,7 +341,7 @@ export default function AnimeDetailPage() {
                                             <span 
                                                 key={genreRelation.genre.id} 
                                                 className={styles.genreTag}
-                                                style={{ backgroundColor: getGenreColor(genreRelation.genre.nom) }}
+                                                style={{ background: getGenreColor(genreRelation.genre.nom) }}
                                             >
                                                 {genreRelation.genre.nom}
                                             </span>

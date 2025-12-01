@@ -51,9 +51,9 @@
 
 .paginationButton {
   padding: 0.5rem 1rem;
-  border: 2px solid var(--bleu-pastel);
-  background-color: transparent;
-  color: var(--bleu-pastel);
+  border: 2px solid var(--cyan-pastel);
+  background-color: white;
+  color: var(--cyan-pastel);
   border-radius: var(--arrondi-petit);
   font-weight: 600;
   cursor: pointer;
@@ -64,7 +64,7 @@
 }
 
 .paginationButton:hover:not(:disabled) {
-  background-color: var(--bleu-pastel);
+  background-color: var(--cyan-pastel);
   color: white;
 }
 
