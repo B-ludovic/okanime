@@ -45,7 +45,7 @@ const createAnime = asyncHandler(async (req, res) => {
   // L'admin peut les modérer après coup si nécessaire
   const statutModeration = 'VALIDE';
 
-  // Crée l'anime
+  // Crée l'anime avec une saison par défaut
   const anime = await prisma.anime.create({
     data: {
       titreVf: validatedData.titreVf,
@@ -61,6 +61,15 @@ const createAnime = asyncHandler(async (req, res) => {
           genre: { connect: { id: genreId } },
         })),
       },
+      saisons: {
+        create: {
+          numeroSaison: 1,
+          titreSaison: 'Saison 1',
+          nombreEpisodes: 12, // Valeur par défaut, modifiable après
+          annee: validatedData.anneeDebut,
+          statut: 'EN_COURS',
+        },
+      },
     },
     include: {
       genres: {
@@ -68,12 +77,13 @@ const createAnime = asyncHandler(async (req, res) => {
           genre: true,
         },
       },
+      saisons: true,
     },
   });
 
   res.status(httpStatusCodes.CREATED).json({
     success: true,
-    message: 'Anime créé avec succès et visible immédiatement',
+    message: 'Anime créé avec succès et visible immédiatement (saison par défaut ajoutée)',
     anime,
   });
 });
