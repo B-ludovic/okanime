@@ -1,9 +1,9 @@
 import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
 import LoginForm from '../../../components/forms/LoginForm';
-import styles from '../../../styles/Login.module.css';
+import styles from '../../../styles/modules/Login.module.css';
 
-export default function LoginPage() {
+function LoginPage() {
   return (
     <div className={styles.loginPage}>
       <Header />
@@ -25,3 +25,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export default LoginPage;

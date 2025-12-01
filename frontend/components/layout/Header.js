@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { User, LogOut, Search, Menu, X, ArrowLeft, LayoutDashboard, Film, Users as UsersIcon, Tag, Calendar, Star } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '../../app/lib/utils';
-import styles from '../../styles/Header.module.css';
+import styles from '../../styles/modules/Header.module.css';
 
 export default function Header() {
     const pathname = usePathname();

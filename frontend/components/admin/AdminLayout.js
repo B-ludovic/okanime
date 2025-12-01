@@ -17,7 +17,7 @@ import {
   Star
 } from 'lucide-react';
 
-export default function AdminLayout({ children }) {
+function AdminLayout({ children }) {
   const pathname = usePathname();
 
   const navLinks = [
@@ -89,3 +89,5 @@ export default function AdminLayout({ children }) {
     </div>
   );
 }
+
+export default AdminLayout;

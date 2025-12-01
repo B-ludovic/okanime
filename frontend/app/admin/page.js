@@ -19,7 +19,7 @@ import {
   BarChart3
 } from 'lucide-react';
 
-export default function AdminDashboardPage() {
+function AdminDashboardPage() {
   const router = useRouter();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -236,3 +236,5 @@ export default function AdminDashboardPage() {
     </AdminLayout>
   );
 }
+
+export default AdminDashboardPage;

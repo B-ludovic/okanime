@@ -10,10 +10,10 @@ import BiblioModal from '../../components/bibliotheque/BiblioModal';
 import api from '../../app/lib/api';
 import { isAuthenticated } from '../../app/lib/utils';
 import { STATUTS_BIBLIOTHEQUE } from '../../app/lib/constants';
-import styles from '../../styles/Bibliotheque.module.css';
+import styles from '../../styles/modules/Bibliotheque.module.css';
 import { BookOpen, Filter } from 'lucide-react';
 
-export default function BibliothequePage() {
+function BibliothequePage() {
   const router = useRouter();
   const [bibliotheque, setBibliotheque] = useState([]);
   const [filteredBibliotheque, setFilteredBibliotheque] = useState([]);
@@ -219,3 +219,5 @@ export default function BibliothequePage() {
     </div>
   );
 }
+
+export default BibliothequePage;

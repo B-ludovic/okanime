@@ -8,10 +8,10 @@ import Footer from '../../../components/layout/Footer';
 import api from '../../../app/lib/api';
 import { isAuthenticated } from '../../../app/lib/utils';
 import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
-import styles from '../../../styles/AnimeDetail.module.css';
+import styles from '../../../styles/modules/AnimeDetail.module.css';
 import { Star, BookmarkPlus, Check } from 'lucide-react';
 
-export default function AnimeDetailPage() {
+function AnimeDetailPage() {
     const params = useParams();
     const router = useRouter();
     const [anime, setAnime] = useState(null);
@@ -387,3 +387,5 @@ export default function AnimeDetailPage() {
         </div>
     );
 }
+
+export default AnimeDetailPage;

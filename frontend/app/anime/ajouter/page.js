@@ -11,7 +11,7 @@ import { isAuthenticated } from '../../../app/lib/utils';
 import '../../../styles/AddAnime.css';
 import '../../../styles/Banners.css';
 
-export default function AjouterAnimePage() {
+function AjouterAnimePage() {
   const router = useRouter();
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -462,3 +462,5 @@ export default function AjouterAnimePage() {
     </div>
   );
 }
+
+export default AjouterAnimePage;

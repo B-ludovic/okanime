@@ -1,8 +1,10 @@
+'use client';
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Star, Heart } from "lucide-react";
-import styles from "../../styles/HeroBanner.module.css";
+import styles from "../../styles/modules/HeroBanner.module.css";
 import api from "../../app/lib/api";
 import { isAuthenticated } from "../../app/lib/utils";
 
@@ -17,9 +19,11 @@ function HeroBanner() {
         const fetchFeaturedAnimes = async () => {
             try {
                 const response = await api.get('/animes?limit=5&sort=recent');
-                setAnimes(response.data.data.animes || []);
+                const animesData = response?.data?.animes || [];
+                setAnimes(animesData);
             } catch (err) {
                 console.error('Erreur lors du chargement des animés en vedette:', err);
+                setAnimes([]);
             } finally {
                 setLoading(false);
             }
@@ -48,64 +52,73 @@ function HeroBanner() {
         setCurrentIndex((prev) => (prev + 1) % animes.length);
     };
 
-    if (loading || animes.length === 0) {
+    if (loading) {
         return (
-            <div className="hero-banner-loading">
+            <div className={styles.heroBannerLoading}>
                 <span className="loading"></span>
             </div>
         );
     }
 
+    if (animes.length === 0) {
+        return null;
+    }
+
     const currentAnime = animes[currentIndex];
 
+    // Utiliser le poster si la bannière est un gradient
+    const imageUrl = currentAnime.banniereUrl?.startsWith('gradient-') 
+        ? currentAnime.posterUrl 
+        : (currentAnime.banniereUrl || currentAnime.posterUrl);
+
     return (
-        <div className="hero-banner">
+        <div className={styles.heroBanner}>
             {/* Background avec bannière */}
-            <div className="hero-banner-background">
+            <div className={styles.heroBannerBackground}>
                 <Image
-                    src={currentAnime.banniereUrl || currentAnime.posterUrl}
+                    src={imageUrl}
                     alt={currentAnime.titreVf}
                     fill
-                    className="hero-banner-image"
+                    className={styles.heroBannerImage}
                     priority
                 />
-                <div className="hero-banner-overlay"></div>
+                <div className={styles.heroBannerOverlay}></div>
             </div>
 
             {/* Contenu */}
-            <div className="hero-banner-content">
+            <div className={styles.heroBannerContent}>
                 {/* Navigation précédent */}
-                <button className="hero-banner-nav hero-banner-nav-left" onClick={goToPrevious}>
+                <button className={`${styles.heroBannerNav} ${styles.heroBannerNavLeft}`} onClick={goToPrevious}>
                     <ChevronLeft size={32} />
                 </button>
 
                 {/* Informations de l'anime */}
-                <div className="hero-banner-info">
-                    <h1 className="hero-banner-title">{currentAnime.titreVf}</h1>
+                <div className={styles.heroBannerInfo}>
+                    <h1 className={styles.heroBannerTitle}>{currentAnime.titreVf}</h1>
 
-                    <div className="hero-banner-meta">
+                    <div className={styles.heroBannerMeta}>
                         {currentAnime.noteMoyenne > 0 && (
-                            <span className="hero-banner-meta-item">
+                            <span className={styles.heroBannerMetaItem}>
                                 <Star size={16} fill="gold" /> {currentAnime.noteMoyenne.toFixed(1)}/10
                             </span>
                         )}
                         {currentAnime.genres && currentAnime.genres.length > 0 && (
-                            <span className="hero-banner-meta-item">
+                            <span className={styles.heroBannerMetaItem}>
                                 {currentAnime.genres.slice(0, 2).map((g) => g.genre.nom).join(', ')}
                             </span>
                         )}
                         {currentAnime.anneeDebut && (
-                            <span className="hero-banner-meta-item">{currentAnime.anneeDebut}</span>
+                            <span className={styles.heroBannerMetaItem}>{currentAnime.anneeDebut}</span>
                         )}
                     </div>
 
-                    <p className="hero-banner-synopsis">
+                    <p className={styles.heroBannerSynopsis}>
                         {currentAnime.synopsis.length > 200
                             ? currentAnime.synopsis.slice(0, 200) + '...'
                             : currentAnime.synopsis}
                     </p>
 
-                    <div className="hero-banner-actions">
+                    <div className={styles.heroBannerActions}>
                         <button
                             className="btn btn-primary btn-large"
                             onClick={() => router.push(`/anime/${currentAnime.id}`)}
@@ -115,6 +128,7 @@ function HeroBanner() {
                         {isAuthenticated() && (
                             <button
                                 className="btn btn-ghost btn-large"
+                                style={{ color: 'white' }}
                                 onClick={() => router.push(`/anime/${currentAnime.id}`)}
                             >
                                 <Heart size={20} />
@@ -125,16 +139,16 @@ function HeroBanner() {
                 </div>
 
                 {/* Navigation suivant */}
-                <button className="hero-banner-nav hero-banner-nav-right" onClick={goToNext}>
+                <button className={`${styles.heroBannerNav} ${styles.heroBannerNavRight}`} onClick={goToNext}>
                     <ChevronRight size={32} />
                 </button>
 
                 {/* Pagination dots */}
-                <div className="hero-banner-pagination">
+                <div className={styles.heroBannerPagination}>
                     {animes.map((_, index) => (
                         <button
                             key={index}
-                            className={`hero-banner-dot ${index === currentIndex ? 'active' : ''}`}
+                            className={`${styles.heroBannerDot} ${index === currentIndex ? styles.active : ''}`}
                             onClick={() => setCurrentIndex(index)}
                         />
                     ))}
@@ -143,3 +157,5 @@ function HeroBanner() {
         </div>
     );
 }
+
+export default HeroBanner;

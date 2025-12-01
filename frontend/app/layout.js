@@ -3,12 +3,12 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
+const metadata = {
   title: 'O\'Kanime - Votre bibliothèque d\'animés',
   description: 'Gérez votre collection d\'animés en ligne',
 }
 
-export default function RootLayout({ children }) {
+function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className={inter.className}>
@@ -17,3 +17,6 @@ export default function RootLayout({ children }) {
     </html>
   )
 }
+
+export default RootLayout;
+export { metadata };

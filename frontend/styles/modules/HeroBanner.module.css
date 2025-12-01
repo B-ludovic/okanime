@@ -1,0 +1,283 @@
+/* HERO BANNER ROTATIF */
+
+.heroBanner {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  border-radius: var(--arrondi-moyen);
+  margin-top: var(--espace-xl);
+  margin-bottom: var(--espace-xl);
+}
+
+.heroBannerBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.heroBannerImage {
+  object-fit: cover;
+  animation: zoomIn 5s ease-in-out;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.heroBannerOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  z-index: 1;
+}
+
+.heroBannerContent {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--espace-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.heroBannerInfo {
+  max-width: 600px;
+  color: white;
+  animation: slideInLeft 0.8s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.heroBannerTitle {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: var(--espace-sm);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  line-height: 1.1;
+}
+
+.heroBannerMeta {
+  display: flex;
+  gap: var(--espace-md);
+  margin-bottom: var(--espace-md);
+  font-size: 1rem;
+  flex-wrap: wrap;
+}
+
+.heroBannerMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.heroBannerSynopsis {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: var(--espace-lg);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.heroBannerActions {
+  display: flex;
+  gap: var(--espace-md);
+}
+
+/* Navigation */
+.heroBannerNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: white;
+  z-index: 3;
+}
+
+.heroBannerNav:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.heroBannerNavLeft {
+  left: var(--espace-md);
+}
+
+.heroBannerNavRight {
+  right: var(--espace-md);
+}
+
+/* Pagination */
+.heroBannerPagination {
+  position: absolute;
+  bottom: var(--espace-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--espace-sm);
+  z-index: 3;
+}
+
+.heroBannerDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.heroBannerDot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.heroBannerDot.active {
+  background-color: white;
+  width: 32px;
+  border-radius: 6px;
+}
+
+.heroBannerLoading {
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-bleu-principal);
+  border-radius: var(--arrondi-moyen);
+  margin-bottom: var(--espace-xl);
+}
+
+/* SECTIONS HOME */
+
+.homeSection {
+  margin-bottom: var(--espace-xl);
+}
+
+.homeSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--espace-lg);
+}
+
+.homeSectionTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--bleu-pastel);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.homeSectionLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--corail-pastel);
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.homeSectionLink:hover {
+  color: var(--rose-saumon);
+  gap: 1rem;
+}
+
+.animeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--espace-md);
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .heroBanner {
+    height: 500px;
+  }
+
+  .heroBannerTitle {
+    font-size: 2rem;
+  }
+
+  .heroBannerSynopsis {
+    font-size: 0.9rem;
+  }
+
+  .heroBannerActions {
+    flex-direction: column;
+  }
+
+  .heroBannerNav {
+    width: 40px;
+    height: 40px;
+  }
+
+  .homeSectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .animeGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--espace-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .heroBanner {
+    height: 400px;
+  }
+
+  .heroBannerTitle {
+    font-size: 1.5rem;
+  }
+
+  .heroBannerMeta {
+    font-size: 0.875rem;
+  }
+}

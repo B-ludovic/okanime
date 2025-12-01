@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import styles from '../styles/Home.module.css';
+import HeroBanner from '../components/home/HeroBanner';
+import FeaturedAnimes from '../components/home/FeaturedAnimes';
+import TopRatedAnimes from '../components/home/TopRatedAnimes';
+import styles from '../styles/modules/Home.module.css';
 
-export default function Home() {
+function Home() {
   return (
     <div className={styles.page}>
       <Header />
@@ -28,6 +31,15 @@ export default function Home() {
               </Link>
             </div>
           </div>
+
+          {/* Hero Banner rotatif */}
+          <HeroBanner />
+
+          {/* Section derniers ajouts */}
+          <FeaturedAnimes />
+
+          {/* Section les mieux notés */}
+          <TopRatedAnimes />
         </div>
       </main>
 
@@ -35,3 +47,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

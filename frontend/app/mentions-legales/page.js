@@ -1,13 +1,13 @@
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
-import styles from '../../styles/Legal.module.css';
+import styles from '../../styles/modules/Legal.module.css';
 
-export const metadata = {
+const metadata = {
   title: 'Mentions Légales - O\'Kanime',
   description: 'Mentions légales du site O\'Kanime',
 };
 
-export default function MentionsLegalesPage() {
+function MentionsLegalesPage() {
   return (
     <div className={styles.legalPage}>
       <Header />
@@ -151,3 +151,6 @@ export default function MentionsLegalesPage() {
     </div>
   );
 }
+
+export default MentionsLegalesPage;
+export { metadata };

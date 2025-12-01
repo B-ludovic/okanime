@@ -5,10 +5,10 @@ import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import AnimeCard from '../../components/anime/AnimeCard';
 import api from '../../app/lib/api';
-import styles from '../../styles/AnimeList.module.css';
+import styles from '../../styles/modules/AnimeList.module.css';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function AnimePage() {
+function AnimePage() {
   const [animes, setAnimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -124,3 +124,6 @@ export default function AnimePage() {
     </div>
   );
 }
+
+
+export default AnimePage;

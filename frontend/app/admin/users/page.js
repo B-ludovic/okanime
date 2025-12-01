@@ -7,7 +7,7 @@ import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { Shield, User, Mail, Calendar, Trash2 } from 'lucide-react';
 
-export default function AdminUsersPage() {
+function AdminUsersPage() {
   const router = useRouter();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -220,3 +220,5 @@ export default function AdminUsersPage() {
     </AdminLayout>
   );
 }
+
+export default AdminUsersPage;

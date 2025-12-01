@@ -7,11 +7,11 @@ import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { Edit, Trash2, Eye, Calendar, User, Plus, X, ChevronRight, ChevronLeft } from 'lucide-react';
-import styles from '../../../styles/ModalAdmin.module.css';
+import styles from '../../../styles/modules/ModalAdmin.module.css';
 import '../../../styles/Admin.css';
 import '../../../styles/Banners.css';
 
-export default function TousLesAnimesPage() {
+function TousLesAnimesPage() {
   const router = useRouter();
   const [animes, setAnimes] = useState([]);
   const [allAnimes, setAllAnimes] = useState([]); // Stocke tous les animés
@@ -401,3 +401,5 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
     </div>
   );
 }
+
+export default TousLesAnimesPage;

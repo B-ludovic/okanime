@@ -8,7 +8,7 @@ import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { CheckCircle, XCircle, Eye, Calendar, User } from 'lucide-react';
 
-export default function AdminAnimesPage() {
+function AdminAnimesPage() {
   const router = useRouter();
   const [animes, setAnimes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -184,3 +184,5 @@ export default function AdminAnimesPage() {
     </AdminLayout>
   );
 }
+
+export default AdminAnimesPage;

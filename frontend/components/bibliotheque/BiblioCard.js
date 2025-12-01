@@ -5,9 +5,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Edit2, Trash2 } from 'lucide-react';
 import { STATUTS_BIBLIOTHEQUE } from '../../app/lib/constants';
-import styles from '../../styles/BiblioCard.module.css';
+import styles from '../../styles/modules/BiblioCard.module.css';
 
-export default function BiblioCard({ entry, onUpdate, onDelete }) {
+function BiblioCard({ entry, onUpdate, onDelete }) {
   const [showActions, setShowActions] = useState(false);
 
   // Calcule le pourcentage de progression
@@ -101,3 +101,5 @@ export default function BiblioCard({ entry, onUpdate, onDelete }) {
     </div>
   );
 }
+
+export default BiblioCard;

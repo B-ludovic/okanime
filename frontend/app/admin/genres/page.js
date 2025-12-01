@@ -7,7 +7,7 @@ import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { Plus, Edit2, Trash2, Tag } from 'lucide-react';
 
-export default function AdminGenresPage() {
+function AdminGenresPage() {
   const router = useRouter();
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -223,3 +223,5 @@ export default function AdminGenresPage() {
     </AdminLayout>
   );
 }
+
+export default AdminGenresPage;

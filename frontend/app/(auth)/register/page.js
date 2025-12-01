@@ -1,9 +1,9 @@
 import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
 import RegisterForm from '../../../components/forms/RegisterForm';
-import styles from '../../../styles/Register.module.css';
+import styles from '../../../styles/modules/Register.module.css';
 
-export default function RegisterPage() {
+function RegisterPage() {
   return (
     <div className={styles.registerPage}>
       <Header />
@@ -25,3 +25,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+export default RegisterPage;

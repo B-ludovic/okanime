@@ -41,7 +41,7 @@ const getAllAnimes = async (req, res, next) => {
     let orderBy = { dateAjout: 'desc' }; // Par défaut: les plus récents ajoutés
     
     if (sort === 'recent') {
-      orderBy = { createdAt: 'desc' }; // Les plus récents créés
+      orderBy = { dateAjout: 'desc' }; // Les plus récents ajoutés
     } else if (sort === 'rating') {
       orderBy = { noteMoyenne: 'desc' }; // Les mieux notés
     }

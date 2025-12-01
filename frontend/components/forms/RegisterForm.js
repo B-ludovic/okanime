@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { UserPlus } from 'lucide-react';
 import api from '../../app/lib/api';
-import styles from '../../styles/RegisterForm.module.css';
+import styles from '../../styles/modules/RegisterForm.module.css';
 
-export default function RegisterForm() {
+function RegisterForm() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     username: '',
@@ -168,3 +168,5 @@ export default function RegisterForm() {
     </form>
   );
 }
+
+export default RegisterForm;

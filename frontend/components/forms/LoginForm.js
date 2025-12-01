@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { LogIn } from 'lucide-react';
 import api from '../../app/lib/api';
-import styles from '../../styles/LoginForm.module.css';
+import styles from '../../styles/modules/LoginForm.module.css';
 
-export default function LoginForm() {
+function LoginForm() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
@@ -103,3 +103,5 @@ export default function LoginForm() {
     </form>
   );
 }
+
+export default LoginForm;

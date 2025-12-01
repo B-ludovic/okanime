@@ -1,14 +1,14 @@
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import Image from 'next/image';
-import styles from '../../styles/Legal.module.css';
+import styles from '../../styles/modules/Legal.module.css';
 
-export const metadata = {
+const metadata = {
   title: 'Politique de Confidentialité - O\'Kanime',
   description: 'Politique de confidentialité et protection des données personnelles sur O\'Kanime',
 };
 
-export default function PolitiqueConfidentialitePage() {
+function PolitiqueConfidentialitePage() {
   return (
     <div className={styles.legalPage}>
       <Header />
@@ -218,3 +218,7 @@ export default function PolitiqueConfidentialitePage() {
     </div>
   );
 }
+
+
+export default PolitiqueConfidentialitePage;
+export { metadata };

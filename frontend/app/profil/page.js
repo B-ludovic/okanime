@@ -22,7 +22,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 
-export default function ProfilPage() {
+function ProfilPage() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({
@@ -323,3 +323,5 @@ export default function ProfilPage() {
     </div>
   );
 }
+
+export default ProfilPage;

@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { STATUTS_BIBLIOTHEQUE } from '../../app/lib/constants';
-import styles from '../../styles/BiblioModal.module.css';
+import styles from '../../styles/modules/BiblioModal.module.css';
 
-export default function BiblioModal({ entry, onClose, onSave }) {
+function BiblioModal({ entry, onClose, onSave }) {
   const [formData, setFormData] = useState({
     statut: entry.statut,
     progressionEpisodes: entry.progressionEpisodes,
@@ -88,3 +88,5 @@ export default function BiblioModal({ entry, onClose, onSave }) {
     </div>
   );
 }
+
+export default BiblioModal;

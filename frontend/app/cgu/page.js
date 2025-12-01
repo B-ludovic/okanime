@@ -1,14 +1,14 @@
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import Image from 'next/image';
-import styles from '../../styles/Legal.module.css';
+import styles from '../../styles/modules/Legal.module.css';
 
-export const metadata = {
+const metadata = {
   title: 'Conditions Générales d\'Utilisation - O\'Kanime',
   description: 'Conditions générales d\'utilisation du site O\'Kanime',
 };
 
-export default function CGUPage() {
+function CGUPage() {
   return (
     <div className={styles.legalPage}>
       <Header />
@@ -240,3 +240,6 @@ export default function CGUPage() {
     </div>
   );
 }
+
+export default CGUPage;
+export { metadata };

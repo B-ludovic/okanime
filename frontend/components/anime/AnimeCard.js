@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Star } from 'lucide-react';
-import styles from '../../styles/AnimeCard.module.css';
+import styles from '../../styles/modules/AnimeCard.module.css';
 
-export default function AnimeCard({ anime }) {
+function AnimeCard({ anime }) {
   if (!anime) {
     return null;
   }
@@ -106,3 +106,5 @@ export default function AnimeCard({ anime }) {
     </Link>
   );
 }
+
+export default AnimeCard;
