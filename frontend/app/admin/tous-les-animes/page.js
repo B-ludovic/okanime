@@ -6,7 +6,7 @@ import Image from 'next/image';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
-import { Edit, Trash2, Eye, Calendar, User, Plus, X } from 'lucide-react';
+import { Edit, Trash2, Eye, Calendar, User, Plus, X, ChevronRight, ChevronLeft } from 'lucide-react';
 import styles from '../../../styles/ModalAdmin.module.css';
 import '../../../styles/Admin.css';
 import '../../../styles/Banners.css';
@@ -14,11 +14,15 @@ import '../../../styles/Banners.css';
 export default function TousLesAnimesPage() {
   const router = useRouter();
   const [animes, setAnimes] = useState([]);
+  const [allAnimes, setAllAnimes] = useState([]); // Stocke tous les animés
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingAnime, setEditingAnime] = useState(null);
   const [genres, setGenres] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalAnimes, setTotalAnimes] = useState(0);
+  const animesPerPage = 20;
 
   // Vérifie l'authentification et le rôle admin
   useEffect(() => {
@@ -34,13 +38,17 @@ export default function TousLesAnimesPage() {
     }
   }, [router]);
 
-  // Récupère tous les animés
-  const fetchAnimes = async () => {
+  // Récupère tous les animés (une seule fois)
+  const fetchAllAnimes = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/animes');
+      const response = await api.get('/animes?limit=1000'); // Récupère jusqu'à 1000 animés
       console.log('Response:', response); // Debug
-      setAnimes(response.data?.animes || []);
+      const allAnimesData = response.data?.animes || [];
+      console.log('Total animés récupérés:', allAnimesData.length); // DEBUG
+      setAllAnimes(allAnimesData);
+      setTotalAnimes(allAnimesData.length);
+      console.log('Pages totales:', Math.ceil(allAnimesData.length / 20)); // DEBUG
     } catch (err) {
       setError('Erreur lors du chargement des animés');
       console.error(err);
@@ -49,9 +57,16 @@ export default function TousLesAnimesPage() {
     }
   };
 
+  // Paginer les animés affichés
   useEffect(() => {
-    fetchAnimes();
+    const startIndex = (currentPage - 1) * animesPerPage;
+    const endIndex = startIndex + animesPerPage;
+    setAnimes(allAnimes.slice(startIndex, endIndex));
+  }, [currentPage, allAnimes]);
+
+  useEffect(() => {
     fetchGenres();
+    fetchAllAnimes();
   }, []);
 
   // Récupère les genres
@@ -80,7 +95,7 @@ export default function TousLesAnimesPage() {
   const handleSaveAnime = async (updatedData) => {
     try {
       await api.put(`/admin/animes/${editingAnime.id}`, updatedData);
-      fetchAnimes();
+      await fetchAllAnimes();
       handleCloseModal();
     } catch (err) {
       alert('Erreur lors de la modification');
@@ -94,7 +109,7 @@ export default function TousLesAnimesPage() {
 
     try {
       await api.delete(`/admin/animes/${animeId}`);
-      fetchAnimes();
+      await fetchAllAnimes();
     } catch (err) {
       alert('Erreur lors de la suppression');
       console.error(err);
@@ -118,16 +133,32 @@ export default function TousLesAnimesPage() {
         <div>
           <h1 className="admin-title">Tous les animés</h1>
           <p className="admin-subtitle">
-            {animes.length} animé{animes.length > 1 ? 's' : ''} dans la base de données
+            {totalAnimes} animé{totalAnimes > 1 ? 's' : ''} dans la base de données • Page {currentPage} sur {Math.ceil(totalAnimes / animesPerPage)}
           </p>
         </div>
-        <button 
-          className="btn btn-primary"
-          onClick={() => router.push('/anime/ajouter')}
-        >
-          <Plus size={18} />
-          Ajouter un animé
-        </button>
+        <div className="admin-header-actions">
+          <button 
+            className="btn btn-primary"
+            onClick={() => router.push('/anime/ajouter')}
+          >
+            <Plus size={18} />
+            Ajouter un animé
+          </button>
+          <button 
+            className="btn btn-bleu-gradient admin-pagination-btn"
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button 
+            className="btn btn-bleu-gradient admin-pagination-btn"
+            onClick={() => setCurrentPage(prev => prev + 1)}
+            disabled={totalAnimes === 0 || currentPage >= Math.ceil(totalAnimes / animesPerPage)}
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
       </div>
 
       {/* Erreur */}

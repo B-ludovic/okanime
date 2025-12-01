@@ -196,6 +196,34 @@ img {
   left: 100%;
 }
 
+.btn-bleu-gradient {
+  background: var(--gradient-bleu-cyan);
+  color: white;
+  box-shadow: var(--ombre-moyenne);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-bleu-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-bleu-gradient:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 8px 20px rgba(147, 197, 253, 0.4);
+}
+
+.btn-bleu-gradient:hover::before {
+  left: 100%;
+}
+
 .btn-secondary {
   background: var(--gradient-peche-rose);
   color: white;
