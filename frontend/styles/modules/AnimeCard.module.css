@@ -126,3 +126,24 @@
   font-size: 0.875rem;
   margin-left: auto;
 }
+
+/* RESPONSIVE (Simple) */
+
+@media (max-width: 950px) {
+  /* 1. On réduit les espaces internes pour gagner de la place */
+  .body {
+    padding: 0.75rem; /* Un peu plus compact que sur PC */
+  }
+
+  /* 2. On réduit légèrement le titre */
+  .title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  /* 3. On désactive l'effet de survol (inutile sur tactile) */
+  .animeCard:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Retour à l'ombre normale */
+  }
+}

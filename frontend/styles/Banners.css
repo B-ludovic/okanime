@@ -155,3 +155,25 @@
   font-weight: 600;
   z-index: 1;
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+  /* On force 2 colonnes pour les choix de bannières */
+  .banner-selector {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  /* On réduit un peu la hauteur pour gagner de la place */
+  .banner-option .banner-gradient {
+    height: 120px;
+  }
+}
+
+/* Sur très petit écran, on passe à 1 seule colonne */
+@media (max-width: 500px) {
+  .banner-selector {
+    grid-template-columns: 1fr;
+  }
+}

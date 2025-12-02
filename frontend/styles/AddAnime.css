@@ -311,20 +311,36 @@
 
 /* RESPONSIVE */
 
-@media (max-width: 768px) {
+@media (max-width: 950px) {
+  /* 1. Le Formulaire : Tout en 1 colonne */
   .ajout-anime-form-row {
     grid-template-columns: 1fr;
+    gap: var(--espace-md);
   }
 
+  /* 2. Les Genres : 2 colonnes max pour lisibilité */
   .ajout-anime-genres-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .ajout-anime-title {
-    font-size: 2rem;
+  /* 3. Le Container : Prend toute la largeur */
+  .ajout-anime-container {
+    padding: 0 1rem;
   }
 
   .ajout-anime-card {
-    padding: var(--espace-md);
+    padding: 1.5rem; /* Moins d'espace perdu */
+  }
+
+  /* 4. Titre */
+  .ajout-anime-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  /* Les Genres : 1 seule colonne sur très petit écran */
+  .ajout-anime-genres-grid {
+    grid-template-columns: 1fr;
   }
 }

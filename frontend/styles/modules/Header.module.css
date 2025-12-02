@@ -43,7 +43,7 @@
 .navLink { color: var(--texte-gris); text-decoration: none; font-weight: 500; transition: color 0.3s; }
 .navLink:hover { color: var(--bleu-pastel); }
 
-/* --- BARRE DE RECHERCHE DESKTOP ANIMÉE (Nouveau Code) --- */
+/* BARRE DE RECHERCHE DESKTOP ANIMÉE */
 .searchBox {
   position: relative;
   display: flex;

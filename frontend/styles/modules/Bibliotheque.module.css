@@ -145,30 +145,40 @@
 
 /* RESPONSIVE */
 
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 950px) {
+  /* 1. La Grille : 2 colonnes */
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--espace-md);
   }
 
+  /* 2. Les Filtres : Scroll horizontal fluide (Style App Native) */
+  .filters {
+    flex-wrap: nowrap; /* Force sur une seule ligne */
+    overflow-x: auto;  /* Active le scroll */
+    padding-bottom: 10px; /* Espace pour le doigt */
+    -webkit-overflow-scrolling: touch;
+    
+    
+    /* Cache la barre de scroll disgracieuse */
+    scrollbar-width: none; 
+  }
+  
+  .filters::-webkit-scrollbar { display: none; }
+  
+  .filterButton {
+    white-space: nowrap; /* Empêche le texte de se couper */
+    flex-shrink: 0;      /* Garde la taille normale du bouton */
+  }
+
+  /* 3. Titre */
   .title {
     font-size: 2rem;
   }
-
-  .filters {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: var(--espace-xs);
-  }
 }
 
-@media (max-width: 480px) {
+/* Petit mobile */
+@media (max-width: 500px) {
   .grid {
     grid-template-columns: 1fr;
   }

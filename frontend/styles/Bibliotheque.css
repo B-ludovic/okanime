@@ -361,31 +361,48 @@
 
 /* RESPONSIVE */
 
-@media (max-width: 1024px) {
-  .bibliotheque-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .bibliotheque-grid {
+@media (max-width: 950px) {
+  /* 1. La Grille : On passe à 2 colonnes */
+  .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--espace-md);
   }
 
-  .bibliotheque-title {
-    font-size: 2rem;
+  /* 2. Les Filtres : Scroll horizontal FORCÉ */
+  /* Attention : le nom de classe est '.filters' et non '.bibliotheque-filters' */
+  .filters {
+    display: flex;
+    flex-wrap: nowrap;   /* Force sur une seule ligne */
+    gap: var(--espace-sm);
+    
+    /* LA CORRECTION ULTIME */
+    max-width: calc(100vw - 2rem); /* Largeur écran - padding container */
+    width: 100%;
+    
+    /* Active le scroll */
+    overflow-x: auto;
+    
+    /* Esthétique */
+    padding-bottom: 10px; 
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; 
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  
+  .filterButton {
+    white-space: nowrap; 
+    flex-shrink: 0;      
   }
 
-  .bibliotheque-filters {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: var(--espace-xs);
+  /* 3. Titre */
+  .title {
+    font-size: 2rem;
   }
 }
 
-@media (max-width: 480px) {
-  .bibliotheque-grid {
+/* Petit mobile */
+@media (max-width: 500px) {
+  .grid {
     grid-template-columns: 1fr;
   }
 }

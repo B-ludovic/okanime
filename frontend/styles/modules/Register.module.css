@@ -61,16 +61,35 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .registerCardBody {
-    padding: 2rem 1.5rem;
-  }
 
-  .registerTitle {
-    font-size: 1.5rem;
-  }
-
+@media (max-width: 950px) {
+  /* 1. Ajustement de l'espace vertical */
   .registerMain {
     padding: 2rem 0;
+  }
+
+  /* 2. Container : Marges de sécurité sur les côtés */
+  .registerContainer {
+    padding: 0 1rem;
+  }
+
+  /* 3. La Carte : Optimisation de l'espace interne */
+  .registerCardBody {
+    padding: 1.5rem; /* Moins de vide autour du formulaire */
+  }
+
+  /* 4. Titre plus petit */
+  .registerTitle {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Petit mobile (Téléphone standard) */
+@media (max-width: 480px) {
+  .registerCard {
+    /* Sur très petit écran, on enlève l'ombre portée pour un look plus net/flat */
+    box-shadow: none;
+    border: 1px solid #e5e7eb;
   }
 }
