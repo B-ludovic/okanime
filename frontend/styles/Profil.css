@@ -320,40 +320,46 @@
 
 /* RESPONSIVE */
 
-@media (max-width: 768px) {
+@media (max-width: 950px) {
+  /* 1. Header du Profil : On empile tout et on centre */
   .profil-header-content {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Une seule colonne */
     text-align: center;
+    gap: var(--espace-lg);
   }
 
-  .profil-avatar-section {
+  /* On centre l'avatar et les infos */
+  .profil-avatar-section, 
+  .profil-info, 
+  .profil-meta {
+    align-items: center;
+    justify-content: center;
     margin: 0 auto;
   }
-
+  
+  /* Les badges (email, date) s'empilent ou se mettent en flex */
   .profil-meta {
-    justify-content: center;
     flex-wrap: wrap;
+    gap: var(--espace-sm);
   }
 
-  .profil-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
+  /* 2. Les Grilles (Stats et Bibliothèque) */
+  .profil-stats-grid,
   .profil-library-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes partout */
+    gap: var(--espace-sm);
   }
 
-  .profil-username {
-    font-size: 1.5rem;
+  /* 3. Ajustement boutons paramètres */
+  .profil-setting-btn {
+    padding: 1rem;
+    font-size: 0.9rem;
   }
 }
 
-@media (max-width: 480px) {
-  .profil-library-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
+/* Très petits écrans */
+@media (max-width: 500px) {
   .profil-stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 1 colonne pour les grosses stats */
   }
 }

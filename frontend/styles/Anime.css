@@ -319,41 +319,66 @@
 
 /* RESPONSIVE */
 
-/* Tablette */
-@media (max-width: 1024px) {
-  .anime-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+@media (max-width: 950px) {
   
-  .anime-detail-content {
-    grid-template-columns: 250px 1fr;
-    gap: var(--espace-lg);
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
+  /* --- PAGE LISTE --- */
+  
+  /* 1. La Grille : On passe à 2 colonnes (lisible sur mobile) */
   .anime-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--espace-md);
   }
   
+  /* 2. Container : On évite que ça touche les bords */
+  .anime-list-container {
+    padding: 0 1rem;
+  }
+  
+  /* 3. Titre plus petit */
+  .anime-list-title {
+    font-size: 2rem;
+  }
+  
+  /* 4. Pagination : On permet aux boutons de passer à la ligne */
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  /* --- PAGE DÉTAIL --- */
+  
+  /* 1. Layout : On empile l'image et le texte (Colonne) */
   .anime-detail-content {
     grid-template-columns: 1fr;
-    padding: var(--espace-md);
+    text-align: center; /* On centre tout, c'est plus élégant */
+    gap: 2rem;
   }
   
+  /* 2. Poster : On le centre et on limite sa taille */
+  .anime-detail-poster {
+    max-width: 300px;
+    margin: 0 auto; /* Centrage horizontal */
+    width: 100%;
+  }
+  
+  /* 3. Infos : On aligne les éléments flexibles au centre */
+  .anime-detail-info {
+    align-items: center;
+  }
+  
+  /* 4. Genres : On les centre aussi */
+  .anime-detail-genres {
+    justify-content: center;
+  }
+  
+  /* 5. Titre Détail */
   .anime-detail-title {
-    font-size: 1.75rem;
-  }
-  
-  .anime-list-title {
     font-size: 2rem;
   }
 }
 
-@media (max-width: 480px) {
+/* Petit ajustement pour les très petits écrans */
+@media (max-width: 500px) {
   .anime-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 1 seule colonne si l'écran est minuscule */
   }
 }

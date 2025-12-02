@@ -59,3 +59,22 @@
   color: var(--texte-gris);
   font-size: 0.875rem;
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+  .footer {
+    padding: 2rem 1rem;
+  }
+
+  /* On empile les liens verticalement pour qu'ils soient faciles à cliquer */
+  .footerLinks {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* On cache les petits traits de séparation devenus inutiles */
+  .footerSeparator {
+    display: none;
+  }
+}

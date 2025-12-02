@@ -78,3 +78,17 @@
   color: var(--rose-saumon);
   text-decoration: underline;
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+  /* Les formulaires sont déjà assez compacts, on ajuste juste légèrement */
+  .formInput {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.95rem;
+  }
+  
+  .formLabel {
+    font-size: 0.8rem;
+  }
+}

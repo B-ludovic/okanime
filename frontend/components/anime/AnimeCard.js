@@ -66,6 +66,8 @@ function AnimeCard({ anime }) {
           fill
           className={styles.image}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
+          onError={(e) => { e.target.src = '/placeholder-anime.jpg'; }}
+          unoptimized={anime.posterUrl?.includes('cloudinary')}
         />
         {anime.noteMoyenne > 0 && (
           <div className={styles.badge}>

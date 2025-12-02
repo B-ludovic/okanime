@@ -69,3 +69,32 @@
   color: var(--texte-gris);
   margin-top: 0.5rem;
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+  /* La modale prend presque toute la largeur avec une petite marge */
+  .modal {
+    width: 90%;
+    max-width: none;
+    padding: 1.5rem;
+  }
+
+  .header {
+    margin-bottom: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  /* Les boutons d'action s'empilent (Annuler en bas, Valider en haut) */
+  .actions {
+    flex-direction: column-reverse; /* Astuce ergonomique : Valider souvent en bas */
+    gap: 0.75rem;
+  }
+
+  .actions button {
+    width: 100%; /* Boutons pleine largeur */
+  }
+}

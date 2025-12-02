@@ -92,24 +92,26 @@
 
 /* RESPONSIVE */
 
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 950px) {
+  /* 1. La Grille : 2 colonnes (Tablette/Mobile) */
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--espace-md);
   }
-  
+
+  /* 2. Titre plus petit */
   .title {
     font-size: 2rem;
   }
+
+  /* 3. Pagination : Permettre le retour à la ligne */
+  .pagination {
+    flex-wrap: wrap;
+  }
 }
 
-@media (max-width: 480px) {
+/* Petit mobile : 1 seule colonne */
+@media (max-width: 500px) {
   .grid {
     grid-template-columns: 1fr;
   }

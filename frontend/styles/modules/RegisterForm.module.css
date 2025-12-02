@@ -87,3 +87,18 @@
   color: var(--rose-saumon);
   text-decoration: underline;
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+  /* 1. Réduction du padding des inputs */
+  .formInput {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.95rem;
+  }
+
+  /* 2. Labels plus petits */
+  .formLabel {
+    font-size: 0.8rem;
+  }
+}

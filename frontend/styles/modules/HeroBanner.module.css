@@ -236,48 +236,65 @@
 
 /* RESPONSIVE */
 
-@media (max-width: 768px) {
+/* RESPONSIVE (Simple) */
+
+@media (max-width: 950px) {
+  /* 1. Hero Banner : On réduit la hauteur */
   .heroBanner {
-    height: 500px;
+    height: 450px; /* Plus compact sur mobile */
   }
 
+  /* 2. Titre et Texte : Plus petits pour que ça rentre */
   .heroBannerTitle {
     font-size: 2rem;
   }
 
   .heroBannerSynopsis {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    /* On limite le nombre de lignes pour ne pas cacher les boutons */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
   }
 
-  .heroBannerActions {
-    flex-direction: column;
-  }
-
+  /* 3. Flèches de navigation : Plus discrètes */
   .heroBannerNav {
     width: 40px;
     height: 40px;
   }
+  
+  /* 4. Grilles des sections (Tendances, Nouveautés...) */
+  /* On force 2 colonnes comme sur les autres pages */
+  .animeGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--espace-md);
+  }
 
+  /* 5. Titres des sections */
   .homeSectionTitle {
     font-size: 1.5rem;
   }
-
-  .animeGrid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: var(--espace-sm);
-  }
 }
 
-@media (max-width: 480px) {
-  .heroBanner {
-    height: 400px;
+/* Petit mobile : ajustements ultimes */
+@media (max-width: 500px) {
+  .animeGrid {
+    grid-template-columns: 1fr; /* 1 colonne */
   }
 
+  .heroBanner {
+    height: 400px; /* Encore un peu moins haut */
+  }
+  
   .heroBannerTitle {
     font-size: 1.5rem;
   }
-
-  .heroBannerMeta {
-    font-size: 0.875rem;
+  
+  /* On cache les flèches sur très petit écran pour laisser voir l'image */
+  .heroBannerNav {
+    display: none;
   }
 }

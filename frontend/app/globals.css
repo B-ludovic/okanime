@@ -599,43 +599,28 @@ select.form-input {
 
 /* RESPONSIVE */
 
-@media (max-width: 768px) {
-  .nav {
-    display: none;
-  }
+@media (max-width: 950px) {
   
-  .hero-title-main {
-    font-size: 2rem;
-  }
+  /* 1. Gestion de l'affichage (Mobile vs Desktop) */
+  .mobile-only { display: flex !important; }
+  .desktop-only { display: none !important; }
   
-  .hero-description {
-    font-size: 1rem;
-  }
+  /* 2. Ajustement des Layouts */
+  .main { padding: 1rem 0; }
+  .container { padding: 0 1rem; }
   
-  .hero-cta-text {
-    font-size: 1.125rem;
-  }
+  /* 3. Les Grilles passent en 1 colonne */
+  .grid-auto { grid-template-columns: 1fr; }
+  .header-container { justify-content: space-between; }
   
-  .grid-auto {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* SCROLLBAR */
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--fond-page);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bleu-pastel);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--bleu-profond);
+  /* 4. On cache la nav classique (gérée par le burger) */
+  .nav { display: none; }
+  
+  /* 5. Ajustement des tailles de texte */
+  .hero-title-main { font-size: 2rem; }
+  .hero-description { font-size: 1rem; }
+  
+  /* 6. Ajustement des espaces internes */
+  .card-body { padding: 1rem; }
+  .hero { min-height: auto; padding: 2rem 1rem; }
 }

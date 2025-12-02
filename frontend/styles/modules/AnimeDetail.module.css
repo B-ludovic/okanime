@@ -266,24 +266,40 @@
 
 /* RESPONSIVE */
 
-@media (max-width: 1024px) {
-  .content {
-    grid-template-columns: 250px 1fr;
-    gap: var(--espace-lg);
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 950px) {
+  /* 1. Layout : On empile tout en une colonne */
   .content {
     grid-template-columns: 1fr;
-    padding: var(--espace-md);
-  }
-  
-  .title {
-    font-size: 1.75rem;
+    gap: 2rem;
+    padding: 1rem;
   }
 
+  /* 2. Poster : On le centre et on réduit sa taille max */
+  .posterSection {
+    align-items: center;
+    max-width: 300px;
+    margin: 0 auto; /* Centrage horizontal */
+    width: 100%;
+  }
+
+  /* 3. Titre et Infos : Centrés pour l'élégance */
   .titleRow {
-    gap: var(--espace-sm);
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .author {
+    text-align: center;
+  }
+
+  /* 4. Genres : Centrés */
+  .genres {
+    justify-content: center;
   }
 }
