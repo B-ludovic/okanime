@@ -10,6 +10,7 @@ import { isAuthenticated, getCurrentUser } from '../../../app/lib/utils';
 import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
 import styles from '../../../styles/modules/AnimeDetail.module.css';
 import { Star, BookmarkPlus, Check } from 'lucide-react';
+import AnimeStructuredData from '../../../components/seo/AnimeStructuredData';
 
 // Export de la fonction generateMetadata pour le SEO dynamique
 // Cette fonction est dans un fichier séparé car elle s'exécute côté serveur
@@ -216,6 +217,9 @@ function AnimeDetailPage() {
 
     return (
         <div className={styles.page}>
+            {/* Données structurées JSON-LD pour Google rich snippets */}
+            <AnimeStructuredData anime={anime} />
+            
             <Header />
 
             <main className={styles.main}>
