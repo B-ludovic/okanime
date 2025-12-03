@@ -136,6 +136,9 @@ model Avis {
   anime            Anime    @relation(fields: [animeId], references: [id], onDelete: Cascade)
   
   @@unique([userId, animeId])
+  @@index([animeId]) // AJOUT : Index pour performance
+  @@index([userId])  // AJOUT : Index pour performance
+
   @@map("avis")
 }
 

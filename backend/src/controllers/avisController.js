@@ -261,5 +261,7 @@ const updateAnimeMoyenne = async (animeId) => {
 export {
     createAvis,
     getAvisByAnime,
+    getMesAvis,
+    updateAvis,
     deleteAvis,
 };
