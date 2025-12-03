@@ -11,6 +11,10 @@ import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
 import styles from '../../../styles/modules/AnimeDetail.module.css';
 import { Star, BookmarkPlus, Check } from 'lucide-react';
 
+// Export de la fonction generateMetadata pour le SEO dynamique
+// Cette fonction est dans un fichier séparé car elle s'exécute côté serveur
+export { generateMetadata } from './metadata';
+
 function AnimeDetailPage() {
     const params = useParams();
     const router = useRouter();
