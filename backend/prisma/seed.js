@@ -171,6 +171,7 @@ async function main() {
             posterUrl: animeData.images?.jpg?.large_image_url,
             noteMoyenne: animeData.score || 0,
             statutModeration: StatutModeration.VALIDE,
+            verifie: true, // ✅ Animes du seed sont automatiquement vérifiés
             userIdAjout: admin.id,
           }
         });

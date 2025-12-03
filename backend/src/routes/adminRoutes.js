@@ -15,7 +15,9 @@ import {
   deleteUser,
   createGenre,        
   updateGenre,        
-  deleteGenre,        
+  deleteGenre,
+  getAllAvis,
+  deleteAvis,
 } from '../controllers/adminController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { adminOnly } from '../middlewares/roleMiddleware.js';
@@ -47,6 +49,10 @@ router.delete('/users/:userId/avatar', authMiddleware, adminOnly, deleteUserAvat
 router.post('/genres', authMiddleware, adminOnly, createGenre );
 router.put('/genres/:id', authMiddleware, adminOnly, updateGenre );
 router.delete('/genres/:id', authMiddleware, adminOnly, deleteGenre );
+
+// GESTION DES AVIS (admin uniquement)
+router.get('/avis', authMiddleware, adminOnly, getAllAvis);
+router.delete('/avis/:id', authMiddleware, adminOnly, deleteAvis);
 
 // STATISTIQUES (admin uniquement)
 router.get('/stats', authMiddleware, adminOnly,getStats );

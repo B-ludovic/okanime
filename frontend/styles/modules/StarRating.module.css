@@ -1,0 +1,45 @@
+/* Composant de notation par étoiles */
+
+.starRating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: var(--espace-sm) 0;
+}
+
+.starButton {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.starButton:not(.readonly):hover {
+  transform: scale(1.2);
+}
+
+.starButton:not(.readonly):active {
+  transform: scale(0.95);
+}
+
+.starButton.readonly {
+  cursor: default;
+}
+
+.starIcon {
+  color: #D1D5DB;
+  transition: all 0.2s;
+}
+
+.starIcon.filled {
+  color: #FCD34D;
+  filter: drop-shadow(0 2px 4px rgba(252, 211, 77, 0.3));
+}
+
+.ratingValue {
+  margin-left: var(--espace-sm);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--bleu-pastel);
+}

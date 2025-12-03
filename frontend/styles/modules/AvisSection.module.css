@@ -1,0 +1,214 @@
+/* Section des avis */
+
+.sectionTitle {
+  color: var(--bleu-pastel);
+  font-size: 1.5rem;
+  margin-bottom: var(--espace-lg);
+  font-weight: 700;
+}
+
+.avisHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--espace-lg);
+  flex-wrap: wrap;
+  gap: var(--espace-md);
+}
+
+.avisSort {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+}
+
+.avisSort label {
+  font-size: 0.9rem;
+  color: var(--gris-moyen);
+  font-weight: 500;
+}
+
+.sortSelect {
+  padding: 0.5rem 1rem;
+  border: 2px solid rgba(147, 197, 253, 0.2);
+  border-radius: var(--arrondi-petit);
+  background-color: white;
+  color: var(--texte-noir);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.sortSelect:hover {
+  border-color: var(--bleu-pastel);
+}
+
+.sortSelect:focus {
+  outline: none;
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
+}
+
+.userAvisContainer {
+  margin-bottom: var(--espace-xl);
+}
+
+.avisList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-md);
+}
+
+.avisCard {
+  background-color: white;
+  border-radius: var(--arrondi-moyen);
+  padding: var(--espace-lg);
+  border: 2px solid rgba(147, 197, 253, 0.2);
+  transition: all 0.3s;
+}
+
+.avisCard:hover {
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 4px 12px rgba(147, 197, 253, 0.15);
+}
+
+.userAvis {
+  background: linear-gradient(135deg, rgba(147, 197, 253, 0.05), rgba(147, 197, 253, 0.1));
+  border-color: var(--bleu-pastel);
+}
+
+.avisCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--espace-md);
+}
+
+.avisUser {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+}
+
+.avisAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bleu-pastel);
+}
+
+.avisAvatarPlaceholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FCA5A5, #EF4444);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  border: 2px solid var(--bleu-pastel);
+}
+
+.avisUser > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.avisUsername {
+  font-weight: 700;
+  color: var(--texte-noir);
+  font-size: 1rem;
+}
+
+.avisDate {
+  font-size: 0.875rem;
+  color: var(--gris-moyen);
+}
+
+.avisActions {
+  display: flex;
+  gap: var(--espace-xs);
+}
+
+.btnIcon {
+  background: transparent;
+  border: 2px solid var(--bleu-pastel);
+  color: var(--bleu-pastel);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--arrondi-petit);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.btnIcon:hover {
+  background-color: var(--bleu-pastel);
+  color: white;
+  transform: scale(1.05);
+}
+
+.btnDanger {
+  border-color: #EF4444;
+  color: #EF4444;
+}
+
+.btnDanger:hover {
+  background-color: #EF4444;
+  color: white;
+}
+
+.avisCommentaire {
+  margin-top: var(--espace-md);
+  color: var(--texte-noir);
+  line-height: 1.6;
+  font-size: 1rem;
+  padding-top: var(--espace-md);
+  border-top: 1px solid rgba(147, 197, 253, 0.2);
+}
+
+.avisEmpty {
+  text-align: center;
+  padding: var(--espace-xl);
+  background-color: rgba(147, 197, 253, 0.05);
+  border-radius: var(--arrondi-moyen);
+  border: 2px dashed rgba(147, 197, 253, 0.3);
+}
+
+.avisEmpty p {
+  color: var(--gris-moyen);
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .avisHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .avisCard {
+    padding: var(--espace-md);
+  }
+
+  .avisCardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espace-sm);
+  }
+
+  .avisActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

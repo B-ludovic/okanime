@@ -11,6 +11,7 @@ import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
 import styles from '../../../styles/modules/AnimeDetail.module.css';
 import { Star, BookmarkPlus, Check } from 'lucide-react';
 import AnimeStructuredData from '../../../components/seo/AnimeStructuredData';
+import AvisSection from '../../../components/avis/AvisSection';
 
 // Composant client pour la page de détail d'anime
 function AnimeDetailPage() {
@@ -438,6 +439,11 @@ function AnimeDetailPage() {
                                     </div>
                                 </div>
                             )}
+
+                            {/* Section Avis */}
+                            <div className={styles.avisSection}>
+                                <AvisSection animeId={anime.id} />
+                            </div>
                         </div>
                         </div>
                     </div>

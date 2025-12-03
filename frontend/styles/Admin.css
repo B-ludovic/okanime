@@ -542,6 +542,103 @@
   margin-bottom: var(--espace-md);
 }
 
+/* SECTION AVIS ADMIN */
+.admin-filters {
+  display: flex;
+  gap: var(--espace-sm);
+  margin-bottom: var(--espace-lg);
+  flex-wrap: wrap;
+}
+
+.admin-avis-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-md);
+}
+
+.admin-avis-card {
+  background-color: white;
+  border-radius: var(--arrondi-moyen);
+  padding: var(--espace-lg);
+  border: 2px solid rgba(147, 197, 253, 0.2);
+  transition: all 0.3s;
+}
+
+.admin-avis-card:hover {
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 4px 12px rgba(147, 197, 253, 0.15);
+}
+
+.admin-avis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--espace-md);
+  gap: var(--espace-md);
+}
+
+.admin-avis-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-xs);
+}
+
+.admin-avis-user {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  font-weight: 600;
+  color: var(--texte-noir);
+}
+
+.admin-avis-username {
+  font-size: 1rem;
+}
+
+.admin-avis-anime {
+  color: var(--texte-gris);
+  font-size: 0.9rem;
+}
+
+.admin-avis-anime strong {
+  color: var(--bleu-pastel);
+  font-weight: 600;
+}
+
+.admin-avis-date {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  font-size: 0.875rem;
+  color: var(--gris-moyen);
+}
+
+.admin-avis-rating {
+  margin-bottom: var(--espace-sm);
+}
+
+.admin-avis-comment {
+  padding: var(--espace-md);
+  background-color: rgba(147, 197, 253, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: var(--arrondi-petit);
+}
+
+.admin-avis-comment p {
+  color: var(--texte-noir);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.admin-empty {
+  text-align: center;
+  padding: var(--espace-xl);
+  background-color: rgba(147, 197, 253, 0.05);
+  border-radius: var(--arrondi-moyen);
+  border: 2px dashed rgba(147, 197, 253, 0.3);
+  color: var(--gris-moyen);
+}
+
 /* RESPONSIVE */
 
 /* Sécurité globale : aucun élément ne doit dépasser 100% */

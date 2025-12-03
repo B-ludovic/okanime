@@ -112,7 +112,7 @@ const getAvisByAnime = asyncHandler(async (req, res) => {
 });
 
 // RÉCUPÉRER MES AVIS - GET /api/avis/me
-export const getMesAvis = asyncHandler(async (req, res) => {
+const getMesAvis = asyncHandler(async (req, res) => {
     const userId = req.user.id;
 
     const avis = await prisma.avis.findMany({
@@ -140,7 +140,7 @@ export const getMesAvis = asyncHandler(async (req, res) => {
 });
 
 // MODIFIER MON AVIS - PUT /api/avis/:id
-export const updateAvis = asyncHandler(async (req, res) => {
+const updateAvis = asyncHandler(async (req, res) => {
     const userId = req.user.id;
     const { id } = req.params;
 

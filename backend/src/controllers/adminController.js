@@ -743,6 +743,81 @@ const deleteGenre = asyncHandler(async (req, res) => {
   });
 });
 
+// GESTION DES AVIS (ADMIN UNIQUEMENT)
+
+// RÉCUPÉRER TOUS LES AVIS - GET /api/admin/avis
+const getAllAvis = asyncHandler(async (req, res) => {
+  const avis = await prisma.avis.findMany({
+    include: {
+      user: {
+        select: {
+          id: true,
+          username: true,
+          email: true,
+        },
+      },
+      anime: {
+        select: {
+          id: true,
+          titreVf: true,
+          posterUrl: true,
+        },
+      },
+    },
+    orderBy: {
+      dateCreation: 'desc',
+    },
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    data: { avis },
+  });
+});
+
+// SUPPRIMER UN AVIS - DELETE /api/admin/avis/:id
+const deleteAvis = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  // Vérifie que l'avis existe
+  const avis = await prisma.avis.findUnique({
+    where: { id },
+  });
+
+  if (!avis) {
+    throw new HttpNotFoundError('Avis introuvable');
+  }
+
+  const animeId = avis.animeId;
+
+  // Supprime l'avis
+  await prisma.avis.delete({
+    where: { id },
+  });
+
+  // Recalcule la note moyenne de l'anime
+  const allAvis = await prisma.avis.findMany({
+    where: { animeId },
+    select: { note: true },
+  });
+
+  let noteMoyenne = 0;
+  if (allAvis.length > 0) {
+    const total = allAvis.reduce((sum, a) => sum + a.note, 0);
+    noteMoyenne = Math.round((total / allAvis.length) * 10) / 10;
+  }
+
+  await prisma.anime.update({
+    where: { id: animeId },
+    data: { noteMoyenne },
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: 'Avis supprimé avec succès',
+  });
+});
+
 export {
   createAnime,
   updateAnime,
@@ -760,4 +835,6 @@ export {
   getAllUsers,
   changeUserRole,
   deleteUser,
+  getAllAvis,
+  deleteAvis,
 };

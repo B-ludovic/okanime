@@ -347,6 +347,50 @@
   padding: 3rem;
 }
 
+/* Section Avis */
+.avisSection {
+  margin-top: var(--espace-xl);
+}
+
+.avisHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--espace-lg);
+}
+
+.avisSort {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+}
+
+.avisSort label {
+  font-size: 0.9rem;
+  color: var(--gris-moyen);
+}
+
+.sortSelect {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--bleu-pastel-20);
+  border-radius: var(--arrondi-petit);
+  background-color: white;
+  color: var(--gris-fonce);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sortSelect:hover {
+  border-color: var(--bleu-pastel);
+}
+
+.sortSelect:focus {
+  outline: none;
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 0 0 3px var(--bleu-pastel-10);
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 950px) {

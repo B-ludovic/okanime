@@ -95,7 +95,9 @@ Backend : http://localhost:5001
 - Gestion de bibliothèque personnelle (À voir, En cours, Terminé, Abandonné, Favoris)
 - Passage automatique à "Terminé" quand tous les épisodes sont vus
 - Optimistic UI pour l'ajout à la bibliothèque
-- Système d'avis et de notes
+- **Système d'avis et de notes (1-10 étoiles)**
+- **Commentaires sur les animés**
+- **Modification et suppression de ses propres avis**
 - Upload d'images (Cloudinary)
 - Barre de recherche dans le header
 - Page profil avec statistiques
@@ -122,6 +124,9 @@ Backend : http://localhost:5001
 - Récupération automatique du nombre d'épisodes réel
 - Gestion des genres
 - Gestion des utilisateurs (création, modification, suppression)
+- **Gestion des avis (consultation et suppression)**
+- **Filtres des avis (récents, meilleures notes, moins bonnes notes)**
+- **Suppression d'avis directement sur les pages d'animés**
 - Protection du Super Admin (badge spécial, impossible à supprimer)
 - Modération des contenus
 - Statistiques globales
@@ -137,18 +142,23 @@ okanime/
 │   │   └── migrations/
 │   ├── src/
 │   │   ├── config/          # Configuration (Prisma, Cloudinary, Rate limiting, Helmet)
-│   │   ├── controllers/     # Logique métier
+│   │   ├── controllers/     # Logique métier (animes, avis, auth, etc.)
 │   │   ├── middlewares/     # Auth, erreurs, upload, honeypot
-│   │   ├── routes/          # Routes API
+│   │   ├── routes/          # Routes API (animes, avis, auth, admin, etc.)
 │   │   ├── services/        # Jikan API, Cloudinary, traduction
 │   │   ├── utils/           # JWT, bcrypt, erreurs HTTP
-│   │   └── validators/      # Validation Zod
+│   │   └── validators/      # Validation Zod (animes, avis, auth)
 │   └── app.js
 └── frontend/
     ├── app/
     │   ├── (auth)/          # Pages login/register
     │   ├── admin/           # Panel d'administration
+    │   │   ├── avis/        # Gestion des avis (nouveau)
+    │   │   ├── animes/      # Modération des animés
+    │   │   ├── genres/      # Gestion des genres
+    │   │   └── users/       # Gestion des utilisateurs
     │   ├── anime/           # Pages animés
+    │   │   └── [id]/        # Page détail avec section avis
     │   ├── bibliotheque/    # Bibliothèque personnelle
     │   ├── profil/          # Page profil utilisateur
     │   ├── recherche/       # Page de recherche
@@ -159,6 +169,7 @@ okanime/
     ├── components/
     │   ├── admin/           # AdminLayout
     │   ├── anime/           # AnimeCard, etc.
+    │   ├── avis/            # StarRating, AvisSection, AvisForm (nouveau)
     │   ├── bibliotheque/    # BiblioCard, BiblioModal
     │   ├── forms/           # LoginForm, RegisterForm
     │   └── layout/          # Header, Footer
@@ -184,9 +195,10 @@ Le projet implémente plusieurs couches de protection :
 
 ### Protection des données
 - Nettoyage XSS automatique sur toutes les entrées
-- Validation stricte des tailles (synopsis 5000 car., commentaires 2000 car.)
+- Validation stricte des tailles (synopsis 5000 car., commentaires 2000 car., avis 1000 car.)
 - CORS strict avec whitelist d'origines autorisées
 - Protection IDOR : vérification que l'utilisateur ne modifie que ses propres données
+- Indexes sur les avis pour optimiser les performances (recherche par anime et par user)
 
 ## Notes de développement
 
@@ -224,6 +236,8 @@ Le projet implémente plusieurs couches de protection :
 - Validation avec Zod pour des messages d'erreur clairs
 - Trust proxy activé pour déploiement sur Render
 - Images d'animés hébergées sur MyAnimeList CDN
+- **Système d'avis avec recalcul automatique de la note moyenne**
+- **CSS Modules pour tous les composants (cohérence du code)**
 
 **Pages légales**
 - Conformité RGPD (Politique de Confidentialité)

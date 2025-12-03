@@ -1,0 +1,106 @@
+/* Formulaire d'avis */
+
+.avisFormTrigger {
+  margin-bottom: var(--espace-lg);
+}
+
+.avisFormAuth {
+  padding: var(--espace-lg);
+  background: linear-gradient(135deg, rgba(147, 197, 253, 0.05), rgba(147, 197, 253, 0.1));
+  border-radius: var(--arrondi-moyen);
+  text-align: center;
+  border: 2px solid rgba(147, 197, 253, 0.2);
+}
+
+.avisFormAuth p {
+  margin-bottom: var(--espace-md);
+  color: var(--texte-noir);
+}
+
+.avisFormContainer {
+  padding: var(--espace-lg);
+  background: white;
+  border-radius: var(--arrondi-moyen);
+  border: 2px solid rgba(147, 197, 253, 0.2);
+  margin-bottom: var(--espace-lg);
+}
+
+.avisFormTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--bleu-pastel);
+  margin-bottom: var(--espace-md);
+}
+
+.avisForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-md);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-xs);
+}
+
+.formGroup label {
+  font-weight: 600;
+  color: var(--texte-noir);
+  font-size: 0.95rem;
+}
+
+.formTextarea {
+  width: 100%;
+  padding: var(--espace-md);
+  border: 2px solid rgba(147, 197, 253, 0.2);
+  border-radius: var(--arrondi-petit);
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 120px;
+  transition: all 0.3s;
+}
+
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--bleu-pastel);
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
+}
+
+.textareaCounter {
+  display: block;
+  text-align: right;
+  font-size: 0.875rem;
+  color: var(--gris-moyen);
+  margin-top: 0.25rem;
+}
+
+.formActions {
+  display: flex;
+  gap: var(--espace-md);
+  justify-content: flex-end;
+}
+
+.errorMessage {
+  background-color: #FEE2E2;
+  color: #DC2626;
+  padding: var(--espace-sm) var(--espace-md);
+  border-radius: var(--arrondi-petit);
+  border: 2px solid #FCA5A5;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .avisFormContainer {
+    padding: var(--espace-md);
+  }
+
+  .formActions {
+    flex-direction: column-reverse;
+  }
+
+  .formActions button {
+    width: 100%;
+  }
+}

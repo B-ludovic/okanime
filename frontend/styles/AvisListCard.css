@@ -1,0 +1,149 @@
+.user-avis-container {
+  margin-bottom: var(--espace-lg);
+}
+
+.avis-empty {
+  padding: var(--espace-xl);
+  text-align: center;
+  color: var(--gris-moyen);
+  background: var(--fond-clair);
+  border-radius: var(--arrondi-moyen);
+}
+
+.avis-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-md);
+}
+
+.avis-card {
+  padding: var(--espace-lg);
+  background: white;
+  border-radius: var(--arrondi-moyen);
+  border: 2px solid var(--bleu-pastel-10);
+  transition: all 0.3s;
+}
+
+.avis-card:hover {
+  border-color: var(--bleu-pastel-20);
+  box-shadow: var(--ombre-moyenne);
+}
+
+.avis-card.user-avis {
+  background: var(--gradient-bleu-leger);
+  border-color: var(--bleu-pastel);
+}
+
+.avis-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--espace-md);
+}
+
+.avis-user {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-md);
+}
+
+.avis-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bleu-pastel);
+}
+
+.avis-avatar-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-bleu-principal);
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.avis-username {
+  display: block;
+  font-weight: 700;
+  color: var(--gris-fonce);
+  font-size: 1rem;
+}
+
+.avis-date {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--gris-moyen);
+}
+
+.avis-actions {
+  display: flex;
+  gap: var(--espace-sm);
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--gris-moyen);
+  border-radius: var(--arrondi-petit);
+  transition: all 0.3s;
+}
+
+.btn-icon:hover {
+  background-color: var(--bleu-pastel-10);
+  color: var(--bleu-pastel);
+}
+
+.btn-icon.btn-danger {
+  color: var(--rouge-erreur);
+}
+
+.btn-icon.btn-danger:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--rouge-erreur);
+}
+
+.avis-commentaire {
+  margin-top: var(--espace-md);
+  line-height: 1.6;
+  color: var(--gris-fonce);
+  white-space: pre-wrap;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .avis-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espace-md);
+  }
+
+  .star-rating {
+    flex-wrap: wrap;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  .avis-card-header {
+    flex-direction: column;
+    gap: var(--espace-md);
+  }
+
+  .avis-actions {
+    align-self: flex-end;
+  }
+}

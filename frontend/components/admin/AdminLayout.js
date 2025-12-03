@@ -25,7 +25,7 @@ function AdminLayout({ children }) {
     { href: '/admin/animes', label: 'Modération animés', icon: Film },
     { href: '/admin/tous-les-animes', label: 'Tous les animés', icon: Film },
     { href: '/admin/saisons', label: 'Saisons', icon: Calendar, wip: true },
-    { href: '/admin/avis', label: 'Avis', icon: Star, wip: true },
+    { href: '/admin/avis', label: 'Avis', icon: Star },
     { href: '/admin/logs', label: "Logs d'activité", iconSrc: '/icons/log.png', wip: true },
     { href: '/admin/statistiques', label: 'Stats avancées', iconSrc: '/icons/advanced-statistics.png', wip: true },
     { href: '/admin/users', label: 'Utilisateurs', icon: Users },
