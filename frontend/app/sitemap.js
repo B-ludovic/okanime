@@ -50,7 +50,10 @@ async function sitemap() {
             return staticPages; // Retourner au moins les pages statiques
         }
 
-        const animes = await response.json();
+        const data = await response.json();
+        
+        // L'API peut retourner un objet {animes: [...]} ou directement un tableau
+        const animes = Array.isArray(data) ? data : (data.animes || []);
 
         // Créer une entrée pour chaque anime
         const animePages = animes.map((anime) => ({
