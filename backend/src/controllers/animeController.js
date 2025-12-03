@@ -12,8 +12,10 @@ const getAllAnimes = async (req, res, next) => {
     const skip = (pageNumber - 1) * limitNumber;
 
     // Filtres de recherche
+    // Ne montrer que les animes validés ET vérifiés (publiés)
     const where = {
       statutModeration: 'VALIDE',
+      verifie: true,
     };
 
     // Si recherche par titre
