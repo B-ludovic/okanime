@@ -172,20 +172,6 @@ function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Avis - Work in Progress */}
-        <div className="admin-stat-card wip">
-          <div className="admin-stat-header">
-            <span className="admin-stat-label">Modération Avis</span>
-            <div className="admin-stat-icon">
-              <MessageSquare size={24} />
-            </div>
-          </div>
-          <div className="admin-stat-wip">
-            <Image src="/icons/work-in-progress.png" alt="En développement" width={60} height={60} />
-            <span className="admin-stat-wip-text">Bientôt disponible</span>
-          </div>
-        </div>
-
         {/* Logs d'activité - Work in Progress */}
         <div className="admin-stat-card wip">
           <div className="admin-stat-header">
