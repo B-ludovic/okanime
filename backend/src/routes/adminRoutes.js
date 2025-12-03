@@ -26,39 +26,36 @@ import { adminLimiter } from '../config/rateLimiter.js';
 
 const router = express.Router();
 
-// Applique le rate limiter spécifique admin (1000 req/15min) sur toutes les routes admin
-router.use(adminLimiter);
-
-// GESTION DES ANIMÉS (créateur ou admin)
+// GESTION DES ANIMÉS (créateur ou admin) - rate limit normal
 router.post('/animes', authMiddleware, uploadSingleOptional('poster'),createAnime );
 router.put('/animes/:id', authMiddleware, uploadSingleOptional('poster'), updateAnime );
 router.delete('/animes/:id', authMiddleware, deleteAnime );
 
-// GESTION DES SAISONS (créateur ou admin)
+// GESTION DES SAISONS (créateur ou admin) - rate limit normal
 router.post('/animes/:animeId/saisons', authMiddleware, addSaison );
 router.put('/saisons/:id', authMiddleware, updateSaison );
 router.delete('/saisons/:id', authMiddleware, deleteSaison );
 
-// MODÉRATION (admin uniquement)
-router.get('/animes/pending', authMiddleware, adminOnly, getPendingAnimes);
-router.put('/animes/:id/moderation', authMiddleware, adminOnly, moderateAnime );
+// MODÉRATION (admin uniquement) - rate limit augmenté
+router.get('/animes/pending', authMiddleware, adminOnly, adminLimiter, getPendingAnimes);
+router.put('/animes/:id/moderation', authMiddleware, adminOnly, adminLimiter, moderateAnime );
 
-// GESTION DES UTILISATEURS (admin uniquement)
-router.get('/users', authMiddleware, adminOnly, getAllUsers );        
-router.put('/users/:userId/role', authMiddleware, adminOnly, changeUserRole );
-router.delete('/users/:userId', authMiddleware, adminOnly, deleteUser );
-router.delete('/users/:userId/avatar', authMiddleware, adminOnly, deleteUserAvatar );
+// GESTION DES UTILISATEURS (admin uniquement) - rate limit augmenté
+router.get('/users', authMiddleware, adminOnly, adminLimiter, getAllUsers );        
+router.put('/users/:userId/role', authMiddleware, adminOnly, adminLimiter, changeUserRole );
+router.delete('/users/:userId', authMiddleware, adminOnly, adminLimiter, deleteUser );
+router.delete('/users/:userId/avatar', authMiddleware, adminOnly, adminLimiter, deleteUserAvatar );
 
-// GESTION DES GENRES (admin uniquement)
-router.post('/genres', authMiddleware, adminOnly, createGenre );
-router.put('/genres/:id', authMiddleware, adminOnly, updateGenre );
-router.delete('/genres/:id', authMiddleware, adminOnly, deleteGenre );
+// GESTION DES GENRES (admin uniquement) - rate limit augmenté
+router.post('/genres', authMiddleware, adminOnly, adminLimiter, createGenre );
+router.put('/genres/:id', authMiddleware, adminOnly, adminLimiter, updateGenre );
+router.delete('/genres/:id', authMiddleware, adminOnly, adminLimiter, deleteGenre );
 
-// GESTION DES AVIS (admin uniquement)
-router.get('/avis', authMiddleware, adminOnly, getAllAvis);
-router.delete('/avis/:id', authMiddleware, adminOnly, deleteAvis);
+// GESTION DES AVIS (admin uniquement) - rate limit augmenté
+router.get('/avis', authMiddleware, adminOnly, adminLimiter, getAllAvis);
+router.delete('/avis/:id', authMiddleware, adminOnly, adminLimiter, deleteAvis);
 
-// STATISTIQUES (admin uniquement)
-router.get('/stats', authMiddleware, adminOnly,getStats );
+// STATISTIQUES (admin uniquement) - rate limit augmenté
+router.get('/stats', authMiddleware, adminOnly, adminLimiter, getStats );
 
 export default router;
