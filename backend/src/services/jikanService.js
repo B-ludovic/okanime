@@ -32,6 +32,45 @@ const getAnimeDetailsFromJikan = async (jikanId) => {
   return data.data;
 };
 
+// Récupère le nombre RÉEL d'épisodes (utile pour les séries en cours)
+const getEpisodesCountFromJikan = async (jikanId) => {
+  try {
+    // L'endpoint /full retourne déjà le nombre d'épisodes si disponible
+    const animeData = await fetchFromJikan(`/anime/${jikanId}/full`);
+    const anime = animeData.data;
+    
+    // Si episodes est disponible et non null, on le retourne
+    if (anime.episodes && anime.episodes > 0) {
+      return anime.episodes;
+    }
+    
+    // Sinon, on essaie de récupérer via l'endpoint episodes
+    const episodesData = await fetchFromJikan(`/anime/${jikanId}/episodes`);
+    const episodes = episodesData.data;
+    
+    // Retourne le nombre d'épisodes dans la liste
+    return episodes?.length || 12; // 12 par défaut si rien n'est trouvé
+  } catch (error) {
+    console.warn(`⚠️ Impossible de récupérer le nombre d'épisodes pour malId ${jikanId}:`, error.message);
+    return 12; // Valeur par défaut
+  }
+};
+
+// Récupère les vidéos (trailers, promos) d'un anime
+const getAnimeVideosFromJikan = async (jikanId) => {
+  try {
+    const data = await fetchFromJikan(`/anime/${jikanId}/videos`);
+    return {
+      trailers: data.data?.promo || [],
+      episodes: data.data?.episodes || [],
+      musicVideos: data.data?.music_videos || []
+    };
+  } catch (error) {
+    console.warn(`Impossible de récupérer les vidéos pour malId ${jikanId}:`, error.message);
+    return { trailers: [], episodes: [], musicVideos: [] };
+  }
+};
+
 // Récupère les genres disponibles sur Jikan
 const getGenresFromJikan = async () => {
   const data = await fetchFromJikan('/genres/anime');
@@ -62,6 +101,8 @@ const transformJikanToOurFormat = async (jikanAnime) => {
 export {
   searchAnimeOnJikan,
   getAnimeDetailsFromJikan,
+  getEpisodesCountFromJikan,
+  getAnimeVideosFromJikan,
   getGenresFromJikan,
   transformJikanToOurFormat,
 };

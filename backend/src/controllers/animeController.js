@@ -1,5 +1,6 @@
 import prisma from '../config/prisma.js';
 import { HttpNotFoundError, httpStatusCodes } from '../utils/httpErrors.js';
+import { getAnimeVideosFromJikan } from '../services/jikanService.js';
 
 // Récupérer tous les animes (avec recherche et filtres)
 const getAllAnimes = async (req, res, next) => {
@@ -132,9 +133,22 @@ const getAnimeById = async (req, res, next) => {
       throw new HttpNotFoundError('Anime introuvable');
     }
 
+    // Récupérer les vidéos depuis Jikan si malId existe
+    let videos = null;
+    if (anime.malId) {
+      try {
+        videos = await getAnimeVideosFromJikan(anime.malId);
+      } catch (error) {
+        console.warn(`Impossible de récupérer les vidéos pour ${anime.titreVf}:`, error.message);
+      }
+    }
+
     res.status(httpStatusCodes.OK).json({
       success: true,
-      data: { anime },
+      data: { 
+        anime,
+        videos // Ajoute les vidéos à la réponse
+      },
     });
   } catch (error) {
     next(error);

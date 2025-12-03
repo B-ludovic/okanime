@@ -46,7 +46,13 @@ function AjouterAnimePage() {
     try {
       const response = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(jikanQuery)}&limit=10`);
       const data = await response.json();
-      setJikanResults(data.data || []);
+      
+      // Filtre les doublons basés sur mal_id
+      const uniqueResults = (data.data || []).filter((anime, index, self) =>
+        index === self.findIndex((a) => a.mal_id === anime.mal_id)
+      );
+      
+      setJikanResults(uniqueResults);
     } catch (err) {
       console.error('Erreur recherche Jikan:', err);
       setError('Erreur lors de la recherche sur Jikan');

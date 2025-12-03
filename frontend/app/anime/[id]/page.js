@@ -15,6 +15,7 @@ function AnimeDetailPage() {
     const params = useParams();
     const router = useRouter();
     const [anime, setAnime] = useState(null);
+    const [videos, setVideos] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [inBiblio, setInBiblio] = useState(false);
@@ -71,6 +72,7 @@ function AnimeDetailPage() {
             try {
                 const response = await api.get(`/animes/${params.id}`);
                 setAnime(response.data.anime);
+                setVideos(response.data.videos); // Récupère les vidéos
                 
                 // Vérifier si l'anime est déjà dans la bibliothèque
                 if (isAuthenticated() && response.data.anime.saisons?.[0]?.id) {
@@ -355,6 +357,30 @@ function AnimeDetailPage() {
                                 <h2 className={styles.resumeTitle}>Résumé</h2>
                                 <p className={styles.resumeText}>{anime.synopsis}</p>
                             </div>
+
+                            {/* Trailers/Vidéos */}
+                            {videos && videos.trailers && videos.trailers.length > 0 && (
+                                <div className={styles.videosSection}>
+                                    <h2 className={styles.videosTitle}>Bandes-annonces</h2>
+                                    <div className={styles.trailersList}>
+                                        {videos.trailers.slice(0, 2).map((trailer, index) => (
+                                            <div key={index} className={styles.trailerItem}>
+                                                <h4 className={styles.trailerTitle}>{trailer.title}</h4>
+                                                <div className={styles.videoWrapper}>
+                                                    <iframe
+                                                        src={trailer.trailer.embed_url}
+                                                        title={trailer.title}
+                                                        frameBorder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                        className={styles.videoIframe}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
 
                             {/* Saisons */}
                             {anime.saisons && anime.saisons.length > 0 && (

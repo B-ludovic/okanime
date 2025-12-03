@@ -16,6 +16,8 @@
   margin: 0 auto;
   padding: var(--espace-lg);
   flex: 1;
+  min-height: calc(100vh - 70px);  /* 70px = hauteur du header */
+  align-items: start;  /* Force la sidebar en haut */
 }
 
 /* Sidebar */
@@ -541,8 +543,8 @@
   box-sizing: border-box;
 }
 
-/* --- TABLETTES & MOBILES (Tout ce qui est < 1024px) --- */
-@media (max-width: 1024px) {
+/* --- TABLETTES & MOBILES (Tout ce qui est < 950px) --- */
+@media (max-width: 950px) {
   /* 1. CONTENEUR PRINCIPAL */
   .admin-container {
     display: flex;             /* On remplace Grid par Flex column */

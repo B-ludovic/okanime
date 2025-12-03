@@ -227,6 +227,60 @@
   font-size: 1rem;
 }
 
+/* Section vidéos/trailers */
+.videosSection {
+  margin-top: var(--espace-xl);
+  padding-top: var(--espace-lg);
+  border-top: 2px solid rgba(147, 197, 253, 0.2);
+}
+
+.videosTitle {
+  color: var(--bleu-pastel);
+  font-size: 1.5rem;
+  margin-bottom: var(--espace-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+}
+
+.trailersList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--espace-lg);
+}
+
+.trailerItem {
+  background-color: rgba(147, 197, 253, 0.05);
+  border-radius: var(--arrondi-moyen);
+  padding: var(--espace-md);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+}
+
+.trailerTitle {
+  color: var(--bleu-pastel);
+  font-size: 0.95rem;
+  margin-bottom: var(--espace-sm);
+  font-weight: 600;
+}
+
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* Ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--arrondi-petit);
+  background: #000;
+}
+
+.videoIframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--arrondi-petit);
+}
+
 .seasonsSection {
   margin-top: var(--espace-lg);
 }
@@ -301,5 +355,18 @@
   /* 4. Genres : Centrés */
   .genres {
     justify-content: center;
+  }
+
+  /* 5. Vidéos : Une seule colonne sur mobile */
+  .trailersList {
+    grid-template-columns: 1fr;
+  }
+
+  .trailerItem {
+    padding: var(--espace-sm);
+  }
+
+  .trailerTitle {
+    font-size: 0.9rem;
   }
 }

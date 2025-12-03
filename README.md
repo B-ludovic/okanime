@@ -99,6 +99,7 @@ Backend : http://localhost:5001
 - Upload d'images (Cloudinary)
 - Barre de recherche dans le header
 - Page profil avec statistiques
+- Intégration trailers YouTube (via Jikan API)
 - Pages légales (Mentions Légales, Politique de Confidentialité, CGU)
 
 **Sécurité**
@@ -114,8 +115,11 @@ Backend : http://localhost:5001
 - Protection IDOR sur bibliothèque et avis
 
 **Admin**
-- Panel d'administration complet
+- Panel d'administration complet avec sidebar responsive
+- Menu burger mobile (apparaît à < 950px)
 - Gestion des animés (CRUD)
+- Intégration Jikan API pour ajout rapide d'animés
+- Récupération automatique du nombre d'épisodes réel
 - Gestion des genres
 - Gestion des utilisateurs (création, modification, suppression)
 - Protection du Super Admin (badge spécial, impossible à supprimer)
@@ -177,10 +181,6 @@ Le projet implémente plusieurs couches de protection :
 
 ### Headers de sécurité (Helmet)
 - Content Security Policy (CSP)
-- Strict Transport Security (HSTS)
-- Protection clickjacking (X-Frame-Options: DENY)
-- Protection MIME sniffing (X-Content-Type-Options: nosniff)
-- Cache du nom du framework (X-Powered-By supprimé)
 
 ### Protection des données
 - Nettoyage XSS automatique sur toutes les entrées
