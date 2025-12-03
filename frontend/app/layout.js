@@ -56,8 +56,7 @@ export const metadata = {
   
   // Vérification propriétaire (à remplir si besoin)
   verification: {
-    // google: 'votre-code-google-search-console',
-    // yandex: 'votre-code-yandex',
+    google: 'C8DSaVD375jMGKw_NRydSyuH6DqoV8DEa61aTq12BiQ',
   },
 }
 
