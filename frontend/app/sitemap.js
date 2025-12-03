@@ -52,8 +52,8 @@ async function sitemap() {
 
         const data = await response.json();
         
-        // L'API peut retourner un objet {animes: [...]} ou directement un tableau
-        const animes = Array.isArray(data) ? data : (data.animes || []);
+        // L'API retourne {success: true, data: {animes: [...]}}
+        const animes = data?.data?.animes || data?.animes || (Array.isArray(data) ? data : []);
 
         // Créer une entrée pour chaque anime
         const animePages = animes.map((anime) => ({
