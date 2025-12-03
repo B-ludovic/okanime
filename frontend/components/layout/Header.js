@@ -177,8 +177,18 @@ export default function Header() {
                     <div className={styles.headerActions}>
                         {isAuth ? (
                             <>
-                                <Link href="/profil" className="btn btn-ghost btn-circle">
-                                    <User size={20} />
+                                <Link href="/profil" className="btn btn-ghost btn-circle" title="Mon profil">
+                                    {user?.avatar ? (
+                                        <Image 
+                                            src={user.avatar} 
+                                            alt={user.username} 
+                                            width={32} 
+                                            height={32}
+                                            className="rounded-full object-cover"
+                                        />
+                                    ) : (
+                                        <User size={20} />
+                                    )}
                                 </Link>
                                 <button onClick={logout} className="btn btn-ghost">
                                     <LogOut size={18} />
@@ -348,9 +358,20 @@ export default function Header() {
                         <div className={styles.drawerUserSection}>
                             {/* Carte Profil améliorée */}
                             <div className={styles.userInfo}>
-                                {/* Avatar avec l'initiale */}
+                                {/* Avatar */}
                                 <div className={styles.userAvatar}>
-                                    {user?.username?.charAt(0).toUpperCase() || 'U'}
+                                    {user?.avatar ? (
+                                        <Image 
+                                            src={user.avatar} 
+                                            alt={user.username} 
+                                            width={48} 
+                                            height={48}
+                                            className="rounded-full object-cover"
+                                            style={{ width: '100%', height: '100%' }}
+                                        />
+                                    ) : (
+                                        user?.username?.charAt(0).toUpperCase() || 'U'
+                                    )}
                                 </div>
                                 <div className={styles.userDetails}>
                                     <strong>{user?.username}</strong>

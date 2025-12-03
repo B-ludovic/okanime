@@ -70,4 +70,25 @@ const strictLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-export { loginLimiter, registerLimiter, apiLimiter, adminLimiter, strictLimiter };
+// Rate limiter pour utilisateurs authentifiés (identifie par userId au lieu de IP)
+// Limite : 500 requêtes par 15 minutes par utilisateur
+const authenticatedUserLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 500, // Maximum 500 requêtes par utilisateur
+  message: {
+    success: false,
+    error: 'Trop de requêtes. Veuillez ralentir.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  // Identifie par userId si authentifié, sinon par IP
+  keyGenerator: (req) => {
+    return req.user?.id || req.ip;
+  },
+  skip: (req) => {
+    // Ne s'applique pas si pas authentifié (utilise apiLimiter à la place)
+    return !req.user;
+  },
+});
+
+export { loginLimiter, registerLimiter, apiLimiter, adminLimiter, strictLimiter, authenticatedUserLimiter };
