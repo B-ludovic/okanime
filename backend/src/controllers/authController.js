@@ -55,12 +55,12 @@ const register = asyncHandler(async (req, res) => {
   const token = generateToken(user.id, user.role);
 
   // 7. Envoie le token dans un cookie httpOnly (sécurisé contre XSS)
-  const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', token, {
     httpOnly: true, // Inaccessible via JavaScript (protection XSS)
-    secure: isProduction, // HTTPS en production
-    sameSite: 'lax', // 'lax' est plus permissif que 'none' pour cross-site
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
+    secure: true, // HTTPS requis
+    sameSite: 'none', // Permet cross-site avec credentials
+    domain: '.okanime.live', // Partagé entre okanime.live et api.okanime.live
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
   });
 
   // 8. Renvoie la réponse (sans le token dans le JSON)
@@ -99,12 +99,12 @@ const login = asyncHandler(async (req, res) => {
   const token = generateToken(user.id, user.role);
 
   // 5. Envoie le token dans un cookie httpOnly (sécurisé contre XSS)
-  const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', token, {
     httpOnly: true, // Inaccessible via JavaScript (protection XSS)
-    secure: isProduction, // HTTPS en production
-    sameSite: 'lax', // 'lax' est plus permissif que 'none' pour cross-site
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
+    secure: true, // HTTPS requis
+    sameSite: 'none', // Permet cross-site avec credentials
+    domain: '.okanime.live', // Partagé entre okanime.live et api.okanime.live
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
   });
 
   // 6. Renvoie la réponse (sans le mot de passe ni le token)
@@ -177,12 +177,12 @@ const updateAvatar = asyncHandler(async (req, res) => {
 // DÉCONNEXION - POST /api/auth/logout
 const logout = asyncHandler(async (req, res) => {
   // Supprime le cookie en le remplaçant par un cookie expiré
-  const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', '', {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: 'lax',
-    maxAge: 0, // Expire immédiatement
+    secure: true,
+    sameSite: 'none',
+    domain: '.okanime.live',
+    maxAge: 0,
   });
 
   res.status(httpStatusCodes.OK).json({
