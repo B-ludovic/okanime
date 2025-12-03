@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Header from '../../../components/layout/Header';
@@ -10,7 +10,7 @@ import api from '../../../app/lib/api';
 import { isAuthenticated } from '../../../app/lib/utils';
 import '../../../styles/AddAnime.css';
 
-function AjouterAnimePage() {
+function AjouterAnimeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get('edit'); // ID de l'anime à modifier
@@ -473,6 +473,15 @@ function AjouterAnimePage() {
 
       <Footer />
     </div>
+  );
+}
+
+// Wrapper avec Suspense pour useSearchParams
+function AjouterAnimePage() {
+  return (
+    <Suspense fallback={<div className="loading-container"><span className="loading"></span></div>}>
+      <AjouterAnimeContent />
+    </Suspense>
   );
 }
 

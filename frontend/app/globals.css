@@ -449,6 +449,14 @@ select.form-input {
 
 /* LOADING */
 
+.loading-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #FEFEFE 0%, #FFF5F3 40%, #FFEBE8 100%);
+}
+
 .loading {
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-top-color: white;
