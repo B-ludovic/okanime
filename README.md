@@ -197,10 +197,14 @@ Le projet implémente plusieurs couches de protection :
 - Badge visuel dans l'interface admin
 
 **Traduction automatique (optionnel)**
-- Utilise l'API DeepL pour traduire les synopsis japonais en français
-- Activable avec `ENABLE_TRANSLATION=true` dans `.env`
-- Attention : quota limité (500K caractères/mois gratuit)
-- Si désactivé, les synopsis anglais de Jikan sont utilisés
+- Utilise l'API DeepL pour traduire automatiquement les synopsis anglais en français
+- S'active automatiquement si `DEEPL_API_KEY` est définie dans `.env`
+- Fonctionne lors de :
+  - L'ajout d'anime depuis Jikan via le panel admin
+  - L'exécution du seed (100 animés)
+- Traduction côté backend avant sauvegarde en BDD
+- Attention : quota limité (500 000 caractères/mois gratuit)
+- Si pas de clé API, les synopsis restent en anglais (texte original de Jikan)
 
 **Seed de données**
 - Le seed récupère automatiquement 100 animés depuis Jikan API

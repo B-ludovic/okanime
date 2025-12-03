@@ -3,6 +3,7 @@ import { createAnimeSchema, updateAnimeSchema, createSaisonSchema, validateData 
 import { HttpNotFoundError, HttpBadRequestError, HttpForbiddenError, HttpConflictError, httpStatusCodes } from '../utils/httpErrors.js';
 import { uploadPoster, deleteFromCloudinary } from '../services/uploadService.js';
 import { getAnimeDetailsFromJikan, getEpisodesCountFromJikan } from '../services/jikanService.js';
+import { translateToFrench } from '../services/translationService.js';
 import prisma from '../config/prisma.js';
 
 // GESTION DES ANIMÉS 
@@ -14,10 +15,17 @@ const createAnime = asyncHandler(async (req, res) => {
   // Parse genreIds si c'est une string, sinon utilise directement
   const parsedGenreIds = typeof genreIds === 'string' ? JSON.parse(genreIds) : genreIds;
 
+  // Traduit le synopsis en français si DeepL est configuré
+  let finalSynopsis = synopsis;
+  if (synopsis && process.env.DEEPL_API_KEY) {
+    console.log('Traduction du synopsis en français...');
+    finalSynopsis = await translateToFrench(synopsis);
+  }
+
   // Validation
   const validatedData = createAnimeSchema.parse({
     titreVf,
-    synopsis,
+    synopsis: finalSynopsis,
     anneeDebut: parseInt(anneeDebut),
     studio,
     genreIds: parsedGenreIds,
