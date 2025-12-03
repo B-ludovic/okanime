@@ -53,21 +53,30 @@ const corsOptions = {
       process.env.FRONTEND_URL, // URL depuis .env (si définie)
     ].filter(Boolean); // Retire les valeurs undefined/null
 
+    console.log('🔍 CORS Check - Origin:', origin);
+    console.log('📋 Allowed origins:', allowedOrigins);
+
     // Autorise les requêtes sans origin (accès direct, Postman, health checks)
     if (!origin) {
+      console.log('✅ CORS: Pas d\'origin (requête directe) - autorisé');
       return callback(null, true);
     }
 
     // Vérifie si l'origin est dans la liste OU si c'est une preview Vercel
     const isVercelPreview = origin.endsWith('.vercel.app');
     if (allowedOrigins.includes(origin) || isVercelPreview) {
+      console.log('✅ CORS: Origin autorisée -', origin);
       callback(null, true);
     } else {
-      console.error(`CORS bloqué pour l'origin: ${origin}`);
+      console.error(`❌ CORS bloqué pour l'origin: ${origin}`);
       callback(new Error('Non autorisé par CORS'));
     }
   },
   credentials: true, // Autorise l'envoi de cookies
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
+  allowedHeaders: ['Content-Type', 'Authorization'], // Headers autorisés
+  exposedHeaders: ['Content-Range', 'X-Content-Range'], // Headers exposés
+  maxAge: 86400, // Cache preflight 24h
 };
 
 app.use(cors(corsOptions));
