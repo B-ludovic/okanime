@@ -56,12 +56,30 @@ async function sitemap() {
         const animes = data?.data?.animes || data?.animes || (Array.isArray(data) ? data : []);
 
         // Créer une entrée pour chaque anime
-        const animePages = animes.map((anime) => ({
-            url: `${SITE_URL}/anime/${anime.id}`,
-            lastModified: new Date(anime.updatedAt || anime.createdAt),
-            changeFrequency: 'weekly',
-            priority: 0.7,
-        }));
+        const animePages = animes.map((anime) => {
+            // Gérer les dates invalides
+            let lastModified = new Date();
+            try {
+                if (anime.updatedAt) {
+                    lastModified = new Date(anime.updatedAt);
+                } else if (anime.createdAt) {
+                    lastModified = new Date(anime.createdAt);
+                }
+                // Vérifier que la date est valide
+                if (isNaN(lastModified.getTime())) {
+                    lastModified = new Date();
+                }
+            } catch (e) {
+                lastModified = new Date();
+            }
+            
+            return {
+                url: `${SITE_URL}/anime/${anime.id}`,
+                lastModified,
+                changeFrequency: 'weekly',
+                priority: 0.7,
+            };
+        });
 
         // Combiner pages statiques + pages d'animes
         return [...staticPages, ...animePages];
