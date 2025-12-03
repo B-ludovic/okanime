@@ -51,6 +51,7 @@ const corsOptions = {
       'https://okanime.live', // Production (domaine principal)
       'https://www.okanime.live', // Production (avec www)
       'https://okanime.vercel.app', // Vercel (déploiement)
+      'https://api.okanime.live', // API custom domain
       process.env.FRONTEND_URL, // URL depuis .env (si définie)
     ].filter(Boolean); // Retire les valeurs undefined/null
 

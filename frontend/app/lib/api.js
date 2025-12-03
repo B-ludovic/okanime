@@ -1,5 +1,5 @@
 // URL de base de l'API backend
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.okanime.live/api';
 
 // Fonction helper pour faire des requêtes avec fetch
 const fetchAPI = async (endpoint, options = {}) => {

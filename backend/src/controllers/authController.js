@@ -58,8 +58,8 @@ const register = asyncHandler(async (req, res) => {
   const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', token, {
     httpOnly: true, // Inaccessible via JavaScript (protection XSS)
-    secure: true, // Force HTTPS (Render et Vercel sont en HTTPS)
-    sameSite: isProduction ? 'none' : 'lax', // 'none' requis pour cross-domain
+    secure: isProduction, // HTTPS en production
+    sameSite: 'lax', // 'lax' est plus permissif que 'none' pour cross-site
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
   });
 
@@ -102,8 +102,8 @@ const login = asyncHandler(async (req, res) => {
   const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', token, {
     httpOnly: true, // Inaccessible via JavaScript (protection XSS)
-    secure: true, // Force HTTPS (Render et Vercel sont en HTTPS)
-    sameSite: isProduction ? 'none' : 'lax', // 'none' requis pour cross-domain
+    secure: isProduction, // HTTPS en production
+    sameSite: 'lax', // 'lax' est plus permissif que 'none' pour cross-site
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
   });
 
@@ -180,8 +180,8 @@ const logout = asyncHandler(async (req, res) => {
   const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', '', {
     httpOnly: true,
-    secure: true, // Force HTTPS
-    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
+    sameSite: 'lax',
     maxAge: 0, // Expire immédiatement
   });
 
