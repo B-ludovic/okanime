@@ -55,10 +55,11 @@ const register = asyncHandler(async (req, res) => {
   const token = generateToken(user.id, user.role);
 
   // 7. Envoie le token dans un cookie httpOnly (sécurisé contre XSS)
+  const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', token, {
     httpOnly: true, // Inaccessible via JavaScript (protection XSS)
-    secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en production
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Protection CSRF
+    secure: true, // Force HTTPS (Render et Vercel sont en HTTPS)
+    sameSite: isProduction ? 'none' : 'lax', // 'none' requis pour cross-domain
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
   });
 
@@ -98,10 +99,11 @@ const login = asyncHandler(async (req, res) => {
   const token = generateToken(user.id, user.role);
 
   // 5. Envoie le token dans un cookie httpOnly (sécurisé contre XSS)
+  const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', token, {
     httpOnly: true, // Inaccessible via JavaScript (protection XSS)
-    secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en production
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Protection CSRF
+    secure: true, // Force HTTPS (Render et Vercel sont en HTTPS)
+    sameSite: isProduction ? 'none' : 'lax', // 'none' requis pour cross-domain
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
   });
 
@@ -175,10 +177,11 @@ const updateAvatar = asyncHandler(async (req, res) => {
 // DÉCONNEXION - POST /api/auth/logout
 const logout = asyncHandler(async (req, res) => {
   // Supprime le cookie en le remplaçant par un cookie expiré
+  const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('token', '', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: true, // Force HTTPS
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: 0, // Expire immédiatement
   });
 
