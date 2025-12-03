@@ -398,6 +398,17 @@
   transform: translateY(-2px);
 }
 
+.admin-btn-warning {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #000;
+  border: none;
+}
+
+.admin-btn-warning:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
 .admin-btn-small {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;

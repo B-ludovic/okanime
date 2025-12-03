@@ -191,7 +191,7 @@ function AdminUsersPage() {
                     {/* Suppression avatar */}
                     {user.avatar && !user.isSuperAdmin && (
                       <button
-                        className="admin-btn admin-btn-small admin-btn-danger"
+                        className="admin-btn admin-btn-small admin-btn-warning"
                         onClick={() => handleDeleteAvatar(user.id)}
                         title="Supprimer l'avatar"
                       >
