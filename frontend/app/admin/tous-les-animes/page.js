@@ -9,7 +9,6 @@ import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { Edit, Trash2, Eye, Calendar, User, Plus, X, ChevronRight, ChevronLeft } from 'lucide-react';
 import styles from '../../../styles/modules/ModalAdmin.module.css';
 import '../../../styles/Admin.css';
-import '../../../styles/Banners.css';
 
 function TousLesAnimesPage() {
   const router = useRouter();
