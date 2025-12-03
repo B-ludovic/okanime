@@ -407,7 +407,7 @@ function AnimeDetailPage() {
                                                         src={trailer.trailer.embed_url}
                                                         title={trailer.title}
                                                         frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                         allowFullScreen
                                                         className={styles.videoIframe}
                                                     />
