@@ -32,10 +32,10 @@ const registerLimiter = rateLimit({
 });
 
 // Rate limiter général pour l'API
-// Limite : 100 requêtes par 15 minutes
+// Limite : 300 requêtes par 15 minutes (augmenté pour éviter les blocages)
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Maximum 100 requêtes
+  max: 300, // Maximum 300 requêtes (augmenté de 100)
   message: {
     success: false,
     error: 'Trop de requêtes. Veuillez ralentir.',
