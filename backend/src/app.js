@@ -58,10 +58,12 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    // Vérifie si l'origin est dans la liste
-    if (allowedOrigins.includes(origin)) {
+    // Vérifie si l'origin est dans la liste OU si c'est une preview Vercel
+    const isVercelPreview = origin.endsWith('.vercel.app');
+    if (allowedOrigins.includes(origin) || isVercelPreview) {
       callback(null, true);
     } else {
+      console.error(`CORS bloqué pour l'origin: ${origin}`);
       callback(new Error('Non autorisé par CORS'));
     }
   },
