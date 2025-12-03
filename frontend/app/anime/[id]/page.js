@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
 import api from '../../../app/lib/api';
-import { isAuthenticated } from '../../../app/lib/utils';
+import { isAuthenticated, getCurrentUser } from '../../../app/lib/utils';
 import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
 import styles from '../../../styles/modules/AnimeDetail.module.css';
 import { Star, BookmarkPlus, Check } from 'lucide-react';
@@ -23,6 +23,16 @@ function AnimeDetailPage() {
     const [biblioEntryId, setBiblioEntryId] = useState(null);
     const [biblioStatut, setBiblioStatut] = useState(null); // Statut actuel dans la biblio
     const [saving, setSaving] = useState(false);
+
+    // Vérifie si l'utilisateur peut modifier cet anime
+    const canEdit = () => {
+        if (!isAuthenticated() || !anime) return false;
+        const user = getCurrentUser();
+        // L'utilisateur peut modifier si :
+        // - Il est ADMIN
+        // - OU il est le créateur de l'anime
+        return user.role === 'ADMIN' || user.id === anime.userAjout?.id;
+    };
 
     // Fonction pour attribuer une couleur à chaque genre
     const getGenreColor = (genreName) => {
@@ -261,7 +271,26 @@ function AnimeDetailPage() {
                             <div className={styles.info}>
                             <div className={styles.titleRow}>
                                 <h1 className={styles.title}>{anime.titreVf}</h1>
-                                <button
+                                
+                                <div className={styles.actionButtons}>
+                                    {/* Bouton Modifier (visible seulement pour admin ou créateur) */}
+                                    {canEdit() && (
+                                        <button
+                                            onClick={() => router.push(`/anime/ajouter?edit=${anime.id}`)}
+                                            className={styles.editButton}
+                                            title="Modifier cet anime"
+                                        >
+                                            <Image 
+                                                src="/icons/edit.png"
+                                                alt="Modifier" 
+                                                width={22} 
+                                                height={22}
+                                            />
+                                        </button>
+                                    )}
+                                    
+                                    {/* Bouton Favori */}
+                                    <button
                                     onClick={async () => {
                                         if (!isAuthenticated()) {
                                             alert('Vous devez être connecté');
@@ -328,6 +357,7 @@ function AnimeDetailPage() {
                                         className={styles.favoriteIcon}
                                     />
                                 </button>
+                                </div>
                             </div>
 
                             {anime.studio && (

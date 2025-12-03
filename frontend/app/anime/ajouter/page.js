@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
@@ -12,6 +12,9 @@ import '../../../styles/AddAnime.css';
 
 function AjouterAnimePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get('edit'); // ID de l'anime à modifier
+  const [isEditMode, setIsEditMode] = useState(false);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -107,6 +110,39 @@ function AjouterAnimePage() {
     fetchGenres();
   }, []);
 
+  // Charge les données de l'anime en mode édition
+  useEffect(() => {
+    if (editId) {
+      setIsEditMode(true);
+      const fetchAnime = async () => {
+        try {
+          const response = await api.get(`/animes/${editId}`);
+          const anime = response.data.anime;
+          
+          setFormData({
+            titreVf: anime.titreVf || '',
+            synopsis: anime.synopsis || '',
+            anneeDebut: anime.anneeDebut || new Date().getFullYear(),
+            studio: anime.studio || '',
+            genreIds: anime.genres?.map(g => g.genre.id) || [],
+            malId: anime.malId || null,
+          });
+          
+          // Charge le poster existant
+          if (anime.posterUrl) {
+            setPosterPreview(anime.posterUrl);
+            setPosterUrl(anime.posterUrl);
+          }
+        } catch (err) {
+          console.error('Erreur lors du chargement de l\'anime:', err);
+          setError('Impossible de charger l\'anime');
+        }
+      };
+      
+      fetchAnime();
+    }
+  }, [editId]);
+
   // Gestion des champs texte
   const handleChange = (e) => {
     setFormData({
@@ -172,18 +208,25 @@ function AjouterAnimePage() {
         data.append('malId', formData.malId);
       }
       
-      // Si poster depuis Jikan (URL)
+      // Si poster depuis Jikan (URL) ou poster existant en mode édition
       if (posterUrl && !posterFile) {
         data.append('posterUrl', posterUrl);
       } else if (posterFile) {
         data.append('poster', posterFile);
       }
 
-      // Envoie à l'API
-      await api.postFormData('/admin/animes', data);
-
-      alert('Anime ajouté avec succès ! Il sera visible après validation par un administrateur.');
-      router.push('/anime');
+      // Mode édition ou création
+      if (isEditMode && editId) {
+        // Modification d'un anime existant
+        await api.putFormData(`/admin/animes/${editId}`, data);
+        alert('Anime modifié avec succès !');
+        router.push(`/anime/${editId}`);
+      } else {
+        // Création d'un nouvel anime
+        await api.postFormData('/admin/animes', data);
+        alert('Anime ajouté avec succès ! Il sera visible après validation par un administrateur.');
+        router.push('/anime');
+      }
     } catch (err) {
       setError(err.message || 'Erreur lors de l\'ajout de l\'anime');
     } finally {
@@ -199,13 +242,14 @@ function AjouterAnimePage() {
         <div className="ajout-anime-container">
           {/* Header */}
           <div className="ajout-anime-header">
-            <h1 className="ajout-anime-title">Ajouter un animé</h1>
+            <h1 className="ajout-anime-title">{isEditMode ? 'Modifier l\'animé' : 'Ajouter un animé'}</h1>
             <p className="ajout-anime-subtitle">
-              Proposez un nouvel animé à la communauté
+              {isEditMode ? 'Modifiez les informations de cet anime' : 'Proposez un nouvel animé à la communauté'}
             </p>
           </div>
 
-          {/* Section recherche Jikan */}
+          {/* Section recherche Jikan - Masquée en mode édition */}
+          {!isEditMode && (
           <div className="ajout-anime-card jikan-search-card">
             <h2 className="jikan-search-title">
               Rechercher sur Jikan (optionnel)
@@ -262,6 +306,7 @@ function AjouterAnimePage() {
               </div>
             )}
           </div>
+          )}
 
           <div className="ajout-anime-card">
             {/* Message d'info */}

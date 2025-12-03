@@ -120,8 +120,21 @@ const createAnime = asyncHandler(async (req, res) => {
 const updateAnime = asyncHandler(async (req, res) => {
   const { id } = req.params;
   
+  // Parse les données du FormData (conversion des strings en types appropriés)
+  const parsedData = {
+    ...req.body,
+    anneeDebut: req.body.anneeDebut ? parseInt(req.body.anneeDebut, 10) : undefined,
+    genreIds: req.body.genreIds ? JSON.parse(req.body.genreIds) : undefined,
+  };
+
+  // Traduit le synopsis en français si modifié et si DeepL est configuré
+  if (parsedData.synopsis && process.env.DEEPL_API_KEY) {
+    console.log('🌐 Traduction du synopsis en français...');
+    parsedData.synopsis = await translateToFrench(parsedData.synopsis);
+  }
+
   // Valide les données
-  const validatedData = validateData(updateAnimeSchema, req.body);
+  const validatedData = validateData(updateAnimeSchema, parsedData);
 
   // Vérifie que l'anime existe
   const anime = await prisma.anime.findUnique({
@@ -139,25 +152,36 @@ const updateAnime = asyncHandler(async (req, res) => {
 
   // Upload du nouveau poster si fourni
   let posterUrl = anime.posterUrl;
-  if (req.files && req.files.poster) {
+  if (req.file) {
     // Supprime l'ancien poster de Cloudinary si c'est une URL Cloudinary
     if (anime.posterUrl && anime.posterUrl.includes('cloudinary')) {
       await deleteFromCloudinary(anime.posterUrl);
     }
-    posterUrl = await uploadPoster(req.files.poster[0].buffer);
+    posterUrl = await uploadPoster(req.file.buffer);
+  } else if (req.body.posterUrl) {
+    // Si une URL de poster est fournie (depuis Jikan par exemple)
+    posterUrl = req.body.posterUrl;
   }
 
   // Mise à jour de l'anime
+  // Nettoie les valeurs undefined pour Prisma
+  const dataToUpdate = Object.fromEntries(
+    Object.entries(validatedData).filter(([_, value]) => value !== undefined)
+  );
+  
+  // Retire genreIds de dataToUpdate car on le gère séparément
+  const { genreIds, ...animeData } = dataToUpdate;
+
   const updatedAnime = await prisma.anime.update({
     where: { id },
     data: {
-      ...validatedData,
+      ...animeData,
       posterUrl,
       // Mise à jour des genres si fournis
-      ...(validatedData.genreIds && {
+      ...(genreIds && genreIds.length > 0 && {
         genres: {
           deleteMany: {}, // Supprime toutes les anciennes relations
-          create: validatedData.genreIds.map(genreId => ({
+          create: genreIds.map(genreId => ({
             genre: {
               connect: { id: genreId }
             }

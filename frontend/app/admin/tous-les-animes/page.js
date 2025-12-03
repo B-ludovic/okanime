@@ -269,7 +269,6 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
     anneeDebut: anime.anneeDebut || new Date().getFullYear(),
     studio: anime.studio || '',
     genreIds: anime.genres?.map(g => g.genre.id) || [],
-    bannerGradient: anime.banniereUrl?.replace('gradient-', '') || '1',
   });
 
   const handleSubmit = (e) => {
@@ -281,7 +280,6 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
     formDataToSend.append('anneeDebut', formData.anneeDebut);
     formDataToSend.append('studio', formData.studio);
     formDataToSend.append('genreIds', JSON.stringify(formData.genreIds));
-    formDataToSend.append('bannerGradient', formData.bannerGradient);
 
     onSave(formDataToSend);
   };
@@ -365,22 +363,6 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
                     />
                     <span>{genre.nom}</span>
                   </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Bannière gradient */}
-            <div className="form-group">
-              <label>Bannière (gradient) *</label>
-              <div className={styles.bannersGrid}>
-                {[...Array(20)].map((_, index) => (
-                  <div
-                    key={index + 1}
-                    className={`banner-gradient banner-${index + 1} ${styles.bannerOption} ${formData.bannerGradient === String(index + 1) ? styles.selected : ''}`}
-                    onClick={() => setFormData({ ...formData, bannerGradient: String(index + 1) })}
-                  >
-                    <div className="banner-label">Bannière {index + 1}</div>
-                  </div>
                 ))}
               </div>
             </div>

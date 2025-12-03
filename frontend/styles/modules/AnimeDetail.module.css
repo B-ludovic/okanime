@@ -140,6 +140,35 @@
   flex: 1;
 }
 
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xs);
+}
+
+.editButton {
+  background: transparent;
+  border: 2px solid var(--bleu-principal);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.editButton:hover {
+  background-color: var(--bleu-principal);
+  transform: scale(1.1);
+}
+
+.editButton:active {
+  transform: scale(0.95);
+}
+
 .favoriteButton {
   background: transparent;
   border: none;
