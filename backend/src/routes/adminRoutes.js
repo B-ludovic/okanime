@@ -22,8 +22,12 @@ import {
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { adminOnly } from '../middlewares/roleMiddleware.js';
 import { uploadSingleOptional } from '../middlewares/uploadMiddleware.js';
+import { adminLimiter } from '../config/rateLimiter.js';
 
 const router = express.Router();
+
+// Applique le rate limiter spécifique admin (1000 req/15min) sur toutes les routes admin
+router.use(adminLimiter);
 
 // GESTION DES ANIMÉS (créateur ou admin)
 router.post('/animes', authMiddleware, uploadSingleOptional('poster'),createAnime );

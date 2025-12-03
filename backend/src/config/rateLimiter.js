@@ -32,13 +32,26 @@ const registerLimiter = rateLimit({
 });
 
 // Rate limiter général pour l'API
-// Limite : 300 requêtes par 15 minutes (augmenté pour éviter les blocages)
+// Limite : 300 requêtes par 15 minutes
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // Maximum 300 requêtes (augmenté de 100)
+  max: 300, // Maximum 300 requêtes
   message: {
     success: false,
     error: 'Trop de requêtes. Veuillez ralentir.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Rate limiter spécifique pour l'admin (plus permissif)
+// Limite : 1000 requêtes par 15 minutes
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000, // Maximum 1000 requêtes (beaucoup d'appels API en admin)
+  message: {
+    success: false,
+    error: 'Trop de requêtes admin. Veuillez ralentir.',
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -57,4 +70,4 @@ const strictLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-export { loginLimiter, registerLimiter, apiLimiter, strictLimiter };
+export { loginLimiter, registerLimiter, apiLimiter, adminLimiter, strictLimiter };
