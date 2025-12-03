@@ -5,23 +5,20 @@ import prisma from '../config/prisma.js';
 
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
-  // 1. Récupère le token depuis le cookie (priorité) ou le header Authorization (fallback)
-  let token = req.cookies?.token; // Depuis le cookie httpOnly
+  // 1. Récupère le header Authorization
+  const authHeader = req.headers.authorization;
   
-  // Fallback : si pas de cookie, cherche dans le header (pour compatibilité)
-  if (!token) {
-    const authHeader = req.headers.authorization;
-    token = getTokenFromHeader(authHeader);
-  }
+  // 2. Extrait le token
+  const token = getTokenFromHeader(authHeader);
   
   if (!token) {
     throw new HttpUnauthorizedError('Token manquant. Veuillez vous connecter.');
   }
 
-  // 2. Vérifie et décode le token
+  // 3. Vérifie et décode le token
   const decoded = verifyToken(token); // Lève une erreur si invalide
 
-  // 3. Récupère l'utilisateur en base de données
+  // 4. Récupère l'utilisateur en base de données
   const user = await prisma.user.findUnique({
     where: { id: decoded.userId },
     select: {
@@ -37,23 +34,18 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
     throw new HttpUnauthorizedError('Utilisateur introuvable. Veuillez vous reconnecter.');
   }
 
-  // 4. Attache l'utilisateur à la requête
+  // 5. Attache l'utilisateur à la requête
   req.user = user;
 
-  // 5. Passe au middleware suivant
+  // 6. Passe au middleware suivant
   next();
 });
 
 
 const optionalAuthMiddleware = asyncHandler(async (req, res, next) => {
   try {
-    // Récupère le token depuis le cookie (priorité) ou le header
-    let token = req.cookies?.token;
-    
-    if (!token) {
-      const authHeader = req.headers.authorization;
-      token = getTokenFromHeader(authHeader);
-    }
+    const authHeader = req.headers.authorization;
+    const token = getTokenFromHeader(authHeader);
     
     if (token) {
       const decoded = verifyToken(token);

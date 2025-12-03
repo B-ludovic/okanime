@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, login, logout, getMe, updateAvatar } from '../controllers/authController.js';
+import { register, login, getMe, updateAvatar } from '../controllers/authController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { uploadSingleOptional } from '../middlewares/uploadMiddleware.js';
 import { loginLimiter, registerLimiter, strictLimiter } from '../config/rateLimiter.js';
@@ -15,9 +15,6 @@ router.post('/register', honeypot('website'), registerLimiter, register);
 
 // Connexion - Limité à 5 tentatives par 15 minutes + protection honeypot
 router.post('/login', honeypot('website'), loginLimiter, login);
-
-// Déconnexion - Supprime le cookie httpOnly
-router.post('/logout', logout);
 
 
 // ROUTES PROTÉGÉES - Nécessitent authentification

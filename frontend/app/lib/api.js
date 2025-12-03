@@ -3,8 +3,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.okanime.live/api
 
 // Fonction helper pour faire des requêtes avec fetch
 const fetchAPI = async (endpoint, options = {}) => {
-  // Les cookies sont envoyés automatiquement avec credentials: 'include'
-  // Plus besoin de gérer manuellement le token
+  // Récupère le token depuis localStorage
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   // Configure les headers par défaut
   const headers = {};
@@ -19,19 +19,23 @@ const fetchAPI = async (endpoint, options = {}) => {
     Object.assign(headers, options.headers);
   }
 
-  // Fait la requête avec credentials: 'include' pour envoyer les cookies
+  // Ajoute le token si disponible
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  // Fait la requête
   const response = await fetch(`${API_URL}${endpoint}`, {
     method: options.method || 'GET',
     headers: headers,
     body: options.body,
-    credentials: 'include', // Envoie les cookies httpOnly automatiquement
   });
 
   // Gère les erreurs
   if (!response.ok) {
-    // Si 401 (non autorisé), redirige vers login
+    // Si 401 (non autorisé), déconnecte l'utilisateur
     if (response.status === 401 && typeof window !== 'undefined') {
-      // Nettoie le localStorage (si utilisé pour d'autres données)
+      localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';
     }

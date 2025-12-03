@@ -31,7 +31,7 @@ function LoginForm() {
 
     try {
       const response = await api.post('/auth/login', formData);
-      // Le token est maintenant dans un cookie httpOnly, on ne stocke que les infos user
+      localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       router.push('/');
       router.refresh();

@@ -1,5 +1,3 @@
-import api from './api';
-
 // Récupère l'utilisateur depuis localStorage
 const getCurrentUser = () => {
   if (typeof window === 'undefined') return null;
@@ -15,31 +13,26 @@ const getCurrentUser = () => {
 };
 
 // Vérifie si l'utilisateur est authentifié
-// On vérifie juste si on a les infos user (le cookie httpOnly est géré automatiquement)
 const isAuthenticated = () => {
   if (typeof window === 'undefined') return false;
   
-  const user = getCurrentUser();
-  return !!user;
+  const token = localStorage.getItem('token');
+  return !!token;
 };
 
 // Déconnecte l'utilisateur
-const logout = async () => {
+const logout = () => {
   if (typeof window === 'undefined') return;
   
-  try {
-    // Appelle l'API pour supprimer le cookie httpOnly
-    await api.post('/auth/logout');
-  } catch (error) {
-    console.error('Erreur lors de la déconnexion:', error);
-  } finally {
-    // Nettoie le localStorage
-    localStorage.removeItem('user');
-    window.location.href = '/';
-  }
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = '/';
 };
 
-// Note: getToken() n'est plus nécessaire car le token est dans un cookie httpOnly
-// Il n'est plus accessible via JavaScript (c'est le but !)
+// Récupère le token
+const getToken = () => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('token');
+};
 
-export { getCurrentUser, isAuthenticated, logout };
+export { getCurrentUser, isAuthenticated, logout, getToken };

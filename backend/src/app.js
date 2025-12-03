@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import xss from 'xss-clean';
-import cookieParser from 'cookie-parser';
 import helmetConfig from './config/security.js';
 import { apiLimiter } from './config/rateLimiter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -51,7 +50,6 @@ const corsOptions = {
       'https://okanime.live', // Production (domaine principal)
       'https://www.okanime.live', // Production (avec www)
       'https://okanime.vercel.app', // Vercel (déploiement)
-      'https://api.okanime.live', // API custom domain
       process.env.FRONTEND_URL, // URL depuis .env (si définie)
     ].filter(Boolean); // Retire les valeurs undefined/null
 
@@ -81,16 +79,13 @@ app.use(cors(corsOptions));
 // Gestion des requêtes OPTIONS (preflight CORS)
 app.options('*', cors(corsOptions));
 
-// 4. Parse les cookies
-app.use(cookieParser());
-
-// 5. Parse les données JSON
+// 4. Parse les données JSON
 app.use(express.json({ limit: '10mb' })); // Limite la taille des requêtes JSON à 10MB
 
-// 6. Parse les données URL-encoded
+// 5. Parse les données URL-encoded
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// 7. Rate limiting général - Limite toutes les requêtes API
+// 6. Rate limiting général - Limite toutes les requêtes API
 app.use('/api', apiLimiter);
 
 

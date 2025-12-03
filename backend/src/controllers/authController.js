@@ -54,21 +54,13 @@ const register = asyncHandler(async (req, res) => {
   // 6. Génère un token JWT
   const token = generateToken(user.id, user.role);
 
-  // 7. Envoie le token dans un cookie httpOnly (sécurisé contre XSS)
-  res.cookie('token', token, {
-    httpOnly: true, // Inaccessible via JavaScript (protection XSS)
-    secure: true, // HTTPS requis
-    sameSite: 'none', // Permet cross-site avec credentials
-    domain: '.okanime.live', // Partagé entre okanime.live et api.okanime.live
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
-  });
-
-  // 8. Renvoie la réponse (sans le token dans le JSON)
+  // 7. Renvoie la réponse
   res.status(httpStatusCodes.CREATED).json({
     success: true,
     message: 'Inscription réussie',
     data: {
       user,
+      token,
     },
   });
 });
@@ -98,16 +90,7 @@ const login = asyncHandler(async (req, res) => {
   // 4. Génère un token JWT
   const token = generateToken(user.id, user.role);
 
-  // 5. Envoie le token dans un cookie httpOnly (sécurisé contre XSS)
-  res.cookie('token', token, {
-    httpOnly: true, // Inaccessible via JavaScript (protection XSS)
-    secure: true, // HTTPS requis
-    sameSite: 'none', // Permet cross-site avec credentials
-    domain: '.okanime.live', // Partagé entre okanime.live et api.okanime.live
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
-  });
-
-  // 6. Renvoie la réponse (sans le mot de passe ni le token)
+  // 5. Renvoie la réponse (sans le mot de passe)
   res.status(httpStatusCodes.OK).json({
     success: true,
     message: 'Connexion réussie',
@@ -120,6 +103,7 @@ const login = asyncHandler(async (req, res) => {
         avatar: user.avatar,
         dateInscription: user.dateInscription,
       },
+      token,
     },
   });
 });
@@ -174,21 +158,4 @@ const updateAvatar = asyncHandler(async (req, res) => {
   });
 });
 
-// DÉCONNEXION - POST /api/auth/logout
-const logout = asyncHandler(async (req, res) => {
-  // Supprime le cookie en le remplaçant par un cookie expiré
-  res.cookie('token', '', {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-    domain: '.okanime.live',
-    maxAge: 0,
-  });
-
-  res.status(httpStatusCodes.OK).json({
-    success: true,
-    message: 'Déconnexion réussie',
-  });
-});
-
-export { register, login, logout, getMe, updateAvatar };
+export { register, login, getMe, updateAvatar };
