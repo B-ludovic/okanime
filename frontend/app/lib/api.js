@@ -3,8 +3,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
 // Fonction helper pour faire des requêtes avec fetch
 const fetchAPI = async (endpoint, options = {}) => {
-  // Récupère le token depuis localStorage
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  // Les cookies sont envoyés automatiquement avec credentials: 'include'
+  // Plus besoin de gérer manuellement le token
 
   // Configure les headers par défaut
   const headers = {};
@@ -19,23 +19,19 @@ const fetchAPI = async (endpoint, options = {}) => {
     Object.assign(headers, options.headers);
   }
 
-  // Ajoute le token si disponible
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  // Fait la requête
+  // Fait la requête avec credentials: 'include' pour envoyer les cookies
   const response = await fetch(`${API_URL}${endpoint}`, {
     method: options.method || 'GET',
     headers: headers,
     body: options.body,
+    credentials: 'include', // Envoie les cookies httpOnly automatiquement
   });
 
   // Gère les erreurs
   if (!response.ok) {
-    // Si 401 (non autorisé), déconnecte l'utilisateur
+    // Si 401 (non autorisé), redirige vers login
     if (response.status === 401 && typeof window !== 'undefined') {
-      localStorage.removeItem('token');
+      // Nettoie le localStorage (si utilisé pour d'autres données)
       localStorage.removeItem('user');
       window.location.href = '/login';
     }

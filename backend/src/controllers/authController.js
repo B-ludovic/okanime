@@ -54,13 +54,20 @@ const register = asyncHandler(async (req, res) => {
   // 6. Génère un token JWT
   const token = generateToken(user.id, user.role);
 
-  // 7. Renvoie la réponse
+  // 7. Envoie le token dans un cookie httpOnly (sécurisé contre XSS)
+  res.cookie('token', token, {
+    httpOnly: true, // Inaccessible via JavaScript (protection XSS)
+    secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en production
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Protection CSRF
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
+  });
+
+  // 8. Renvoie la réponse (sans le token dans le JSON)
   res.status(httpStatusCodes.CREATED).json({
     success: true,
     message: 'Inscription réussie',
     data: {
       user,
-      token,
     },
   });
 });
@@ -90,7 +97,15 @@ const login = asyncHandler(async (req, res) => {
   // 4. Génère un token JWT
   const token = generateToken(user.id, user.role);
 
-  // 5. Renvoie la réponse (sans le mot de passe)
+  // 5. Envoie le token dans un cookie httpOnly (sécurisé contre XSS)
+  res.cookie('token', token, {
+    httpOnly: true, // Inaccessible via JavaScript (protection XSS)
+    secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en production
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Protection CSRF
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
+  });
+
+  // 6. Renvoie la réponse (sans le mot de passe ni le token)
   res.status(httpStatusCodes.OK).json({
     success: true,
     message: 'Connexion réussie',
@@ -103,7 +118,6 @@ const login = asyncHandler(async (req, res) => {
         avatar: user.avatar,
         dateInscription: user.dateInscription,
       },
-      token,
     },
   });
 });
@@ -158,4 +172,20 @@ const updateAvatar = asyncHandler(async (req, res) => {
   });
 });
 
-export { register, login, getMe, updateAvatar };
+// DÉCONNEXION - POST /api/auth/logout
+const logout = asyncHandler(async (req, res) => {
+  // Supprime le cookie en le remplaçant par un cookie expiré
+  res.cookie('token', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 0, // Expire immédiatement
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: 'Déconnexion réussie',
+  });
+});
+
+export { register, login, logout, getMe, updateAvatar };
