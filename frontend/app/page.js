@@ -6,6 +6,27 @@ import FeaturedAnimes from '../components/home/FeaturedAnimes';
 import TopRatedAnimes from '../components/home/TopRatedAnimes';
 import styles from '../styles/modules/Home.module.css';
 
+// Metadata SEO pour la page d'accueil
+// Ces infos apparaissent dans Google et sur les réseaux sociaux
+export const metadata = {
+  title: 'Accueil', // Sera affiché comme "Accueil | O'Kanime" grâce au template
+  description: 'Découvrez votre bibliothèque d\'animés personnelle. Suivez vos séries préférées, du Shōnen au Slice of Life, notez vos animes et partagez vos découvertes avec la communauté.',
+  keywords: ['anime streaming', 'catalogue anime', 'suivi anime', 'bibliothèque manga', 'shonen', 'seinen', 'slice of life'],
+  
+  // Open Graph spécifique à la page d'accueil
+  openGraph: {
+    title: 'O\'Kanime - Découvrez et organisez vos animés préférés',
+    description: 'Votre sanctuaire personnel pour gérer, noter et suivre toutes vos séries d\'animation japonaise préférées.',
+    url: 'https://okanime.live',
+  },
+  
+  // Twitter Card spécifique
+  twitter: {
+    title: 'O\'Kanime - Découvrez et organisez vos animés préférés',
+    description: 'Votre sanctuaire personnel pour gérer, noter et suivre toutes vos séries d\'animation japonaise préférées.',
+  },
+}
+
 function Home() {
   return (
     <div className={styles.page}>
