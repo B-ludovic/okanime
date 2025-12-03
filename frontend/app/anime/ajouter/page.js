@@ -9,7 +9,6 @@ import { Upload, X, AlertCircle, Search } from 'lucide-react';
 import api from '../../../app/lib/api';
 import { isAuthenticated } from '../../../app/lib/utils';
 import '../../../styles/AddAnime.css';
-import '../../../styles/Banners.css';
 
 function AjouterAnimePage() {
   const router = useRouter();
@@ -33,8 +32,7 @@ function AjouterAnimePage() {
 
   const [posterFile, setPosterFile] = useState(null);
   const [posterPreview, setPosterPreview] = useState(null);
-  const [posterUrl, setPosterUrl] = useState(''); // URL du poster depuis Jikan
-  const [selectedBanner, setSelectedBanner] = useState(null); // Numéro de bannière (1-20)
+  const [posterUrl, setPosterUrl] = useState(null); // URL du poster depuis Jikan
 
   // Recherche sur Jikan
   const handleJikanSearch = async () => {
@@ -160,12 +158,6 @@ function AjouterAnimePage() {
       return;
     }
 
-    if (!selectedBanner) {
-      setError('Veuillez sélectionner une bannière');
-      setLoading(false);
-      return;
-    }
-
     try {
       // Prépare les données en FormData
       const data = new FormData();
@@ -185,11 +177,6 @@ function AjouterAnimePage() {
         data.append('posterUrl', posterUrl);
       } else if (posterFile) {
         data.append('poster', posterFile);
-      }
-      
-      // Si bannière gradient sélectionnée
-      if (selectedBanner) {
-        data.append('bannerGradient', selectedBanner);
       }
 
       // Envoie à l'API
@@ -418,31 +405,6 @@ function AjouterAnimePage() {
                     </button>
                   </div>
                 )}
-              </div>
-
-              {/* Bannière (sélection gradient uniquement) */}
-              <div className="ajout-anime-upload-section">
-                <label className="ajout-anime-upload-label">Bannière *</label>
-                <p className="banner-description">
-                  Choisissez une bannière parmi nos 20 gradients disponibles
-                </p>
-
-                {/* Sélection de bannières gradient */}
-                <div className="banner-selector">
-                  {[...Array(20)].map((_, index) => {
-                    const bannerNum = index + 1;
-                    return (
-                      <div
-                        key={bannerNum}
-                        className={`banner-option ${selectedBanner === bannerNum ? 'selected' : ''}`}
-                        onClick={() => setSelectedBanner(bannerNum)}
-                      >
-                        <div className={`banner-gradient banner-${bannerNum}`}></div>
-                        <span className="banner-label">Bannière {bannerNum}</span>
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
 
               {/* Actions */}

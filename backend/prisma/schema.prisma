@@ -38,9 +38,9 @@ model Anime {
   anneeDebut        Int
   studio            String?
   posterUrl         String?
-  banniereUrl       String?
   noteMoyenne       Float?            @default(0)
   statutModeration  StatutModeration  @default(EN_ATTENTE)
+  verifie           Boolean           @default(false) // Vérifié définitivement par un admin
   dateAjout         DateTime          @default(now())
   
   userIdAjout       String

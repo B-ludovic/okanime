@@ -10,7 +10,7 @@ import prisma from '../config/prisma.js';
 
 // CRÉER UN ANIME MANUELLEMENT - POST /api/admin/animes
 const createAnime = asyncHandler(async (req, res) => {
-  const { titreVf, synopsis, anneeDebut, studio, genreIds, posterUrl, bannerGradient, malId } = req.body;
+  const { titreVf, synopsis, anneeDebut, studio, genreIds, posterUrl, malId } = req.body;
 
   // Parse genreIds si c'est une string, sinon utilise directement
   const parsedGenreIds = typeof genreIds === 'string' ? JSON.parse(genreIds) : genreIds;
@@ -43,16 +43,10 @@ const createAnime = asyncHandler(async (req, res) => {
     throw new HttpBadRequestError('Le poster est obligatoire');
   }
 
-  // Gestion de la bannière (gradient uniquement, obligatoire)
-  if (!bannerGradient) {
-    throw new HttpBadRequestError('La bannière est obligatoire');
-  }
-  
-  const banniereUrl = `gradient-${bannerGradient}`;
-
   // Tous les animes sont VALIDES par défaut (visibles immédiatement)
-  // L'admin peut les modérer après coup si nécessaire
+  // Mais seuls les animes créés par ADMIN sont vérifiés automatiquement
   const statutModeration = 'VALIDE';
+  const verifie = req.user.role === 'ADMIN'; // true si admin, false si user
 
   // Vérifie si le malId existe déjà dans la base
   if (malId) {
@@ -86,8 +80,8 @@ const createAnime = asyncHandler(async (req, res) => {
       anneeDebut: validatedData.anneeDebut,
       studio: validatedData.studio,
       posterUrl: finalPosterUrl,
-      banniereUrl,
       statutModeration,
+      verifie, // Vérifié auto si admin, sinon nécessite vérification
       userIdAjout: req.user.id,
       malId: malId ? parseInt(malId) : null,
       genres: {
@@ -153,19 +147,12 @@ const updateAnime = asyncHandler(async (req, res) => {
     posterUrl = await uploadPoster(req.files.poster[0].buffer);
   }
 
-  // Gestion de la bannière gradient
-  let banniereUrl = anime.banniereUrl;
-  if (req.body.bannerGradient) {
-    banniereUrl = `gradient-${req.body.bannerGradient}`;
-  }
-
   // Mise à jour de l'anime
   const updatedAnime = await prisma.anime.update({
     where: { id },
     data: {
       ...validatedData,
       posterUrl,
-      banniereUrl,
       // Mise à jour des genres si fournis
       ...(validatedData.genreIds && {
         genres: {
@@ -338,25 +325,30 @@ const deleteSaison = asyncHandler(async (req, res) => {
 
 // MODÉRATION 
 
-// RÉCUPÉRER LES ANIMÉS EN ATTENTE - GET /api/admin/animes/pending
+// RÉCUPÉRER LES ANIMÉS EN ATTENTE DE VÉRIFICATION - GET /api/admin/animes/pending
 const getPendingAnimes = asyncHandler(async (req, res) => {
+  // Récupère tous les animes VALIDES mais pas encore vérifiés
+  // (créés par des users, visibles mais à vérifier par admin)
   const animes = await prisma.anime.findMany({
     where: {
-      statutModeration: 'EN_ATTENTE'
+      statutModeration: 'VALIDE',
+      verifie: false // Pas encore vérifiés définitivement
     },
     include: {
       userAjout: {
         select: {
           id: true,
           username: true,
-          email: true
+          email: true,
+          role: true
         }
       },
       genres: {
         include: {
           genre: true
         }
-      }
+      },
+      saisons: true
     },
     orderBy: {
       dateAjout: 'asc' // Les plus anciens en premier
@@ -388,11 +380,13 @@ const moderateAnime = asyncHandler(async (req, res) => {
     throw new HttpNotFoundError('Anime introuvable');
   }
 
-  // Met à jour le statut de modération
+  // Met à jour le statut de modération ET marque comme vérifié
+  // Si l'admin valide l'anime, il est considéré comme vérifié définitivement
   const updatedAnime = await prisma.anime.update({
     where: { id },
     data: {
-      statutModeration: statut
+      statutModeration: statut,
+      verifie: statut === 'VALIDE' // Vérifié seulement si validé, pas si refusé
     }
   });
 
@@ -449,11 +443,21 @@ const getStats = asyncHandler(async (req, res) => {
   // Compte le nombre d'animés par statut
   const totalAnimes = await prisma.anime.count();
   const animesValides = await prisma.anime.count({
-    where: { statutModeration: 'VALIDE' }
+    where: { 
+      statutModeration: 'VALIDE',
+      verifie: true // Validés ET vérifiés définitivement
+    }
   });
+  
+  // En attente = animés visibles mais pas encore vérifiés par un admin
+  // (créés par des users, besoin de vérification)
   const animesEnAttente = await prisma.anime.count({
-    where: { statutModeration: 'EN_ATTENTE' }
+    where: { 
+      statutModeration: 'VALIDE',
+      verifie: false // Visible mais pas vérifié
+    }
   });
+  
   const animesRefuses = await prisma.anime.count({
     where: { statutModeration: 'REFUSE' }
   });

@@ -45,12 +45,12 @@ const corsOptions = {
   origin: (origin, callback) => {
     // Liste des origines autorisées
     const allowedOrigins = [
-      'http://localhost:3000',
+      'http://localhost:3000', // Développement local
       'http://localhost:3001',
-      process.env.FRONTEND_URL, // URL de production depuis .env
-      'https://okanime.fr', // Production (avec domaine)
-      'https://www.okanime.fr', // Production (avec www)
-      'https://okanime-frontend.onrender.com', // Frontend Render
+      'https://okanime.live', // Production (domaine principal)
+      'https://www.okanime.live', // Production (avec www)
+      'https://okanime.vercel.app', // Vercel (déploiement)
+      process.env.FRONTEND_URL, // URL depuis .env (si définie)
     ].filter(Boolean); // Retire les valeurs undefined/null
 
     // Autorise les requêtes sans origin (accès direct, Postman, health checks)
