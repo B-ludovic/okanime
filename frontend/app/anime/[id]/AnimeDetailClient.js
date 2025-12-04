@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
@@ -14,8 +14,7 @@ import AnimeStructuredData from '../../../components/seo/AnimeStructuredData';
 import AvisSection from '../../../components/avis/AvisSection';
 
 // Composant client pour la page de détail d'anime
-function AnimeDetailPage() {
-    const params = useParams();
+function AnimeDetailPage({ id }) {
     const router = useRouter();
     const [anime, setAnime] = useState(null);
     const [videos, setVideos] = useState(null);
@@ -83,7 +82,7 @@ function AnimeDetailPage() {
     useEffect(() => {
         const fetchAnime = async () => {
             try {
-                const response = await api.get(`/animes/${params.id}`);
+                const response = await api.get(`/animes/${id}`);
                 setAnime(response.data.anime);
                 setVideos(response.data.videos); // Récupère les vidéos
                 
@@ -114,10 +113,10 @@ function AnimeDetailPage() {
             }
         };
 
-        if (params.id) {
+        if (id) {
             fetchAnime();
         }
-    }, [params.id]);
+    }, [id]);
 
     // Fonction pour changer le statut dans la bibliothèque
     const handleStatutChange = async (newStatut) => {

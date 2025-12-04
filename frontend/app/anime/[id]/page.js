@@ -9,6 +9,8 @@ export { generateMetadata } from './metadata';
 
 // Le composant page est un Server Component par défaut
 // Il ne fait que retourner le Client Component
-export default function AnimeDetailPage() {
-    return <AnimeDetailClient />;
+export default async function AnimeDetailPage({ params }) {
+    // Next.js 16: params est une Promise
+    const { id } = await params;
+    return <AnimeDetailClient id={id} />;
 }

@@ -3,9 +3,12 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
 export async function generateMetadata({ params }) {
+  // Next.js 16: params est une Promise
+  const { id } = await params;
+  
   try {
     // Récupère les données de l'anime depuis l'API
-    const response = await fetch(`${API_URL}/animes/${params.id}`, {
+    const response = await fetch(`${API_URL}/animes/${id}`, {
       cache: 'no-store', // Toujours récupérer les données fraîches
     });
 
@@ -42,7 +45,7 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title: `${anime.titreVf} - O'Kanime`,
         description: shortSynopsis,
-        url: `https://okanime.live/anime/${params.id}`,
+        url: `https://okanime.live/anime/${id}`,
         type: 'video.tv_show', // Type spécifique pour les séries
         images: [
           {
