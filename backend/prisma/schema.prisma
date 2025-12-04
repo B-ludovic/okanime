@@ -17,9 +17,11 @@ model User {
   dateInscription DateTime @default(now())
   avatar          String?
   
-  bibliotheque    Bibliotheque[]
-  avis            Avis[]
-  animesAjoutes   Anime[]        @relation("UserAddedAnime")
+  bibliotheque              Bibliotheque[]
+  avis                      Avis[]
+  animesAjoutes             Anime[]                    @relation("UserAddedAnime")
+  emailVerificationTokens   EmailVerificationToken[]
+  passwordResetTokens       PasswordResetToken[]
   
   @@map("users")
 }
@@ -163,4 +165,28 @@ model Message {
   dateCreation  DateTime @default(now())
   
   @@map("messages")
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("email_verification_tokens")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("password_reset_tokens")
 }
