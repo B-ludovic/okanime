@@ -2,6 +2,20 @@
 
 Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et laisser des avis.
 
+## 📸 Aperçu
+
+![Page d'accueil](./captures/home.png)
+*Page d'accueil avec les animés populaires*
+
+![Page de détail d'un animé](./captures/anime-detail.png)
+*Fiche détaillée d'un animé avec avis et notes*
+
+![Bibliothèque personnelle](./captures/bibliotheque.png)
+*Gestion de sa bibliothèque avec différents statuts*
+
+![Notre collection](./captures/collection.png)
+*Catalogue complet des animés disponibles*
+
 ## Stack
 
 **Frontend**
