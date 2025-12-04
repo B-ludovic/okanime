@@ -19,6 +19,11 @@ import {
   getAllAvis,
   deleteAvis,
 } from '../controllers/adminController.js';
+import {
+  getAllMessages,
+  toggleReadStatus,
+  deleteMessage,
+} from '../controllers/contactController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { adminOnly } from '../middlewares/roleMiddleware.js';
 import { uploadSingleOptional } from '../middlewares/uploadMiddleware.js';
@@ -54,6 +59,11 @@ router.delete('/genres/:id', authMiddleware, adminOnly, adminLimiter, deleteGenr
 // GESTION DES AVIS (admin uniquement) - rate limit augmenté
 router.get('/avis', authMiddleware, adminOnly, adminLimiter, getAllAvis);
 router.delete('/avis/:id', authMiddleware, adminOnly, adminLimiter, deleteAvis);
+
+// GESTION DES MESSAGES DE CONTACT (admin uniquement) - rate limit augmenté
+router.get('/messages', authMiddleware, adminOnly, adminLimiter, getAllMessages);
+router.put('/messages/:id/toggle-read', authMiddleware, adminOnly, adminLimiter, toggleReadStatus);
+router.delete('/messages/:id', authMiddleware, adminOnly, adminLimiter, deleteMessage);
 
 // STATISTIQUES (admin uniquement) - rate limit augmenté
 router.get('/stats', authMiddleware, adminOnly, adminLimiter, getStats );

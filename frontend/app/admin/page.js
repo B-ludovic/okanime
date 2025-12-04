@@ -186,18 +186,16 @@ function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Statistiques avancées - Work in Progress */}
-        <div className="admin-stat-card wip">
+        {/* Messages */}
+        <div className="admin-stat-card" onClick={() => router.push('/admin/messages')} style={{ cursor: 'pointer' }}>
           <div className="admin-stat-header">
-            <span className="admin-stat-label">Stats avancées</span>
+            <span className="admin-stat-label">Messages</span>
             <div className="admin-stat-icon">
-              <BarChart3 size={24} />
+              <MessageSquare size={24} />
             </div>
           </div>
-          <div className="admin-stat-wip">
-            <Image src="/icons/work-in-progress.png" alt="En développement" width={60} height={60} />
-            <span className="admin-stat-wip-text">Bientôt disponible</span>
-          </div>
+          <div className="admin-stat-value">{stats.totalMessages || 0}</div>
+          <div className="admin-stat-label">messages de contact</div>
         </div>
       </div>
 

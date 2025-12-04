@@ -152,3 +152,15 @@ model ApiImportLog {
   
   @@map("api_import_logs")
 }
+
+model Message {
+  id            String   @id @default(uuid())
+  nom           String
+  email         String
+  sujet         String
+  message       String   @db.Text
+  lu            Boolean  @default(false)
+  dateCreation  DateTime @default(now())
+  
+  @@map("messages")
+}

@@ -98,6 +98,7 @@ Backend : http://localhost:5001
 - **Système d'avis et de notes (1-10 étoiles)**
 - **Commentaires sur les animés**
 - **Modification et suppression de ses propres avis**
+- **Formulaire de contact pour envoyer des messages**
 - Upload d'images (Cloudinary)
 - Barre de recherche dans le header
 - Page profil avec statistiques
@@ -127,6 +128,7 @@ Backend : http://localhost:5001
 - **Gestion des avis (consultation et suppression)**
 - **Filtres des avis (récents, meilleures notes, moins bonnes notes)**
 - **Suppression d'avis directement sur les pages d'animés**
+- **Gestion des messages de contact**
 - Protection du Super Admin (badge spécial, impossible à supprimer)
 - Modération des contenus
 - Statistiques globales
@@ -142,9 +144,9 @@ okanime/
 │   │   └── migrations/
 │   ├── src/
 │   │   ├── config/          # Configuration (Prisma, Cloudinary, Rate limiting, Helmet)
-│   │   ├── controllers/     # Logique métier (animes, avis, auth, etc.)
+│   │   ├── controllers/     # Logique métier (animes, avis, contact, auth, etc.)
 │   │   ├── middlewares/     # Auth, erreurs, upload, honeypot
-│   │   ├── routes/          # Routes API (animes, avis, auth, admin, etc.)
+│   │   ├── routes/          # Routes API (animes, avis, contact, auth, admin, etc.)
 │   │   ├── services/        # Jikan API, Cloudinary, traduction
 │   │   ├── utils/           # JWT, bcrypt, erreurs HTTP
 │   │   └── validators/      # Validation Zod (animes, avis, auth)
@@ -153,13 +155,15 @@ okanime/
     ├── app/
     │   ├── (auth)/          # Pages login/register
     │   ├── admin/           # Panel d'administration
-    │   │   ├── avis/        # Gestion des avis (nouveau)
+    │   │   ├── avis/        # Gestion des avis
+    │   │   ├── messages/    # Gestion des messages de contact (nouveau)
     │   │   ├── animes/      # Modération des animés
     │   │   ├── genres/      # Gestion des genres
     │   │   └── users/       # Gestion des utilisateurs
     │   ├── anime/           # Pages animés
     │   │   └── [id]/        # Page détail avec section avis
     │   ├── bibliotheque/    # Bibliothèque personnelle
+    │   ├── contact/         # Formulaire de contact (nouveau)
     │   ├── profil/          # Page profil utilisateur
     │   ├── recherche/       # Page de recherche
     │   ├── mentions-legales/     # Mentions légales
@@ -169,7 +173,7 @@ okanime/
     ├── components/
     │   ├── admin/           # AdminLayout
     │   ├── anime/           # AnimeCard, etc.
-    │   ├── avis/            # StarRating, AvisSection, AvisForm (nouveau)
+    │   ├── avis/            # StarRating, AvisSection, AvisForm
     │   ├── bibliotheque/    # BiblioCard, BiblioModal
     │   ├── forms/           # LoginForm, RegisterForm
     │   └── layout/          # Header, Footer

@@ -13,6 +13,7 @@ import genreRoutes from './routes/genreRoutes.js';
 import bibliothequeRoutes from './routes/bibliothequeRoutes.js';
 import avisRoutes from './routes/avisRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
 import { httpStatusCodes } from './utils/httpErrors.js';
 
 // Configuration
@@ -115,6 +116,7 @@ app.use('/api/animes', animeRoutes);
 app.use('/api/genres', genreRoutes);
 app.use('/api/bibliotheque', bibliothequeRoutes);
 app.use('/api/avis', avisRoutes);
+app.use('/api/contact', contactRoutes); // Route publique pour le formulaire de contact
 
 // Routes admin - Protection admin dans les routes
 app.use('/api/admin', adminRoutes);

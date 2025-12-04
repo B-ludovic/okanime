@@ -492,6 +492,9 @@ const getStats = asyncHandler(async (req, res) => {
   // Compte le nombre de saisons
   const totalSaisons = await prisma.saison.count();
 
+  // Compte le nombre de messages de contact
+  const totalMessages = await prisma.message.count();
+
   res.status(httpStatusCodes.OK).json({
     success: true,
     data: {
@@ -502,7 +505,8 @@ const getStats = asyncHandler(async (req, res) => {
         animesEnAttente,
         animesRefuses,
         totalAvis,
-        totalSaisons
+        totalSaisons,
+        totalMessages
       }
     }
   });

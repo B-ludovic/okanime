@@ -27,7 +27,7 @@ function AdminLayout({ children }) {
     { href: '/admin/saisons', label: 'Saisons', icon: Calendar, wip: true },
     { href: '/admin/avis', label: 'Avis', icon: Star },
     { href: '/admin/logs', label: "Logs d'activité", iconSrc: '/icons/log.png', wip: true },
-    { href: '/admin/statistiques', label: 'Stats avancées', iconSrc: '/icons/advanced-statistics.png', wip: true },
+    { href: '/admin/messages', label: 'Messages', icon: MessageSquare },
     { href: '/admin/users', label: 'Utilisateurs', icon: Users },
     { href: '/admin/genres', label: 'Genres', icon: Tag },
   ];

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { User, LogOut, Search, Menu, X, ArrowLeft, LayoutDashboard, Film, Users as UsersIcon, Tag, Calendar, Star } from 'lucide-react';
+import { User, LogOut, Search, Menu, X, ArrowLeft, LayoutDashboard, Film, Users as UsersIcon, Tag, Calendar, Star, MessageSquare } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '../../app/lib/utils';
 import styles from '../../styles/modules/Header.module.css';
@@ -122,7 +122,7 @@ export default function Header() {
                                 href="/"
                                 className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}
                             >
-                                <Image src="/icons/home.png" alt="Accueil" width={20} height={20} className="object-contain" />
+                                <Image src="/icons/house.png" alt="Accueil" width={20} height={20} className="object-contain" />
                                 Accueil
                             </Link>
                         </li>
@@ -146,6 +146,15 @@ export default function Header() {
                                 </Link>
                             </li>
                         )}
+                        <li>
+                            <Link
+                                href="/contact"
+                                className={`${styles.navLink} ${pathname === '/contact' ? styles.active : ''}`}
+                            >
+                                <Image src="/icons/contact.png" alt="Contact" width={20} height={20} className="object-contain" />
+                                Contact
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
 
@@ -253,6 +262,15 @@ export default function Header() {
                             <span>Ma Bibliothèque</span>
                         </Link>
                     )}
+                    
+                    <Link 
+                        href="/contact" 
+                        className={`${styles.drawerLink} ${isAuth ? styles.stagger4 : styles.stagger3}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        <Image src="/icons/contact.png" alt="" width={22} height={22} />
+                        <span>Contact</span>
+                    </Link>
 
                     {/* Section Administration avec tous les liens */}
                     {isAuth && user?.role === 'ADMIN' && (
@@ -266,7 +284,7 @@ export default function Header() {
                                 
                                 <Link 
                                     href="/admin" 
-                                    className={`${styles.drawerLink} ${styles.stagger4}`}
+                                    className={`${styles.drawerLink} ${styles.stagger5}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <LayoutDashboard size={20} />
@@ -275,7 +293,7 @@ export default function Header() {
                                 
                                 <Link 
                                     href="/admin/animes" 
-                                    className={`${styles.drawerLink} ${styles.stagger5}`}
+                                    className={`${styles.drawerLink} ${styles.stagger6}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Film size={20} />
@@ -284,7 +302,7 @@ export default function Header() {
                                 
                                 <Link 
                                     href="/admin/tous-les-animes" 
-                                    className={`${styles.drawerLink} ${styles.stagger6}`}
+                                    className={`${styles.drawerLink} ${styles.stagger7}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Film size={20} />
@@ -293,7 +311,7 @@ export default function Header() {
                                 
                                 <Link 
                                     href="/admin/users" 
-                                    className={`${styles.drawerLink} ${styles.stagger7}`}
+                                    className={`${styles.drawerLink} ${styles.stagger8}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <UsersIcon size={20} />
@@ -302,7 +320,7 @@ export default function Header() {
                                 
                                 <Link 
                                     href="/admin/genres" 
-                                    className={`${styles.drawerLink} ${styles.stagger8}`}
+                                    className={`${styles.drawerLink} ${styles.stagger9}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Tag size={20} />
@@ -311,7 +329,7 @@ export default function Header() {
                                 
                                 <Link 
                                     href="/admin/saisons" 
-                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger9}`}
+                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger10}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Calendar size={20} />
@@ -321,7 +339,7 @@ export default function Header() {
                                 
                                 <Link 
                                     href="/admin/avis" 
-                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger10}`}
+                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger11}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Star size={20} />
@@ -331,7 +349,7 @@ export default function Header() {
                                 
                                 <Link 
                                     href="/admin/logs" 
-                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger11}`}
+                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger12}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Image src="/icons/log.png" alt="" width={20} height={20} />
@@ -340,20 +358,19 @@ export default function Header() {
                                 </Link>
                                 
                                 <Link 
-                                    href="/admin/statistiques" 
-                                    className={`${styles.drawerLink} ${styles.wipLink} ${styles.stagger12}`}
+                                    href="/admin/messages" 
+                                    className={`${styles.drawerLink} ${styles.stagger13}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
-                                    <Image src="/icons/advanced-statistics.png" alt="" width={20} height={20} />
-                                    <span>Stats avancées</span>
-                                    <Image src="/icons/work-in-progress.png" alt="WIP" width={16} height={16} />
+                                    <MessageSquare size={20} />
+                                    <span>Messages</span>
                                 </Link>
                             </div>
                         </>
                     )}
                 </nav>
 
-                <div className={`${styles.drawerFooter} ${styles.stagger13}`}>
+                <div className={`${styles.drawerFooter} ${styles.stagger14}`}>
                     {isAuth ? (
                         <div className={styles.drawerUserSection}>
                             {/* Carte Profil améliorée */}

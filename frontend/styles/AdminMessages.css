@@ -1,0 +1,327 @@
+/* PAGE ADMIN MESSAGES */
+
+.messages-filters {
+  display: flex;
+  gap: var(--espace-sm);
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  padding: 10px 16px;
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texte-gris);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  border-color: var(--bleu-pastel);
+  color: var(--bleu-pastel);
+}
+
+.filter-btn.active {
+  background: var(--bleu-pastel);
+  border-color: var(--bleu-pastel);
+  color: white;
+}
+
+/* CONTENEUR PRINCIPAL */
+.messages-container {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: var(--espace-lg);
+  height: calc(100vh - 300px);
+}
+
+@media (max-width: 1200px) {
+  .messages-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  
+  .message-detail {
+    display: none;
+  }
+  
+  .message-detail.mobile-visible {
+    display: block;
+  }
+}
+
+/* LISTE DES MESSAGES */
+.messages-list {
+  background: white;
+  border-radius: var(--arrondi-moyen);
+  box-shadow: var(--ombre-moyenne);
+  padding: var(--espace-md);
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.messages-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espace-xxl);
+  color: var(--texte-gris);
+  text-align: center;
+}
+
+.messages-empty svg {
+  color: #D1D5DB;
+  margin-bottom: var(--espace-md);
+}
+
+/* ITEM DE MESSAGE */
+.message-item {
+  padding: var(--espace-md);
+  border: 2px solid #F3F4F6;
+  border-radius: 0.5rem;
+  margin-bottom: var(--espace-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.message-item:hover {
+  border-color: var(--bleu-pastel);
+  background: rgba(147, 197, 253, 0.05);
+}
+
+.message-item.selected {
+  border-color: var(--bleu-pastel);
+  background: rgba(147, 197, 253, 0.1);
+}
+
+.message-item.unread {
+  border-color: var(--bleu-pastel);
+  background: rgba(147, 197, 253, 0.05);
+}
+
+.message-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--espace-xs);
+}
+
+.message-item-sender {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  color: var(--texte-noir);
+  font-size: 0.95rem;
+}
+
+.message-item-sender strong {
+  font-weight: 700;
+}
+
+.message-subject-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.message-subject-badge.blue {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.message-subject-badge.green {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.message-subject-badge.red {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.message-subject-badge.purple {
+  background: #EDE9FE;
+  color: #5B21B6;
+}
+
+.message-subject-badge.orange {
+  background: #FED7AA;
+  color: #9A3412;
+}
+
+.message-subject-badge.gray {
+  background: #F3F4F6;
+  color: #4B5563;
+}
+
+.message-item-preview {
+  color: var(--texte-gris);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: var(--espace-xs);
+}
+
+.message-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-item-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--texte-gris);
+}
+
+.unread-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--bleu-pastel);
+  border-radius: 50%;
+}
+
+/* DÉTAIL DU MESSAGE */
+.message-detail {
+  background: white;
+  border-radius: var(--arrondi-moyen);
+  box-shadow: var(--ombre-moyenne);
+  padding: var(--espace-xl);
+  overflow-y: auto;
+}
+
+.message-detail-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--texte-gris);
+  text-align: center;
+}
+
+.message-detail-empty svg {
+  color: #D1D5DB;
+  margin-bottom: var(--espace-md);
+}
+
+.message-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--espace-xl);
+  padding-bottom: var(--espace-md);
+  border-bottom: 2px solid #F3F4F6;
+}
+
+.message-detail-title {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--texte-noir);
+}
+
+.message-detail-actions {
+  display: flex;
+  gap: var(--espace-sm);
+}
+
+.message-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-xl);
+}
+
+.message-detail-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espace-lg);
+}
+
+@media (max-width: 768px) {
+  .message-detail-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+.message-detail-info-item {
+  display: flex;
+  gap: var(--espace-sm);
+  align-items: flex-start;
+}
+
+.message-detail-info-item svg {
+  color: var(--bleu-pastel);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.message-detail-info-item label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texte-gris);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.message-detail-info-item p {
+  color: var(--texte-noir);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.message-email-link {
+  color: var(--bleu-pastel);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.message-email-link:hover {
+  color: #60A5FA;
+  text-decoration: underline;
+}
+
+.message-detail-message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-sm);
+}
+
+.message-detail-message label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texte-gris);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.message-detail-text {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  padding: var(--espace-lg);
+  color: var(--texte-noir);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.message-detail-reply {
+  padding-top: var(--espace-md);
+  border-top: 2px solid #F3F4F6;
+}

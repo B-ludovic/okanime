@@ -30,6 +30,7 @@
   color: var(--bleu-pastel);
   text-decoration: none;
   z-index: 20;
+  margin-left: -10px; /* Décale uniquement le logo vers la gauche */
 }
 
 /* ELEMENTS DESKTOP */
