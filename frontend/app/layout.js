@@ -5,6 +5,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 // Metadata SEO optimisées pour le site
 export const metadata = {
+  // URL de base du site (obligatoire pour Open Graph et Twitter Cards)
+  metadataBase: new URL('https://okanime.live'),
+  
   title: {
     default: 'O\'Kanime - Votre bibliothèque d\'animés personnelle',
     template: '%s | O\'Kanime' // Template pour les pages enfants

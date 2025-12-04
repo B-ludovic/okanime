@@ -86,8 +86,9 @@ app.use(express.json({ limit: '10mb' })); // Limite la taille des requêtes JSON
 // 5. Parse les données URL-encoded
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// 6. Rate limiting général - Limite toutes les requêtes API
-app.use('/api', apiLimiter);
+// 6. Rate limiting général - RETIRÉ
+// Les rate limiters spécifiques sont appliqués directement dans les routes sensibles
+// (auth, upload, admin) pour éviter de bloquer la navigation normale
 
 
 // ROUTES DE BASE

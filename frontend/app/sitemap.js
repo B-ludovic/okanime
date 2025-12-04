@@ -41,9 +41,16 @@ async function sitemap() {
 
     try {
         // Récupérer tous les animes validés depuis l'API
+        // Timeout de 5 secondes pour éviter de bloquer le build
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        
         const response = await fetch(`${API_URL}/animes?verifie=true`, {
             next: { revalidate: 3600 }, // Cache 1h
+            signal: controller.signal, // Permet d'annuler la requête si trop longue
         });
+        
+        clearTimeout(timeoutId); // Annuler le timeout si la requête aboutit
 
         if (!response.ok) {
             console.error('Erreur sitemap: impossible de récupérer les animes');

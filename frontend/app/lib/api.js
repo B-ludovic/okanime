@@ -44,15 +44,14 @@ const fetchAPI = async (endpoint, options = {}) => {
     let errorMessage = `Erreur ${response.status}: ${response.statusText}`;
     try {
       const errorData = await response.json();
-      errorMessage = errorData.error || errorData.message || errorMessage;
+      // Le backend renvoie toujours { success: false, error: { message: "...", type: "..." } }
+      errorMessage = errorData.error?.message || errorData.message || errorMessage;
     } catch (parseError) {
       console.error('Impossible de parser la réponse d\'erreur:', parseError);
     }
 
-    // Convertir en string si c'est un objet
-    const errorString = typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage);
-    console.error(`API Error [${options.method || 'GET'} ${endpoint}]:`, errorString);
-    throw new Error(errorString);
+    console.error(`API Error [${options.method || 'GET'} ${endpoint}]:`, errorMessage);
+    throw new Error(errorMessage);
   }
 
   // Retourne les données JSON

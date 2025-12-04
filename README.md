@@ -5,7 +5,7 @@ Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et lai
 ## Stack
 
 **Frontend**
-- Next.js 16.0.5 (App Router)
+- Next.js 16.0.7 (App Router)
 - React 19.2.0
 - CSS modules
 - Lucide React (icônes)
@@ -16,14 +16,16 @@ Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et lai
 - PostgreSQL
 - Jikan API v4 (données animés)
 - Cloudinary (upload d'images)
+- Resend
 
 **Sécurité**
-- Express Rate Limit (protection brute force)
+- Express Rate Limit (protection brute force et spam)
 - Helmet (headers de sécurité HTTP)
 - XSS-Clean (nettoyage des données)
 - CORS strict (whitelist d'origines)
 - Honeypot (protection anti-bots)
 - Validation des tailles de champs
+- Rate limiting adapté par type de route
 
 ## Installation
 
@@ -42,6 +44,10 @@ CLOUDINARY_API_KEY="votre_api_key"
 CLOUDINARY_API_SECRET="votre_api_secret"
 FRONTEND_URL="http://localhost:3001"  # Pour le CORS en production
 NODE_ENV="development"
+
+# Email (Resend)
+RESEND_API_KEY="re_votre_cle_resend"
+RESEND_FROM_EMAIL="noreply@votredomaine.com"
 
 # Optionnel - Traduction automatique des synopsis
 ENABLE_TRANSLATION="false"  # Mettre à "true" pour activer DeepL
@@ -89,6 +95,7 @@ Backend : http://localhost:5001
 
 **Utilisateur**
 - Authentification JWT avec rôles (admin/user)
+- Vérification par email (lien de confirmation)
 - Super Admin protégé (ne peut pas être supprimé ou modifié)
 - Catalogue de 100 animés (seed automatique depuis Jikan API)
 - Badges de genres colorés (16 couleurs différentes)
@@ -106,16 +113,17 @@ Backend : http://localhost:5001
 - Pages légales (Mentions Légales, Politique de Confidentialité, CGU)
 
 **Sécurité**
+- Rate limiting adapté (lecture libre, écriture limitée)
 - Rate limiting sur login (5 tentatives/15min)
 - Rate limiting sur register (3 tentatives/heure)
-- Rate limiting sur upload (10 tentatives/15min)
-- Rate limiting global API (100 requêtes/15min)
+- Rate limiting sur actions utilisateur (100/15min)
 - Protection honeypot anti-bots sur login/register
 - Headers de sécurité Helmet
 - Protection XSS sur toutes les entrées
 - CORS strict avec whitelist d'origines
 - Limites de taille sur synopsis (5000 car.), commentaires (2000 car.)
 - Protection IDOR sur bibliothèque et avis
+- Format d'erreur uniformisé (backend/frontend)
 
 **Admin**
 - Panel d'administration complet avec sidebar responsive
@@ -147,8 +155,8 @@ okanime/
 │   │   ├── controllers/     # Logique métier (animes, avis, contact, auth, etc.)
 │   │   ├── middlewares/     # Auth, erreurs, upload, honeypot
 │   │   ├── routes/          # Routes API (animes, avis, contact, auth, admin, etc.)
-│   │   ├── services/        # Jikan API, Cloudinary, traduction
-│   │   ├── utils/           # JWT, bcrypt, erreurs HTTP
+│   │   ├── services/        # Jikan API, Cloudinary, traduction, emails (Resend)
+│   │   ├── utils/           # JWT, bcrypt, erreurs HTTP, templates emails
 │   │   └── validators/      # Validation Zod (animes, avis, auth)
 │   └── app.js
 └── frontend/
@@ -163,6 +171,7 @@ okanime/
     │   ├── anime/           # Pages animés
     │   │   └── [id]/        # Page détail avec section avis
     │   ├── bibliotheque/    # Bibliothèque personnelle
+    │   ├── confirm-email/   # Page de confirmation d'email (nouveau)
     │   ├── contact/         # Formulaire de contact (nouveau)
     │   ├── profil/          # Page profil utilisateur
     │   ├── recherche/       # Page de recherche
@@ -187,8 +196,9 @@ Le projet implémente plusieurs couches de protection :
 ### Protection contre le brute force
 - **Login** : 5 tentatives max par 15 minutes
 - **Register** : 3 inscriptions max par heure depuis la même IP
+- **Actions utilisateur** : 100 actions max par 15 minutes (avis, bibliothèque)
 - **Upload** : 10 uploads max par 15 minutes
-- **API globale** : 100 requêtes max par 15 minutes
+- **Routes de lecture** : Pas de limite (navigation fluide)
 
 ### Protection anti-bots
 - Champ honeypot invisible sur login/register
@@ -258,9 +268,11 @@ Le projet est déployé sur Render :
 
 **Variables d'environnement importantes en production :**
 - `NODE_ENV=production`
-- `FRONTEND_URL` : URL complète du frontend (pour CORS)
+- `FRONTEND_URL` : URL complète du frontend (pour CORS et liens emails)
 - `JWT_SECRET` : Secret complexe (64+ caractères)
 - `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_USERNAME` : Credentials sécurisés
+- `RESEND_API_KEY` : Clé API Resend pour les emails
+- `RESEND_FROM_EMAIL` : Email vérifié sur Resend
 - `ENABLE_TRANSLATION=false` (par défaut, pour économiser le quota DeepL)
 
 ## Crédits

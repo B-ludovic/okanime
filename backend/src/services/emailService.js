@@ -16,14 +16,11 @@ export const sendConfirmationEmail = async (email, username, token) => {
     });
 
     if (error) {
-      console.error('Erreur Resend:', error);
       throw new Error('Erreur lors de l\'envoi de l\'email');
     }
 
-    console.log('Email de confirmation envoyé:', data.id);
     return data;
   } catch (error) {
-    console.error('Erreur sendConfirmationEmail:', error);
     throw error;
   }
 };
@@ -41,14 +38,11 @@ export const sendPasswordResetEmail = async (email, username, token) => {
     });
 
     if (error) {
-      console.error('Erreur Resend:', error);
       throw new Error('Erreur lors de l\'envoi de l\'email');
     }
 
-    console.log('Email de réinitialisation envoyé:', data.id);
     return data;
   } catch (error) {
-    console.error('Erreur sendPasswordResetEmail:', error);
     throw error;
   }
 };

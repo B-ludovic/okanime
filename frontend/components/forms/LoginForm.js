@@ -67,7 +67,12 @@ function LoginForm() {
 
       {/* Mot de passe */}
       <div className={styles.formGroup}>
-        <label className={styles.formLabel}>Mot de passe</label>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <label className={styles.formLabel}>Mot de passe</label>
+          <Link href="/forgot-password" className={styles.textLink} style={{ fontSize: '14px' }}>
+            Mot de passe oublié ?
+          </Link>
+        </div>
         <input
           type="password"
           name="password"
