@@ -16,6 +16,9 @@ Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et lai
 ![Notre collection](./captures/collection.png)
 *Catalogue complet des animés disponibles*
 
+![Notre collection](./captures/formulaire-inscription.png)
+*Formulaire d'inscription*
+
 ## Stack
 
 **Frontend**
