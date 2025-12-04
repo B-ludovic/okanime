@@ -195,23 +195,22 @@ function RechercheContent() {
                   <p className={styles.emptyText}>
                     Essayez avec d&apos;autres mots-clés ou un autre genre
                   </p>
-                  {/* BOUTON AJOUTER UN ANIME */}
-                  {isAuthenticated() && (
-                    <div className={styles.emptyAddSection}>
-                      <p className={styles.emptyAddText}>
-                        L&apos;animé que vous cherchez n&apos;existe pas dans notre base ?
-                      </p>
-                      <button
-                        className="btn btn-primary btn-large"
-                        onClick={() => router.push('/anime/ajouter')}
-                      >
-                        <Plus size={18} />
-                        Ajouter un animé
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
+
+              {/* BOUTON AJOUTER UN ANIME - Toujours visible */}
+              <div className={styles.emptyAddSection}>
+                <p className={styles.emptyAddText}>
+                  L&apos;animé que vous cherchez n&apos;existe pas dans notre base ?
+                </p>
+                <button
+                  className="btn btn-primary btn-large"
+                  onClick={() => router.push(isAuthenticated() ? '/anime/ajouter' : '/login')}
+                >
+                  <Plus size={18} />
+                  Ajouter un animé
+                </button>
+              </div>
             </>
           ) : (
             <div className={styles.emptyState}>
