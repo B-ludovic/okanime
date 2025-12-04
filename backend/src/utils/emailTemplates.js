@@ -22,8 +22,12 @@ const emailConfirmationTemplate = (username, confirmationLink) => {
     
     <!-- Content -->
     <div style="padding: 40px 30px;">
-      <h2 style="color: #1F2937; font-size: 22px; font-weight: 600; margin-top: 0; margin-bottom: 20px;">
-        Bienvenue ${username} ! 👋
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="https://okanime.live/icons/hello.png" alt="Email" style="width: 64px; height: 64px;" />
+      </div>
+      
+      <h2 style="color: #1F2937; font-size: 22px; font-weight: 600; margin-top: 0; margin-bottom: 20px; text-align: center;">
+        Bienvenue ${username} !
       </h2>
       
       <p style="color: #6B7280; font-size: 16px; margin: 16px 0; line-height: 1.7;">
@@ -38,9 +42,10 @@ const emailConfirmationTemplate = (username, confirmationLink) => {
       </div>
       
       <!-- Info Box -->
-      <div style="background-color: #BFDBFE; padding: 16px 20px; margin: 24px 0; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(96, 165, 250, 0.2);">
+      <div style="background-color: #BFDBFE; padding: 16px 20px; margin: 24px 0; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(96, 165, 250, 0.2); display: flex; align-items: center; gap: 12px;">
+        <img src="https://okanime.live/icons/sand-timer.png" alt="Timer" style="width: 24px; height: 24px;" />
         <p style="margin: 0; color: #1F2937; font-size: 15px;">
-          <strong>⏱️ Ce lien est valide pendant 24 heures.</strong>
+          <strong>Ce lien est valide pendant 24 heures.</strong>
         </p>
       </div>
       
@@ -98,8 +103,12 @@ const passwordResetTemplate = (username, resetLink) => {
     
     <!-- Content -->
     <div style="padding: 40px 30px;">
-      <h2 style="color: #1F2937; font-size: 22px; font-weight: 600; margin-top: 0; margin-bottom: 20px;">
-        Réinitialisation de mot de passe 🔒
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="https://okanime.live/icons/padlock.png" alt="Sécurité" style="width: 64px; height: 64px;" />
+      </div>
+      
+      <h2 style="color: #1F2937; font-size: 22px; font-weight: 600; margin-top: 0; margin-bottom: 20px; text-align: center;">
+        Réinitialisation de mot de passe
       </h2>
       
       <p style="color: #6B7280; font-size: 16px; margin: 16px 0; line-height: 1.7;">
@@ -118,9 +127,10 @@ const passwordResetTemplate = (username, resetLink) => {
       </div>
       
       <!-- Warning Box -->
-      <div style="background-color: #FEF3C7; padding: 16px 20px; margin: 24px 0; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">
+      <div style="background-color: #FEF3C7; padding: 16px 20px; margin: 24px 0; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2); display: flex; align-items: flex-start; gap: 12px;">
+        <img src="https://okanime.live/icons/danger.png" alt="Important" style="width: 24px; height: 24px; margin-top: 2px;" />
         <p style="margin: 0; color: #92400E; font-size: 15px;">
-          <strong>⚠️ Important :</strong> Ce lien est valide pendant 1 heure seulement. Passé ce délai, vous devrez faire une nouvelle demande.
+          <strong>Important :</strong> Ce lien est valide pendant 1 heure seulement. Passé ce délai, vous devrez faire une nouvelle demande.
         </p>
       </div>
       
