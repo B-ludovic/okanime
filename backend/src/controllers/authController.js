@@ -4,7 +4,9 @@ import { hashPassword, comparePassword } from '../utils/bcrypt.js';
 import { generateToken } from '../utils/jwt.js';
 import { HttpBadRequestError, HttpUnauthorizedError, HttpConflictError, httpStatusCodes } from '../utils/httpErrors.js';
 import { uploadAvatar, deleteFromCloudinary } from '../services/uploadService.js';
+import { sendConfirmationEmail } from '../services/emailService.js';
 import prisma from '../config/prisma.js';
+import crypto from 'crypto';
 
 // INSCRIPTION - POST /api/auth/register
 const register = asyncHandler(async (req, res) => {
@@ -46,18 +48,40 @@ const register = asyncHandler(async (req, res) => {
       username: true,
       email: true,
       role: true,
+      emailVerified: true,
       dateInscription: true,
       // On ne renvoie JAMAIS le mot de passe
     },
   });
 
-  // 6. Génère un token JWT
+  // 6. Génère un token de vérification d'email
+  const verificationToken = crypto.randomBytes(32).toString('hex');
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 heures
+
+  await prisma.emailVerificationToken.create({
+    data: {
+      userId: user.id,
+      token: verificationToken,
+      expiresAt,
+    },
+  });
+
+  // 7. Envoie l'email de confirmation
+  try {
+    await sendConfirmationEmail(user.email, user.username, verificationToken);
+    console.log('Email de confirmation envoyé à:', user.email);
+  } catch (error) {
+    console.error('Erreur envoi email:', error);
+    // On ne bloque pas l'inscription si l'email échoue
+  }
+
+  // 8. Génère un token JWT
   const token = generateToken(user.id, user.role);
 
-  // 7. Renvoie la réponse
+  // 9. Renvoie la réponse
   res.status(httpStatusCodes.CREATED).json({
     success: true,
-    message: 'Inscription réussie',
+    message: 'Inscription réussie ! Veuillez vérifier votre email pour confirmer votre compte.',
     data: {
       user,
       token,
