@@ -22,10 +22,10 @@ Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et lai
 ## Stack
 
 **Frontend**
-- Next.js 16.0.7 (App Router)
-- React 19.2.0
+- Next.js 16 
+- React
 - CSS modules
-- Lucide React (icônes)
+- Lucide React
 
 **Backend**
 - Node.js + Express
@@ -39,7 +39,7 @@ Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et lai
 - Express Rate Limit (protection brute force et spam)
 - Helmet (headers de sécurité HTTP)
 - XSS-Clean (nettoyage des données)
-- CORS strict (whitelist d'origines)
+- CORS 
 - Honeypot (protection anti-bots)
 - Validation des tailles de champs
 - Rate limiting adapté par type de route
@@ -273,8 +273,8 @@ Le projet implémente plusieurs couches de protection :
 **Pages légales**
 - Conformité RGPD (Politique de Confidentialité)
 - Mentions Légales avec informations sur l'éditeur et l'hébergeur
-- CGU avec âge minimum (13 ans) et règles d'utilisation
-- Design cohérent avec le reste du site (pas de bordure gauche)
+- CGU avec âge minimum et règles d'utilisation
+- Design cohérent avec le reste du site
 
 ## Déploiement
 
@@ -301,5 +301,4 @@ Le projet est déployé sur Render :
 ## Auteur
 
 Ludovic BATAILLE - Projet étudiant/personnel  
-Contact : contact@okanime.fr
  
