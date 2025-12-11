@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { ModalProvider } from './context/ModalContext'
+import AxeptioWidget from '../components/layout/AxeptioWidget'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -70,6 +71,7 @@ function RootLayout({ children }) {
       <body className={inter.className}>
         <ModalProvider>
           {children}
+          <AxeptioWidget />
         </ModalProvider>
       </body>
     </html>
