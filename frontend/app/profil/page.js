@@ -8,6 +8,7 @@ import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import api from '../lib/api';
 import { isAuthenticated, getCurrentUser } from '../lib/utils';
+import { useModal } from '../context/ModalContext';
 import '../../styles/Profil.css';
 import {
   User,
@@ -24,6 +25,7 @@ import {
 
 function ProfilPage() {
   const router = useRouter();
+  const { showSuccess, showError, showConfirm, showWarning } = useModal();
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({
     total: 0,
@@ -95,10 +97,10 @@ function ProfilPage() {
       localStorage.setItem('user', JSON.stringify(response.data.user));
       setUser(response.data.user);
 
-      alert('Avatar mis à jour avec succès !');
+      showSuccess('Succès', 'Avatar mis à jour avec succès !');
       window.location.reload();
     } catch (err) {
-      alert('Erreur lors de l\'upload de l\'avatar');
+      showError('Erreur', 'Erreur lors de l\'upload de l\'avatar');
       console.error(err);
     } finally {
       setUploadingAvatar(false);
@@ -107,14 +109,14 @@ function ProfilPage() {
 
   // Supprimer le compte
   const handleDeleteAccount = () => {
-    if (
-      confirm(
-        'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.'
-      )
-    ) {
-      // TODO: Implémenter la suppression de compte
-      alert('Fonctionnalité à venir');
-    }
+    showConfirm(
+      'Supprimer le compte',
+      'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.',
+      () => {
+        // TODO: Implémenter la suppression de compte
+        showWarning('En développement', 'Fonctionnalité à venir');
+      }
+    );
   };
 
   if (loading || !user) {
@@ -299,7 +301,7 @@ function ProfilPage() {
             </h2>
 
             <div className="profil-settings-grid">
-              <button className="profil-setting-btn" onClick={() => alert('Fonctionnalité à venir')}>
+              <button className="profil-setting-btn" onClick={() => showWarning('En développement', 'Fonctionnalité à venir')}>
                 <div className="profil-setting-btn-left">
                   <Lock size={20} />
                   <span>Changer le mot de passe</span>

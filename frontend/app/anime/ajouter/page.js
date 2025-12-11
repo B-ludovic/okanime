@@ -8,12 +8,14 @@ import Footer from '../../../components/layout/Footer';
 import { Upload, X, AlertCircle, Search } from 'lucide-react';
 import api from '../../../app/lib/api';
 import { isAuthenticated } from '../../../app/lib/utils';
+import { useModal } from '../../context/ModalContext';
 import '../../../styles/AddAnime.css';
 
 function AjouterAnimeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get('edit'); // ID de l'anime à modifier
+  const { showSuccess } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -219,12 +221,12 @@ function AjouterAnimeContent() {
       if (isEditMode && editId) {
         // Modification d'un anime existant
         await api.putFormData(`/admin/animes/${editId}`, data);
-        alert('Anime modifié avec succès !');
+        showSuccess('Succès', 'Anime modifié avec succès !');
         router.push(`/anime/${editId}`);
       } else {
         // Création d'un nouvel anime
         await api.postFormData('/admin/animes', data);
-        alert('Anime ajouté avec succès ! Il sera visible après validation par un administrateur.');
+        showSuccess('Succès', 'Anime ajouté avec succès ! Il sera visible après validation par un administrateur.');
         router.push('/anime');
       }
     } catch (err) {

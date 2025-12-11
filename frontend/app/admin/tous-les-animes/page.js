@@ -6,12 +6,14 @@ import Image from 'next/image';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
+import { useModal } from '../../context/ModalContext';
 import { Edit, Trash2, Eye, Calendar, User, Plus, X, ChevronRight, ChevronLeft } from 'lucide-react';
 import styles from '../../../styles/modules/ModalAdmin.module.css';
 import '../../../styles/Admin.css';
 
 function TousLesAnimesPage() {
   const router = useRouter();
+  const { showSuccess, showError, showWarning, showConfirm } = useModal();
   const [animes, setAnimes] = useState([]);
   const [allAnimes, setAllAnimes] = useState([]); // Stocke tous les animés
   const [loading, setLoading] = useState(true);
@@ -96,21 +98,27 @@ function TousLesAnimesPage() {
       await api.put(`/admin/animes/${editingAnime.id}`, updatedData);
       await fetchAllAnimes();
       handleCloseModal();
+      showSuccess('Animé modifié avec succès');
     } catch (err) {
-      alert('Erreur lors de la modification');
+      showError('Erreur lors de la modification');
       console.error(err);
     }
   };
 
   // Supprimer un anime
   const handleDelete = async (animeId) => {
-    if (!confirm('Voulez-vous vraiment supprimer cet anime ?')) return;
+    const confirmed = await showConfirm(
+      'Voulez-vous vraiment supprimer cet anime ?',
+      'Suppression d\'animé'
+    );
+    if (!confirmed) return;
 
     try {
       await api.delete(`/admin/animes/${animeId}`);
       await fetchAllAnimes();
+      showSuccess('Animé supprimé avec succès');
     } catch (err) {
-      alert('Erreur lors de la suppression');
+      showError('Erreur lors de la suppression');
       console.error(err);
     }
   };

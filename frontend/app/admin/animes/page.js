@@ -6,10 +6,12 @@ import Image from 'next/image';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
+import { useModal } from '../../context/ModalContext';
 import { CheckCircle, XCircle, Eye, Calendar, User } from 'lucide-react';
 
 function AdminAnimesPage() {
   const router = useRouter();
+  const { showSuccess, showError, showWarning, showConfirm } = useModal();
   const [animes, setAnimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -48,30 +50,40 @@ function AdminAnimesPage() {
 
   // Valider un anime
   const handleValidate = async (animeId) => {
-    if (!confirm('Voulez-vous vraiment valider cet anime ?')) return;
+    const confirmed = await showConfirm(
+      'Voulez-vous vraiment valider cet anime ?',
+      'Validation d\'animé'
+    );
+    if (!confirmed) return;
 
     try {
       await api.put(`/admin/animes/${animeId}/moderation`, {
         statut: 'VALIDE',
       });
       fetchPendingAnimes();
+      showSuccess('Animé validé avec succès');
     } catch (err) {
-      alert('Erreur lors de la validation');
+      showError('Erreur lors de la validation');
       console.error(err);
     }
   };
 
   // Refuser un anime
   const handleRefuse = async (animeId) => {
-    if (!confirm('Voulez-vous vraiment refuser cet anime ?')) return;
+    const confirmed = await showConfirm(
+      'Voulez-vous vraiment refuser cet anime ?',
+      'Refus d\'animé'
+    );
+    if (!confirmed) return;
 
     try {
       await api.put(`/admin/animes/${animeId}/moderation`, {
         statut: 'REFUSE',
       });
       fetchPendingAnimes();
+      showSuccess('Animé refusé');
     } catch (err) {
-      alert('Erreur lors du refus');
+      showError('Erreur lors du refus');
       console.error(err);
     }
   };

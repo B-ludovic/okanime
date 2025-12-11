@@ -12,9 +12,11 @@ import { isAuthenticated } from '../../app/lib/utils';
 import { STATUTS_BIBLIOTHEQUE } from '../../app/lib/constants';
 import styles from '../../styles/modules/Bibliotheque.module.css';
 import { BookOpen, Filter } from 'lucide-react';
+import { useModal } from '../context/ModalContext';
 
 function BibliothequePage() {
   const router = useRouter();
+  const { showError, showConfirm } = useModal();
   const [bibliotheque, setBibliotheque] = useState([]);
   const [filteredBibliotheque, setFilteredBibliotheque] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,23 +77,25 @@ function BibliothequePage() {
       fetchBibliotheque(); // Recharge la bibliothèque
     } catch (err) {
       console.error('Erreur lors de la mise à jour:', err);
-      alert('Erreur lors de la mise à jour');
+      showError('Erreur', 'Erreur lors de la mise à jour');
     }
   };
 
   // Supprime une entrée
   const handleDelete = async (entry) => {
-    if (!confirm(`Voulez-vous vraiment retirer "${entry.saison.anime.titreVf}" de votre bibliothèque ?`)) {
-      return;
-    }
-
-    try {
-      await api.delete(`/bibliotheque/${entry.id}`);
-      fetchBibliotheque();
-    } catch (err) {
-      console.error('Erreur lors de la suppression:', err);
-      alert('Erreur lors de la suppression');
-    }
+    showConfirm(
+      'Confirmation',
+      `Voulez-vous vraiment retirer "${entry.saison.anime.titreVf}" de votre bibliothèque ?`,
+      async () => {
+        try {
+          await api.delete(`/bibliotheque/${entry.id}`);
+          fetchBibliotheque();
+        } catch (err) {
+          console.error('Erreur lors de la suppression:', err);
+          showError('Erreur', 'Erreur lors de la suppression');
+        }
+      }
+    );
   };
 
   // Compte par statut

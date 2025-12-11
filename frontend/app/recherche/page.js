@@ -9,6 +9,7 @@ import AnimeCard from '../../components/anime/AnimeCard';
 import { Search, X, Plus } from 'lucide-react';
 import api from '../../app/lib/api';
 import { isAuthenticated } from '../../app/lib/utils';
+import { useModal } from '../context/ModalContext';
 import styles from '../../styles/modules/Recherche.module.css';
 import '../../styles/Anime.css';
 
@@ -16,6 +17,7 @@ import '../../styles/Anime.css';
 function RechercheContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { showWarning } = useModal();
   const [animes, setAnimes] = useState([]);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -54,7 +56,7 @@ function RechercheContent() {
   // Fonction de recherche
   const handleSearch = async (query = searchQuery, genre = selectedGenre) => {
     if (!query && !genre) {
-      alert('Veuillez entrer un titre ou sélectionner un genre');
+      showWarning('Recherche vide', 'Veuillez entrer un titre ou sélectionner un genre');
       return;
     }
 

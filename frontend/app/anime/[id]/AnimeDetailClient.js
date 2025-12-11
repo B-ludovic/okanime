@@ -12,10 +12,12 @@ import styles from '../../../styles/modules/AnimeDetail.module.css';
 import { Star, BookmarkPlus, Check } from 'lucide-react';
 import AnimeStructuredData from '../../../components/seo/AnimeStructuredData';
 import AvisSection from '../../../components/avis/AvisSection';
+import { useModal } from '../../context/ModalContext';
 
 // Composant client pour la page de détail d'anime
 function AnimeDetailPage({ id }) {
     const router = useRouter();
+    const { showError, showSuccess, showWarning } = useModal();
     const [anime, setAnime] = useState(null);
     const [videos, setVideos] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -131,7 +133,7 @@ function AnimeDetailPage({ id }) {
             setIsFavorite(newStatut === 'FAVORI');
         } catch (err) {
             console.error('Erreur lors du changement de statut:', err);
-            alert('Impossible de modifier le statut');
+            showError('Erreur', 'Impossible de modifier le statut');
         } finally {
             setSaving(false);
         }
@@ -140,13 +142,13 @@ function AnimeDetailPage({ id }) {
     // Fonction pour ajouter à la bibliothèque
     const addToBibliotheque = async () => {
         if (!isAuthenticated()) {
-            alert('Vous devez être connecté pour ajouter à votre bibliothèque');
+            showWarning('Connexion requise', 'Vous devez être connecté pour ajouter à votre bibliothèque');
             router.push('/login');
             return;
         }
 
         if (!anime?.saisons || anime.saisons.length === 0) {
-            alert('Cet anime n\'a pas de saisons disponibles');
+            showWarning('Aucune saison', 'Cet anime n\'a pas de saisons disponibles');
             return;
         }
 
@@ -163,11 +165,11 @@ function AnimeDetailPage({ id }) {
                 const entryId = response.data.entry?.id || response.data.bibliothequeEntry?.id;
                 setBiblioEntryId(entryId);
                 setBiblioStatut('A_VOIR');
-                alert('Ajouté à votre bibliothèque avec succès !');
+                showSuccess('Succès', 'Ajouté à votre bibliothèque avec succès !');
             } catch (err) {
                 // Si déjà dans la biblio, juste informer
                 if (err.message.includes('déjà dans votre bibliothèque')) {
-                    alert('Cet anime est déjà dans votre bibliothèque');
+                    showWarning('Déjà ajouté', 'Cet anime est déjà dans votre bibliothèque');
                 } else {
                     throw err;
                 }
@@ -176,7 +178,7 @@ function AnimeDetailPage({ id }) {
         } catch (err) {
             setInBiblio(false);
             console.error('Erreur lors de l\'ajout:', err);
-            alert(err.message || 'Impossible d\'ajouter à la bibliothèque');
+            showError('Erreur', err.message || 'Impossible d\'ajouter à la bibliothèque');
         } finally {
             setSaving(false);
         }
@@ -298,12 +300,12 @@ function AnimeDetailPage({ id }) {
                                     <button
                                     onClick={async () => {
                                         if (!isAuthenticated()) {
-                                            alert('Vous devez être connecté');
+                                            showWarning('Connexion requise', 'Vous devez être connecté');
                                             router.push('/login');
                                             return;
                                         }
                                         if (!anime?.saisons || anime.saisons.length === 0) {
-                                            alert('Cet anime n\'a pas de saisons disponibles');
+                                            showWarning('Aucune saison', 'Cet anime n\'a pas de saisons disponibles');
                                             return;
                                         }
                                         try {
@@ -313,7 +315,7 @@ function AnimeDetailPage({ id }) {
                                                     await api.delete(`/bibliotheque/${biblioEntryId}`);
                                                     setIsFavorite(false);
                                                     setBiblioEntryId(null);
-                                                    alert('Retiré des favoris !');
+                                                    showSuccess('Succès', 'Retiré des favoris !');
                                                 }
                                             } else {
                                                 // Ajouter aux favoris
@@ -345,10 +347,10 @@ function AnimeDetailPage({ id }) {
                                                     }
                                                 }
                                                 setIsFavorite(true);
-                                                alert('Ajouté aux favoris !');
+                                                showSuccess('Succès', 'Ajouté aux favoris !');
                                             }
                                         } catch (err) {
-                                            alert(err.message || 'Erreur');
+                                            showError('Erreur', err.message || 'Erreur');
                                         }
                                     }}
                                     className={styles.favoriteButton}

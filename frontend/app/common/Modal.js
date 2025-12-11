@@ -52,7 +52,7 @@ export default function Modal({
     }
   };
 
-  // ⚠️ Gestion sécurisée des callbacks
+  // Gestion sécurisée des callbacks
   const handleConfirm = () => {
     onConfirm?.();
     onClose?.(); // Fermer automatiquement après confirmation

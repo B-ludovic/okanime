@@ -5,10 +5,12 @@ import { useRouter } from 'next/navigation';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
+import { useModal } from '../../context/ModalContext';
 import { Plus, Edit2, Trash2, Tag } from 'lucide-react';
 
 function AdminGenresPage() {
   const router = useRouter();
+  const { showSuccess, showError, showWarning, showConfirm } = useModal();
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -65,7 +67,7 @@ function AdminGenresPage() {
   // Sauvegarde (ajouter ou modifier)
   const handleSave = async () => {
     if (!genreName.trim()) {
-      alert('Le nom du genre ne peut pas être vide');
+      showWarning('Le nom du genre ne peut pas être vide');
       return;
     }
 
@@ -73,29 +75,34 @@ function AdminGenresPage() {
       if (editingGenre) {
         // Modifier
         await api.put(`/admin/genres/${editingGenre.id}`, { nom: genreName });
+        showSuccess('Genre modifié avec succès');
       } else {
         // Ajouter
         await api.post('/admin/genres', { nom: genreName });
+        showSuccess('Genre ajouté avec succès');
       }
       setShowModal(false);
       fetchGenres();
     } catch (err) {
-      alert(err.message || 'Erreur lors de la sauvegarde');
+      showError(err.message || 'Erreur lors de la sauvegarde');
       console.error(err);
     }
   };
 
   // Supprimer un genre
   const handleDelete = async (genreId) => {
-    if (!confirm('Voulez-vous vraiment supprimer ce genre ? Cela affectera tous les animés associés.')) {
-      return;
-    }
+    const confirmed = await showConfirm(
+      'Voulez-vous vraiment supprimer ce genre ? Cela affectera tous les animés associés.',
+      'Suppression de genre'
+    );
+    if (!confirmed) return;
 
     try {
       await api.delete(`/admin/genres/${genreId}`);
       fetchGenres();
+      showSuccess('Genre supprimé avec succès');
     } catch (err) {
-      alert('Erreur lors de la suppression');
+      showError('Erreur lors de la suppression');
       console.error(err);
     }
   };

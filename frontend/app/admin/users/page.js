@@ -5,10 +5,12 @@ import { useRouter } from 'next/navigation';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
+import { useModal } from '../../context/ModalContext';
 import { Shield, User, Mail, Calendar, Trash2 } from 'lucide-react';
 
 function AdminUsersPage() {
   const router = useRouter();
+  const { showSuccess, showError, showWarning, showConfirm } = useModal();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -48,45 +50,54 @@ function AdminUsersPage() {
 
   // Changer le rôle d'un utilisateur
   const handleChangeRole = async (userId, newRole) => {
-    if (!confirm(`Voulez-vous vraiment changer le rôle de cet utilisateur en ${newRole} ?`)) {
-      return;
-    }
+    const confirmed = await showConfirm(
+      `Voulez-vous vraiment changer le rôle de cet utilisateur en ${newRole} ?`,
+      'Changement de rôle'
+    );
+    if (!confirmed) return;
 
     try {
       await api.put(`/admin/users/${userId}/role`, { role: newRole });
       fetchUsers();
+      showSuccess('Rôle modifié avec succès');
     } catch (err) {
-      alert(err.response?.data?.error?.message || 'Erreur lors du changement de rôle');
+      showError(err.response?.data?.error?.message || 'Erreur lors du changement de rôle');
       console.error(err);
     }
   };
 
   // Supprimer un utilisateur
   const handleDeleteUser = async (userId) => {
-    if (!confirm('ATTENTION : Voulez-vous vraiment supprimer cet utilisateur ? Cette action est irréversible !')) {
-      return;
-    }
+    const confirmed = await showConfirm(
+      'ATTENTION : Voulez-vous vraiment supprimer cet utilisateur ? Cette action est irréversible !',
+      'Suppression d\'utilisateur'
+    );
+    if (!confirmed) return;
 
     try {
       await api.delete(`/admin/users/${userId}`);
       fetchUsers();
+      showSuccess('Utilisateur supprimé avec succès');
     } catch (err) {
-      alert(err.response?.data?.error?.message || 'Erreur lors de la suppression de l\'utilisateur');
+      showError(err.response?.data?.error?.message || 'Erreur lors de la suppression de l\'utilisateur');
       console.error(err);
     }
   };
 
   // Supprimer l'avatar d'un utilisateur
   const handleDeleteAvatar = async (userId) => {
-    if (!confirm('Voulez-vous vraiment supprimer l\'avatar de cet utilisateur ?')) {
-      return;
-    }
+    const confirmed = await showConfirm(
+      'Voulez-vous vraiment supprimer l\'avatar de cet utilisateur ?',
+      'Suppression d\'avatar'
+    );
+    if (!confirmed) return;
 
     try {
       await api.delete(`/admin/users/${userId}/avatar`);
       fetchUsers();
+      showSuccess('Avatar supprimé avec succès');
     } catch (err) {
-      alert('Erreur lors de la suppression de l\'avatar');
+      showError('Erreur lors de la suppression de l\'avatar');
       console.error(err);
     }
   };

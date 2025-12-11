@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
+import { useModal } from '../../context/ModalContext';
 import { Trash2, Star, User, Calendar } from 'lucide-react';
 import StarRating from '../../../components/avis/StarRating';
 
 function AdminAvisPage() {
   const router = useRouter();
+  const { showSuccess, showError, showWarning, showConfirm } = useModal();
   const [avis, setAvis] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -49,13 +51,18 @@ function AdminAvisPage() {
 
   // Supprimer un avis
   const handleDelete = async (avisId) => {
-    if (!confirm('Voulez-vous vraiment supprimer cet avis ?')) return;
+    const confirmed = await showConfirm(
+      'Voulez-vous vraiment supprimer cet avis ?',
+      'Suppression d\'avis'
+    );
+    if (!confirmed) return;
 
     try {
       await api.delete(`/admin/avis/${avisId}`);
       fetchAvis();
+      showSuccess('Avis supprimé avec succès');
     } catch (err) {
-      alert('Erreur lors de la suppression');
+      showError('Erreur lors de la suppression');
       console.error(err);
     }
   };

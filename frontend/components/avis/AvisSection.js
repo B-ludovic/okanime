@@ -7,9 +7,11 @@ import StarRating from './StarRating';
 import AvisForm from './AvisForm';
 import api from '../../app/lib/api';
 import { getCurrentUser } from '../../app/lib/utils';
+import { useModal } from '../../app/context/ModalContext';
 import styles from '../../styles/modules/AvisSection.module.css';
 
 export default function AvisSection({ animeId }) {
+  const { showConfirm, showError } = useModal();
   const [avis, setAvis] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userAvis, setUserAvis] = useState(null);
@@ -46,19 +48,23 @@ export default function AvisSection({ animeId }) {
 
   // Supprime un avis
   const handleDelete = async (avisId) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cet avis ?')) return;
-
-    try {
-      // Admin utilise la route admin, utilisateur normal utilise sa route
-      const endpoint = currentUser?.role === 'ADMIN' 
-        ? `/admin/avis/${avisId}` 
-        : `/avis/${avisId}`;
-      
-      await api.delete(endpoint);
-      fetchAvis();
-    } catch (err) {
-      alert('Erreur lors de la suppression');
-    }
+    showConfirm(
+      'Supprimer l\'avis',
+      'Êtes-vous sûr de vouloir supprimer cet avis ?',
+      async () => {
+        try {
+          // Admin utilise la route admin, utilisateur normal utilise sa route
+          const endpoint = currentUser?.role === 'ADMIN' 
+            ? `/admin/avis/${avisId}` 
+            : `/avis/${avisId}`;
+          
+          await api.delete(endpoint);
+          fetchAvis();
+        } catch (err) {
+          showError('Erreur', 'Erreur lors de la suppression');
+        }
+      }
+    );
   };
 
   // Tri des avis

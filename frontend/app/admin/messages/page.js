@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
+import { useModal } from '../../context/ModalContext';
 import api from '../../lib/api';
 import { MessageSquare, Mail, User, Calendar, Trash2, Eye, EyeOff, Filter } from 'lucide-react';
 import '../../../styles/AdminMessages.css';
 
 function AdminMessagesPage() {
   const router = useRouter();
+  const { showSuccess, showError, showWarning, showConfirm } = useModal();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all'); // all, unread, read
@@ -38,14 +40,14 @@ function AdminMessagesPage() {
         setMessages(response.messages);
       } catch (err) {
         console.error('Erreur lors du chargement des messages:', err);
-        alert('Impossible de charger les messages');
+        showError('Impossible de charger les messages');
       } finally {
         setLoading(false);
       }
     };
 
     fetchMessages();
-  }, []);
+  }, [showError]);
 
   // Marquer comme lu/non lu (on bascule le statut)
   const toggleRead = async (messageId) => {
@@ -64,14 +66,18 @@ function AdminMessagesPage() {
       }
     } catch (err) {
       console.error('Erreur lors de la mise à jour du statut:', err);
-      alert('Impossible de modifier le statut');
+      showError('Impossible de modifier le statut');
     }
   };
 
   // Supprimer un message
   const deleteMessage = async (messageId) => {
     // On demande confirmation avant de supprimer
-    if (!confirm('Voulez-vous vraiment supprimer ce message ?')) return;
+    const confirmed = await showConfirm(
+      'Voulez-vous vraiment supprimer ce message ?',
+      'Suppression de message'
+    );
+    if (!confirmed) return;
 
     try {
       // On appelle l'API pour supprimer le message
@@ -83,9 +89,9 @@ function AdminMessagesPage() {
       // Si c'était le message sélectionné, on réinitialise la sélection
       setSelectedMessage(null);
       
-      alert('Message supprimé avec succès');
+      showSuccess('Message supprimé avec succès');
     } catch (err) {
-      alert('Erreur lors de la suppression');
+      showError('Erreur lors de la suppression');
       console.error(err);
     }
   };
