@@ -5,10 +5,12 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { UserPlus } from 'lucide-react';
 import api from '../../app/lib/api';
+import { useModal } from '../../app/context/ModalContext';
 import styles from '../../styles/modules/RegisterForm.module.css';
 
 function RegisterForm() {
   const router = useRouter();
+  const { showError } = useModal();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -69,7 +71,7 @@ function RegisterForm() {
       router.push('/');
       router.refresh();
     } catch (err) {
-      setErrors({ general: err.message || 'Erreur lors de l\'inscription' });
+      showError('Erreur d\'inscription', err.message || 'Une erreur est survenue lors de l\'inscription');
     } finally {
       setLoading(false);
     }
@@ -77,12 +79,6 @@ function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      {/* Erreur générale */}
-      {errors.general && (
-        <div className={`${styles.alert} ${styles.alertError}`}>
-          <span>{errors.general}</span>
-        </div>
-      )}
 
       {/* Username */}
       <div className={styles.formGroup}>

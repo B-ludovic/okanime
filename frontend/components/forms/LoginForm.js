@@ -5,15 +5,16 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { LogIn } from 'lucide-react';
 import api from '../../app/lib/api';
+import { useModal } from '../../app/context/ModalContext';
 import styles from '../../styles/modules/LoginForm.module.css';
 
 function LoginForm() {
   const router = useRouter();
+  const { showError } = useModal();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -21,12 +22,10 @@ function LoginForm() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    if (error) setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
     setLoading(true);
 
     try {
@@ -36,7 +35,7 @@ function LoginForm() {
       router.push('/');
       router.refresh();
     } catch (err) {
-      setError(err.message || 'Erreur lors de la connexion');
+      showError('Erreur de connexion', err.message || 'Email ou mot de passe incorrect');
     } finally {
       setLoading(false);
     }
@@ -44,12 +43,6 @@ function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      {/* Message d'erreur */}
-      {error && (
-        <div className={`${styles.alert} ${styles.alertError}`}>
-          <span>{error}</span>
-        </div>
-      )}
 
       {/* Email */}
       <div className={styles.formGroup}>
