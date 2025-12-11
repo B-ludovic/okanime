@@ -35,7 +35,6 @@ function LoginForm() {
       router.push('/');
       router.refresh();
     } catch (err) {
-      console.log('Erreur de connexion capturée:', err);
       showError('Erreur de connexion', err.message || 'Email ou mot de passe incorrect');
     } finally {
       setLoading(false);
