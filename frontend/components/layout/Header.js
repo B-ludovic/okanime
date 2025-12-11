@@ -52,8 +52,9 @@ export default function Header() {
     };
 
     const handleLogout = () => {
-        logout();
-        showSuccess('Déconnexion', 'Vous avez été déconnecté avec succès');
+        showSuccess('Déconnexion', 'Vous avez été déconnecté avec succès', () => {
+            logout();
+        });
     };
 
     return (
