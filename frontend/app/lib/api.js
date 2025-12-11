@@ -33,13 +33,6 @@ const fetchAPI = async (endpoint, options = {}) => {
 
   // Gère les erreurs
   if (!response.ok) {
-    // Si 401 (non autorisé), déconnecte l'utilisateur
-    if (response.status === 401 && typeof window !== 'undefined') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
-    }
-
     // Parse l'erreur si possible
     let errorMessage = `Erreur ${response.status}: ${response.statusText}`;
     try {
@@ -48,6 +41,17 @@ const fetchAPI = async (endpoint, options = {}) => {
       errorMessage = errorData.error?.message || errorData.message || errorMessage;
     } catch (parseError) {
       console.error('Impossible de parser la réponse d\'erreur:', parseError);
+    }
+
+    // Si 401 (non autorisé) ET qu'on n'est pas déjà sur /login, déconnecte l'utilisateur
+    if (response.status === 401 && typeof window !== 'undefined') {
+      const currentPath = window.location.pathname;
+      // Ne pas rediriger si on est déjà sur la page de login (erreur de connexion)
+      if (currentPath !== '/login' && currentPath !== '/register') {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
     }
 
     console.error(`API Error [${options.method || 'GET'} ${endpoint}]:`, errorMessage);

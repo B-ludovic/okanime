@@ -6,11 +6,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import { User, LogOut, Search, Menu, X, ArrowLeft, LayoutDashboard, Film, Users as UsersIcon, Tag, Calendar, Star, MessageSquare } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '../../app/lib/utils';
+import { useModal } from '../../app/context/ModalContext';
 import styles from '../../styles/modules/Header.module.css';
 
 export default function Header() {
     const pathname = usePathname();
     const router = useRouter();
+    const { showSuccess } = useModal();
     const [user, setUser] = useState(null);
     const [isAuth, setIsAuth] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -47,6 +49,11 @@ export default function Header() {
             // Si déjà ouvert et qu'il y a du texte, soumettre
             handleSearch(e);
         }
+    };
+
+    const handleLogout = () => {
+        logout();
+        showSuccess('Déconnexion', 'Vous avez été déconnecté avec succès');
     };
 
     return (
@@ -199,7 +206,7 @@ export default function Header() {
                                         <User size={20} />
                                     )}
                                 </Link>
-                                <button onClick={logout} className="btn btn-ghost">
+                                <button onClick={handleLogout} className="btn btn-ghost">
                                     <LogOut size={18} />
                                     Déconnexion
                                 </button>
@@ -406,7 +413,7 @@ export default function Header() {
                                     Profil
                                 </Link>
                                 <button 
-                                    onClick={() => { logout(); setIsMobileMenuOpen(false); }} 
+                                    onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} 
                                     className="btn btn-danger btn-sm w-full"
                                 >
                                     Déconnexion
