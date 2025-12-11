@@ -6,7 +6,7 @@ export default function AxeptioWidget() {
   useEffect(() => {
     // Configuration Axeptio
     window.axeptioSettings = {
-      clientId: "693ad3bbbbc710e6f7d043084",
+      clientId: "693ad3bbbbc710e67d043b84",
       cookiesVersion: "a7d7acfc-bbae-4b70-8443-470e2a730b53",
       googleConsentMode: {
         default: {
