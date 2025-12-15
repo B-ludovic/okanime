@@ -19,30 +19,50 @@ Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et lai
 ![Notre collection](./captures/formulaire-inscription.png)
 *Formulaire d'inscription*
 
-## Stack
+## 📊 Modèle de Données
+
+Le projet utilise **Prisma ORM** avec une architecture relationnelle PostgreSQL composée de **8 entités principales**.
+
+![Modèle Conceptuel de Données](./captures/mcd-okanime.png)
+*Diagramme MCD généré avec Mocodo*
+
+### Relations principales
+
+- **USER** ↔ **ANIME** via **BIBLIOTHEQUE** (Many-to-Many avec attributs)
+- **USER** ↔ **ANIME** via **AVIS** (Many-to-Many avec attributs)
+- **ANIME** ↔ **GENRE** via **APPARTIENT** (Many-to-Many)
+- **ANIME** → **SAISON** (One-to-Many)
+
+📄 Le schéma Prisma complet est disponible dans [`backend/prisma/schema.prisma`](backend/prisma/schema.prisma)
+
+---
+
+## 🛠️ Stack Technique
 
 **Frontend**
-- Next.js 16 
-- React
-- CSS modules
-- Lucide React
+- Next.js 16 (App Router, Server Components)
+- React 19
+- CSS Modules + Variables CSS
+- Lucide React (icônes)
+- Fetch API (requêtes HTTP)
 
 **Backend**
-- Node.js + Express
-- Prisma ORM
-- PostgreSQL
-- Jikan API v4 (données animés)
-- Cloudinary (upload d'images)
-- Resend
+- Node.js 18+ + Express
+- Prisma ORM (PostgreSQL)
+- Zod (validation type-safe)
+- JWT + bcrypt (authentification)
+- Jikan API v4 (import animés depuis MyAnimeList)
+- DeepL API (traduction automatique des synopsis)
+- Cloudinary (upload et hébergement d'images)
+- Resend (envoi d'emails transactionnels)
 
 **Sécurité**
 - Express Rate Limit (protection brute force et spam)
-- Helmet (headers de sécurité HTTP)
-- XSS-Clean (nettoyage des données)
-- CORS 
-- Honeypot (protection anti-bots)
-- Validation des tailles de champs
-- Rate limiting adapté par type de route
+- Helmet (headers de sécurité HTTP : CSP, HSTS, X-Frame-Options...)
+- XSS-Clean (sanitization des inputs)
+- CORS strict avec whitelist
+- Honeypot (anti-bots sur formulaires)
+- Validation stricte des tailles de champs (Zod)
 
 ## Installation
 
@@ -108,26 +128,40 @@ Backend : http://localhost:5001
 - Mot de passe : Défini par `ADMIN_PASSWORD` dans `.env` 
 - **Note** : Le compte admin est recréé à chaque seed avec les valeurs des variables d'environnement
 
-## Fonctionnalités
+## ✨ Fonctionnalités
 
-**Utilisateur**
-- Authentification JWT avec rôles (admin/user)
-- Vérification par email (lien de confirmation)
-- Super Admin protégé (ne peut pas être supprimé ou modifié)
-- Catalogue de 100 animés (seed automatique depuis Jikan API)
-- Badges de genres colorés (16 couleurs différentes)
-- Gestion de bibliothèque personnelle (À voir, En cours, Terminé, Abandonné, Favoris)
-- Passage automatique à "Terminé" quand tous les épisodes sont vus
-- Optimistic UI pour l'ajout à la bibliothèque
-- **Système d'avis et de notes (1-10 étoiles)**
-- **Commentaires sur les animés**
-- **Modification et suppression de ses propres avis**
-- **Formulaire de contact pour envoyer des messages**
-- Upload d'images (Cloudinary)
-- Barre de recherche dans le header
-- Page profil avec statistiques
+### 👤 Côté Utilisateur
+
+**Authentification & Sécurité**
+- Inscription avec vérification email (lien de confirmation Resend)
+- Connexion JWT avec rôles (USER / ADMIN)
+- Reset password par email (token temporaire 1h)
+- Protection honeypot anti-bots sur formulaires
+
+**Gestion de Collection**
+- Catalogue de **100+ animés** (seed automatique depuis Jikan API)
+- Recherche par titre (temps réel)
+- Filtrage par **16 genres** avec badges colorés
+- Import automatique depuis MyAnimeList via Jikan API (admin)
+
+**Bibliothèque Personnelle**
+- 6 statuts : **À voir**, **En cours**, **Terminé**, **Abandonné**, **En pause**, **Favoris**
+- Suivi des épisodes vus avec barre de progression
+- Passage automatique à "Terminé" quand tous les épisodes sont marqués
+- Statistiques sur le profil (nombre d'animés par statut)
+
+**Système d'Avis**
+- Notes de 1 à 5 étoiles avec commentaires
+- Modification et suppression de ses propres avis
+- Calcul automatique de la note moyenne par animé
+- Affichage des avis avec avatar et date
+
+**Autres Fonctionnalités**
+- Formulaire de contact (messages sauvegardés en BDD)
 - Intégration trailers YouTube (via Jikan API)
-- Pages légales (Mentions Légales, Politique de Confidentialité, CGU)
+- Pages légales complètes (Mentions Légales, RGPD, CGU)
+- Système de **modals personnalisés** (remplacement de tous les `alert()`)
+- Bandeau de cookies **Axeptio** (conformité RGPD)
 
 **Sécurité**
 - Rate limiting adapté (lecture libre, écriture limitée)
@@ -142,21 +176,38 @@ Backend : http://localhost:5001
 - Protection IDOR sur bibliothèque et avis
 - Format d'erreur uniformisé (backend/frontend)
 
-**Admin**
-- Panel d'administration complet avec sidebar responsive
-- Menu burger mobile (apparaît à < 950px)
-- Gestion des animés (CRUD)
-- Intégration Jikan API pour ajout rapide d'animés
-- Récupération automatique du nombre d'épisodes réel
-- Gestion des genres
-- Gestion des utilisateurs (création, modification, suppression)
-- **Gestion des avis (consultation et suppression)**
-- **Filtres des avis (récents, meilleures notes, moins bonnes notes)**
-- **Suppression d'avis directement sur les pages d'animés**
-- **Gestion des messages de contact**
-- Protection du Super Admin (badge spécial, impossible à supprimer)
-- Modération des contenus
-- Statistiques globales
+### 👨‍💼 Côté Admin
+
+**Panel d'Administration**
+- Interface dédiée avec sidebar responsive (menu burger < 950px)
+- Statistiques globales (nombre d'utilisateurs, animés, avis, messages)
+- Navigation intuitive avec 5 sections principales
+
+**Gestion des Animés**
+- CRUD complet (Create, Read, Update, Delete)
+- Import rapide depuis **Jikan API** (MyAnimeList)
+- Traduction automatique des synopsis EN → FR via **DeepL API**
+- Upload d'images via **Cloudinary**
+- Système de modération (PENDING / APPROVED / REJECTED)
+
+**Gestion des Utilisateurs**
+- Création, modification, suppression
+- Attribution des rôles (USER / ADMIN)
+- Protection du **Super Admin** (badge spécial, impossible à supprimer)
+
+**Gestion des Avis**
+- Consultation de tous les avis avec filtres (récents, meilleures/moins bonnes notes)
+- Suppression d'avis inappropriés
+- Recalcul automatique de la note moyenne
+
+**Gestion des Messages**
+- Consultation des messages du formulaire de contact
+- Marquage "Traité" / "Non traité"
+- Suppression des messages
+
+**Gestion des Genres**
+- Ajout, modification, suppression de genres
+- Association automatique aux animés
 
 ## Structure du projet
 
@@ -231,50 +282,64 @@ Le projet implémente plusieurs couches de protection :
 - Protection IDOR : vérification que l'utilisateur ne modifie que ses propres données
 - Indexes sur les avis pour optimiser les performances (recherche par anime et par user)
 
-## Notes de développement
+## 📚 Notes Techniques
 
-**Super Admin**
-- Champ `isSuperAdmin` dans la base de données
-- Créé automatiquement lors du seed avec les credentials des variables d'environnement
-- Ne peut pas être supprimé ou avoir son rôle modifié
-- Badge visuel dans l'interface admin
+### 🔐 Système de Super Admin
+Le **Super Admin** est un compte spécial créé automatiquement :
+- Défini par les variables `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_USERNAME` dans `.env`
+- Champ `isSuperAdmin: true` dans la base de données
+- **Impossible à supprimer** ou modifier (protection côté backend)
+- Badge visuel distinct dans l'interface admin
 
-**Traduction automatique (optionnel)**
-- Utilise l'API DeepL pour traduire automatiquement les synopsis anglais en français
-- S'active automatiquement si `DEEPL_API_KEY` est définie dans `.env`
+### 🌐 Traduction Automatique (Optionnel)
+Utilisation de l'**API DeepL** pour traduire les synopsis EN → FR :
+- S'active si `DEEPL_API_KEY` est définie dans `.env`
 - Fonctionne lors de :
-  - L'ajout d'anime depuis Jikan via le panel admin
+  - L'import d'animés depuis Jikan API (panel admin)
   - L'exécution du seed (100 animés)
-- Traduction côté backend avant sauvegarde en BDD
-- Attention : quota limité (500 000 caractères/mois gratuit)
-- Si pas de clé API, les synopsis restent en anglais (texte original de Jikan)
+- Traduction **côté backend** avant sauvegarde en BDD
+- ⚠️ Quota limité : 500 000 caractères/mois (plan gratuit)
+- Si pas de clé API, les synopsis restent en anglais
 
-**Seed de données**
-- Le seed récupère automatiquement 100 animés depuis Jikan API
-- 50 animés classiques (top de tous les temps)
-- 50 animés récents avec bonnes notes (score min 7.5)
-- Rate limit de la Jikan API : 1 seconde entre chaque appel
-- Temps d'exécution du seed : ~2 minutes
+### 🌱 Seed de Données
+Le script `npm run prisma:seed` remplit automatiquement la base :
+- **100 animés** récupérés depuis Jikan API (MyAnimeList)
+  - 50 classiques (top all-time)
+  - 50 récents avec bonnes notes (score ≥ 7.5)
+- **16 genres** prédéfinis (Action, Romance, Comédie...)
+- **1 Super Admin** avec les credentials du `.env`
+- ⏱️ Durée : ~2 minutes (rate limit Jikan : 1 req/sec)
 
-**Code commenté pour dev junior**
-- Tous les fichiers de sécurité sont commentés en français
-- Explications détaillées sur le fonctionnement de chaque protection
-- Vocabulaire technique expliqué simplement
+### 🏗️ Architecture du Code
+**Séparation des responsabilités (MVC)**
+- **Models** : Prisma Schema (`schema.prisma`)
+- **Controllers** : Logique métier (`controllers/`)
+- **Routes** : Endpoints API REST (`routes/`)
+- **Services** : Appels APIs externes (Jikan, DeepL, Cloudinary, Resend)
+- **Middlewares** : Auth JWT, rate limiting, gestion d'erreurs
+- **Validators** : Schémas Zod pour validation type-safe
 
-**Architecture**
-- Séparation stricte des responsabilités (controllers, services, middlewares)
-- Gestion centralisée des erreurs avec `asyncHandler`
-- Validation avec Zod pour des messages d'erreur clairs
-- Trust proxy activé pour déploiement sur Render
-- Images d'animés hébergées sur MyAnimeList CDN
-- **Système d'avis avec recalcul automatique de la note moyenne**
-- **CSS Modules pour tous les composants (cohérence du code)**
+**Bonnes Pratiques**
+- Gestion centralisée des erreurs avec `errorHandler`
+- Validation stricte avec **Zod** (messages clairs)
+- **Fetch API** natif (pas besoin d'axios)
+- CSS Modules pour isolation des styles
+- Trust proxy activé (déploiement Render)
+- Images animés hébergées sur **MyAnimeList CDN** (pas de stockage local)
 
-**Pages légales**
-- Conformité RGPD (Politique de Confidentialité)
-- Mentions Légales avec informations sur l'éditeur et l'hébergeur
-- CGU avec âge minimum et règles d'utilisation
-- Design cohérent avec le reste du site
+### 💡 Système de Modals Personnalisés
+Remplacement de tous les `alert()` et `confirm()` natifs :
+- **ModalContext** : Provider global avec React Context
+- **5 types** : success, error, warning, confirm, info
+- **Hooks personnalisés** : `useModal()` avec helpers
+- **49 remplacements** effectués dans 14 fichiers
+- Animations CSS, fermeture Escape, accessibilité (aria-labels)
+
+### 📄 Pages Légales & RGPD
+- **Mentions Légales** : Éditeur, hébergeur, responsable publication
+- **Politique de Confidentialité** : Conformité RGPD, gestion des données
+- **CGU** : Règles d'utilisation, âge minimum, modération
+- **Axeptio** : Bandeau de cookies conforme RGPD
 
 ## Déploiement
 
