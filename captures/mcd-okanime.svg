@@ -37,7 +37,7 @@
 		<text x="84" y="413.2" fill="#607734" font-family="Arial" font-size="14">createdAt datetime</text>
 		<text x="84" y="431.2" fill="#607734" font-family="Arial" font-size="14">updatedAt datetime</text>
 	</g>
-	<text x="154" y="278" fill="#726f83" font-family="Arial" font-size="12">0,N</text>
+	<text x="154" y="278" fill="#726f83" font-family="Arial" font-size="12">0,1</text>
 	<text x="302" y="404" fill="#726f83" font-family="Arial" font-size="12">0,N</text>
 </g>
 
@@ -68,7 +68,7 @@
 		<text x="371" y="604.3" fill="#27360c" font-family="Arial Black" font-size="13">COMPREND</text>
 	</g>
 	<text x="419" y="575" fill="#726f83" font-family="Arial" font-size="12">1,N</text>
-	<text x="419" y="657" fill="#726f83" font-family="Arial" font-size="12">0,N</text>
+	<text x="419" y="657" fill="#726f83" font-family="Arial" font-size="12">1,1</text>
 </g>
 
 <!-- Entity USER -->
