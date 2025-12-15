@@ -291,14 +291,14 @@ Le **Super Admin** est un compte spécial créé automatiquement :
 - **Impossible à supprimer** ou modifier (protection côté backend)
 - Badge visuel distinct dans l'interface admin
 
-### 🌐 Traduction Automatique (Optionnel)
+### 🌐 Traduction Automatique
 Utilisation de l'**API DeepL** pour traduire les synopsis EN → FR :
 - S'active si `DEEPL_API_KEY` est définie dans `.env`
 - Fonctionne lors de :
   - L'import d'animés depuis Jikan API (panel admin)
   - L'exécution du seed (100 animés)
 - Traduction **côté backend** avant sauvegarde en BDD
-- ⚠️ Quota limité : 500 000 caractères/mois (plan gratuit)
+- Quota limité : 500 000 caractères/mois (plan gratuit)
 - Si pas de clé API, les synopsis restent en anglais
 
 ### 🌱 Seed de Données
