@@ -23,7 +23,7 @@ Bibliothèque d'animés pour gérer sa collection, suivre ses visionnages et lai
 
 Le projet utilise **Prisma ORM** avec une architecture relationnelle PostgreSQL composée de **8 entités principales**.
 
-![Modèle Conceptuel de Données](./captures/mcd-okanime.png)
+![Modèle Conceptuel de Données](./captures/mcd-okanime.svg)
 *Diagramme MCD généré avec Mocodo*
 
 ### Relations principales
