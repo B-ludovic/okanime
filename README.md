@@ -308,7 +308,6 @@ Le script `npm run prisma:seed` remplit automatiquement la base :
   - 50 récents avec bonnes notes (score ≥ 7.5)
 - **16 genres** prédéfinis (Action, Romance, Comédie...)
 - **1 Super Admin** avec les credentials du `.env`
-- ⏱️ Durée : ~2 minutes (rate limit Jikan : 1 req/sec)
 
 ### 🏗️ Architecture du Code
 **Séparation des responsabilités (MVC)**
@@ -344,8 +343,8 @@ Remplacement de tous les `alert()` et `confirm()` natifs :
 ## Déploiement
 
 Le projet est déployé sur Render :
-- **Frontend** : https://okanime-frontend.onrender.com
-- **Backend** : https://okanime-api.onrender.com
+- **Frontend** : https://okanime.live (Vercel)
+- **Backend** : API sur Render
 - **Base de données** : PostgreSQL sur Render
 
 **Variables d'environnement importantes en production :**
