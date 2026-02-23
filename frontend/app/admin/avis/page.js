@@ -6,12 +6,12 @@ import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
-import { Trash2, Star, User, Calendar } from 'lucide-react';
+import { Trash2, User, Calendar } from 'lucide-react';
 import StarRating from '../../../components/avis/StarRating';
 
 function AdminAvisPage() {
   const router = useRouter();
-  const { showSuccess, showError, showWarning, showConfirm } = useModal();
+  const { showSuccess, showError, showConfirm } = useModal();
   const [avis, setAvis] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -121,25 +121,25 @@ function AdminAvisPage() {
       {/* Filtres */}
       <div className="admin-filters">
         <button
-          className={`btn ${filter === 'all' ? 'btn-primary' : 'btn-ghost'}`}
+          className={`admin-filter-btn ${filter === 'all' ? 'active' : ''}`}
           onClick={() => setFilter('all')}
         >
           Tous
         </button>
         <button
-          className={`btn ${filter === 'recent' ? 'btn-primary' : 'btn-ghost'}`}
+          className={`admin-filter-btn ${filter === 'recent' ? 'active' : ''}`}
           onClick={() => setFilter('recent')}
         >
           Plus récents
         </button>
         <button
-          className={`btn ${filter === 'highRated' ? 'btn-primary' : 'btn-ghost'}`}
+          className={`admin-filter-btn ${filter === 'highRated' ? 'active' : ''}`}
           onClick={() => setFilter('highRated')}
         >
           Meilleures notes
         </button>
         <button
-          className={`btn ${filter === 'lowRated' ? 'btn-primary' : 'btn-ghost'}`}
+          className={`admin-filter-btn ${filter === 'lowRated' ? 'active' : ''}`}
           onClick={() => setFilter('lowRated')}
         >
           Moins bien notés
@@ -171,7 +171,7 @@ function AdminAvisPage() {
                   </div>
                 </div>
                 <button
-                  className="btn btn-danger btn-sm"
+                  className="admin-btn admin-btn-danger admin-btn-small"
                   onClick={() => handleDelete(a.id)}
                   title="Supprimer"
                 >
