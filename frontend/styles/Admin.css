@@ -17,7 +17,6 @@
   padding: var(--espace-lg);
   flex: 1;
   min-height: calc(100vh - 70px);  /* 70px = hauteur du header */
-  align-items: start;  /* Force la sidebar en haut */
 }
 
 /* Sidebar */
@@ -27,9 +26,27 @@
   padding: var(--espace-lg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.05);
-  height: fit-content;
-  position: sticky;
+  box-sizing: border-box;
+  position: fixed;
   top: 80px;
+  left: max(var(--espace-lg), calc((100vw - 1600px) / 2 + var(--espace-lg)));
+  width: 250px;
+  height: calc(100vh - 80px - var(--espace-lg));
+  overflow-y: auto;
+  z-index: 40;
+}
+
+.admin-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.admin-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(147, 197, 253, 0.3);
+  border-radius: 2px;
 }
 
 .admin-sidebar-title {
@@ -91,13 +108,12 @@
 
 /* Contenu principal */
 .admin-main {
+  grid-column: 2; /* Force la colonne 2 car la sidebar est en position: fixed */
   display: flex;
   flex-direction: column;
   gap: var(--espace-lg);
-  
-  /* --- LA CORRECTION MAGIQUE --- */
-  min-width: 0; /* Autorise le conteneur à rétrécir en dessous de la taille de son contenu */
-  width: 100%;  /* S'assure qu'il ne dépasse pas */
+  min-width: 0;
+  width: 100%;
 }
 
 .admin-header {
@@ -672,7 +688,8 @@
 
   /* 3. CONTENU PRINCIPAL */
   .admin-main {
-    min-width: 0;              /* CRUCIAL : Permet aux enfants de rétrécir */
+    grid-column: auto; /* Réinitialise le grid-column pour le layout mobile */
+    min-width: 0;
     width: 100%;
   }
 
