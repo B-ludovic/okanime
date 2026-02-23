@@ -148,7 +148,7 @@ function AdminGenresPage() {
           <thead>
             <tr>
               <th>Genre</th>
-              <th>Nombre d'animés</th>
+              <th>Nombre d&apos;animés</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -194,20 +194,20 @@ function AdminGenresPage() {
 
       {/* Modal d'ajout/modification */}
       {showModal && (
-        <div className="biblio-modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="biblio-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="biblio-modal-header">
-              <h2 className="biblio-modal-title">
+        <div className="admin-modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-modal-header">
+              <h2 className="admin-modal-title">
                 {editingGenre ? 'Modifier le genre' : 'Ajouter un genre'}
               </h2>
             </div>
 
-            <div className="biblio-modal-body">
-              <div className="form-group">
-                <label className="form-label">Nom du genre</label>
+            <div className="admin-modal-body">
+              <div className="admin-modal-field">
+                <label className="admin-modal-label">Nom du genre</label>
                 <input
                   type="text"
-                  className="form-input"
+                  className="admin-modal-input"
                   placeholder="Ex: Action, Aventure..."
                   value={genreName}
                   onChange={(e) => setGenreName(e.target.value)}
@@ -216,11 +216,11 @@ function AdminGenresPage() {
               </div>
             </div>
 
-            <div className="biblio-modal-actions">
-              <button className="btn btn-ghost" onClick={() => setShowModal(false)}>
+            <div className="admin-modal-actions">
+              <button className="admin-btn admin-btn-ghost" onClick={() => setShowModal(false)}>
                 Annuler
               </button>
-              <button className="btn btn-primary" onClick={handleSave}>
+              <button className="admin-btn admin-btn-primary" onClick={handleSave}>
                 {editingGenre ? 'Modifier' : 'Ajouter'}
               </button>
             </div>
