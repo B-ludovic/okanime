@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminLayout from '../../../components/admin/AdminLayout';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
@@ -109,16 +108,16 @@ function AdminGenresPage() {
 
   if (loading) {
     return (
-      <AdminLayout>
+      <>
         <div className="admin-loading">
           <span className="loading"></span>
         </div>
-      </AdminLayout>
+      </>
     );
   }
 
   return (
-    <AdminLayout>
+    <>
       {/* Header */}
       <div className="admin-header">
         <h1 className="admin-title">Gestion des genres</h1>
@@ -227,7 +226,7 @@ function AdminGenresPage() {
           </div>
         </div>
       )}
-    </AdminLayout>
+    </>
   );
 }
 

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminLayout from '../../../components/admin/AdminLayout';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
 import api from '../../lib/api';
@@ -131,16 +130,16 @@ function AdminMessagesPage() {
 
   if (loading) {
     return (
-      <AdminLayout>
+      <>
         <div className="admin-loading">
           <span className="loading"></span>
         </div>
-      </AdminLayout>
+      </>
     );
   }
 
   return (
-    <AdminLayout>
+    <>
       {/* Header */}
       <div className="admin-header">
         <div>
@@ -327,7 +326,7 @@ function AdminMessagesPage() {
           )}
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

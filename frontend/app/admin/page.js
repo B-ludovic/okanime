@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../lib/api';
 import { isAuthenticated, getCurrentUser } from '../lib/utils';
 import { 
@@ -58,26 +57,26 @@ function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <AdminLayout>
+      <>
         <div className="admin-loading">
           <span className="loading"></span>
         </div>
-      </AdminLayout>
+      </>
     );
   }
 
   if (error) {
     return (
-      <AdminLayout>
+      <>
         <div className="alert alert-error">
           <span>{error}</span>
         </div>
-      </AdminLayout>
+      </>
     );
   }
 
   return (
-    <AdminLayout>
+    <>
       {/* Header */}
       <div className="admin-header">
         <h1 className="admin-title">Tableau de bord</h1>
@@ -217,7 +216,7 @@ function AdminDashboardPage() {
           </button>
         </div>
       )}
-    </AdminLayout>
+    </>
   );
 }
 
