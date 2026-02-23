@@ -7,6 +7,7 @@ import { useModal } from '../../context/ModalContext';
 import api from '../../lib/api';
 import { MessageSquare, Mail, User, Calendar, Trash2, Eye, EyeOff, Filter } from 'lucide-react';
 import '../../../styles/AdminMessages.css';
+import '../../../styles/Admin.css';
 
 function AdminMessagesPage() {
   const router = useRouter();

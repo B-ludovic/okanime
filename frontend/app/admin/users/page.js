@@ -6,6 +6,7 @@ import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
 import { Shield, User, Mail, Calendar, Trash2 } from 'lucide-react';
+import '../../../styles/Admin.css';
 
 function AdminUsersPage() {
   const router = useRouter();

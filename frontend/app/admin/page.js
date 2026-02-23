@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import api from '../lib/api';
 import { isAuthenticated, getCurrentUser } from '../lib/utils';
+import '../../styles/Admin.css';
 import { 
   Users, 
   Film, 

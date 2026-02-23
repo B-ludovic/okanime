@@ -7,6 +7,7 @@ import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
 import { Trash2, User, Calendar } from 'lucide-react';
 import StarRating from '../../../components/avis/StarRating';
+import '../../../styles/Admin.css';
 
 function AdminAvisPage() {
   const router = useRouter();

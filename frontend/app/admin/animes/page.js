@@ -7,6 +7,7 @@ import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
 import { CheckCircle, XCircle, Eye, Calendar, User } from 'lucide-react';
+import '../../../styles/Admin.css';
 
 function AdminAnimesPage() {
   const router = useRouter();

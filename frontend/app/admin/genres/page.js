@@ -6,6 +6,7 @@ import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
 import { Plus, Edit2, Trash2, Tag } from 'lucide-react';
+import '../../../styles/Admin.css';
 
 function AdminGenresPage() {
   const router = useRouter();
