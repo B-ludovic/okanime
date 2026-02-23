@@ -151,23 +151,23 @@ function AdminMessagesPage() {
         </div>
         
         {/* Filtres */}
-        <div className="messages-filters">
+        <div className="admin-filters">
           <button
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+            className={`admin-filter-btn ${filter === 'all' ? 'active' : ''}`}
             onClick={() => setFilter('all')}
           >
             <Filter size={16} />
             Tous ({messages.length})
           </button>
           <button
-            className={`filter-btn ${filter === 'unread' ? 'active' : ''}`}
+            className={`admin-filter-btn ${filter === 'unread' ? 'active' : ''}`}
             onClick={() => setFilter('unread')}
           >
             <EyeOff size={16} />
             Non lus ({messages.filter(m => !m.lu).length})
           </button>
           <button
-            className={`filter-btn ${filter === 'read' ? 'active' : ''}`}
+            className={`admin-filter-btn ${filter === 'read' ? 'active' : ''}`}
             onClick={() => setFilter('read')}
           >
             <Eye size={16} />
@@ -236,14 +236,14 @@ function AdminMessagesPage() {
                 </h2>
                 <div className="message-detail-actions">
                   <button
-                    className="btn btn-ghost btn-sm"
+                    className="admin-btn admin-btn-ghost admin-btn-small"
                     onClick={() => toggleRead(selectedMessage.id)}
                     title={selectedMessage.lu ? 'Marquer comme non lu' : 'Marquer comme lu'}
                   >
                     {selectedMessage.lu ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                   <button
-                    className="btn btn-danger btn-sm"
+                    className="admin-btn admin-btn-danger admin-btn-small"
                     onClick={() => deleteMessage(selectedMessage.id)}
                     title="Supprimer"
                   >
@@ -311,7 +311,7 @@ function AdminMessagesPage() {
                 <div className="message-detail-reply">
                   <a
                     href={`mailto:${selectedMessage.email}?subject=Re: ${getSubjectLabel(selectedMessage.sujet)}`}
-                    className="btn btn-primary"
+                    className="admin-btn admin-btn-primary"
                   >
                     <Mail size={18} />
                     Répondre par email

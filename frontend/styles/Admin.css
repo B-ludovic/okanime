@@ -695,6 +695,11 @@
   flex-wrap: wrap;
 }
 
+/* Quand les filtres sont dans le header (ex: messages), pas de marge basse */
+.admin-header .admin-filters {
+  margin-bottom: 0;
+}
+
 .admin-avis-list {
   display: flex;
   flex-direction: column;
