@@ -27,19 +27,21 @@ import {
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { adminOnly } from '../middlewares/roleMiddleware.js';
 import { uploadSingleOptional } from '../middlewares/uploadMiddleware.js';
-import { adminLimiter } from '../config/rateLimiter.js';
+import { adminLimiter, userActionLimiter } from '../config/rateLimiter.js';
 
 const router = express.Router();
 
-// GESTION DES ANIMÉS (créateur ou admin) - rate limit normal
-router.post('/animes', authMiddleware, uploadSingleOptional('poster'),createAnime );
-router.put('/animes/:id', authMiddleware, uploadSingleOptional('poster'), updateAnime );
-router.delete('/animes/:id', authMiddleware, deleteAnime );
+// GESTION DES ANIMÉS (créateur ou admin)
+// POST/PUT/DELETE : créateur peut gérer ses propres animés, admin a le CRUD complet
+// Vérification IDOR dans le contrôleur (anime.userIdAjout === req.user.id || role === ADMIN)
+router.post('/animes', authMiddleware, userActionLimiter, uploadSingleOptional('poster'), createAnime);
+router.put('/animes/:id', authMiddleware, userActionLimiter, uploadSingleOptional('poster'), updateAnime);
+router.delete('/animes/:id', authMiddleware, userActionLimiter, deleteAnime);
 
-// GESTION DES SAISONS (créateur ou admin) - rate limit normal
-router.post('/animes/:animeId/saisons', authMiddleware, addSaison );
-router.put('/saisons/:id', authMiddleware, updateSaison );
-router.delete('/saisons/:id', authMiddleware, deleteSaison );
+// GESTION DES SAISONS (admin uniquement)
+router.post('/animes/:animeId/saisons', authMiddleware, adminOnly, adminLimiter, addSaison);
+router.put('/saisons/:id', authMiddleware, adminOnly, adminLimiter, updateSaison);
+router.delete('/saisons/:id', authMiddleware, adminOnly, adminLimiter, deleteSaison);
 
 // MODÉRATION (admin uniquement) - rate limit augmenté
 router.get('/animes/pending', authMiddleware, adminOnly, adminLimiter, getPendingAnimes);
