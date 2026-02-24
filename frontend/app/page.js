@@ -40,16 +40,22 @@ function Home() {
                 Plongez au cœur de vos animes préférés avec <span className={`${styles.textPrimary} brand-name`}>O&apos;Kanime</span>.
               </h1>
               <p className={styles.heroDescription}>
-                Du Shōnen épique au Slice of Life apaisant, chaque série mérite sa place dans votre sanctuaire. 
-                <span className="brand-name">O&apos;Kanime</span> vous offre l&apos;espace parfait pour organiser vos saisons, découvrir des pépites méconnues 
+                Du Shōnen épique au Slice of Life apaisant, chaque série mérite sa place dans votre sanctuaire.
+                <span className="brand-name">O&apos;Kanime</span> vous offre l&apos;espace parfait pour organiser vos saisons, découvrir des pépites méconnues
                 et garder une trace de chaque moment marquant.
+                Tu connais un anime méconnu ? Propose-le à la communauté !
               </p>
               <p className={styles.heroCtaText}>
                 Prêt à binge-watcher ? Organisez votre prochaine session ici.
               </p>
-              <Link href="/anime" className="btn btn-secondary btn-large">
-                Découvrir les animés
-              </Link>
+              <div className={styles.heroButtons}>
+                <Link href="/anime" className="btn btn-secondary btn-large">
+                  Découvrir les animés
+                </Link>
+                <Link href="/anime/ajouter" className="btn btn-ghost btn-large">
+                  Proposer un animé
+                </Link>
+              </div>
             </div>
           </div>
 

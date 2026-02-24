@@ -254,7 +254,7 @@ function AjouterAnimeContent() {
           {!isEditMode && (
           <div className="ajout-anime-card jikan-search-card">
             <h2 className="jikan-search-title">
-              Rechercher sur Jikan (optionnel)
+              Rechercher sur Jikan (conseillé)
             </h2>
             <p className="jikan-search-subtitle">
               Trouvez un anime sur Jikan pour pré-remplir automatiquement le formulaire
