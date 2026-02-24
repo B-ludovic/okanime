@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { User, LogOut, Search, Menu, X, ArrowLeft, LayoutDashboard, Film, Users as UsersIcon, Tag, Calendar, Star, MessageSquare } from 'lucide-react';
+import { User, LogOut, Search, Menu, X, LayoutDashboard, Film, Users as UsersIcon, Tag, Calendar, Star, MessageSquare } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { getCurrentUser, logout, isAuthenticated } from '../../app/lib/utils';
 import { useModal } from '../../app/context/ModalContext';
@@ -30,23 +30,19 @@ export default function Header() {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        if (searchQuery.trim()) {
-            router.push(`/recherche?q=${encodeURIComponent(searchQuery)}`);
-            setIsSearchExpanded(false);
-            setIsMobileMenuOpen(false);
-        }
+        router.push(`/recherche?q=${encodeURIComponent(searchQuery.trim())}`);
+        setIsSearchExpanded(false);
+        setIsMobileMenuOpen(false);
     };
 
     const handleMobileSearchClick = (e) => {
         e.preventDefault();
         if (!isSearchExpanded) {
             setIsSearchExpanded(true);
-            // Focus l'input après l'expansion pour ouvrir le clavier mobile
             setTimeout(() => {
                 mobileSearchInputRef.current?.focus();
             }, 100);
-        } else if (searchQuery.trim()) {
-            // Si déjà ouvert et qu'il y a du texte, soumettre
+        } else {
             handleSearch(e);
         }
     };

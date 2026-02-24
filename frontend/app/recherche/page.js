@@ -9,7 +9,6 @@ import AnimeCard from '../../components/anime/AnimeCard';
 import { Search, X, Plus } from 'lucide-react';
 import api from '../../app/lib/api';
 import { isAuthenticated } from '../../app/lib/utils';
-import { useModal } from '../context/ModalContext';
 import styles from '../../styles/modules/Recherche.module.css';
 import '../../styles/Anime.css';
 
@@ -17,7 +16,6 @@ import '../../styles/Anime.css';
 function RechercheContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { showWarning } = useModal();
   const [animes, setAnimes] = useState([]);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,8 +28,7 @@ function RechercheContent() {
     const fetchGenres = async () => {
       try {
         const response = await api.get('/genres');
-        console.log('Genres reçus:', response);
-        setGenres(response.data.genres);
+setGenres(response.data.genres);
       } catch (err) {
         console.error('Erreur lors du chargement des genres:', err);
       }
@@ -45,20 +42,16 @@ function RechercheContent() {
     const query = searchParams.get('q');
     const genre = searchParams.get('genre');
 
-    if (query || genre) {
+    if (searchParams.has('q') || genre) {
       setSearchQuery(query || '');
       setSelectedGenre(genre || '');
-      handleSearch(query, genre);
+      handleSearch(query || '', genre || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   // Fonction de recherche
   const handleSearch = async (query = searchQuery, genre = selectedGenre) => {
-    if (!query && !genre) {
-      showWarning('Recherche vide', 'Veuillez entrer un titre ou sélectionner un genre');
-      return;
-    }
 
     setLoading(true);
     setHasSearched(true);
@@ -159,6 +152,14 @@ function RechercheContent() {
                     Réinitialiser
                   </button>
                 )}
+                <button
+                  type="button"
+                  className={`btn btn-secondary ${styles.addAnimeBtn}`}
+                  onClick={() => router.push(isAuthenticated() ? '/anime/ajouter' : '/login')}
+                >
+                  <Plus size={18} />
+                  Proposer un animé
+                </button>
               </div>
             </form>
           </div>
@@ -200,19 +201,6 @@ function RechercheContent() {
                 </div>
               )}
 
-              {/* BOUTON AJOUTER UN ANIME - Toujours visible */}
-              <div className={styles.emptyAddSection}>
-                <p className={styles.emptyAddText}>
-                  L&apos;animé que vous cherchez n&apos;existe pas dans notre base ?
-                </p>
-                <button
-                  className="btn btn-primary btn-large"
-                  onClick={() => router.push(isAuthenticated() ? '/anime/ajouter' : '/login')}
-                >
-                  <Plus size={18} />
-                  Ajouter un animé
-                </button>
-              </div>
             </>
           ) : (
             <div className={styles.emptyState}>

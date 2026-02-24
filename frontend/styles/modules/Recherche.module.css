@@ -26,6 +26,12 @@
   display: flex;
   gap: var(--espace-sm);
   margin-top: var(--espace-md);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.addAnimeBtn {
+  margin-left: auto;
 }
 
 .loadingContainer {
