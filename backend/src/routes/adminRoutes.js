@@ -32,6 +32,9 @@ import { adminLimiter, userActionLimiter } from '../config/rateLimiter.js';
 
 const router = express.Router();
 
+// LISTE COMPLÈTE DES ANIMÉS (admin uniquement)
+router.get('/animes', authMiddleware, adminOnly, adminLimiter, getAllAnimesAdmin);
+
 // GESTION DES ANIMÉS (créateur ou admin)
 // POST/PUT/DELETE : créateur peut gérer ses propres animés, admin a le CRUD complet
 // Vérification IDOR dans le contrôleur (anime.userIdAjout === req.user.id || role === ADMIN)

@@ -397,6 +397,136 @@
   justify-content: center;
 }
 
+/* === CARTES ANIMÉS COMPACTES (page tous-les-animes) === */
+.admin-anime-content-compact {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: var(--espace-md);
+  padding: var(--espace-md);
+  align-items: center;
+}
+
+.admin-anime-poster-sm {
+  width: 80px;
+  height: 112px;
+  border-radius: var(--arrondi-petit);
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.admin-anime-content-compact .admin-anime-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.admin-anime-content-compact .admin-anime-actions {
+  flex-direction: column;
+  gap: var(--espace-xs);
+  min-width: 110px;
+}
+
+.admin-anime-genre-more {
+  background-color: rgba(107, 114, 128, 0.15);
+  color: var(--texte-gris);
+}
+
+/* Barre de recherche */
+.admin-search-form {
+  flex: 1;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+.admin-search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  background-color: var(--fond-carte);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--arrondi-petit);
+  padding: 0.5rem 0.75rem;
+}
+
+.admin-search-icon {
+  color: var(--texte-gris);
+  flex-shrink: 0;
+}
+
+.admin-search-input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--texte-noir);
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-search-input::placeholder {
+  color: var(--texte-gris);
+}
+
+.admin-search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--texte-gris);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.admin-search-clear:hover {
+  color: var(--texte-noir);
+}
+
+/* Onglets de filtre */
+.admin-filter-tabs {
+  display: flex;
+  gap: var(--espace-xs);
+  flex-wrap: wrap;
+}
+
+.admin-filter-tab {
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--arrondi-grand);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--fond-carte);
+  color: var(--texte-gris);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-filter-tab:hover {
+  border-color: var(--bleu-pastel);
+  color: var(--bleu-pastel);
+}
+
+.admin-filter-tab.active {
+  background-color: var(--bleu-pastel);
+  color: white;
+  border-color: var(--bleu-pastel);
+}
+
+/* Pagination bas de page */
+.admin-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espace-md);
+  padding: var(--espace-lg) 0;
+}
+
+.admin-pagination-info {
+  font-size: 0.9rem;
+  color: var(--texte-gris);
+  font-weight: 500;
+}
+
 /* Boutons d'action */
 .admin-btn {
   padding: 0.75rem 1.5rem;
@@ -1086,6 +1216,30 @@
     flex-direction: column;
     width: 100%;
     align-items: center;
+  }
+
+  /* Cartes animés compactes (tous-les-animes) */
+  .admin-anime-content-compact {
+    grid-template-columns: 60px 1fr;
+    gap: var(--espace-sm);
+    padding: var(--espace-sm);
+  }
+
+  .admin-anime-poster-sm {
+    width: 60px;
+    height: 84px;
+  }
+
+  .admin-anime-content-compact .admin-anime-actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: unset;
+  }
+
+  /* Filtres */
+  .admin-search-form {
+    max-width: 100%;
   }
 
   .admin-btn {

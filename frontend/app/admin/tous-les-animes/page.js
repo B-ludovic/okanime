@@ -1,36 +1,49 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
-import { Edit, Trash2, Eye, Calendar, User, Plus, X, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Edit, Trash2, Eye, User, Plus, X, ChevronRight, ChevronLeft, Search, Calendar } from 'lucide-react';
 import styles from '../../../styles/modules/ModalAdmin.module.css';
 import '../../../styles/Admin.css';
+
+const STATUT_LABELS = {
+  VALIDE: 'Validé',
+  EN_ATTENTE: 'En attente',
+  REFUSE: 'Refusé',
+};
+
+const STATUT_CLASSES = {
+  VALIDE: 'admin-badge-success',
+  EN_ATTENTE: 'admin-badge-warning',
+  REFUSE: 'admin-badge-danger',
+};
 
 function TousLesAnimesPage() {
   const router = useRouter();
   const { showSuccess, showError, showConfirm } = useModal();
+
   const [animes, setAnimes] = useState([]);
-  const [allAnimes, setAllAnimes] = useState([]); // Stocke tous les animés
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingAnime, setEditingAnime] = useState(null);
   const [genres, setGenres] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalAnimes, setTotalAnimes] = useState(0);
-  const animesPerPage = 20;
 
-  // Vérifie l'authentification et le rôle admin
+  const [search, setSearch] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [statutFilter, setStatutFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({ total: 0, totalPages: 1 });
+
   useEffect(() => {
     if (!isAuthenticated()) {
       router.push('/login');
       return;
     }
-
     const user = getCurrentUser();
     if (user.role !== 'ADMIN') {
       router.push('/');
@@ -38,38 +51,31 @@ function TousLesAnimesPage() {
     }
   }, [router]);
 
-  // Récupère tous les animés (une seule fois)
-  const fetchAllAnimes = async () => {
+  const fetchAnimes = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get('/animes?limit=1000'); // Récupère jusqu'à 1000 animés
-      console.log('Response:', response); // Debug
-      const allAnimesData = response.data?.animes || [];
-      console.log('Total animés récupérés:', allAnimesData.length); // DEBUG
-      setAllAnimes(allAnimesData);
-      setTotalAnimes(allAnimesData.length);
-      console.log('Pages totales:', Math.ceil(allAnimesData.length / 20)); // DEBUG
+      const params = new URLSearchParams({ page: currentPage, limit: 20 });
+      if (search) params.append('query', search);
+      if (statutFilter) params.append('statut', statutFilter);
+      const response = await api.get(`/admin/animes?${params.toString()}`);
+      setAnimes(response.data?.animes || []);
+      setPagination(response.data?.pagination || { total: 0, totalPages: 1 });
     } catch (err) {
       setError('Erreur lors du chargement des animés');
       console.error(err);
     } finally {
       setLoading(false);
     }
-  };
-
-  // Paginer les animés affichés
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * animesPerPage;
-    const endIndex = startIndex + animesPerPage;
-    setAnimes(allAnimes.slice(startIndex, endIndex));
-  }, [currentPage, allAnimes]);
+  }, [currentPage, search, statutFilter]);
 
   useEffect(() => {
     fetchGenres();
-    fetchAllAnimes();
   }, []);
 
-  // Récupère les genres
+  useEffect(() => {
+    fetchAnimes();
+  }, [fetchAnimes]);
+
   const fetchGenres = async () => {
     try {
       const response = await api.get('/genres');
@@ -79,58 +85,57 @@ function TousLesAnimesPage() {
     }
   };
 
-  // Ouvrir le modal pour modifier
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setSearch(searchInput);
+    setCurrentPage(1);
+  };
+
+  const handleStatutFilter = (statut) => {
+    setStatutFilter(statut);
+    setCurrentPage(1);
+  };
+
   const handleEdit = (anime) => {
     setEditingAnime(anime);
     setShowModal(true);
   };
 
-  // Fermer le modal
   const handleCloseModal = () => {
     setShowModal(false);
     setEditingAnime(null);
   };
 
-  // Sauvegarder les modifications
   const handleSaveAnime = async (updatedData) => {
     try {
       await api.put(`/admin/animes/${editingAnime.id}`, updatedData);
-      await fetchAllAnimes();
+      await fetchAnimes();
       handleCloseModal();
-      showSuccess('Animé modifié avec succès');
+      showSuccess('Animé modifié', 'Les modifications ont été enregistrées.');
     } catch (err) {
-      showError('Erreur lors de la modification');
+      showError('Erreur', 'Erreur lors de la modification.');
       console.error(err);
     }
   };
 
-  // Supprimer un anime
-  const handleDelete = (animeId) => {
+  const handleDelete = (animeId, animeTitre) => {
     showConfirm(
-      'Suppression d\'animé',
-      'Voulez-vous vraiment supprimer cet animé ? Cette action est irréversible.',
+      'Supprimer cet animé',
+      `Voulez-vous vraiment supprimer "${animeTitre}" ? Cette action est irréversible.`,
       async () => {
         try {
           await api.delete(`/admin/animes/${animeId}`);
-          await fetchAllAnimes();
-          showSuccess('Succès', 'Animé supprimé avec succès');
+          await fetchAnimes();
+          showSuccess('Animé supprimé', `"${animeTitre}" a été supprimé.`);
         } catch (err) {
-          showError('Erreur', 'Erreur lors de la suppression');
+          showError('Erreur', 'Erreur lors de la suppression.');
           console.error(err);
         }
       }
     );
   };
 
-  if (loading) {
-    return (
-      <>
-        <div className="admin-loading">
-          <span className="loading"></span>
-        </div>
-      </>
-    );
-  }
+  const { total, totalPages } = pagination;
 
   return (
     <>
@@ -139,31 +144,59 @@ function TousLesAnimesPage() {
         <div>
           <h1 className="admin-title">Tous les animés</h1>
           <p className="admin-subtitle">
-            {totalAnimes} animé{totalAnimes > 1 ? 's' : ''} dans la base de données • Page {currentPage} sur {Math.ceil(totalAnimes / animesPerPage)}
+            {total} animé{total !== 1 ? 's' : ''} • Page {currentPage} sur {totalPages || 1}
           </p>
         </div>
         <div className="admin-header-actions">
-          <button 
+          <button
             className="btn btn-primary"
             onClick={() => router.push('/anime/ajouter')}
           >
             <Plus size={18} />
             Ajouter un animé
           </button>
-          <button 
-            className="btn btn-bleu-gradient admin-pagination-btn"
-            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-            disabled={currentPage === 1}
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <button 
-            className="btn btn-bleu-gradient admin-pagination-btn"
-            onClick={() => setCurrentPage(prev => prev + 1)}
-            disabled={totalAnimes === 0 || currentPage >= Math.ceil(totalAnimes / animesPerPage)}
-          >
-            <ChevronRight size={18} />
-          </button>
+        </div>
+      </div>
+
+      {/* Filtres */}
+      <div className="admin-filters">
+        <form onSubmit={handleSearchSubmit} className="admin-search-form">
+          <div className="admin-search-bar">
+            <Search size={16} className="admin-search-icon" />
+            <input
+              type="text"
+              className="admin-search-input"
+              placeholder="Rechercher un animé..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            {searchInput && (
+              <button
+                type="button"
+                className="admin-search-clear"
+                onClick={() => { setSearchInput(''); setSearch(''); setCurrentPage(1); }}
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        </form>
+
+        <div className="admin-filter-tabs">
+          {[
+            { label: 'Tous', value: '' },
+            { label: 'Validés', value: 'VALIDE' },
+            { label: 'En attente', value: 'EN_ATTENTE' },
+            { label: 'Refusés', value: 'REFUSE' },
+          ].map(({ label, value }) => (
+            <button
+              key={value}
+              className={`admin-filter-tab${statutFilter === value ? ' active' : ''}`}
+              onClick={() => handleStatutFilter(value)}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -174,71 +207,86 @@ function TousLesAnimesPage() {
         </div>
       )}
 
-      {/* Liste des animés */}
-      {animes.length > 0 ? (
+      {/* Liste */}
+      {loading ? (
+        <div className="admin-loading">
+          <span className="loading"></span>
+        </div>
+      ) : animes.length > 0 ? (
         <div className="admin-animes-list">
           {animes.map((anime) => (
             <div key={anime.id} className="admin-anime-card">
-              <div className="admin-anime-content">
+              <div className="admin-anime-content-compact">
                 {/* Poster */}
                 <Image
                   src={anime.posterUrl || '/placeholder-anime.jpg'}
                   alt={anime.titreVf}
-                  width={150}
-                  height={210}
-                  className="admin-anime-poster"
+                  width={80}
+                  height={112}
+                  className="admin-anime-poster-sm"
                 />
 
-                {/* Informations */}
+                {/* Infos */}
                 <div className="admin-anime-info">
-                  <h3 className="admin-anime-title">{anime.titreVf}</h3>
-
-                  <div className="admin-anime-meta">
-                    {anime.userAjout && (
-                      <span className="admin-anime-meta-item">
-                        <User size={14} />
-                        Ajouté par : {anime.userAjout.username}
-                      </span>
-                    )}
-                    <span className="admin-anime-meta-item">
-                      <Calendar size={14} />
-                      {anime.studio} • {anime.anneeDebut}
+                  <div className="admin-anime-title-row">
+                    <h3 className="admin-anime-title">{anime.titreVf}</h3>
+                    <span className={`admin-badge ${STATUT_CLASSES[anime.statutModeration]}`}>
+                      {STATUT_LABELS[anime.statutModeration]}
                     </span>
                   </div>
 
-                  <p className="admin-anime-synopsis">{anime.synopsis}</p>
+                  <div className="admin-anime-meta">
+                    <span className="admin-anime-meta-item">
+                      <Calendar size={13} />
+                      {anime.studio ? `${anime.studio} • ` : ''}{anime.anneeDebut}
+                    </span>
+                    {anime.userAjout && (
+                      <span className="admin-anime-meta-item">
+                        <User size={13} />
+                        {anime.userAjout.username}
+                      </span>
+                    )}
+                  </div>
 
                   <div className="admin-anime-genres">
-                    {anime.genres?.map((genreRelation) => (
+                    {anime.genres?.slice(0, 4).map((genreRelation) => (
                       <span key={genreRelation.genre.id} className="admin-anime-genre">
                         {genreRelation.genre.nom}
                       </span>
                     ))}
+                    {anime.genres?.length > 4 && (
+                      <span className="admin-anime-genre admin-anime-genre-more">
+                        +{anime.genres.length - 4}
+                      </span>
+                    )}
                   </div>
                 </div>
 
                 {/* Actions */}
                 <div className="admin-anime-actions">
                   <button
-                    className="admin-btn admin-btn-primary"
+                    className="admin-btn admin-btn-small admin-btn-ghost"
                     onClick={() => handleEdit(anime)}
+                    title="Modifier"
                   >
-                    <Edit size={18} />
+                    <Edit size={14} />
                     Modifier
                   </button>
                   <button
-                    className="admin-btn admin-btn-danger"
-                    onClick={() => handleDelete(anime.id)}
+                    className="admin-btn admin-btn-small admin-btn-ghost"
+                    onClick={() => router.push(`/anime/${anime.id}`)}
+                    title="Voir"
                   >
-                    <Trash2 size={18} />
-                    Supprimer
+                    <Eye size={14} />
+                    Voir
                   </button>
                   <button
-                    className="admin-btn btn-ghost admin-btn-small"
-                    onClick={() => router.push(`/anime/${anime.id}`)}
+                    className="admin-btn admin-btn-small admin-btn-danger"
+                    onClick={() => handleDelete(anime.id, anime.titreVf)}
+                    title="Supprimer"
                   >
-                    <Eye size={16} />
-                    Voir
+                    <Trash2 size={14} />
+                    Supprimer
                   </button>
                 </div>
               </div>
@@ -250,10 +298,37 @@ function TousLesAnimesPage() {
           <div className="admin-empty-icon">
             <Image src="/icons/television.png" alt="Aucun anime" width={64} height={64} />
           </div>
-          <h3 className="admin-empty-title">Aucun anime</h3>
+          <h3 className="admin-empty-title">Aucun animé trouvé</h3>
           <p className="admin-empty-text">
-            Commencez par ajouter votre premier anime !
+            {search || statutFilter
+              ? 'Aucun animé ne correspond à vos filtres.'
+              : 'Commencez par ajouter votre premier animé !'}
           </p>
+        </div>
+      )}
+
+      {/* Pagination bas de page */}
+      {!loading && totalPages > 1 && (
+        <div className="admin-pagination">
+          <button
+            className="admin-btn admin-btn-ghost admin-btn-small"
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft size={16} />
+            Précédent
+          </button>
+          <span className="admin-pagination-info">
+            Page {currentPage} sur {totalPages}
+          </span>
+          <button
+            className="admin-btn admin-btn-ghost admin-btn-small"
+            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            disabled={currentPage >= totalPages}
+          >
+            Suivant
+            <ChevronRight size={16} />
+          </button>
         </div>
       )}
 
@@ -270,7 +345,6 @@ function TousLesAnimesPage() {
   );
 }
 
-// Composant Modal d'édition
 function AnimeEditModal({ anime, genres, onClose, onSave }) {
   const [formData, setFormData] = useState({
     titreVf: anime.titreVf || '',
@@ -282,14 +356,12 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     const formDataToSend = new FormData();
     formDataToSend.append('titreVf', formData.titreVf);
     formDataToSend.append('synopsis', formData.synopsis);
     formDataToSend.append('anneeDebut', formData.anneeDebut);
     formDataToSend.append('studio', formData.studio);
     formDataToSend.append('genreIds', JSON.stringify(formData.genreIds));
-
     onSave(formDataToSend);
   };
 
@@ -298,7 +370,7 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
       ...prev,
       genreIds: prev.genreIds.includes(genreId)
         ? prev.genreIds.filter(id => id !== genreId)
-        : [...prev.genreIds, genreId]
+        : [...prev.genreIds, genreId],
     }));
   };
 
@@ -314,7 +386,6 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
 
         <div className={styles.modalBody}>
           <form onSubmit={handleSubmit} className={styles.form}>
-            {/* Titre */}
             <div className="form-group">
               <label>Titre VF *</label>
               <input
@@ -325,7 +396,6 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
               />
             </div>
 
-            {/* Synopsis */}
             <div className="form-group">
               <label>Synopsis *</label>
               <textarea
@@ -336,7 +406,6 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
               />
             </div>
 
-            {/* Année et Studio */}
             <div className={styles.formRow}>
               <div className="form-group">
                 <label>Année de début *</label>
@@ -359,7 +428,6 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
               </div>
             </div>
 
-            {/* Genres */}
             <div className="form-group">
               <label>Genres *</label>
               <div className={styles.genresGrid}>
@@ -376,7 +444,6 @@ function AnimeEditModal({ anime, genres, onClose, onSave }) {
               </div>
             </div>
 
-            {/* Boutons */}
             <div className={styles.modalActions}>
               <button type="button" className="btn btn-ghost" onClick={onClose}>
                 Annuler
