@@ -9,7 +9,7 @@ import api from '../../../app/lib/api';
 import { isAuthenticated, getCurrentUser } from '../../../app/lib/utils';
 import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
 import styles from '../../../styles/modules/AnimeDetail.module.css';
-import { Star, BookmarkPlus, Check } from 'lucide-react';
+import { Star, BookmarkPlus } from 'lucide-react';
 import AnimeStructuredData from '../../../components/seo/AnimeStructuredData';
 import AvisSection from '../../../components/avis/AvisSection';
 import { useModal } from '../../context/ModalContext';
@@ -119,6 +119,59 @@ function AnimeDetailPage({ id }) {
             fetchAnime();
         }
     }, [id]);
+
+    // Fonction pour basculer le favori
+    const handleFavoriteToggle = async () => {
+        if (!isAuthenticated()) {
+            showWarning('Connexion requise', 'Vous devez être connecté');
+            router.push('/login');
+            return;
+        }
+        if (!anime?.saisons || anime.saisons.length === 0) {
+            showWarning('Aucune saison', "Cet anime n'a pas de saisons disponibles");
+            return;
+        }
+        try {
+            if (isFavorite) {
+                if (biblioEntryId) {
+                    await api.delete(`/bibliotheque/${biblioEntryId}`);
+                    setIsFavorite(false);
+                    setInBiblio(false);
+                    setBiblioEntryId(null);
+                    setBiblioStatut(null);
+                    showSuccess('Succès', 'Retiré des favoris !');
+                }
+            } else {
+                try {
+                    const response = await api.post('/bibliotheque', {
+                        saisonId: anime.saisons[0].id,
+                        statut: 'FAVORI',
+                    });
+                    const entryId = response.data.entry?.id || response.data.bibliothequeEntry?.id;
+                    setBiblioEntryId(entryId);
+                } catch (err) {
+                    if (err.message.includes('déjà dans votre bibliothèque')) {
+                        const biblioResponse = await api.get('/bibliotheque');
+                        const existingEntry = biblioResponse.data.bibliotheque.find(
+                            entry => entry.saison.id === anime.saisons[0].id
+                        );
+                        if (existingEntry) {
+                            await api.put(`/bibliotheque/${existingEntry.id}`, { statut: 'FAVORI' });
+                            setBiblioEntryId(existingEntry.id);
+                        }
+                    } else {
+                        throw err;
+                    }
+                }
+                setIsFavorite(true);
+                setInBiblio(true);
+                setBiblioStatut('FAVORI');
+                showSuccess('Succès', 'Ajouté aux favoris !');
+            }
+        } catch (err) {
+            showError('Erreur', err.message || 'Erreur');
+        }
+    };
 
     // Fonction pour changer le statut dans la bibliothèque
     const handleStatutChange = async (newStatut) => {
@@ -298,64 +351,10 @@ function AnimeDetailPage({ id }) {
                                     
                                     {/* Bouton Favori */}
                                     <button
-                                    onClick={async () => {
-                                        if (!isAuthenticated()) {
-                                            showWarning('Connexion requise', 'Vous devez être connecté');
-                                            router.push('/login');
-                                            return;
-                                        }
-                                        if (!anime?.saisons || anime.saisons.length === 0) {
-                                            showWarning('Aucune saison', 'Cet anime n\'a pas de saisons disponibles');
-                                            return;
-                                        }
-                                        try {
-                                            if (isFavorite) {
-                                                // Retirer des favoris (supprimer de la bibliothèque)
-                                                if (biblioEntryId) {
-                                                    await api.delete(`/bibliotheque/${biblioEntryId}`);
-                                                    setIsFavorite(false);
-                                                    setBiblioEntryId(null);
-                                                    showSuccess('Succès', 'Retiré des favoris !');
-                                                }
-                                            } else {
-                                                // Ajouter aux favoris
-                                                try {
-                                                    // Essayer d'abord d'ajouter
-                                                    const response = await api.post('/bibliotheque', {
-                                                        saisonId: anime.saisons[0].id,
-                                                        statut: 'FAVORI',
-                                                    });
-                                                    const entryId = response.data.entry?.id || response.data.bibliothequeEntry?.id;
-                                                    setBiblioEntryId(entryId);
-                                                } catch (err) {
-                                                    // Si déjà dans la biblio, faire un update
-                                                    if (err.message.includes('déjà dans votre bibliothèque')) {
-                                                        // Trouver l'ID de l'entrée existante
-                                                        const biblioResponse = await api.get('/bibliotheque');
-                                                        const existingEntry = biblioResponse.data.bibliotheque.find(
-                                                            entry => entry.saison.id === anime.saisons[0].id
-                                                        );
-                                                        if (existingEntry) {
-                                                            const response = await api.put(`/bibliotheque/${existingEntry.id}`, {
-                                                                statut: 'FAVORI',
-                                                            });
-                                                            const entryId = response.data.entry?.id || response.data.bibliothequeEntry?.id || existingEntry.id;
-                                                            setBiblioEntryId(entryId);
-                                                        }
-                                                    } else {
-                                                        throw err;
-                                                    }
-                                                }
-                                                setIsFavorite(true);
-                                                showSuccess('Succès', 'Ajouté aux favoris !');
-                                            }
-                                        } catch (err) {
-                                            showError('Erreur', err.message || 'Erreur');
-                                        }
-                                    }}
-                                    className={styles.favoriteButton}
-                                    title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
-                                >
+                                        onClick={handleFavoriteToggle}
+                                        className={styles.favoriteButton}
+                                        title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+                                    >
                                     <Image 
                                         src={isFavorite ? "/icons/favori.png" : "/icons/favori-empty.png"}
                                         alt="Favori" 
