@@ -138,6 +138,11 @@ Backend : http://localhost:5001
 - Reset password par email (token temporaire 1h)
 - Protection honeypot anti-bots sur formulaires
 
+**Contribution**
+- Proposition d'un animé par tout utilisateur inscrit (formulaire complet)
+- Recherche et pré-remplissage automatique via **Jikan API**
+- Soumis en attente de modération admin avant publication
+
 **Gestion de Collection**
 - Catalogue de **100+ animés** (seed automatique depuis Jikan API)
 - Recherche par titre (temps réel)
@@ -179,9 +184,9 @@ Backend : http://localhost:5001
 ### 👨‍💼 Côté Admin
 
 **Panel d'Administration**
-- Interface dédiée avec sidebar responsive (menu burger < 950px)
+- Interface dédiée avec sidebar persistante et responsive (menu burger < 950px)
 - Statistiques globales (nombre d'utilisateurs, animés, avis, messages)
-- Navigation intuitive avec 5 sections principales
+- Navigation avec 7 sections : Tableau de bord, Modération, Tous les animés, Avis, Messages, Utilisateurs, Genres
 
 **Gestion des Animés**
 - CRUD complet (Create, Read, Update, Delete)
@@ -232,8 +237,9 @@ okanime/
     │   ├── (auth)/          # Pages login/register
     │   ├── admin/           # Panel d'administration
     │   │   ├── avis/        # Gestion des avis
-    │   │   ├── messages/    # Gestion des messages de contact (nouveau)
+    │   │   ├── messages/    # Gestion des messages de contact
     │   │   ├── animes/      # Modération des animés
+    │   │   ├── tous-les-animes/ # CRUD complet des animés
     │   │   ├── genres/      # Gestion des genres
     │   │   └── users/       # Gestion des utilisateurs
     │   ├── anime/           # Pages animés
@@ -248,7 +254,7 @@ okanime/
     │   ├── cgu/             # Conditions générales d'utilisation
     │   └── lib/             # Utils, API client, constantes
     ├── components/
-    │   ├── admin/           # AdminLayout
+    │   ├── admin/           # AdminLayout, AdminSidebar
     │   ├── anime/           # AnimeCard, etc.
     │   ├── avis/            # StarRating, AvisSection, AvisForm
     │   ├── bibliotheque/    # BiblioCard, BiblioModal
