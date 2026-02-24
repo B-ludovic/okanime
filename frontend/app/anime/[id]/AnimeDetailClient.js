@@ -420,11 +420,11 @@ function AnimeDetailPage({ id }) {
                                     <div className={styles.trailersList}>
                                         {videos.trailers.slice(0, 2).map((trailer, index) => (
                                             <div key={index} className={styles.trailerItem}>
-                                                <h4 className={styles.trailerTitle}>{trailer.title}</h4>
+                                                <h4 className={styles.trailerTitle}>Trailer {index + 1}</h4>
                                                 <div className={styles.videoWrapper}>
                                                     <iframe
                                                         src={trailer.trailer.embed_url}
-                                                        title={trailer.title}
+                                                        title={`Trailer ${index + 1}`}
                                                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                         allowFullScreen
                                                         className={styles.videoIframe}
