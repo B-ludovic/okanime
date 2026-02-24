@@ -10,14 +10,15 @@ import {
   moderateAnime,
   deleteUserAvatar,
   getStats,
-  getAllUsers,        
+  getAllUsers,
   changeUserRole,
   deleteUser,
-  createGenre,        
-  updateGenre,        
+  createGenre,
+  updateGenre,
   deleteGenre,
   getAllAvis,
   deleteAvis,
+  getAllAnimesAdmin,
 } from '../controllers/adminController.js';
 import {
   getAllMessages,
