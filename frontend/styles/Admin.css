@@ -642,8 +642,26 @@
   background: linear-gradient(135deg, var(--jaune-pastel) 0%, var(--or-pastel) 100%);
 }
 
+.admin-shortcut-warning:hover {
+  border-color: var(--jaune-pastel);
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.2);
+}
+
+.admin-shortcut-warning:hover .admin-shortcut-arrow {
+  color: var(--jaune-pastel);
+}
+
 .admin-shortcut-success .admin-shortcut-icon {
   background: linear-gradient(135deg, var(--vert-pastel) 0%, #10B981 100%);
+}
+
+.admin-shortcut-success:hover {
+  border-color: var(--vert-pastel);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.admin-shortcut-success:hover .admin-shortcut-arrow {
+  color: var(--vert-pastel);
 }
 
 .admin-shortcut-body {
@@ -796,10 +814,6 @@
   flex-wrap: wrap;
 }
 
-/* Quand les filtres sont dans le header (ex: messages), pas de marge basse */
-.admin-header .admin-filters {
-  margin-bottom: 0;
-}
 
 .admin-avis-list {
   display: flex;
@@ -985,6 +999,16 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  /* Stats Grid - 2 colonnes sur tablette */
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Shortcuts Grid - 2 colonnes sur tablette */
+  .admin-shortcuts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* --- MOBILES UNIQUEMENT (< 768px) --- */
@@ -1008,6 +1032,15 @@
   /* Shortcuts */
   .admin-shortcuts-grid {
     grid-template-columns: 1fr;
+  }
+
+  .admin-shortcut-card {
+    padding: var(--espace-sm) var(--espace-md);
+  }
+
+  .admin-shortcut-desc {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
   /* Cartes Animés (Mode Vertical) */

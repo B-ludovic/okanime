@@ -1,36 +1,5 @@
 /* PAGE ADMIN MESSAGES */
 
-.messages-filters {
-  display: flex;
-  gap: var(--espace-sm);
-}
-
-.filter-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--espace-xs);
-  padding: 10px 16px;
-  background: white;
-  border: 2px solid #E5E7EB;
-  border-radius: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--texte-gris);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.filter-btn:hover {
-  border-color: var(--bleu-pastel);
-  color: var(--bleu-pastel);
-}
-
-.filter-btn.active {
-  background: var(--bleu-pastel);
-  border-color: var(--bleu-pastel);
-  color: white;
-}
-
 /* CONTENEUR PRINCIPAL */
 .messages-container {
   display: grid;
