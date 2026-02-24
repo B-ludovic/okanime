@@ -129,6 +129,10 @@
   align-items: center;
 }
 
+.admin-header-btn {
+  margin-top: var(--espace-md);
+}
+
 .admin-pagination-btn {
   padding: 0.75rem;
   min-width: auto;
