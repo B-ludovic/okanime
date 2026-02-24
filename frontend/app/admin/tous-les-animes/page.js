@@ -12,7 +12,7 @@ import '../../../styles/Admin.css';
 
 function TousLesAnimesPage() {
   const router = useRouter();
-  const { showSuccess, showError, showWarning, showConfirm } = useModal();
+  const { showSuccess, showError, showConfirm } = useModal();
   const [animes, setAnimes] = useState([]);
   const [allAnimes, setAllAnimes] = useState([]); // Stocke tous les animés
   const [loading, setLoading] = useState(true);
@@ -105,21 +105,21 @@ function TousLesAnimesPage() {
   };
 
   // Supprimer un anime
-  const handleDelete = async (animeId) => {
-    const confirmed = await showConfirm(
-      'Voulez-vous vraiment supprimer cet anime ?',
-      'Suppression d\'animé'
+  const handleDelete = (animeId) => {
+    showConfirm(
+      'Suppression d\'animé',
+      'Voulez-vous vraiment supprimer cet animé ? Cette action est irréversible.',
+      async () => {
+        try {
+          await api.delete(`/admin/animes/${animeId}`);
+          await fetchAllAnimes();
+          showSuccess('Succès', 'Animé supprimé avec succès');
+        } catch (err) {
+          showError('Erreur', 'Erreur lors de la suppression');
+          console.error(err);
+        }
+      }
     );
-    if (!confirmed) return;
-
-    try {
-      await api.delete(`/admin/animes/${animeId}`);
-      await fetchAllAnimes();
-      showSuccess('Animé supprimé avec succès');
-    } catch (err) {
-      showError('Erreur lors de la suppression');
-      console.error(err);
-    }
   };
 
   if (loading) {
