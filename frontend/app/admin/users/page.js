@@ -6,7 +6,7 @@ import Image from 'next/image';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
-import { Shield, User, Mail, Calendar, Trash2 } from 'lucide-react';
+import { Shield, ShieldOff, User, Mail, Calendar, Trash2, ImageOff } from 'lucide-react';
 import '../../../styles/Admin.css';
 
 function AdminUsersPage() {
@@ -178,7 +178,17 @@ function AdminUsersPage() {
                 <tr key={user.id}>
                   <td>
                     <div className="admin-user-cell">
-                      <User size={18} />
+                      {user.avatar ? (
+                        <Image
+                          src={user.avatar}
+                          alt={user.username}
+                          width={32}
+                          height={32}
+                          className="admin-user-avatar"
+                        />
+                      ) : (
+                        <User size={18} />
+                      )}
                       <strong>{user.username}</strong>
                     </div>
                   </td>
@@ -205,41 +215,40 @@ function AdminUsersPage() {
                       {!user.isSuperAdmin && (
                         user.role === 'USER' ? (
                           <button
-                            className="admin-btn admin-btn-small admin-btn-success"
+                            className="admin-btn admin-btn-small admin-btn-icon admin-btn-success"
                             onClick={() => handleChangeRole(user.id, 'ADMIN', user.username)}
+                            title="Promouvoir en admin"
                           >
-                            <Shield size={14} />
-                            Promouvoir
+                            <Shield size={15} />
                           </button>
                         ) : (
                           <button
-                            className="admin-btn admin-btn-small admin-btn-ghost"
+                            className="admin-btn admin-btn-small admin-btn-icon admin-btn-ghost"
                             onClick={() => handleChangeRole(user.id, 'USER', user.username)}
+                            title="Rétrograder en utilisateur"
                           >
-                            <User size={14} />
-                            Rétrograder
+                            <ShieldOff size={15} />
                           </button>
                         )
                       )}
 
                       {user.avatar && !user.isSuperAdmin && (
                         <button
-                          className="admin-btn admin-btn-small admin-btn-warning"
+                          className="admin-btn admin-btn-small admin-btn-icon admin-btn-warning"
                           onClick={() => handleDeleteAvatar(user.id, user.username)}
                           title="Supprimer l'avatar"
                         >
-                          <Trash2 size={14} />
+                          <ImageOff size={15} />
                         </button>
                       )}
 
                       {!user.isSuperAdmin && (
                         <button
-                          className="admin-btn admin-btn-small admin-btn-danger"
+                          className="admin-btn admin-btn-small admin-btn-icon admin-btn-danger"
                           onClick={() => handleDeleteUser(user.id, user.username)}
                           title="Supprimer l'utilisateur"
                         >
-                          <Trash2 size={14} />
-                          Supprimer
+                          <Trash2 size={15} />
                         </button>
                       )}
                     </div>

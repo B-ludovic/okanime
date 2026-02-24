@@ -511,6 +511,25 @@
   margin-bottom: var(--espace-lg);
 }
 
+/* Bouton icon-only dans les tableaux */
+.admin-btn-icon {
+  padding: 0;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  justify-content: center;
+}
+
+/* Avatar mini dans la cellule utilisateur */
+.admin-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(147, 197, 253, 0.3);
+  flex-shrink: 0;
+}
+
 /* Cellules de tableau */
 .admin-user-cell {
   display: flex;
@@ -545,6 +564,7 @@
 .admin-actions-cell {
   display: flex;
   gap: var(--espace-xs);
+  justify-content: center;
 }
 
 /* Messages d'état */
