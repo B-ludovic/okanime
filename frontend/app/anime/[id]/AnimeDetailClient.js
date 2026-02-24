@@ -369,21 +369,21 @@ function AnimeDetailPage({ id }) {
                                     >
                                     <Heart
                                         size={24}
-                                        fill={isFavorite ? 'var(--corail)' : 'none'}
-                                        color={isFavorite ? 'var(--corail)' : 'currentColor'}
+                                        fill={isFavorite ? '#EC4899' : 'none'}
+                                        color={isFavorite ? '#EC4899' : '#9CA3AF'}
                                         className={styles.favoriteIcon}
                                     />
                                 </button>
                                 </div>
                             </div>
 
-                            <div className={styles.metaRow}>
+                            <div className={styles.metaBlock}>
                                 {anime.studio && (
-                                    <span className={styles.author}>de {anime.studio}</span>
+                                    <span className={styles.author}>{anime.studio}</span>
                                 )}
                                 {anime.anneeDebut && (
                                     <span className={styles.year}>
-                                        <Calendar size={14} />
+                                        <Calendar size={16} />
                                         {anime.anneeDebut}
                                     </span>
                                 )}
@@ -449,17 +449,9 @@ function AnimeDetailPage({ id }) {
                                                     Saison {saison.numeroSaison}
                                                     {saison.titreSaison && ` — ${saison.titreSaison}`}
                                                 </span>
-                                                <div className={styles.seasonMeta}>
-                                                    <span className={styles.seasonEpisodes}>
-                                                        {saison.nombreEpisodes} épisodes
-                                                    </span>
-                                                    {saison.annee && (
-                                                        <span className={styles.seasonYear}>{saison.annee}</span>
-                                                    )}
-                                                    <span className={saison.statut === 'EN_COURS' ? styles.seasonStatusOngoing : styles.seasonStatusDone}>
-                                                        {saison.statut === 'EN_COURS' ? 'En cours' : 'Terminé'}
-                                                    </span>
-                                                </div>
+                                                <span className={styles.seasonEpisodes}>
+                                                    {saison.nombreEpisodes} épisodes
+                                                </span>
                                             </div>
                                         ))}
                                     </div>

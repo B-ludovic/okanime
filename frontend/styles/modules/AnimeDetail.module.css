@@ -124,13 +124,13 @@
 .info {
   display: flex;
   flex-direction: column;
+  gap: var(--espace-lg);
 }
 
 .titleRow {
   display: flex;
   align-items: center;
   gap: var(--espace-md);
-  margin-bottom: var(--espace-xs);
 }
 
 .title {
@@ -194,44 +194,33 @@
   transform: scale(0.95);
 }
 
-.favoriteButton img {
-  transition: transform 0.3s ease;
-  display: block;
-}
-
 .favoriteIcon {
-  object-fit: contain;
+  display: block;
+  transition: fill 0.2s ease, color 0.2s ease;
 }
 
-.favoriteButton:hover img {
-  filter: brightness(1.1);
-}
-
-.metaRow {
+.metaBlock {
   display: flex;
-  align-items: center;
-  gap: var(--espace-md);
-  margin-bottom: var(--espace-md);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.375rem;
 }
 
 .author {
-  font-size: 1.125rem;
-  color: var(--texte-gris);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texte-noir);
 }
 
 .year {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.9rem;
-  color: var(--texte-gris);
+  gap: 0.375rem;
+  font-size: 1rem;
   font-weight: 500;
+  color: var(--bleu-pastel);
 }
 
-.genresSection {
-  margin-bottom: var(--espace-md);
-}
+.genresSection {}
 
 .genresLabel {
   font-weight: 600;
@@ -256,7 +245,6 @@
 }
 
 .resumeSection {
-  margin-top: var(--espace-md);
   padding-top: var(--espace-md);
   border-top: 2px solid rgba(147, 197, 253, 0.2);
 }
@@ -276,8 +264,7 @@
 
 /* Section vidéos/trailers */
 .videosSection {
-  margin-top: var(--espace-xl);
-  padding-top: var(--espace-lg);
+  padding-top: var(--espace-md);
   border-top: 2px solid rgba(147, 197, 253, 0.2);
 }
 
@@ -329,7 +316,8 @@
 }
 
 .seasonsSection {
-  margin-top: var(--espace-lg);
+  padding-top: var(--espace-md);
+  border-top: 2px solid rgba(147, 197, 253, 0.2);
 }
 
 .seasonsTitle {
@@ -367,28 +355,6 @@
   font-size: 0.875rem;
 }
 
-.seasonYear {
-  color: var(--texte-gris);
-  font-size: 0.875rem;
-}
-
-.seasonStatusOngoing {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--arrondi-grand);
-  background-color: rgba(52, 211, 153, 0.15);
-  color: #059669;
-}
-
-.seasonStatusDone {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--arrondi-grand);
-  background-color: rgba(147, 197, 253, 0.15);
-  color: var(--bleu-pastel);
-}
 
 .loadingContainer {
   display: flex;
@@ -398,7 +364,8 @@
 
 /* Section Avis */
 .avisSection {
-  margin-top: var(--espace-xl);
+  padding-top: var(--espace-md);
+  border-top: 2px solid rgba(147, 197, 253, 0.2);
 }
 
 .avisHeader {
