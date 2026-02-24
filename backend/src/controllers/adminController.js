@@ -54,10 +54,20 @@ const createAnime = asyncHandler(async (req, res) => {
       where: { malId: parseInt(malId) },
       select: { id: true, titreVf: true }
     });
-    
+
     if (existingAnime) {
       throw new HttpConflictError(`Cet anime existe déjà dans la base de données : "${existingAnime.titreVf}"`);
     }
+  }
+
+  // Vérifie si un anime avec le même titre existe déjà (insensible à la casse)
+  const existingByTitle = await prisma.anime.findFirst({
+    where: { titreVf: { equals: validatedData.titreVf, mode: 'insensitive' } },
+    select: { id: true, titreVf: true }
+  });
+
+  if (existingByTitle) {
+    throw new HttpConflictError(`Un anime avec ce titre existe déjà : "${existingByTitle.titreVf}"`);
   }
 
   // Récupère le nombre d'épisodes depuis Jikan si malId est fourni
