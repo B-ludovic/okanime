@@ -447,11 +447,19 @@ function AnimeDetailPage({ id }) {
                                             <div key={saison.id} className={styles.seasonItem}>
                                                 <span className={styles.seasonName}>
                                                     Saison {saison.numeroSaison}
-                                                    {saison.titreSaison && ` - ${saison.titreSaison}`}
+                                                    {saison.titreSaison && ` — ${saison.titreSaison}`}
                                                 </span>
-                                                <span className={styles.seasonEpisodes}>
-                                                    {saison.nombreEpisodes} épisodes
-                                                </span>
+                                                <div className={styles.seasonMeta}>
+                                                    <span className={styles.seasonEpisodes}>
+                                                        {saison.nombreEpisodes} épisodes
+                                                    </span>
+                                                    {saison.annee && (
+                                                        <span className={styles.seasonYear}>{saison.annee}</span>
+                                                    )}
+                                                    <span className={saison.statut === 'EN_COURS' ? styles.seasonStatusOngoing : styles.seasonStatusDone}>
+                                                        {saison.statut === 'EN_COURS' ? 'En cours' : 'Terminé'}
+                                                    </span>
+                                                </div>
                                             </div>
                                         ))}
                                     </div>

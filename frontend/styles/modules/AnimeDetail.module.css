@@ -355,8 +355,39 @@
   font-weight: 600;
 }
 
+.seasonMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  flex-wrap: wrap;
+}
+
 .seasonEpisodes {
   color: var(--texte-gris);
+  font-size: 0.875rem;
+}
+
+.seasonYear {
+  color: var(--texte-gris);
+  font-size: 0.875rem;
+}
+
+.seasonStatusOngoing {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--arrondi-grand);
+  background-color: rgba(52, 211, 153, 0.15);
+  color: #059669;
+}
+
+.seasonStatusDone {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--arrondi-grand);
+  background-color: rgba(147, 197, 253, 0.15);
+  color: var(--bleu-pastel);
 }
 
 .loadingContainer {
