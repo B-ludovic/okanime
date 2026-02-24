@@ -512,7 +512,53 @@ const getStats = asyncHandler(async (req, res) => {
   });
 });
 
-// GESTION DES UTILISATEURS 
+// LISTE COMPLÈTE DES ANIMÉS (admin) - GET /api/admin/animes
+const getAllAnimesAdmin = asyncHandler(async (req, res) => {
+  const { query, page = '1', limit = '20', statut } = req.query;
+
+  const pageNumber = Math.max(1, parseInt(page) || 1);
+  const limitNumber = Math.min(50, Math.max(1, parseInt(limit) || 20));
+  const skip = (pageNumber - 1) * limitNumber;
+
+  const where = {};
+
+  if (query) {
+    where.titreVf = { contains: query, mode: 'insensitive' };
+  }
+
+  if (statut && ['VALIDE', 'EN_ATTENTE', 'REFUSE'].includes(statut)) {
+    where.statutModeration = statut;
+  }
+
+  const [total, animes] = await Promise.all([
+    prisma.anime.count({ where }),
+    prisma.anime.findMany({
+      where,
+      skip,
+      take: limitNumber,
+      include: {
+        genres: { include: { genre: true } },
+        userAjout: { select: { id: true, username: true } },
+      },
+      orderBy: { dateAjout: 'desc' },
+    }),
+  ]);
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    data: {
+      animes,
+      pagination: {
+        page: pageNumber,
+        limit: limitNumber,
+        total,
+        totalPages: Math.ceil(total / limitNumber),
+      },
+    },
+  });
+});
+
+// GESTION DES UTILISATEURS
 
 // Récupère tous les utilisateurs
 const getAllUsers = asyncHandler(async (req, res) => {
@@ -841,4 +887,5 @@ export {
   deleteUser,
   getAllAvis,
   deleteAvis,
+  getAllAnimesAdmin,
 };
