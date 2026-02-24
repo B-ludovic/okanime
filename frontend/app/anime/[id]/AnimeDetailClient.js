@@ -45,22 +45,39 @@ function AnimeDetailPage({ id }) {
         }
 
         const colors = {
-            'Action': 'linear-gradient(135deg, #FCA5A5, #EF4444)',        // Rouge - énergie et combat
-            'Adventure': 'linear-gradient(135deg, #FCD34D, #F59E0B)',     // Orange - exploration
-            'Comedy': 'linear-gradient(135deg, #FEF3C7, #FCD34D)',        // Jaune - joie et humour
-            'Drama': 'linear-gradient(135deg, #C4B5FD, #8B5CF6)',         // Violet - émotions
-            'Fantasy': 'linear-gradient(135deg, #F9A8D4, #EC4899)',       // Rose - magie et rêves
-            'Horror': 'linear-gradient(135deg, #4B5563, #1F2937)',        // Gris foncé - peur
-            'Mystery': 'linear-gradient(135deg, #A5B4FC, #6366F1)',       // Indigo - énigmes
-            'Romance': 'linear-gradient(135deg, #FBCFE8, #F472B6)',       // Rose clair - amour
-            'Sci-Fi': 'linear-gradient(135deg, #93C5FD, #3B82F6)',        // Bleu - technologie
-            'Slice of Life': 'linear-gradient(135deg, #6EE7B7, #10B981)', // Vert - quotidien
-            'Sports': 'linear-gradient(135deg, #5EEAD4, #14B8A6)',        // Turquoise - compétition
-            'Supernatural': 'linear-gradient(135deg, #A78BFA, #7C3AED)',  // Violet foncé - surnaturel
-            'Thriller': 'linear-gradient(135deg, #F87171, #DC2626)',      // Rouge foncé - suspense
-            'Mecha': 'linear-gradient(135deg, #9CA3AF, #6B7280)',         // Gris - robots
-            'School': 'linear-gradient(135deg, #FDBA74, #F97316)',        // Orange clair - jeunesse
-            'Music': 'linear-gradient(135deg, #D8B4FE, #A855F7)',         // Violet clair - harmonie
+            'Action': 'linear-gradient(135deg, #FCA5A5, #EF4444)',
+            'Adventure': 'linear-gradient(135deg, #FCD34D, #F59E0B)',
+            'Comedy': 'linear-gradient(135deg, #FEF3C7, #FCD34D)',
+            'Drama': 'linear-gradient(135deg, #C4B5FD, #8B5CF6)',
+            'Fantasy': 'linear-gradient(135deg, #F9A8D4, #EC4899)',
+            'Horror': 'linear-gradient(135deg, #4B5563, #1F2937)',
+            'Mystery': 'linear-gradient(135deg, #A5B4FC, #6366F1)',
+            'Romance': 'linear-gradient(135deg, #FBCFE8, #F472B6)',
+            'Sci-Fi': 'linear-gradient(135deg, #93C5FD, #3B82F6)',
+            'Science Fiction': 'linear-gradient(135deg, #93C5FD, #3B82F6)',
+            'Slice of Life': 'linear-gradient(135deg, #6EE7B7, #10B981)',
+            'Sports': 'linear-gradient(135deg, #5EEAD4, #14B8A6)',
+            'Supernatural': 'linear-gradient(135deg, #A78BFA, #7C3AED)',
+            'Thriller': 'linear-gradient(135deg, #F87171, #DC2626)',
+            'Suspense': 'linear-gradient(135deg, #F87171, #DC2626)',
+            'Mecha': 'linear-gradient(135deg, #9CA3AF, #6B7280)',
+            'School': 'linear-gradient(135deg, #FDBA74, #F97316)',
+            'Music': 'linear-gradient(135deg, #D8B4FE, #A855F7)',
+            'Military': 'linear-gradient(135deg, #86EFAC, #16A34A)',
+            'Historical': 'linear-gradient(135deg, #D4B483, #A0845C)',
+            'Psychological': 'linear-gradient(135deg, #818CF8, #4F46E5)',
+            'Isekai': 'linear-gradient(135deg, #FDE68A, #F59E0B)',
+            'Ecchi': 'linear-gradient(135deg, #FCA5A5, #F472B6)',
+            'Harem': 'linear-gradient(135deg, #FDA4AF, #E11D48)',
+            'Shounen': 'linear-gradient(135deg, #93C5FD, #2563EB)',
+            'Shoujo': 'linear-gradient(135deg, #F9A8D4, #DB2777)',
+            'Seinen': 'linear-gradient(135deg, #6B7280, #374151)',
+            'Josei': 'linear-gradient(135deg, #C084FC, #9333EA)',
+            'Award Winning': 'linear-gradient(135deg, #FDE68A, #EAB308)',
+            'Boys Love': 'linear-gradient(135deg, #93C5FD, #60A5FA)',
+            'Girls Love': 'linear-gradient(135deg, #F9A8D4, #EC4899)',
+            'Gourmet': 'linear-gradient(135deg, #FCA5A5, #F97316)',
+            'Avant Garde': 'linear-gradient(135deg, #E879F9, #A21CAF)',
         };
 
         // Recherche insensible à la casse
