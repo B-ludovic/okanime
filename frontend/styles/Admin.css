@@ -594,6 +594,94 @@
   margin-bottom: var(--espace-md);
 }
 
+/* Navigation rapide (shortcuts) */
+.admin-shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espace-md);
+  overflow: hidden;
+}
+
+.admin-shortcut-card {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-md);
+  padding: var(--espace-md) var(--espace-lg);
+  background-color: var(--fond-carte);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  border-radius: var(--arrondi-petit);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.admin-shortcut-card:hover {
+  border-color: var(--bleu-pastel);
+  background-color: rgba(147, 197, 253, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(147, 197, 253, 0.15);
+}
+
+.admin-shortcut-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--bleu-pastel) 0%, var(--cyan-pastel) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.admin-shortcut-warning .admin-shortcut-icon {
+  background: linear-gradient(135deg, var(--jaune-pastel) 0%, var(--or-pastel) 100%);
+}
+
+.admin-shortcut-success .admin-shortcut-icon {
+  background: linear-gradient(135deg, var(--vert-pastel) 0%, #10B981 100%);
+}
+
+.admin-shortcut-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-shortcut-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--texte-noir);
+}
+
+.admin-shortcut-desc {
+  font-size: 0.8rem;
+  color: var(--texte-gris);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.admin-shortcut-arrow {
+  color: var(--texte-gris);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.admin-shortcut-card:hover .admin-shortcut-arrow {
+  transform: translateX(4px);
+  color: var(--bleu-pastel);
+}
+
 /* Boutons de filtre admin */
 .admin-filter-btn {
   display: inline-flex;
@@ -880,6 +968,11 @@
   /* Stats Grid */
   .admin-stats-grid {
     grid-template-columns: 1fr; /* Une seule colonne */
+  }
+
+  /* Shortcuts */
+  .admin-shortcuts-grid {
+    grid-template-columns: 1fr;
   }
 
   /* Cartes Animés (Mode Vertical) */
