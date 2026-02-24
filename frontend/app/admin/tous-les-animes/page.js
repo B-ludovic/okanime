@@ -194,10 +194,12 @@ function TousLesAnimesPage() {
                   <h3 className="admin-anime-title">{anime.titreVf}</h3>
 
                   <div className="admin-anime-meta">
-                    <span className="admin-anime-meta-item">
-                      <User size={14} />
-                      Ajouté par : {anime.userAjout?.username || 'Inconnu'}
-                    </span>
+                    {anime.userAjout && (
+                      <span className="admin-anime-meta-item">
+                        <User size={14} />
+                        Ajouté par : {anime.userAjout.username}
+                      </span>
+                    )}
                     <span className="admin-anime-meta-item">
                       <Calendar size={14} />
                       {anime.studio} • {anime.anneeDebut}
