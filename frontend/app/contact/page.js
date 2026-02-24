@@ -12,6 +12,7 @@ export default function ContactPage() {
     email: '',
     sujet: '',
     message: '',
+    website: '', // Honeypot anti-bots (caché aux humains)
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -118,6 +119,20 @@ export default function ContactPage() {
                 )}
 
                 <form onSubmit={handleSubmit} className="contact-form">
+                  {/* Honeypot anti-bots : caché aux humains, rempli automatiquement par les bots */}
+                  <div style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }} aria-hidden="true">
+                    <label htmlFor="website">Ne pas remplir</label>
+                    <input
+                      type="text"
+                      id="website"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="nom">Nom complet</label>
                     <input
