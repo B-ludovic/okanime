@@ -111,23 +111,24 @@ function AdminAvisPage() {
             )}
           </p>
         </div>
+      </div>
 
-        <div className="admin-filters">
-          {[
-            { key: 'all', label: 'Tous' },
-            { key: 'recent', label: 'Plus récents' },
-            { key: 'highRated', label: 'Meilleures notes' },
-            { key: 'lowRated', label: 'Moins bien notés' },
-          ].map(({ key, label }) => (
-            <button
-              key={key}
-              className={`admin-filter-btn ${filter === key ? 'active' : ''}`}
-              onClick={() => setFilter(key)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+      {/* Filtres */}
+      <div className="admin-filters">
+        {[
+          { key: 'all', label: 'Tous' },
+          { key: 'recent', label: 'Plus récents' },
+          { key: 'highRated', label: 'Meilleures notes' },
+          { key: 'lowRated', label: 'Moins bien notés' },
+        ].map(({ key, label }) => (
+          <button
+            key={key}
+            className={`admin-filter-btn ${filter === key ? 'active' : ''}`}
+            onClick={() => setFilter(key)}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       {/* Erreur */}
