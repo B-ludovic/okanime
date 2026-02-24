@@ -43,14 +43,14 @@ export default function AvisForm({ animeId, existingAvis, onAvisSubmitted }) {
         // Modifier l'avis existant
         await api.put(`/avis/${existingAvis.id}`, {
           note,
-          commentaire: commentaire.trim() || null,
+          commentaire: commentaire.trim() || undefined,
         });
       } else {
         // Créer un nouvel avis
         await api.post('/avis', {
           animeId,
           note,
-          commentaire: commentaire.trim() || null,
+          commentaire: commentaire.trim() || undefined,
         });
       }
 
