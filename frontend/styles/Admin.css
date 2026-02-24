@@ -822,24 +822,60 @@
 
 .admin-avis-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--espace-md);
+  align-items: center;
   gap: var(--espace-md);
+  margin-bottom: var(--espace-md);
+}
+
+/* Badge note coloré */
+.admin-avis-note-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+}
+
+.admin-avis-note-badge.note-high {
+  background: linear-gradient(135deg, var(--vert-pastel) 0%, #10B981 100%);
+}
+
+.admin-avis-note-badge.note-mid {
+  background: linear-gradient(135deg, var(--jaune-pastel) 0%, var(--or-pastel) 100%);
+}
+
+.admin-avis-note-badge.note-low {
+  background: linear-gradient(135deg, var(--rouge-pastel) 0%, #EF4444 100%);
 }
 
 .admin-avis-info {
   display: flex;
   flex-direction: column;
   gap: var(--espace-xs);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Ligne user + date + étoiles */
+.admin-avis-meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-md);
+  flex-wrap: wrap;
 }
 
 .admin-avis-user {
   display: flex;
   align-items: center;
-  gap: var(--espace-xs);
+  gap: 0.25rem;
   font-weight: 600;
-  color: var(--texte-noir);
+  font-size: 0.875rem;
+  color: var(--texte-gris);
 }
 
 .admin-avis-username {
@@ -847,19 +883,18 @@
 }
 
 .admin-avis-anime {
-  color: var(--texte-gris);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .admin-avis-anime strong {
   color: var(--bleu-pastel);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .admin-avis-date {
   display: flex;
   align-items: center;
-  gap: var(--espace-xs);
+  gap: 0.25rem;
   font-size: 0.875rem;
   color: var(--gris-moyen);
 }
