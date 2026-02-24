@@ -305,6 +305,19 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
+/* Carte en attente de modération */
+.admin-anime-card.card-pending {
+  border-left: 4px solid var(--jaune-pastel);
+}
+
+/* Titre + badge sur la même ligne */
+.admin-anime-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  flex-wrap: wrap;
+}
+
 .admin-anime-content {
   display: grid;
   grid-template-columns: 150px 1fr auto;

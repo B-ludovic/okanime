@@ -6,23 +6,21 @@ import Image from 'next/image';
 import api from '../../lib/api';
 import { isAuthenticated, getCurrentUser } from '../../lib/utils';
 import { useModal } from '../../context/ModalContext';
-import { CheckCircle, XCircle, Eye, Calendar, User } from 'lucide-react';
+import { CheckCircle, XCircle, Eye, Calendar, User, Clock } from 'lucide-react';
 import '../../../styles/Admin.css';
 
 function AdminAnimesPage() {
   const router = useRouter();
-  const { showSuccess, showError, showWarning, showConfirm } = useModal();
+  const { showSuccess, showError, showConfirm } = useModal();
   const [animes, setAnimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Vérifie l'authentification et le rôle admin
   useEffect(() => {
     if (!isAuthenticated()) {
       router.push('/login');
       return;
     }
-
     const user = getCurrentUser();
     if (user.role !== 'ADMIN') {
       router.push('/');
@@ -30,7 +28,6 @@ function AdminAnimesPage() {
     }
   }, [router]);
 
-  // Récupère les animés en attente
   const fetchPendingAnimes = async () => {
     setLoading(true);
     try {
@@ -48,53 +45,45 @@ function AdminAnimesPage() {
     fetchPendingAnimes();
   }, []);
 
-  // Valider un anime
-  const handleValidate = async (animeId) => {
-    const confirmed = await showConfirm(
-      'Voulez-vous vraiment valider cet anime ?',
-      'Validation d\'animé'
+  const handleValidate = (animeId) => {
+    showConfirm(
+      'Valider cet animé',
+      "L'animé sera publié et visible par tous les utilisateurs.",
+      async () => {
+        try {
+          await api.put(`/admin/animes/${animeId}/moderation`, { statut: 'VALIDE' });
+          fetchPendingAnimes();
+          showSuccess('Animé validé', "L'animé est maintenant publié.");
+        } catch (err) {
+          showError('Erreur', 'Impossible de valider cet animé.');
+          console.error(err);
+        }
+      }
     );
-    if (!confirmed) return;
-
-    try {
-      await api.put(`/admin/animes/${animeId}/moderation`, {
-        statut: 'VALIDE',
-      });
-      fetchPendingAnimes();
-      showSuccess('Animé validé avec succès');
-    } catch (err) {
-      showError('Erreur lors de la validation');
-      console.error(err);
-    }
   };
 
-  // Refuser un anime
-  const handleRefuse = async (animeId) => {
-    const confirmed = await showConfirm(
-      'Voulez-vous vraiment refuser cet anime ?',
-      'Refus d\'animé'
+  const handleRefuse = (animeId) => {
+    showConfirm(
+      'Refuser cet animé',
+      "L'animé sera rejeté et ne sera pas publié.",
+      async () => {
+        try {
+          await api.put(`/admin/animes/${animeId}/moderation`, { statut: 'REFUSE' });
+          fetchPendingAnimes();
+          showSuccess('Animé refusé', "L'animé a été rejeté.");
+        } catch (err) {
+          showError('Erreur', 'Impossible de refuser cet animé.');
+          console.error(err);
+        }
+      }
     );
-    if (!confirmed) return;
-
-    try {
-      await api.put(`/admin/animes/${animeId}/moderation`, {
-        statut: 'REFUSE',
-      });
-      fetchPendingAnimes();
-      showSuccess('Animé refusé');
-    } catch (err) {
-      showError('Erreur lors du refus');
-      console.error(err);
-    }
   };
 
   if (loading) {
     return (
-      <>
-        <div className="admin-loading">
-          <span className="loading"></span>
-        </div>
-      </>
+      <div className="admin-loading">
+        <span className="loading"></span>
+      </div>
     );
   }
 
@@ -102,10 +91,20 @@ function AdminAnimesPage() {
     <>
       {/* Header */}
       <div className="admin-header">
-        <h1 className="admin-title">Modération des animés</h1>
-        <p className="admin-subtitle">
-          {animes.length} animé{animes.length > 1 ? 's' : ''} en attente de validation
-        </p>
+        <div>
+          <h1 className="admin-title">Modération des animés</h1>
+          <p className="admin-subtitle">
+            {animes.length === 0
+              ? 'Aucun animé en attente de validation'
+              : `${animes.length} animé${animes.length > 1 ? 's' : ''} en attente de validation`}
+          </p>
+        </div>
+        {animes.length > 0 && (
+          <span className="admin-badge admin-badge-pending">
+            <Clock size={14} />
+            {animes.length} en attente
+          </span>
+        )}
       </div>
 
       {/* Erreur */}
@@ -119,7 +118,7 @@ function AdminAnimesPage() {
       {animes.length > 0 ? (
         <div className="admin-animes-list">
           {animes.map((anime) => (
-            <div key={anime.id} className="admin-anime-card">
+            <div key={anime.id} className="admin-anime-card card-pending">
               <div className="admin-anime-content">
                 {/* Poster */}
                 <Image
@@ -132,17 +131,29 @@ function AdminAnimesPage() {
 
                 {/* Informations */}
                 <div className="admin-anime-info">
-                  <h3 className="admin-anime-title">{anime.titreVf}</h3>
+                  <div className="admin-anime-title-row">
+                    <h3 className="admin-anime-title">{anime.titreVf}</h3>
+                    <span className="admin-badge admin-badge-pending">
+                      <Clock size={12} />
+                      En attente
+                    </span>
+                  </div>
 
                   <div className="admin-anime-meta">
                     <span className="admin-anime-meta-item">
                       <User size={14} />
-                      Ajouté par : {anime.userAjout?.username || 'Inconnu'}
+                      Proposé par <strong>{anime.userAjout?.username || 'Inconnu'}</strong>
                     </span>
                     <span className="admin-anime-meta-item">
                       <Calendar size={14} />
                       {anime.studio} • {anime.anneeDebut}
                     </span>
+                    {anime.createdAt && (
+                      <span className="admin-anime-meta-item">
+                        <Clock size={14} />
+                        Soumis le {new Date(anime.createdAt).toLocaleDateString('fr-FR')}
+                      </span>
+                    )}
                   </div>
 
                   <p className="admin-anime-synopsis">{anime.synopsis}</p>
@@ -173,11 +184,11 @@ function AdminAnimesPage() {
                     Refuser
                   </button>
                   <button
-                    className="admin-btn btn-ghost admin-btn-small"
+                    className="admin-btn admin-btn-ghost admin-btn-small"
                     onClick={() => router.push(`/anime/${anime.id}`)}
                   >
                     <Eye size={16} />
-                    Voir
+                    Voir la fiche
                   </button>
                 </div>
               </div>
@@ -186,10 +197,12 @@ function AdminAnimesPage() {
         </div>
       ) : (
         <div className="admin-empty">
-          <div className="admin-empty-icon">✨</div>
-          <h3 className="admin-empty-title">Aucun anime en attente</h3>
+          <div className="admin-empty-icon">
+            <Image src="/icons/television.png" alt="Aucun anime en attente" width={64} height={64} />
+          </div>
+          <h3 className="admin-empty-title">File de modération vide</h3>
           <p className="admin-empty-text">
-            Tous les animés ont été modérés !
+            Tous les animés proposés ont été traités. Revenez plus tard !
           </p>
         </div>
       )}
