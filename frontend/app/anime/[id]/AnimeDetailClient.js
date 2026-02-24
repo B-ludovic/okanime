@@ -9,7 +9,7 @@ import api from '../../../app/lib/api';
 import { isAuthenticated, getCurrentUser } from '../../../app/lib/utils';
 import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
 import styles from '../../../styles/modules/AnimeDetail.module.css';
-import { Star, BookmarkPlus } from 'lucide-react';
+import { Star, BookmarkPlus, Pencil, Heart, Calendar } from 'lucide-react';
 import AnimeStructuredData from '../../../components/seo/AnimeStructuredData';
 import AvisSection from '../../../components/avis/AvisSection';
 import { useModal } from '../../context/ModalContext';
@@ -340,12 +340,7 @@ function AnimeDetailPage({ id }) {
                                             className={styles.editButton}
                                             title="Modifier cet anime"
                                         >
-                                            <Image 
-                                                src="/icons/edit.png"
-                                                alt="Modifier" 
-                                                width={22} 
-                                                height={22}
-                                            />
+                                            <Pencil size={18} />
                                         </button>
                                     )}
                                     
@@ -355,20 +350,27 @@ function AnimeDetailPage({ id }) {
                                         className={styles.favoriteButton}
                                         title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
                                     >
-                                    <Image 
-                                        src={isFavorite ? "/icons/favori.png" : "/icons/favori-empty.png"}
-                                        alt="Favori" 
-                                        width={28} 
-                                        height={28}
+                                    <Heart
+                                        size={24}
+                                        fill={isFavorite ? 'var(--corail)' : 'none'}
+                                        color={isFavorite ? 'var(--corail)' : 'currentColor'}
                                         className={styles.favoriteIcon}
                                     />
                                 </button>
                                 </div>
                             </div>
 
-                            {anime.studio && (
-                                <p className={styles.author}>de {anime.studio}</p>
-                            )}
+                            <div className={styles.metaRow}>
+                                {anime.studio && (
+                                    <span className={styles.author}>de {anime.studio}</span>
+                                )}
+                                {anime.anneeDebut && (
+                                    <span className={styles.year}>
+                                        <Calendar size={14} />
+                                        {anime.anneeDebut}
+                                    </span>
+                                )}
+                            </div>
 
                             {/* Genres */}
                             {anime.genres && anime.genres.length > 0 && (
@@ -406,7 +408,6 @@ function AnimeDetailPage({ id }) {
                                                     <iframe
                                                         src={trailer.trailer.embed_url}
                                                         title={trailer.title}
-                                                        frameBorder="0"
                                                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                         allowFullScreen
                                                         className={styles.videoIframe}

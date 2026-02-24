@@ -148,10 +148,11 @@
 
 .editButton {
   background: transparent;
-  border: 2px solid var(--bleu-principal);
+  border: 2px solid var(--bleu-pastel);
+  color: var(--bleu-pastel);
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 0.5rem;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,7 +162,8 @@
 }
 
 .editButton:hover {
-  background-color: var(--bleu-principal);
+  background-color: var(--bleu-pastel);
+  color: white;
   transform: scale(1.1);
 }
 
@@ -205,10 +207,26 @@
   filter: brightness(1.1);
 }
 
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-md);
+  margin-bottom: var(--espace-md);
+  flex-wrap: wrap;
+}
+
 .author {
   font-size: 1.125rem;
   color: var(--texte-gris);
-  margin-bottom: var(--espace-md);
+}
+
+.year {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--texte-gris);
+  font-weight: 500;
 }
 
 .genresSection {
