@@ -36,6 +36,7 @@ enum Role {
 model Anime {
   id                String            @id @default(uuid())
   malId             Int?              @unique // MyAnimeList ID depuis Jikan
+  slug              String?           @unique // URL lisible ex: fire-force
   titreVf           String
   synopsis          String            @db.Text
   anneeDebut        Int
