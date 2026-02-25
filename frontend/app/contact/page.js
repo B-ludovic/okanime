@@ -46,6 +46,13 @@ export default function ContactPage() {
       return;
     }
 
+    // Validation longueur du message
+    if (formData.message.length < 10) {
+      setError('Le message doit contenir au moins 10 caractères');
+      setLoading(false);
+      return;
+    }
+
     try {
       // On envoie les données du formulaire à notre API backend
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
@@ -144,6 +151,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       placeholder="Votre nom"
                       className="form-input"
+                      maxLength={100}
                       required
                     />
                   </div>
@@ -158,6 +166,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       placeholder="votre.email@exemple.com"
                       className="form-input"
+                      maxLength={254}
                       required
                     />
                   </div>
@@ -192,6 +201,7 @@ export default function ContactPage() {
                       placeholder="Décrivez votre demande en détail..."
                       rows={6}
                       className="form-textarea"
+                      maxLength={1000}
                       required
                     />
                     <span className="form-help">
