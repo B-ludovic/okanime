@@ -132,10 +132,10 @@ function AnimeDetailPage({ slug }) {
             }
         };
 
-        if (id) {
+        if (slug) {
             fetchAnime();
         }
-    }, [id]);
+    }, [slug]);
 
     // Fonction pour basculer le favori
     const handleFavoriteToggle = async () => {
