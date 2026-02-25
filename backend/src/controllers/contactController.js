@@ -1,31 +1,39 @@
 import { PrismaClient } from '@prisma/client';
+import { z } from 'zod';
 import { httpStatusCodes, HttpNotFoundError, HttpConflictError, HttpBadRequestError, HttpForbiddenError } from '../utils/httpErrors.js';
 
 const prisma = new PrismaClient();
+
+// Schéma de validation Zod pour le formulaire de contact
+const contactSchema = z.object({
+  nom: z.string().min(1, 'Le nom est requis').max(100, 'Le nom ne peut pas dépasser 100 caractères').trim(),
+  email: z.string().email('Email invalide').max(254, 'Email trop long').trim(),
+  sujet: z.enum(
+    ['question', 'suggestion', 'bug', 'anime', 'compte', 'autre'],
+    { errorMap: () => ({ message: 'Sujet invalide' }) }
+  ),
+  message: z
+    .string()
+    .min(10, 'Le message doit contenir au moins 10 caractères')
+    .max(1000, 'Le message ne peut pas dépasser 1000 caractères')
+    .trim(),
+});
 
 // Fonction pour créer un message de contact
 // Cette fonction est appelée quand un utilisateur remplit le formulaire de contact
 const createMessage = async (req, res, next) => {
   try {
-    // On récupère les données envoyées par l'utilisateur
-    const { nom, email, sujet, message } = req.body;
-
-    // Validation basique : on vérifie que tous les champs sont remplis
-    if (!nom || !email || !sujet || !message) {
+    // Validation avec Zod (taille, format, enum sujet)
+    const result = contactSchema.safeParse(req.body);
+    if (!result.success) {
+      const firstError = result.error.errors[0]?.message || 'Données invalides';
       return res.status(httpStatusCodes.BAD_REQUEST).json({
         success: false,
-        error: 'Tous les champs sont requis',
+        error: firstError,
       });
     }
 
-    // Validation de l'email : format basique
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(httpStatusCodes.BAD_REQUEST).json({
-        success: false,
-        error: 'Email invalide',
-      });
-    }
+    const { nom, email, sujet, message } = result.data;
 
     // On crée le message dans la base de données
     const newMessage = await prisma.message.create({
