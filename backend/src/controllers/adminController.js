@@ -4,6 +4,7 @@ import { HttpNotFoundError, HttpBadRequestError, HttpForbiddenError, HttpConflic
 import { uploadPoster, deleteFromCloudinary } from '../services/uploadService.js';
 import { getAnimeDetailsFromJikan, getEpisodesCountFromJikan } from '../services/jikanService.js';
 import { translateToFrench } from '../services/translationService.js';
+import { generateSlug } from '../utils/slugUtils.js';
 import prisma from '../config/prisma.js';
 
 // GESTION DES ANIMÉS 
@@ -86,6 +87,7 @@ const createAnime = asyncHandler(async (req, res) => {
   const anime = await prisma.anime.create({
     data: {
       titreVf: validatedData.titreVf,
+      slug: generateSlug(validatedData.titreVf),
       synopsis: validatedData.synopsis,
       anneeDebut: validatedData.anneeDebut,
       studio: validatedData.studio,
