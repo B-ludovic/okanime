@@ -96,13 +96,13 @@ const getAllAnimes = async (req, res, next) => {
   }
 };
 
-// Récupérer un anime par ID
+// Récupérer un anime par slug
 const getAnimeById = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id: slug } = req.params;
 
     const anime = await prisma.anime.findUnique({
-      where: { id },
+      where: { slug },
       include: {
         genres: {
           include: {
