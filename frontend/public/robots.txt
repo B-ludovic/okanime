@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Ne pas indexer les pages privées
+Disallow: /admin
+Disallow: /profil
+Disallow: /bibliotheque
+Disallow: /anime/ajouter
+
+Sitemap: https://okanime.live/sitemap.xml
