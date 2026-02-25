@@ -11,6 +11,6 @@ export { generateMetadata } from './metadata';
 // Il ne fait que retourner le Client Component
 export default async function AnimeDetailPage({ params }) {
     // Next.js 16: params est une Promise
-    const { id } = await params;
-    return <AnimeDetailClient id={id} />;
+    const { slug } = await params;
+    return <AnimeDetailClient slug={slug} />;
 }

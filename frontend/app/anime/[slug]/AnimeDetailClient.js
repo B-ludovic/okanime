@@ -15,7 +15,7 @@ import AvisSection from '../../../components/avis/AvisSection';
 import { useModal } from '../../context/ModalContext';
 
 // Composant client pour la page de détail d'anime
-function AnimeDetailPage({ id }) {
+function AnimeDetailPage({ slug }) {
     const router = useRouter();
     const { showError, showSuccess, showWarning } = useModal();
     const [anime, setAnime] = useState(null);
@@ -101,7 +101,7 @@ function AnimeDetailPage({ id }) {
     useEffect(() => {
         const fetchAnime = async () => {
             try {
-                const response = await api.get(`/animes/${id}`);
+                const response = await api.get(`/animes/${slug}`);
                 setAnime(response.data.anime);
                 setVideos(response.data.videos); // Récupère les vidéos
                 
