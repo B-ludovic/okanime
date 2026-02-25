@@ -53,7 +53,7 @@ function AnimeCard({ anime }) {
   };
 
   return (
-    <Link href={`/anime/${anime.id}`} className={styles.animeCard}>
+    <Link href={`/anime/${anime.slug}`} className={styles.animeCard}>
       {/* Bannière gradient en arrière-plan */}
       {anime.banniereUrl && anime.banniereUrl.startsWith('gradient-') && (
         <div className={`${anime.banniereUrl} ${styles.bannerBackground}`}></div>

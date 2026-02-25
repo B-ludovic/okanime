@@ -274,7 +274,7 @@ function TousLesAnimesPage() {
                   </button>
                   <button
                     className="admin-btn admin-btn-small admin-btn-ghost"
-                    onClick={() => router.push(`/anime/${anime.id}`)}
+                    onClick={() => router.push(`/anime/${anime.slug}`)}
                     title="Voir"
                   >
                     <Eye size={14} />

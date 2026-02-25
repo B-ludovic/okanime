@@ -81,7 +81,7 @@ async function sitemap() {
             }
             
             return {
-                url: `${SITE_URL}/anime/${anime.id}`,
+                url: `${SITE_URL}/anime/${anime.slug}`,
                 lastModified,
                 changeFrequency: 'weekly',
                 priority: 0.7,

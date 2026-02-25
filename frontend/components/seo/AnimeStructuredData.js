@@ -46,7 +46,7 @@ export default function AnimeStructuredData({ anime }) {
     }),
     
     // URL de la page
-    url: `https://okanime.live/anime/${anime.id}`,
+    url: `https://okanime.live/anime/${anime.slug}`,
     
     // Langue
     inLanguage: 'fr-FR',

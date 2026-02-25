@@ -185,7 +185,7 @@ function AdminAnimesPage() {
                   </button>
                   <button
                     className="admin-btn admin-btn-ghost admin-btn-small"
-                    onClick={() => router.push(`/anime/${anime.id}`)}
+                    onClick={() => router.push(`/anime/${anime.slug}`)}
                   >
                     <Eye size={16} />
                     Voir la fiche

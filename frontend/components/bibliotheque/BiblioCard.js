@@ -41,7 +41,7 @@ function BiblioCard({ entry, onUpdate, onDelete }) {
       </div>
 
       {/* Image */}
-      <Link href={`/anime/${entry.saison.anime.id}`}>
+      <Link href={`/anime/${entry.saison.anime.slug}`}>
         <div className={styles.imageContainer}>
           <Image
             src={entry.saison.anime.posterUrl || '/placeholder-anime.jpg'}
@@ -55,7 +55,7 @@ function BiblioCard({ entry, onUpdate, onDelete }) {
 
       <div className={styles.body}>
         {/* Titre */}
-        <Link href={`/anime/${entry.saison.anime.id}`}>
+        <Link href={`/anime/${entry.saison.anime.slug}`}>
           <h3 className={styles.title}>
             {entry.saison.anime.titreVf}
             {entry.saison.numeroSaison > 1 && ` - S${entry.saison.numeroSaison}`}

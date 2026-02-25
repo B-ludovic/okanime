@@ -121,7 +121,7 @@ function HeroBanner() {
                     <div className={styles.heroBannerActions}>
                         <button
                             className="btn btn-primary btn-large"
-                            onClick={() => router.push(`/anime/${currentAnime.id}`)}
+                            onClick={() => router.push(`/anime/${currentAnime.slug}`)}
                         >
                             Découvrir l&apos;anime
                         </button>
@@ -129,7 +129,7 @@ function HeroBanner() {
                             <button
                                 className="btn btn-ghost btn-large"
                                 style={{ color: 'white' }}
-                                onClick={() => router.push(`/anime/${currentAnime.id}`)}
+                                onClick={() => router.push(`/anime/${currentAnime.slug}`)}
                             >
                                 <Heart size={20} />
                                 Ajouter

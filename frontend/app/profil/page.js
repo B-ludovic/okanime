@@ -259,7 +259,7 @@ function ProfilPage() {
                   {recentAnimes.map((entry) => (
                     <Link
                       key={entry.id}
-                      href={`/anime/${entry.saison.anime.id}`}
+                      href={`/anime/${entry.saison.anime.slug}`}
                       className="profil-anime-mini"
                     >
                       <Image
