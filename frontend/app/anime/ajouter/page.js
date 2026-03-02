@@ -66,12 +66,18 @@ function AjouterAnimeContent() {
 
   // Pré-remplit le formulaire avec les données Jikan
   const handleSelectJikanAnime = (anime) => {
+    // Récupère les IDs des genres Jikan qui existent dans notre base
+    const jikanGenreNames = anime.genres?.map((g) => g.name) || [];
+    const matchedGenreIds = genres
+      .filter((g) => jikanGenreNames.includes(g.nom))
+      .map((g) => g.id);
+
     setFormData({
       titreVf: anime.title_english || anime.title || '',
       synopsis: anime.synopsis || '',
       anneeDebut: anime.year || new Date().getFullYear(),
       studio: anime.studios?.[0]?.name || '',
-      genreIds: [], // Les genres seront ajoutés manuellement
+      genreIds: matchedGenreIds,
       malId: anime.mal_id, // Enregistre le MAL ID
     });
     
