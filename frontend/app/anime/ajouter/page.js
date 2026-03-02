@@ -443,12 +443,13 @@ function AjouterAnimeContent() {
                   </div>
                 ) : (
                   <div className="ajout-anime-preview">
-                    <Image 
-                      src={posterPreview} 
-                      alt="Preview" 
+                    <Image
+                      src={posterPreview}
+                      alt="Preview"
                       width={200}
                       height={300}
-                      className="ajout-anime-preview-image" 
+                      className="ajout-anime-preview-image"
+                      unoptimized
                     />
                     <button
                       type="button"
