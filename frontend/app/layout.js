@@ -1,5 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import { ModalProvider } from './context/ModalContext'
 import AxeptioWidget from '../components/layout/AxeptioWidget'
 
@@ -69,6 +70,19 @@ function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className={inter.className}>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-ZWJ7FYLJ5X"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-ZWJ7FYLJ5X');
+          `}
+        </Script>
         <ModalProvider>
           {children}
           <AxeptioWidget />
