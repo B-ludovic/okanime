@@ -294,6 +294,7 @@ function AjouterAnimeContent() {
                       width={60}
                       height={85}
                       style={{ borderRadius: '4px', objectFit: 'cover' }}
+                      unoptimized
                     />
                     <div className="jikan-result-content">
                       <h4 className="jikan-result-title">
