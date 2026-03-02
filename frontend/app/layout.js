@@ -72,7 +72,7 @@ function RootLayout({ children }) {
       <body className={inter.className}>
         {/* Google Analytics */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-ZWJ7FYLJ5X"
+          src="https://www.googletagmanager.com/gtag/js?id=G-BQ52RCC5FC"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -80,7 +80,7 @@ function RootLayout({ children }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-ZWJ7FYLJ5X');
+            gtag('config', 'G-BQ52RCC5FC');
           `}
         </Script>
         <ModalProvider>
