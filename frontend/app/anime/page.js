@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import AnimeCard from '../../components/anime/AnimeCard';
@@ -8,12 +9,15 @@ import api from '../../app/lib/api';
 import styles from '../../styles/modules/AnimeList.module.css';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-function AnimePage() {
+function AnimePageContent() {
+  const searchParams = useSearchParams();
+  const initialGenre = searchParams.get('genre') || '';
+
   const [animes, setAnimes] = useState([]);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState(initialGenre);
   const [selectedSort, setSelectedSort] = useState('recent');
   const [pagination, setPagination] = useState({
     page: 1,
@@ -56,9 +60,9 @@ function AnimePage() {
     }
   };
 
-  // Charge les animés au montage
+  // Charge les animés au montage (avec le genre éventuel depuis l'URL)
   useEffect(() => {
-    fetchAnimes(1);
+    fetchAnimes(1, initialGenre, 'recent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -207,5 +211,14 @@ function AnimePage() {
   );
 }
 
-
-export default AnimePage;
+export default function AnimePage() {
+  return (
+    <Suspense fallback={
+      <div className={styles.loadingContainer}>
+        <span className="loading"></span>
+      </div>
+    }>
+      <AnimePageContent />
+    </Suspense>
+  );
+}

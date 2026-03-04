@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
@@ -395,13 +396,14 @@ function AnimeDetailPage({ slug }) {
                                     <span className={styles.genresLabel}>Genres :</span>
                                     <div className={styles.genres}>
                                         {anime.genres.map((genreRelation) => (
-                                            <span 
-                                                key={genreRelation.genre.id} 
+                                            <Link
+                                                key={genreRelation.genre.id}
+                                                href={`/anime?genre=${encodeURIComponent(genreRelation.genre.nom)}`}
                                                 className={styles.genreTag}
                                                 style={{ background: getGenreColor(genreRelation.genre.nom) }}
                                             >
                                                 {genreRelation.genre.nom}
-                                            </span>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>
