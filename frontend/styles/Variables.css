@@ -42,6 +42,12 @@
   --espace-lg: 2rem;
   --espace-xl: 3rem;
   
+  /* Bordures */
+  --bordure: #E5E7EB;
+
+  /* Texte principal */
+  --texte-principal: #1F2937;
+
   /* Coins arrondis */
   --arrondi-petit: 0.5rem;
   --arrondi-moyen: 1rem;

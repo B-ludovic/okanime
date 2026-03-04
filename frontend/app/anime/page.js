@@ -10,8 +10,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 function AnimePage() {
   const [animes, setAnimes] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+  const [selectedSort, setSelectedSort] = useState('recent');
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 12,
@@ -19,13 +22,30 @@ function AnimePage() {
     totalPages: 0,
   });
 
+  // Charge les genres au montage
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const response = await api.get('/genres');
+        setGenres(response.data.genres);
+      } catch (err) {
+        console.error('Erreur lors du chargement des genres:', err);
+      }
+    };
+    fetchGenres();
+  }, []);
+
   // Récupère les animés depuis l'API
-  const fetchAnimes = async (page = 1) => {
+  const fetchAnimes = async (page = 1, genre = selectedGenre, sort = selectedSort) => {
     setLoading(true);
     setError('');
 
     try {
-      const response = await api.get(`/animes?page=${page}&limit=12`);
+      const params = new URLSearchParams({ page, limit: 12 });
+      if (genre) params.append('genre', genre);
+      if (sort) params.append('sort', sort);
+
+      const response = await api.get(`/animes?${params.toString()}`);
       setAnimes(response.data.animes);
       setPagination(response.data.pagination);
     } catch (err) {
@@ -36,10 +56,33 @@ function AnimePage() {
     }
   };
 
-  // Charge les animés au montage du composant
+  // Charge les animés au montage
   useEffect(() => {
-    fetchAnimes(pagination.page);
+    fetchAnimes(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Recharge depuis la page 1 quand les filtres changent
+  const handleGenreChange = (e) => {
+    const genre = e.target.value;
+    setSelectedGenre(genre);
+    setPagination((p) => ({ ...p, page: 1 }));
+    fetchAnimes(1, genre, selectedSort);
+  };
+
+  const handleSortChange = (e) => {
+    const sort = e.target.value;
+    setSelectedSort(sort);
+    setPagination((p) => ({ ...p, page: 1 }));
+    fetchAnimes(1, selectedGenre, sort);
+  };
+
+  const handleReset = () => {
+    setSelectedGenre('');
+    setSelectedSort('recent');
+    setPagination((p) => ({ ...p, page: 1 }));
+    fetchAnimes(1, '', 'recent');
+  };
 
   // Change de page
   const handlePageChange = (newPage) => {
@@ -47,6 +90,8 @@ function AnimePage() {
     fetchAnimes(newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const hasActiveFilters = selectedGenre || selectedSort !== 'recent';
 
   return (
     <div className={styles.page}>
@@ -60,6 +105,43 @@ function AnimePage() {
             <p className={styles.subtitle}>
               Découvrez notre collection de {pagination.total} animés
             </p>
+          </div>
+
+          {/* Barre de filtres */}
+          <div className={styles.filterBar}>
+            <div className={styles.filterGroup}>
+              <label className={styles.filterLabel}>Genre</label>
+              <select
+                className={styles.filterSelect}
+                value={selectedGenre}
+                onChange={handleGenreChange}
+              >
+                <option value="">Tous les genres</option>
+                {genres.map((genre) => (
+                  <option key={genre.id} value={genre.nom}>
+                    {genre.nom}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className={styles.filterGroup}>
+              <label className={styles.filterLabel}>Trier par</label>
+              <select
+                className={styles.filterSelect}
+                value={selectedSort}
+                onChange={handleSortChange}
+              >
+                <option value="recent">Plus récents</option>
+                <option value="rating">Mieux notés</option>
+              </select>
+            </div>
+
+            {hasActiveFilters && (
+              <button className={styles.filterReset} onClick={handleReset}>
+                Réinitialiser
+              </button>
+            )}
           </div>
 
           {/* Message d'erreur */}
