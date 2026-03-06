@@ -462,7 +462,7 @@ function AnimeDetailPage({ slug }) {
                                                 <h4 className={styles.trailerTitle}>Trailer {index + 1}</h4>
                                                 <div className={styles.videoWrapper}>
                                                     <iframe
-                                                        src={trailer.trailer.embed_url}
+                                                        src={trailer.trailer.embed_url?.replace('autoplay=1', 'autoplay=0')}
                                                         title={`Trailer ${index + 1}`}
                                                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                         allowFullScreen
