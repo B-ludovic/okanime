@@ -81,6 +81,7 @@ function HeroBanner() {
                     fill
                     className={styles.heroBannerImage}
                     priority
+                    unoptimized={!imageUrl?.includes('cloudinary')}
                 />
                 <div className={styles.heroBannerOverlay}></div>
             </div>
