@@ -7,6 +7,7 @@ import {
     getAllGenres,
     getFeaturedAnimes,
     getRecentAnimes,
+    getAnimeEpisodes,
 } from '../controllers/animeController.js';
 
 const router = express.Router();
@@ -15,6 +16,7 @@ const router = express.Router();
 router.get('/', getAllAnimes);
 router.get('/featured', getFeaturedAnimes);
 router.get('/recent', getRecentAnimes);
+router.get('/:id/episodes', getAnimeEpisodes); // Avant /:id pour éviter le conflit de route
 router.get('/:id', getAnimeById);
 
 // Routes admin (besoin d'être admin)
