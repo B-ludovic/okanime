@@ -10,7 +10,7 @@ import api from '../../../app/lib/api';
 import { isAuthenticated, getCurrentUser } from '../../../app/lib/utils';
 import { STATUTS_BIBLIOTHEQUE } from '../../../app/lib/constants';
 import styles from '../../../styles/modules/AnimeDetail.module.css';
-import { Star, BookmarkPlus, Pencil, Heart, Calendar } from 'lucide-react';
+import { Star, BookmarkPlus, Pencil, Heart, Calendar, Plus, Minus } from 'lucide-react';
 import AnimeStructuredData from '../../../components/seo/AnimeStructuredData';
 import AvisSection from '../../../components/avis/AvisSection';
 import { useModal } from '../../context/ModalContext';
