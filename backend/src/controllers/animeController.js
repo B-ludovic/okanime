@@ -254,10 +254,80 @@ const getRecentAnimes = async (req, res, next) => {
   }
 };
 
+// Récupérer les épisodes d'un anime depuis Jikan
+// On mappe les épisodes sur les saisons grâce au nombre d'épisodes par saison
+const getAnimeEpisodes = async (req, res, next) => {
+  try {
+    const { id: slug } = req.params;
+
+    // 1. On récupère l'anime pour avoir son malId et ses saisons
+    const anime = await prisma.anime.findUnique({
+      where: { slug },
+      select: {
+        malId: true,
+        titreVf: true,
+        saisons: {
+          orderBy: { numeroSaison: 'asc' },
+          select: { numeroSaison: true, nombreEpisodes: true },
+        },
+      },
+    });
+
+    if (!anime) throw new HttpNotFoundError('Anime introuvable');
+
+    // 2. Si pas de malId, on ne peut pas aller chercher chez Jikan
+    if (!anime.malId) {
+      return res.status(httpStatusCodes.OK).json({
+        success: true,
+        data: { saisons: [], message: "Cet anime n'a pas d'identifiant Jikan" },
+      });
+    }
+
+    // 3. On récupère tous les épisodes depuis Jikan (page 1 = 100 épisodes max)
+    const jikanUrl = `https://api.jikan.moe/v4/anime/${anime.malId}/episodes`;
+    const jikanResponse = await fetch(jikanUrl);
+    if (!jikanResponse.ok) throw new Error('Erreur Jikan');
+    const jikanData = await jikanResponse.json();
+    const tousLesEpisodes = jikanData.data || [];
+
+    // 4. On distribue les épisodes dans chaque saison
+    // Exemple : saison 1 = 13 épisodes → épisodes 1 à 13
+    //           saison 2 = 12 épisodes → épisodes 14 à 25
+    let episodeOffset = 0;
+    const saisons = anime.saisons.map((saison) => {
+      const debut = episodeOffset;
+      const fin = episodeOffset + saison.nombreEpisodes;
+
+      const episodes = tousLesEpisodes
+        .slice(debut, fin)
+        .map((ep) => ({
+          numero: ep.mal_id,
+          titre: ep.title || `Épisode ${ep.mal_id}`,
+          titreFr: ep.title_romanji || null,
+        }));
+
+      episodeOffset = fin;
+
+      return {
+        numeroSaison: saison.numeroSaison,
+        episodes,
+      };
+    });
+
+    res.status(httpStatusCodes.OK).json({
+      success: true,
+      data: { saisons },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   getAllAnimes,
   getAnimeById,
   getAllGenres,
   getFeaturedAnimes,
   getRecentAnimes,
+  getAnimeEpisodes,
 };
