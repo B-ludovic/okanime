@@ -19,6 +19,7 @@ import {
   getAllAvis,
   deleteAvis,
   getAllAnimesAdmin,
+  getActivityLogs,
 } from '../controllers/adminController.js';
 import {
   getAllMessages,
@@ -73,5 +74,8 @@ router.delete('/messages/:id', authMiddleware, adminOnly, adminLimiter, deleteMe
 
 // STATISTIQUES (admin uniquement) - rate limit augmenté
 router.get('/stats', authMiddleware, adminOnly, adminLimiter, getStats );
+
+// LOGS D'ACTIVITÉ (admin uniquement)
+router.get('/logs', authMiddleware, adminOnly, adminLimiter, getActivityLogs);
 
 export default router;
