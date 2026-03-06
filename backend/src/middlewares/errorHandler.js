@@ -9,6 +9,11 @@ const errorHandler = (err, req, res, next) => {
     method: req.method,
   });
 
+  // En développement, on logue la stack trace côté serveur uniquement (jamais dans la réponse HTTP)
+  if (process.env.NODE_ENV === 'development') {
+    console.error('[Stack]', err.stack);
+  }
+
   // Si c'est une de nos erreurs HTTP custom
   if (err instanceof HttpError) {
     return res.status(err.statusCode).json({
@@ -17,8 +22,6 @@ const errorHandler = (err, req, res, next) => {
         message: err.message,
         type: err.name,
       },
-      // En développement, on affiche aussi la stack trace
-      ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
     });
   }
 
@@ -29,7 +32,7 @@ const errorHandler = (err, req, res, next) => {
       error: {
         message: 'Erreur de validation des données',
         type: 'ValidationError',
-        details: err.errors, // Détails des champs invalides
+        details: err.errors,
       },
     });
   }
@@ -42,7 +45,6 @@ const errorHandler = (err, req, res, next) => {
         message: 'Erreur lors de l\'opération en base de données',
         type: 'DatabaseError',
       },
-      ...(process.env.NODE_ENV === 'development' && { details: err.message }),
     });
   }
 
@@ -53,10 +55,6 @@ const errorHandler = (err, req, res, next) => {
       message: 'Une erreur inattendue s\'est produite',
       type: 'InternalServerError',
     },
-    ...(process.env.NODE_ENV === 'development' && { 
-      stack: err.stack,
-      originalError: err.message 
-    }),
   });
 };
 
