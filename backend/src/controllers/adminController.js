@@ -880,6 +880,56 @@ const deleteAvis = asyncHandler(async (req, res) => {
   });
 });
 
+// LOGS D'ACTIVITÉ - GET /api/admin/logs
+const getActivityLogs = asyncHandler(async (req, res) => {
+  const [recentAnimes, recentAvis] = await Promise.all([
+    prisma.anime.findMany({
+      take: 25,
+      orderBy: { dateAjout: 'desc' },
+      select: {
+        id: true,
+        titreVf: true,
+        slug: true,
+        dateAjout: true,
+        statutModeration: true,
+        userAjout: { select: { id: true, username: true } },
+      },
+    }),
+    prisma.avis.findMany({
+      take: 25,
+      orderBy: { dateCreation: 'desc' },
+      select: {
+        id: true,
+        note: true,
+        dateCreation: true,
+        user: { select: { id: true, username: true } },
+        anime: { select: { id: true, titreVf: true, slug: true } },
+      },
+    }),
+  ]);
+
+  const logs = [
+    ...recentAnimes.map((a) => ({
+      type: 'ANIME_AJOUTE',
+      date: a.dateAjout,
+      user: a.userAjout,
+      anime: { id: a.id, titreVf: a.titreVf, slug: a.slug },
+      meta: { statut: a.statutModeration },
+    })),
+    ...recentAvis.map((av) => ({
+      type: 'AVIS_POSTE',
+      date: av.dateCreation,
+      user: av.user,
+      anime: av.anime,
+      meta: { note: av.note },
+    })),
+  ]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 50);
+
+  res.status(httpStatusCodes.OK).json({ success: true, logs });
+});
+
 export {
   createAnime,
   updateAnime,
@@ -900,4 +950,5 @@ export {
   getAllAvis,
   deleteAvis,
   getAllAnimesAdmin,
+  getActivityLogs,
 };
