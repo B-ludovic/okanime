@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import xss from 'xss-clean';
 import helmetConfig from './config/security.js';
@@ -80,10 +81,13 @@ app.use(cors(corsOptions));
 // Gestion des requêtes OPTIONS (preflight CORS)
 app.options('*', cors(corsOptions));
 
-// 4. Parse les données JSON
+// 4. Parse les cookies
+app.use(cookieParser());
+
+// 5. Parse les données JSON
 app.use(express.json({ limit: '10mb' })); // Limite la taille des requêtes JSON à 10MB
 
-// 5. Parse les données URL-encoded
+// 6. Parse les données URL-encoded
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // 6. Rate limiting général - RETIRÉ

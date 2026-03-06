@@ -1,4 +1,14 @@
 import { asyncHandler } from '../middlewares/errorHandler.js';
+
+// Options du cookie JWT — HttpOnly empêche l'accès depuis JavaScript (protection XSS)
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en prod
+  sameSite: 'lax',
+  domain: process.env.NODE_ENV === 'production' ? '.okanime.live' : undefined,
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en ms
+  path: '/',
+};
 import { registerSchema, loginSchema, validateData } from '../validators/authValidator.js';
 import { hashPassword, comparePassword } from '../utils/bcrypt.js';
 import { generateToken } from '../utils/jwt.js';
@@ -73,16 +83,16 @@ const register = asyncHandler(async (req, res) => {
     // On ne bloque pas l'inscription si l'email échoue
   }
 
-  // 8. Génère un token JWT
+  // 8. Génère un token JWT et le place dans un cookie HttpOnly
   const token = generateToken(user.id, user.role);
+  res.cookie('token', token, cookieOptions);
 
-  // 9. Renvoie la réponse
+  // 9. Renvoie la réponse (sans le token dans le body)
   res.status(httpStatusCodes.CREATED).json({
     success: true,
     message: 'Inscription réussie ! Veuillez vérifier votre email pour confirmer votre compte.',
     data: {
       user,
-      token,
     },
   });
 });
@@ -109,10 +119,11 @@ const login = asyncHandler(async (req, res) => {
     throw new HttpUnauthorizedError('Email ou mot de passe incorrect');
   }
 
-  // 4. Génère un token JWT
+  // 4. Génère un token JWT et le place dans un cookie HttpOnly
   const token = generateToken(user.id, user.role);
+  res.cookie('token', token, cookieOptions);
 
-  // 5. Renvoie la réponse (sans le mot de passe)
+  // 5. Renvoie la réponse (sans le token dans le body)
   res.status(httpStatusCodes.OK).json({
     success: true,
     message: 'Connexion réussie',
@@ -125,7 +136,6 @@ const login = asyncHandler(async (req, res) => {
         avatar: user.avatar,
         dateInscription: user.dateInscription,
       },
-      token,
     },
   });
 });
@@ -405,4 +415,21 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
-export { register, login, getMe, updateAvatar, confirmEmail, resendConfirmationEmail, forgotPassword, resetPassword };
+// DÉCONNEXION - POST /api/auth/logout
+const logout = asyncHandler(async (req, res) => {
+  // Efface le cookie en lui donnant une date d'expiration passée
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    domain: process.env.NODE_ENV === 'production' ? '.okanime.live' : undefined,
+    path: '/',
+  });
+
+  res.status(httpStatusCodes.OK).json({
+    success: true,
+    message: 'Déconnexion réussie',
+  });
+});
+
+export { register, login, logout, getMe, updateAvatar, confirmEmail, resendConfirmationEmail, forgotPassword, resetPassword };
