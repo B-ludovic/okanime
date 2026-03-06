@@ -4,8 +4,7 @@ import { asyncHandler } from '../middlewares/errorHandler.js';
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en prod
-  sameSite: 'lax',
-  domain: process.env.NODE_ENV === 'production' ? '.okanime.live' : undefined,
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' requis pour cross-site en prod
   maxAge: 24 * 60 * 60 * 1000, // 24 heures en ms
   path: '/',
 };
