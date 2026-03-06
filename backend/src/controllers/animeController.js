@@ -1,6 +1,6 @@
 import prisma from '../config/prisma.js';
 import { HttpNotFoundError, httpStatusCodes } from '../utils/httpErrors.js';
-import { getAnimeVideosFromJikan } from '../services/jikanService.js';
+import { getAnimeVideosFromJikan, getAnimeEpisodesFromJikan } from '../services/jikanService.js';
 
 // Récupérer tous les animes (avec recherche et filtres)
 const getAllAnimes = async (req, res, next) => {
@@ -283,12 +283,8 @@ const getAnimeEpisodes = async (req, res, next) => {
       });
     }
 
-    // 3. On récupère tous les épisodes depuis Jikan (page 1 = 100 épisodes max)
-    const jikanUrl = `https://api.jikan.moe/v4/anime/${anime.malId}/episodes`;
-    const jikanResponse = await fetch(jikanUrl);
-    if (!jikanResponse.ok) throw new Error('Erreur Jikan');
-    const jikanData = await jikanResponse.json();
-    const tousLesEpisodes = jikanData.data || [];
+    // 3. On récupère tous les épisodes depuis Jikan via le service partagé
+    const tousLesEpisodes = await getAnimeEpisodesFromJikan(anime.malId);
 
     // 4. On distribue les épisodes dans chaque saison
     // Exemple : saison 1 = 13 épisodes → épisodes 1 à 13

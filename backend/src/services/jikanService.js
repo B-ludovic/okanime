@@ -71,6 +71,17 @@ const getAnimeVideosFromJikan = async (jikanId) => {
   }
 };
 
+// Récupère la liste des épisodes d'un anime depuis Jikan
+const getAnimeEpisodesFromJikan = async (jikanId) => {
+  try {
+    const data = await fetchFromJikan(`/anime/${jikanId}/episodes`);
+    return data.data || [];
+  } catch (error) {
+    console.warn(`Impossible de récupérer les épisodes pour malId ${jikanId}:`, error.message);
+    return [];
+  }
+};
+
 // Récupère les genres disponibles sur Jikan
 const getGenresFromJikan = async () => {
   const data = await fetchFromJikan('/genres/anime');
@@ -103,6 +114,7 @@ export {
   getAnimeDetailsFromJikan,
   getEpisodesCountFromJikan,
   getAnimeVideosFromJikan,
+  getAnimeEpisodesFromJikan,
   getGenresFromJikan,
   transformJikanToOurFormat,
 };
