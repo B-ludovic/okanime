@@ -1293,3 +1293,71 @@
     grid-template-columns: 1fr 1fr; /* 2 colonnes max sur mobile */
   }
 }
+
+/* ============================================================
+   LOGS D'ACTIVITÉ
+   ============================================================ */
+
+.admin-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.admin-log-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--fond-carte);
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+}
+
+.admin-log-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-log-icon-anime {
+  background: #DBEAFE;
+  color: #2563EB;
+}
+
+.admin-log-icon-avis {
+  background: #FEF9C3;
+  color: #CA8A04;
+}
+
+.admin-log-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-log-text {
+  font-size: 14px;
+  color: var(--texte-principal);
+  margin: 0 0 4px;
+  line-height: 1.4;
+}
+
+.admin-log-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin-log-link:hover {
+  text-decoration: underline;
+}
+
+.admin-log-date {
+  font-size: 12px;
+  color: var(--texte-secondaire);
+}

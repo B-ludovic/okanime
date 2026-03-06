@@ -54,7 +54,6 @@ const fetchAPI = async (endpoint, options = {}) => {
       }
     }
 
-    console.error(`API Error [${options.method || 'GET'} ${endpoint}]:`, errorMessage);
     throw new Error(errorMessage);
   }
 

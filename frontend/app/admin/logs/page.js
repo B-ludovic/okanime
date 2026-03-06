@@ -93,7 +93,7 @@ function AdminLogsPage() {
     const fetchLogs = async () => {
       try {
         const response = await api.get('/admin/logs');
-        setLogs(response.data.logs);
+        setLogs(response.logs);
       } catch (err) {
         showError('Erreur', 'Impossible de charger les logs');
         console.error(err);
@@ -102,7 +102,8 @@ function AdminLogsPage() {
       }
     };
     fetchLogs();
-  }, [showError]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     return (

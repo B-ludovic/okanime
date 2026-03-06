@@ -12,7 +12,8 @@ import {
   MessageSquare,
   Shield,
   Calendar,
-  Star
+  Star,
+  ScrollText
 } from 'lucide-react';
 
 const navLinks = [
@@ -21,7 +22,7 @@ const navLinks = [
   { href: '/admin/tous-les-animes', label: 'Tous les animés', icon: Film },
   { href: '/admin/saisons', label: 'Saisons', icon: Calendar, wip: true },
   { href: '/admin/avis', label: 'Avis', icon: Star },
-  { href: '/admin/logs', label: "Logs d'activité", iconSrc: '/icons/log.png', wip: true },
+  { href: '/admin/logs', label: "Logs d'activité", icon: ScrollText },
   { href: '/admin/messages', label: 'Messages', icon: MessageSquare },
   { href: '/admin/users', label: 'Utilisateurs', icon: Users },
   { href: '/admin/genres', label: 'Genres', icon: Tag },
