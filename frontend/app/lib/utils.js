@@ -36,6 +36,7 @@ const logout = async () => {
   }
 
   localStorage.removeItem('user');
+  document.cookie = 'auth=; path=/; max-age=0';
   window.location.href = '/';
 };
 

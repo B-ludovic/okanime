@@ -67,6 +67,7 @@ function RegisterForm() {
       const { confirmPassword, ...dataToSend } = formData;
       const response = await api.post('/auth/register', dataToSend);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      document.cookie = `auth=${response.data.user.role}; path=/; max-age=${24 * 60 * 60}; secure; samesite=lax`;
       router.push('/');
       router.refresh();
     } catch (err) {

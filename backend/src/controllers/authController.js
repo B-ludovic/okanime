@@ -5,7 +5,6 @@ const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax',
-  domain: process.env.NODE_ENV === 'production' ? '.okanime.live' : undefined,
   maxAge: 24 * 60 * 60 * 1000, // 24 heures en ms
   path: '/',
 };
@@ -422,7 +421,6 @@ const logout = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    domain: process.env.NODE_ENV === 'production' ? '.okanime.live' : undefined,
     path: '/',
   });
 
