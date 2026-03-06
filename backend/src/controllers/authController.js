@@ -6,7 +6,7 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en prod
   sameSite: 'lax',
   domain: process.env.NODE_ENV === 'production' ? '.okanime.live' : undefined,
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours en ms
+  maxAge: 24 * 60 * 60 * 1000, // 24 heures en ms
   path: '/',
 };
 import { registerSchema, loginSchema, validateData } from '../validators/authValidator.js';
