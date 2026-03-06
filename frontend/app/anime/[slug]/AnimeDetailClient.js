@@ -29,6 +29,42 @@ function AnimeDetailPage({ slug }) {
     const [biblioStatut, setBiblioStatut] = useState(null); // Statut actuel dans la biblio
     const [saving, setSaving] = useState(false);
 
+    // État pour les épisodes : quelle saison est ouverte, et les épisodes déjà chargés
+    const [expandedSaison, setExpandedSaison] = useState(null); // numéro de saison ouverte
+    const [episodesBySaison, setEpisodesBySaison] = useState({}); // { 1: [...], 2: [...] }
+    const [loadingEpisodes, setLoadingEpisodes] = useState(false);
+
+    // Ouvre ou ferme la liste des épisodes d'une saison
+    const handleToggleEpisodes = async (numeroSaison) => {
+        // Si la saison est déjà ouverte, on la ferme
+        if (expandedSaison === numeroSaison) {
+            setExpandedSaison(null);
+            return;
+        }
+
+        // On ouvre le panneau tout de suite (le spinner s'affiche dedans)
+        setExpandedSaison(numeroSaison);
+
+        // Si les épisodes sont déjà en cache, pas besoin de refaire l'appel
+        if (episodesBySaison[numeroSaison]) return;
+
+        // Sinon on va chercher tous les épisodes de l'anime (un seul appel pour toutes les saisons)
+        setLoadingEpisodes(true);
+        try {
+            const response = await api.get(`/animes/${slug}/episodes`);
+            // On stocke chaque saison dans un objet { numeroSaison: [episodes] }
+            const cache = {};
+            response.data.saisons.forEach((saison) => {
+                cache[saison.numeroSaison] = saison.episodes;
+            });
+            setEpisodesBySaison(cache);
+        } catch (err) {
+            console.error('Erreur lors du chargement des épisodes:', err);
+        } finally {
+            setLoadingEpisodes(false);
+        }
+    };
+
     // Vérifie si l'utilisateur peut modifier cet anime
     const canEdit = () => {
         if (!isAuthenticated() || !anime) return false;
