@@ -155,7 +155,11 @@ setGenres(response.data.genres);
                 <button
                   type="button"
                   className={`btn btn-secondary ${styles.addAnimeBtn}`}
-                  onClick={() => router.push(isAuthenticated() ? '/anime/ajouter' : '/login')}
+                  onClick={() => {
+                    const dest = isAuthenticated() ? '/anime/ajouter' : '/login';
+                    const params = searchQuery ? `?q=${encodeURIComponent(searchQuery)}` : '';
+                    router.push(`${dest}${params}`);
+                  }}
                 >
                   <Plus size={18} />
                   Proposer un animé

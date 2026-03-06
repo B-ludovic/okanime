@@ -15,6 +15,7 @@ function AjouterAnimeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get('edit'); // ID de l'anime à modifier
+  const prefilledQuery = searchParams.get('q'); // Query pré-remplie depuis la recherche
   const { showSuccess } = useModal();
   const [isEditMode, setIsEditMode] = useState(false);
   const [genres, setGenres] = useState([]);
@@ -40,14 +41,15 @@ function AjouterAnimeContent() {
   const [posterUrl, setPosterUrl] = useState(null); // URL du poster depuis Jikan
 
   // Recherche sur Jikan
-  const handleJikanSearch = async () => {
-    if (!jikanQuery.trim()) return;
+  const handleJikanSearch = async (queryOverride) => {
+    const query = queryOverride ?? jikanQuery;
+    if (!query.trim()) return;
     
     setSearchingJikan(true);
     setJikanResults([]);
     
     try {
-      const response = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(jikanQuery)}&limit=10`);
+      const response = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=10`);
       const data = await response.json();
       
       // Filtre les doublons basés sur mal_id
@@ -96,6 +98,15 @@ function AjouterAnimeContent() {
     // Scroll vers le formulaire
     window.scrollTo({ top: 400, behavior: 'smooth' });
   };
+
+  // Pré-remplit la recherche Jikan depuis l'URL
+  useEffect(() => {
+    if (prefilledQuery) {
+      setJikanQuery(prefilledQuery);
+      handleJikanSearch(prefilledQuery);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Vérifie l'authentification
   useEffect(() => {
