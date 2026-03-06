@@ -12,29 +12,16 @@ const getCurrentUser = () => {
   }
 };
 
-// Vérifie si l'utilisateur est authentifié (via les données user en localStorage)
-// Le vrai token est dans un cookie HttpOnly — le backend valide chaque requête
+// Vérifie si l'utilisateur est authentifié
 const isAuthenticated = () => {
   if (typeof window === 'undefined') return false;
-
-  const userString = localStorage.getItem('user');
-  return !!userString;
+  return !!localStorage.getItem('token');
 };
 
-// Déconnecte l'utilisateur : efface le cookie côté backend + les données locales
-const logout = async () => {
+// Déconnecte l'utilisateur
+const logout = () => {
   if (typeof window === 'undefined') return;
-
-  try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.okanime.live/api';
-    await fetch(`${API_URL}/auth/logout`, {
-      method: 'POST',
-      credentials: 'include',
-    });
-  } catch {
-    // Si le backend est injoignable, on déconnecte quand même côté client
-  }
-
+  localStorage.removeItem('token');
   localStorage.removeItem('user');
   document.cookie = 'auth=; path=/; max-age=0';
   window.location.href = '/';

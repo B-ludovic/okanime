@@ -5,13 +5,8 @@ import prisma from '../config/prisma.js';
 
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
-  // 1. Lit le token depuis le cookie HttpOnly (priorité)
-  let token = req.cookies?.token;
-
-  // 2. Fallback sur le header Authorization (compatibilité)
-  if (!token) {
-    token = getTokenFromHeader(req.headers.authorization);
-  }
+  // 1. Lit le token depuis le header Authorization
+  const token = getTokenFromHeader(req.headers.authorization);
 
   if (!token) {
     throw new HttpUnauthorizedError('Token manquant. Veuillez vous connecter.');

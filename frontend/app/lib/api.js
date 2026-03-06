@@ -11,17 +11,21 @@ const fetchAPI = async (endpoint, options = {}) => {
     headers['Content-Type'] = 'application/json';
   }
 
+  // Ajoute le token JWT depuis le localStorage
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   // Ajoute les headers personnalisés si fournis
   if (options.headers) {
     Object.assign(headers, options.headers);
   }
 
-  // Fait la requête — credentials: include envoie automatiquement le cookie HttpOnly
   const response = await fetch(`${API_URL}${endpoint}`, {
     method: options.method || 'GET',
     headers: headers,
     body: options.body,
-    credentials: 'include',
   });
 
   // Gère les erreurs
@@ -41,6 +45,7 @@ const fetchAPI = async (endpoint, options = {}) => {
       const currentPath = window.location.pathname;
       // Ne pas rediriger si on est déjà sur la page de login (erreur de connexion)
       if (currentPath !== '/login' && currentPath !== '/register') {
+        localStorage.removeItem('token');
         localStorage.removeItem('user');
         window.location.href = '/login';
       }

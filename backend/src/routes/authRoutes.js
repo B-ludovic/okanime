@@ -2,7 +2,6 @@ import express from 'express';
 import {
     register,
     login,
-    logout,
     getMe,
     updateAvatar,
     confirmEmail,
@@ -40,9 +39,6 @@ router.post('/reset-password', strictLimiter, resetPassword);
 
 
 // ROUTES PROTÉGÉES - Nécessitent authentification
-
-// Déconnexion - Efface le cookie HttpOnly
-router.post('/logout', logout);
 
 // Récupère les infos de l'utilisateur connecté
 router.get('/me', authMiddleware, getMe);

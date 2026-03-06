@@ -1,13 +1,4 @@
 import { asyncHandler } from '../middlewares/errorHandler.js';
-
-// Options du cookie JWT — HttpOnly empêche l'accès depuis JavaScript (protection XSS)
-const cookieOptions = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-  maxAge: 24 * 60 * 60 * 1000, // 24 heures en ms
-  path: '/',
-};
 import { registerSchema, loginSchema, validateData } from '../validators/authValidator.js';
 import { hashPassword, comparePassword } from '../utils/bcrypt.js';
 import { generateToken } from '../utils/jwt.js';
@@ -82,15 +73,15 @@ const register = asyncHandler(async (req, res) => {
     // On ne bloque pas l'inscription si l'email échoue
   }
 
-  // 8. Génère un token JWT et le place dans un cookie HttpOnly
+  // 8. Génère un token JWT
   const token = generateToken(user.id, user.role);
-  res.cookie('token', token, cookieOptions);
 
-  // 9. Renvoie la réponse (sans le token dans le body)
+  // 9. Renvoie la réponse
   res.status(httpStatusCodes.CREATED).json({
     success: true,
     message: 'Inscription réussie ! Veuillez vérifier votre email pour confirmer votre compte.',
     data: {
+      token,
       user,
     },
   });
@@ -118,15 +109,15 @@ const login = asyncHandler(async (req, res) => {
     throw new HttpUnauthorizedError('Email ou mot de passe incorrect');
   }
 
-  // 4. Génère un token JWT et le place dans un cookie HttpOnly
+  // 4. Génère un token JWT
   const token = generateToken(user.id, user.role);
-  res.cookie('token', token, cookieOptions);
 
-  // 5. Renvoie la réponse (sans le token dans le body)
+  // 5. Renvoie la réponse
   res.status(httpStatusCodes.OK).json({
     success: true,
     message: 'Connexion réussie',
     data: {
+      token,
       user: {
         id: user.id,
         username: user.username,
