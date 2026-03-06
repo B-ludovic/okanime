@@ -484,13 +484,49 @@ function AnimeDetailPage({ slug }) {
                                     <div className={styles.seasonsList}>
                                         {anime.saisons.map((saison) => (
                                             <div key={saison.id} className={styles.seasonItem}>
-                                                <span className={styles.seasonName}>
-                                                    Saison {saison.numeroSaison}
-                                                    {saison.titreSaison && ` — ${saison.titreSaison}`}
-                                                </span>
-                                                <span className={styles.seasonEpisodes}>
-                                                    {saison.nombreEpisodes} épisodes
-                                                </span>
+                                                {/* Ligne principale de la saison */}
+                                                <div className={styles.seasonHeader}>
+                                                    <span className={styles.seasonName}>
+                                                        Saison {saison.numeroSaison}
+                                                        {saison.titreSaison && ` — ${saison.titreSaison}`}
+                                                    </span>
+                                                    <div className={styles.seasonMeta}>
+                                                        <span className={styles.seasonEpisodes}>
+                                                            {saison.nombreEpisodes} épisodes
+                                                        </span>
+                                                        {/* Bouton + / − pour voir les titres d'épisodes (disponible si malId existe) */}
+                                                        {anime.malId && (
+                                                            <button
+                                                                className={styles.episodesToggleBtn}
+                                                                onClick={() => handleToggleEpisodes(saison.numeroSaison)}
+                                                                title={expandedSaison === saison.numeroSaison ? 'Masquer les épisodes' : 'Voir les épisodes'}
+                                                            >
+                                                                {expandedSaison === saison.numeroSaison
+                                                                    ? <Minus size={14} />
+                                                                    : <Plus size={14} />
+                                                                }
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Liste des épisodes (visible si la saison est ouverte) */}
+                                                {expandedSaison === saison.numeroSaison && (
+                                                    <div className={styles.episodesList}>
+                                                        {loadingEpisodes ? (
+                                                            <span className="loading"></span>
+                                                        ) : episodesBySaison[saison.numeroSaison]?.length > 0 ? (
+                                                            episodesBySaison[saison.numeroSaison].map((ep) => (
+                                                                <div key={ep.numero} className={styles.episodeItem}>
+                                                                    <span className={styles.episodeNumber}>{ep.numero}</span>
+                                                                    <span className={styles.episodeTitle}>{ep.titre}</span>
+                                                                </div>
+                                                            ))
+                                                        ) : (
+                                                            <p className={styles.episodesEmpty}>Titres d&apos;épisodes non disponibles</p>
+                                                        )}
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
