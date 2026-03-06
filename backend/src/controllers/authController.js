@@ -3,8 +3,9 @@ import { asyncHandler } from '../middlewares/errorHandler.js';
 // Options du cookie JWT — HttpOnly empêche l'accès depuis JavaScript (protection XSS)
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en prod
-  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' requis pour cross-site en prod
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax',
+  domain: process.env.NODE_ENV === 'production' ? '.okanime.live' : undefined,
   maxAge: 24 * 60 * 60 * 1000, // 24 heures en ms
   path: '/',
 };
