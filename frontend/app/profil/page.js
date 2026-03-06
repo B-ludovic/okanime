@@ -268,6 +268,7 @@ function ProfilPage() {
                         width={150}
                         height={210}
                         className="profil-anime-mini-image"
+                        unoptimized={!entry.saison.anime.posterUrl?.includes('cloudinary')}
                       />
                       <div className="profil-anime-mini-title">
                         {entry.saison.anime.titreVf}

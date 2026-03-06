@@ -127,6 +127,7 @@ function AdminAnimesPage() {
                   width={150}
                   height={210}
                   className="admin-anime-poster"
+                  unoptimized={!anime.posterUrl?.includes('cloudinary')}
                 />
 
                 {/* Informations */}

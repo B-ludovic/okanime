@@ -49,6 +49,7 @@ function BiblioCard({ entry, onUpdate, onDelete }) {
             fill
             className={styles.image}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
+            unoptimized={!entry.saison.anime.posterUrl?.includes('cloudinary')}
           />
         </div>
       </Link>

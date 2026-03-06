@@ -306,6 +306,7 @@ function AnimeDetailPage({ slug }) {
                                         height={420}
                                         className={styles.posterImage}
                                         priority
+                                        unoptimized={!anime.posterUrl?.includes('cloudinary')}
                                     />
                                     {anime.noteMoyenne > 0 && (
                                         <div className={styles.posterBadge}>

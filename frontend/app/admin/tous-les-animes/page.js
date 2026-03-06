@@ -224,6 +224,7 @@ function TousLesAnimesPage() {
                   width={80}
                   height={112}
                   className="admin-anime-poster-sm"
+                  unoptimized={!anime.posterUrl?.includes('cloudinary')}
                 />
 
                 {/* Infos */}
