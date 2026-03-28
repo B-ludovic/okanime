@@ -1,6 +1,5 @@
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
-import Image from 'next/image';
 import styles from '../../styles/modules/Legal.module.css';
 
 const metadata = {
@@ -13,226 +12,185 @@ function CGUPage() {
     <div className={styles.legalPage}>
       <Header />
 
+      <div className={styles.hero}>
+        <h1 className={styles.heroTitle}>Conditions Générales d&apos;Utilisation</h1>
+        <p className={styles.heroSubtitle}>Règles d&apos;utilisation du site O&apos;Kanime</p>
+      </div>
+
       <main className={styles.legalMain}>
         <div className={styles.legalContainer}>
-          <div className={styles.legalHeader}>
-            <h1 className={styles.legalTitle}>Conditions Générales d&apos;Utilisation</h1>
-            <p className={styles.legalSubtitle}>
-              Règles d&apos;utilisation du site O&apos;Kanime
-            </p>
-          </div>
 
-          <div className={styles.legalContent}>
-            {/* Acceptation */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>1. Acceptation des CGU</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  En accédant et en utilisant le site O&apos;Kanime, vous acceptez d&apos;être lié par ces 
-                  Conditions Générales d&apos;Utilisation (CGU). Si vous n&apos;acceptez pas ces conditions, 
-                  veuillez ne pas utiliser le site.
-                </p>
-              </div>
-            </section>
-
-            {/* Nature du service */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>2. Nature du service</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  O&apos;Kanime est une plateforme web gratuite permettant de :
-                </p>
-                <ul>
-                  <li>Découvrir et rechercher des animés</li>
-                  <li>Créer une bibliothèque personnelle d&apos;animés</li>
-                  <li>Suivre sa progression de visionnage</li>
-                  <li>Laisser des avis et notes sur les animés</li>
-                  <li>Participer à une communauté d&apos;amateurs d&apos;animés</li>
-                </ul>
-                <div className={styles.highlight}>
-                  <p>
-                    <strong>Important :</strong> O&apos;Kanime est un projet étudiant et personnel. 
-                    Le service est fourni &quot;tel quel&quot; sans garantie de disponibilité permanente.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Inscription */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>3. Inscription et compte utilisateur</h2>
-              <div className={styles.sectionContent}>
-                <h3 className={styles.subsectionTitle}>
-                  Conditions d&apos;inscription :
-                </h3>
-                <ul>
-                  <li><strong>Âge minimum :</strong> 13 ans</li>
-                  <li>Vous devez fournir des informations exactes et à jour</li>
-                  <li>Un seul compte par personne</li>
-                  <li>Vous êtes responsable de la confidentialité de votre mot de passe</li>
-                </ul>
-
-                <h3 className={styles.subsectionTitle}>
-                  Suppression de compte :
-                </h3>
-                <p>
-                  Vous pouvez supprimer votre compte à tout moment depuis votre profil. 
-                  Toutes vos données seront définitivement effacées.
-                </p>
-              </div>
-            </section>
-
-            {/* Utilisation acceptable */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>4. Utilisation acceptable</h2>
-              <div className={styles.sectionContent}>
-                <p>En utilisant O&apos;Kanime, vous vous engagez à :</p>
-                <ul>
-                  <li>Respecter les autres utilisateurs</li>
-                  <li>Ne pas publier de contenu offensant, haineux ou illégal</li>
-                  <li>Ne pas usurper l&apos;identité d&apos;une autre personne</li>
-                  <li>Ne pas spammer ou abuser des fonctionnalités du site</li>
-                  <li>Ne pas tenter de pirater ou compromettre la sécurité du site</li>
-                  <li>Ne pas utiliser de bots ou scripts automatisés sans autorisation</li>
-                </ul>
-
-                <div className={styles.highlight}>
-                  <p>
-                    <Image src="/icons/danger.png" alt="Attention" width={20} height={20} className={styles.dangerIcon} /> <strong>Sanctions :</strong> En cas de non-respect de ces règles, 
-                    votre compte pourra être suspendu ou supprimé sans préavis.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Contenu utilisateur */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>5. Contenu utilisateur</h2>
-              <div className={styles.sectionContent}>
-                <h3 className={styles.subsectionTitle}>
-                  Vos contributions :
-                </h3>
-                <p>
-                  En ajoutant des animés, avis ou commentaires sur O&apos;Kanime, vous :
-                </p>
-                <ul>
-                  <li>Garantissez que vous avez le droit de publier ce contenu</li>
-                  <li>Accordez à O&apos;Kanime une licence non-exclusive pour afficher ce contenu</li>
-                  <li>Restez responsable du contenu que vous publiez</li>
-                </ul>
-
-                <h3 className={styles.subsectionTitle}>
-                  Modération :
-                </h3>
-                <p>
-                  O&apos;Kanime se réserve le droit de modérer, modifier ou supprimer tout contenu 
-                  jugé inapproprié, sans notification préalable.
-                </p>
-              </div>
-            </section>
-
-            {/* Propriété intellectuelle */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>6. Propriété intellectuelle</h2>
-              <div className={styles.sectionContent}>
-                <h3 className={styles.subsectionTitle}>
-                  Code et design :
-                </h3>
-                <p>
-                  Le code source, le design et la structure d&apos;O&apos;Kanime sont la propriété 
-                  de Ludovic BATAILLE. Toute reproduction non autorisée est interdite.
-                </p>
-
-                <h3 className={styles.subsectionTitle}>
-                  Contenus d&apos;animés :
-                </h3>
-                <ul>
-                  <li>
-                    Les informations sur les animés proviennent de <strong>MyAnimeList</strong> via l&apos;API Jikan
-                  </li>
-                  <li>
-                    Les images, titres et descriptions appartiennent à leurs créateurs et studios respectifs
-                  </li>
-                  <li>
-                    O&apos;Kanime ne revendique aucun droit sur ces contenus et les utilise uniquement 
-                    dans un cadre informatif
-                  </li>
-                  <li>
-                    En cas de demande de retrait d&apos;un ayant droit, contactez-nous à 
-                    <a href="mailto:contact@okanime.fr"> contact@okanime.fr</a>
-                  </li>
-                </ul>
-              </div>
-            </section>
-
-            {/* Limitation de responsabilité */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>7. Limitation de responsabilité</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  O&apos;Kanime est fourni &quot;en l&apos;état&quot;. Nous ne garantissons pas :
-                </p>
-                <ul>
-                  <li>La disponibilité permanente du service (maintenance, pannes)</li>
-                  <li>L&apos;exactitude des informations sur les animés</li>
-                  <li>L&apos;absence de bugs ou d&apos;erreurs</li>
-                </ul>
-                <p>
-                  <strong>Exclusion de garanties :</strong> Dans la limite autorisée par la loi, 
-                  O&apos;Kanime décline toute responsabilité en cas de :
-                </p>
-                <ul>
-                  <li>Perte de données</li>
-                  <li>Interruption de service</li>
-                  <li>Dommages directs ou indirects liés à l&apos;utilisation du site</li>
-                </ul>
-              </div>
-            </section>
-
-            {/* Modifications du service */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>8. Modifications du service</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  O&apos;Kanime se réserve le droit de :
-                </p>
-                <ul>
-                  <li>Modifier ou interrompre le service à tout moment</li>
-                  <li>Ajouter ou supprimer des fonctionnalités</li>
-                  <li>Mettre à jour ces CGU (vous serez informé des changements importants)</li>
-                </ul>
-              </div>
-            </section>
-
-            {/* Données personnelles */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>9. Données personnelles</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  Pour plus d&apos;informations sur la collecte et le traitement de vos données, 
-                  consultez notre <a href="/politique-confidentialite">Politique de Confidentialité</a>.
-                </p>
-              </div>
-            </section>
-
-            {/* Loi applicable */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>10. Loi applicable et litiges</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  Ces CGU sont régies par le droit français. En cas de litige, 
-                  nous vous encourageons à nous contacter d&apos;abord pour trouver une solution amiable.
-                </p>
-                <div className={styles.contactInfo}>
-                  <p>Contact : <a href="mailto:contact@okanime.fr">contact@okanime.fr</a></p>
-                </div>
-              </div>
-            </section>
-
-            <div className={styles.updateDate}>
-              Dernière mise à jour : 30 novembre 2025
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>1</span>
+              <h2 className={styles.sectionTitle}>Acceptation des CGU</h2>
             </div>
-          </div>
+            <div className={styles.sectionBody}>
+              <p>
+                L&apos;accès et l&apos;utilisation du site O&apos;Kanime sont soumis à l&apos;acceptation pleine et entière
+                des présentes Conditions Générales d&apos;Utilisation. En naviguant sur le site, vous reconnaissez
+                avoir pris connaissance de ces conditions et les accepter sans réserve.
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>2</span>
+              <h2 className={styles.sectionTitle}>Description du service</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>
+                O&apos;Kanime est une plateforme web gratuite et personnelle développée dans un cadre pédagogique.
+                Elle permet aux utilisateurs de :
+              </p>
+              <ul>
+                <li>Rechercher et consulter des fiches d&apos;animés.</li>
+                <li>Gérer une bibliothèque personnelle (listes d&apos;envies, favoris).</li>
+                <li>Suivre leur progression de visionnage.</li>
+                <li>Publier des avis et des notes.</li>
+              </ul>
+              <div className={styles.infoBox}>
+                <p>
+                  Le service est fourni &quot;en l&apos;état&quot;. En tant que projet étudiant, O&apos;Kanime ne garantit
+                  pas la pérennité du service ni la sauvegarde permanente des données.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>3</span>
+              <h2 className={styles.sectionTitle}>Inscription et sécurité du compte</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <ul>
+                <li><strong>Éligibilité :</strong> L&apos;inscription est réservée aux personnes âgées de 13 ans ou plus.</li>
+                <li><strong>Exactitude :</strong> Vous vous engagez à fournir une adresse email valide et des informations exactes.</li>
+                <li><strong>Responsabilité :</strong> Vous êtes seul responsable de la confidentialité de vos identifiants. Toute activité effectuée depuis votre compte est réputée être de votre fait.</li>
+                <li><strong>Résiliation :</strong> Vous pouvez supprimer votre compte à tout moment via les paramètres de votre profil. Cette action est irréversible et entraîne la suppression de toutes vos données associées.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>4</span>
+              <h2 className={styles.sectionTitle}>Règles de conduite et utilisation acceptable</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>En utilisant O&apos;Kanime, vous vous engagez à ne pas :</p>
+              <ul>
+                <li>Publier des contenus illicites, injurieux, diffamatoires ou haineux.</li>
+                <li>Usurper l&apos;identité d&apos;un tiers ou d&apos;un autre utilisateur.</li>
+                <li>Perturber le bon fonctionnement du site (attaques par déni de service, injection de scripts malveillants, etc.).</li>
+                <li>Utiliser des outils automatisés (bots, scrapers) pour extraire des données sans autorisation préalable.</li>
+                <li>Créer des comptes multiples de manière abusive.</li>
+              </ul>
+              <div className={styles.infoBox}>
+                <p>
+                  <strong>Sanctions :</strong> Tout manquement à ces règles pourra entraîner la suspension temporaire
+                  ou la suppression définitive du compte, sans préavis ni indemnité.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>5</span>
+              <h2 className={styles.sectionTitle}>Propriété intellectuelle</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>
+                <strong>5.1. Propriété de l&apos;éditeur —</strong> Le code source, l&apos;architecture, le design et le logo
+                d&apos;O&apos;Kanime sont la propriété exclusive de Ludovic BATAILLE. Toute reproduction, représentation
+                ou adaptation de ces éléments est interdite sans accord écrit.
+              </p>
+              <p>
+                <strong>5.2. Contenus tiers (Animés) —</strong> Les données relatives aux animés (titres, synopsis, visuels)
+                sont récupérées via l&apos;API Jikan et proviennent de MyAnimeList. Ces contenus appartiennent à leurs
+                studios et ayants-droit respectifs. O&apos;Kanime les utilise uniquement à des fins d&apos;information et d&apos;illustration.
+              </p>
+              <p>
+                <strong>5.3. Contenus utilisateur —</strong> En publiant un avis ou un commentaire, vous accordez à
+                O&apos;Kanime une licence gratuite et non-exclusive d&apos;affichage de ce contenu sur la plateforme.
+                Vous restez propriétaire de vos écrits et responsable de leur teneur.
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>6</span>
+              <h2 className={styles.sectionTitle}>Limitation de responsabilité</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>L&apos;éditeur met tout en œuvre pour assurer l&apos;accès au site, mais sa responsabilité ne pourra être engagée dans les cas suivants :</p>
+              <ul>
+                <li><strong>Interruption de service :</strong> Maintenance, pannes techniques ou cas de force majeure.</li>
+                <li><strong>Contenu des données :</strong> Erreurs ou imprécisions dans les informations fournies par les API tierces.</li>
+                <li><strong>Perte de données :</strong> L&apos;utilisateur est invité à ne pas considérer O&apos;Kanime comme un outil d&apos;archivage critique.</li>
+                <li><strong>Comportement des tiers :</strong> L&apos;éditeur ne peut être tenu responsable des agissements ou propos tenus par les autres utilisateurs.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>7</span>
+              <h2 className={styles.sectionTitle}>Modifications</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>
+                L&apos;éditeur se réserve le droit de modifier, d&apos;ajouter ou de supprimer des fonctionnalités du site
+                à tout moment. Les présentes CGU peuvent également être mises à jour. La poursuite de l&apos;utilisation
+                du site après modification vaut acceptation des nouvelles conditions.
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>8</span>
+              <h2 className={styles.sectionTitle}>Protection des données</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>
+                Le traitement des données personnelles lié à l&apos;utilisation du site est détaillé dans notre{' '}
+                <a href="/politique-confidentialite">Politique de Confidentialité</a>.
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>9</span>
+              <h2 className={styles.sectionTitle}>Droit applicable et litiges</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>
+                Les présentes CGU sont soumises au droit français. En cas de différend, et avant toute action judiciaire,
+                les parties s&apos;engagent à rechercher une solution amiable. À défaut, le litige sera porté devant
+                les tribunaux compétents.
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>10</span>
+              <h2 className={styles.sectionTitle}>Contact</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <div className={styles.infoBox}>
+                <p>Pour toute question ou signalement de contenu inapproprié : <a href="mailto:contact@okanime.fr">contact@okanime.fr</a></p>
+              </div>
+            </div>
+          </section>
+
+          <p className={styles.updateDate}>Dernière mise à jour : 28 mars 2026</p>
         </div>
       </main>
 

@@ -1,6 +1,5 @@
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
-import Image from 'next/image';
 import styles from '../../styles/modules/Legal.module.css';
 
 const metadata = {
@@ -13,204 +12,180 @@ function PolitiqueConfidentialitePage() {
     <div className={styles.legalPage}>
       <Header />
 
+      <div className={styles.hero}>
+        <h1 className={styles.heroTitle}>Politique de Confidentialité</h1>
+        <p className={styles.heroSubtitle}>Protection de vos données personnelles conformément au RGPD</p>
+      </div>
+
       <main className={styles.legalMain}>
         <div className={styles.legalContainer}>
-          <div className={styles.legalHeader}>
-            <h1 className={styles.legalTitle}>Politique de Confidentialité</h1>
-            <p className={styles.legalSubtitle}>
-              Protection de vos données personnelles conformément au RGPD
-            </p>
-          </div>
 
-          <div className={styles.legalContent}>
-            {/* Introduction */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>1. Introduction</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  O&apos;Kanime respecte votre vie privée et s&apos;engage à protéger vos données personnelles.
-                  Cette politique vous explique comment nous collectons, utilisons et protégeons vos informations.
-                </p>
-                <div className={styles.highlight}>
-                  <p>
-                    <strong>Responsable du traitement des données :</strong><br />
-                    Ludovic BATAILLE<br />
-                    Email : <a href="mailto:contact@okanime.fr">contact@okanime.fr</a>
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Données collectées */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>2. Données collectées</h2>
-              <div className={styles.sectionContent}>
-                <p>Nous collectons uniquement les données nécessaires au fonctionnement du site :</p>
-                
-                <h3 className={styles.subsectionTitle}>
-                  Lors de l&apos;inscription :
-                </h3>
-                <ul>
-                  <li><strong>Nom d&apos;utilisateur</strong> : pour vous identifier sur le site</li>
-                  <li><strong>Adresse email</strong> : pour la connexion et les communications importantes</li>
-                  <li><strong>Mot de passe</strong> : stocké de manière sécurisée (hashé avec bcrypt)</li>
-                </ul>
-
-                <h3 className={styles.subsectionTitle}>
-                  Lors de l&apos;utilisation :
-                </h3>
-                <ul>
-                  <li><strong>Photo de profil</strong> (optionnelle) : stockée sur Cloudinary</li>
-                  <li><strong>Bibliothèque d&apos;animés</strong> : animes ajoutés, statuts de visionnage, progression</li>
-                  <li><strong>Avis et notes</strong> : commentaires et notes laissés sur les animés</li>
-                  <li><strong>Données de connexion</strong> : date d&apos;inscription, dernière connexion</li>
-                </ul>
-
-                <div className={styles.highlight}>
-                  <p>
-                    <Image src="/icons/danger.png" alt="Attention" width={20} height={20} className={styles.dangerIcon} /> <strong>Nous ne collectons jamais :</strong><br />
-                    • Données de paiement<br />
-                    • Données de géolocalisation précise<br />
-                    • Données sensibles (origine, santé, etc.)
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Finalité */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>3. Finalité du traitement</h2>
-              <div className={styles.sectionContent}>
-                <p>Vos données sont utilisées pour :</p>
-                <ul>
-                  <li>Créer et gérer votre compte utilisateur</li>
-                  <li>Personnaliser votre expérience (bibliothèque, avis)</li>
-                  <li>Assurer la sécurité et l&apos;intégrité du site</li>
-                  <li>Améliorer nos services</li>
-                  <li>Respecter nos obligations légales</li>
-                </ul>
-                <p>
-                  <strong>Nous ne vendons jamais vos données à des tiers.</strong>
-                </p>
-              </div>
-            </section>
-
-            {/* Partage des données */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>4. Partage des données</h2>
-              <div className={styles.sectionContent}>
-                <p>Vos données peuvent être partagées avec :</p>
-                <ul>
-                  <li>
-                    <strong>Render</strong> (hébergement) : stockage sécurisé de la base de données
-                  </li>
-                  <li>
-                    <strong>Cloudinary</strong> (optionnel) : stockage des photos de profil si vous en uploadez une
-                  </li>
-                </ul>
-                <p>
-                  Ces services sont conformes au RGPD et utilisent vos données uniquement pour les finalités prévues.
-                </p>
-              </div>
-            </section>
-
-            {/* Durée de conservation */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>5. Durée de conservation</h2>
-              <div className={styles.sectionContent}>
-                <ul>
-                  <li><strong>Compte actif :</strong> vos données sont conservées tant que votre compte existe</li>
-                  <li><strong>Suppression de compte :</strong> toutes vos données sont supprimées définitivement</li>
-                  <li><strong>Compte inactif :</strong> les comptes non utilisés depuis plus de 3 ans peuvent être supprimés</li>
-                </ul>
-              </div>
-            </section>
-
-            {/* Vos droits RGPD */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>6. Vos droits (RGPD)</h2>
-              <div className={styles.sectionContent}>
-                <p>Conformément au RGPD, vous disposez des droits suivants :</p>
-                <ul>
-                  <li><strong>Droit d&apos;accès :</strong> consulter vos données personnelles</li>
-                  <li><strong>Droit de rectification :</strong> corriger vos données via votre profil</li>
-                  <li><strong>Droit à l&apos;effacement :</strong> supprimer votre compte et toutes vos données</li>
-                  <li><strong>Droit à la portabilité :</strong> récupérer vos données dans un format lisible</li>
-                  <li><strong>Droit d&apos;opposition :</strong> vous opposer au traitement de vos données</li>
-                  <li><strong>Droit de limitation :</strong> limiter le traitement de vos données</li>
-                </ul>
-
-                <div className={styles.highlight}>
-                  <p>
-                    <strong>Pour exercer vos droits :</strong><br />
-                    Envoyez un email à <a href="mailto:contact@okanime.fr">contact@okanime.fr</a><br />
-                    Réponse sous 30 jours maximum
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Sécurité */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>7. Sécurité des données</h2>
-              <div className={styles.sectionContent}>
-                <p>Nous mettons en œuvre des mesures de sécurité pour protéger vos données :</p>
-                <ul>
-                  <li><strong>Mots de passe :</strong> hashés avec bcrypt (algorithme sécurisé)</li>
-                  <li><strong>Connexion HTTPS :</strong> chiffrement des communications</li>
-                  <li><strong>Protection anti-XSS :</strong> filtrage des entrées utilisateur</li>
-                  <li><strong>Rate limiting :</strong> protection contre les attaques par force brute</li>
-                  <li><strong>Headers de sécurité :</strong> Helmet.js activé</li>
-                </ul>
-              </div>
-            </section>
-
-            {/* Cookies */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>8. Cookies et stockage local</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  O&apos;Kanime utilise le <strong>localStorage</strong> de votre navigateur pour :
-                </p>
-                <ul>
-                  <li>Stocker votre token d&apos;authentification (JWT)</li>
-                  <li>Maintenir votre session connectée</li>
-                </ul>
-                <p>
-                  Aucun cookie publicitaire ou de tracking tiers n&apos;est utilisé.
-                </p>
-              </div>
-            </section>
-
-            {/* Modifications */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>9. Modifications de la politique</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  Cette politique peut être mise à jour. Les modifications importantes vous seront notifiées 
-                  par email ou via une bannière sur le site.
-                </p>
-              </div>
-            </section>
-
-            {/* Contact */}
-            <section className={styles.legalSection}>
-              <h2 className={styles.sectionTitle}>10. Contact</h2>
-              <div className={styles.sectionContent}>
-                <p>
-                  Pour toute question concernant cette politique ou vos données personnelles :
-                </p>
-                <div className={styles.contactInfo}>
-                  <p>Email : <a href="mailto:contact@okanime.fr">contact@okanime.fr</a></p>
-                  <p>Réponse sous 30 jours</p>
-                </div>
-              </div>
-            </section>
-
-            <div className={styles.updateDate}>
-              Dernière mise à jour : 30 novembre 2025
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>1</span>
+              <h2 className={styles.sectionTitle}>Introduction</h2>
             </div>
-          </div>
+            <div className={styles.sectionBody}>
+              <p>
+                Le site <strong>O&apos;Kanime</strong> respecte votre vie privée et s&apos;engage à protéger vos données personnelles.
+                Cette politique détaille la manière dont nous collectons, utilisons et protégeons vos informations dans le cadre de ce projet étudiant.
+              </p>
+              <div className={styles.infoBox}>
+                <p><strong>Responsable du traitement :</strong> Ludovic BATAILLE</p>
+                <p>Contact : <a href="mailto:contact@okanime.fr">contact@okanime.fr</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>2</span>
+              <h2 className={styles.sectionTitle}>Données collectées</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>Nous collectons uniquement les données strictement nécessaires au fonctionnement du service :</p>
+              <p><strong>Lors de l&apos;inscription :</strong></p>
+              <ul>
+                <li><strong>Nom d&apos;utilisateur</strong> : Pour votre identification publique sur le site.</li>
+                <li><strong>Adresse email</strong> : Pour la gestion du compte, la récupération de mot de passe et les communications essentielles.</li>
+                <li><strong>Mot de passe</strong> : Stocké de manière sécurisée (hashé avec l&apos;algorithme bcrypt).</li>
+              </ul>
+              <p><strong>Lors de l&apos;utilisation :</strong></p>
+              <ul>
+                <li><strong>Photo de profil</strong> (optionnelle) : Stockée via le service tiers Cloudinary.</li>
+                <li><strong>Bibliothèque d&apos;animés</strong> : Liste des animés ajoutés, statuts de visionnage et progression.</li>
+                <li><strong>Avis et notes</strong> : Commentaires et évaluations laissés sur les fiches animés.</li>
+                <li><strong>Données de connexion</strong> : Date d&apos;inscription et date de dernière connexion.</li>
+              </ul>
+              <div className={styles.infoBox}>
+                <p>Nous ne collectons aucune donnée bancaire, de géolocalisation précise ou de données sensibles.</p>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>3</span>
+              <h2 className={styles.sectionTitle}>Finalité et base légale</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>Le traitement de vos données repose sur les bases légales suivantes :</p>
+              <ul>
+                <li><strong>Exécution du contrat :</strong> Fournir les services de gestion de bibliothèque et de profil utilisateur.</li>
+                <li><strong>Intérêt légitime :</strong> Assurer la sécurité du site (prévention du spam, protection contre les attaques).</li>
+              </ul>
+              <p>Vos données sont utilisées pour personnaliser votre expérience et ne sont jamais vendues à des tiers.</p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>4</span>
+              <h2 className={styles.sectionTitle}>Partage et transfert des données</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>Pour le fonctionnement technique d&apos;O&apos;Kanime, vos données sont partagées avec les prestataires suivants :</p>
+              <div className={styles.infoBox}>
+                <p><strong>Render (USA)</strong> : Hébergement de l&apos;application et de la base de données.</p>
+                <p><strong>Cloudinary (USA)</strong> : Stockage des images de profil (si utilisées).</p>
+              </div>
+              <p>
+                Étant donné que ces prestataires sont situés aux États-Unis, les transferts de données sont encadrés
+                par des clauses contractuelles types afin de garantir un niveau de protection conforme au RGPD.
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>5</span>
+              <h2 className={styles.sectionTitle}>Durée de conservation</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <ul>
+                <li><strong>Compte actif :</strong> Vos données sont conservées tant que votre compte est ouvert.</li>
+                <li><strong>Inactivité :</strong> Les comptes inactifs depuis plus de 3 ans sont automatiquement supprimés.</li>
+                <li><strong>Suppression :</strong> En cas de suppression de compte à votre initiative, toutes vos données (profil, bibliothèque, avis, images Cloudinary) sont effacées définitivement.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>6</span>
+              <h2 className={styles.sectionTitle}>Vos droits (RGPD)</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>Conformément à la réglementation européenne, vous disposez des droits suivants :</p>
+              <ul>
+                <li><strong>Accès et Rectification :</strong> Consulter et modifier vos informations via votre profil.</li>
+                <li><strong>Effacement :</strong> Demander la suppression totale de votre compte.</li>
+                <li><strong>Portabilité :</strong> Demander une copie de vos données dans un format structuré.</li>
+                <li><strong>Opposition et Limitation :</strong> Vous opposer au traitement de certaines données.</li>
+              </ul>
+              <div className={styles.infoBox}>
+                <p>Pour exercer ces droits, contactez-nous à : <a href="mailto:contact@okanime.fr">contact@okanime.fr</a></p>
+                <p>Une réponse vous sera apportée sous 30 jours maximum.</p>
+                <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de la <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">CNIL</a>.</p>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>7</span>
+              <h2 className={styles.sectionTitle}>Sécurité</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>Nous appliquons des mesures de sécurité rigoureuses :</p>
+              <ul>
+                <li>Chiffrement des mots de passe via bcrypt.</li>
+                <li>Communications sécurisées via protocole HTTPS.</li>
+                <li>Utilisation de Helmet.js pour sécuriser les headers HTTP.</li>
+                <li>Protections contre les failles XSS et les attaques par force brute (Rate limiting).</li>
+              </ul>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>8</span>
+              <h2 className={styles.sectionTitle}>Cookies et stockage local</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>
+                O&apos;Kanime n&apos;utilise aucun cookie publicitaire ou de tracking tiers.
+                Nous utilisons uniquement le <strong>localStorage</strong> de votre navigateur pour stocker votre JSON Web Token (JWT),
+                ce qui permet de maintenir votre session active. Ce traceur est strictement nécessaire à la fourniture du service.
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>9</span>
+              <h2 className={styles.sectionTitle}>Modifications</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <p>
+                Cette politique peut évoluer. En cas de modification majeure, vous serez informé par email ou via une notification sur le site.
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.legalSection}>
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionNumber}>10</span>
+              <h2 className={styles.sectionTitle}>Contact</h2>
+            </div>
+            <div className={styles.sectionBody}>
+              <div className={styles.infoBox}>
+                <p>Pour toute question : <a href="mailto:contact@okanime.fr">contact@okanime.fr</a></p>
+              </div>
+            </div>
+          </section>
+
+          <p className={styles.updateDate}>Dernière mise à jour : 28 mars 2026</p>
         </div>
       </main>
 
@@ -218,7 +193,6 @@ function PolitiqueConfidentialitePage() {
     </div>
   );
 }
-
 
 export default PolitiqueConfidentialitePage;
 export { metadata };
