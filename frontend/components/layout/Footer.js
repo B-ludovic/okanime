@@ -7,13 +7,15 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
         <div className={styles.footerLogo}>
-          <Image 
-            src="/icons/japan-flag.png" 
-            alt="O'Kanime" 
-            width={24} 
-            height={24}
-            className="object-contain"
-          />
+          <div className={styles.footerLogoIcon}>
+            <Image
+              src="/icons/japan-flag.png"
+              alt="O'Kanime"
+              width={20}
+              height={20}
+              className="object-contain"
+            />
+          </div>
           <p className={styles.footerTitle}><span className="brand-name">O&apos;Kanime</span></p>
         </div>
         <p className={styles.footerText}>Votre bibliothèque d&apos;animés personnelle</p>

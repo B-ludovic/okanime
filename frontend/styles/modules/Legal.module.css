@@ -31,13 +31,13 @@
 .heroTitle {
   font-size: 2.75rem;
   font-weight: 800;
-  color: #1e3a5f;
+  color: var(--bleu-marine);
   margin-bottom: 0.75rem;
 }
 
 .heroSubtitle {
   font-size: 1.05rem;
-  color: #2d5a8e;
+  color: var(--bleu-marine-clair);
   opacity: 0.85;
 }
 
@@ -63,7 +63,7 @@
   border-radius: var(--arrondi-grand);
   box-shadow: var(--ombre-petite);
   overflow: hidden;
-  border: 1px solid #eef2f7;
+  border: 1px solid var(--bordure-claire);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -78,7 +78,7 @@
   gap: var(--espace-sm);
   padding: var(--espace-md) var(--espace-lg);
   background: linear-gradient(to right, rgba(147, 197, 253, 0.12), transparent);
-  border-bottom: 1px solid #eef2f7;
+  border-bottom: 1px solid var(--bordure-claire);
 }
 
 .sectionNumber {
@@ -87,7 +87,7 @@
   min-width: 2.25rem;
   border-radius: 50%;
   background: var(--gradient-bleu-principal);
-  color: #1e3a5f;
+  color: var(--bleu-marine);
   font-family: 'Press Start 2P', monospace;
   font-size: 0.65rem;
   display: flex;
@@ -135,7 +135,7 @@
 /* ─── INFO BOX ──────────────────────────────── */
 
 .infoBox {
-  background: #f4f8ff;
+  background: var(--fond-info);
   border-left: 3px solid var(--bleu-pastel);
   border-radius: 0 var(--arrondi-petit) var(--arrondi-petit) 0;
   padding: var(--espace-sm) var(--espace-md);
