@@ -13,7 +13,8 @@
   --peche-pastel: #FAD4C0;      /* Pêche clair */
   
   /* Couleurs de fond - PLUS CLAIRES */
-  --fond-page: #F9FAFB;          /* Gris très clair (presque blanc) */
+  --fond-page: #F4F6FF;          /* Bleu-lavande très clair */
+  --gradient-body: linear-gradient(to bottom, #F5F3FF, #EFF6FF);
   --fond-carte: #FFFFFF;          /* Blanc pur pour les cards */
   --fond-header: #FFFFFF;         /* Blanc pour le header */
   

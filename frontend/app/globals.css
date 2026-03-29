@@ -16,7 +16,8 @@
 
 body {
   font-family: 'Inter', -apple-system, sans-serif;
-  background-color: var(--fond-page);
+  background: var(--gradient-body);
+  background-attachment: fixed;
   color: var(--texte-noir);
   line-height: 1.6;
 }
