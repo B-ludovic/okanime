@@ -18,6 +18,7 @@ function RegisterForm() {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
+  const [acceptedCgu, setAcceptedCgu] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -50,6 +51,10 @@ function RegisterForm() {
 
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Les mots de passe ne correspondent pas';
+    }
+
+    if (!acceptedCgu) {
+      newErrors.cgu = 'Vous devez accepter les CGU et la politique de confidentialité';
     }
 
     setErrors(newErrors);
@@ -139,6 +144,25 @@ function RegisterForm() {
           required
         />
         {errors.confirmPassword && <span className={styles.formError}>{errors.confirmPassword}</span>}
+      </div>
+
+      {/* CGU */}
+      <div className={styles.formGroup}>
+        <label className={styles.cguLabel}>
+          <input
+            type="checkbox"
+            checked={acceptedCgu}
+            onChange={(e) => setAcceptedCgu(e.target.checked)}
+            className={styles.cguCheckbox}
+          />
+          <span>
+            J&apos;accepte les{' '}
+            <Link href="/cgu" className={styles.textLink} target="_blank">CGU</Link>
+            {' '}et la{' '}
+            <Link href="/politique-confidentialite" className={styles.textLink} target="_blank">Politique de Confidentialité</Link>
+          </span>
+        </label>
+        {errors.cgu && <span className={styles.formError}>{errors.cgu}</span>}
       </div>
 
       {/* Bouton */}
