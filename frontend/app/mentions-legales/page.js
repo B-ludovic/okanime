@@ -64,7 +64,6 @@ function MentionsLegalesPage() {
               <p>
                 <strong>Conception et développement :</strong>{' '}
                 <a href="https://www.lecomptoirducode.fr" target="_blank" rel="noopener noreferrer">Le Comptoir du Code</a>{' '}
-                (société en cours d&apos;immatriculation)
               </p>
               <p>
                 <strong>Contenus tiers :</strong> Les métadonnées (titres, synopsis, notes) et visuels des œuvres proviennent de l&apos;API{' '}
